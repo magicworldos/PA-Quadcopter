@@ -2,7 +2,8 @@
  * if_mpu6050.h
  *
  *  Created on: Apr 26, 2016
- *      Author: lidq
+ *
+ *  四轴飞行控制器  Copyright (C) 2016  李德强
  */
 
 #ifndef IF_MPU6050_H_

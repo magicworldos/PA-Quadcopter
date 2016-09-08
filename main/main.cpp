@@ -2,7 +2,8 @@
  * main.cpp
  *
  *  Created on: Oct 30, 2013
- *      Author: lidq
+ *  
+ *  四轴飞行控制器  Copyright (C) 2016  李德强
  */
 
 #include <engine.h>

@@ -2,7 +2,8 @@
  * driver.c
  *
  *  Created on: Apr 16, 2016
- *      Author: lidq
+ *
+ *  四轴飞行控制器  Copyright (C) 2016  李德强
  */
 
 #include <driver.h>
