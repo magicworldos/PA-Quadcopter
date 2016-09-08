@@ -1,3 +1,9 @@
+# Makefile
+#
+#  Created on: May 24, 2016
+#
+# 四轴飞行控制器  Copyright (C) 2016  李德强
+
 #工程
 MOD_PROJECT			= quadcopter
 #编译目录
