@@ -85,7 +85,7 @@ void params_input()
 		//按键
 		ch = getch();
 		//7
-		if (ch == 55)
+		if (ch == '7')
 		{
 			if (ctl_type == 0)
 			{
@@ -105,7 +105,7 @@ void params_input()
 			}
 		}
 		//8
-		else if (ch == 56)
+		else if (ch == '8')
 		{
 			if (ctl_type == 0)
 			{
@@ -125,7 +125,7 @@ void params_input()
 			}
 		}
 		//9
-		else if (ch == 57)
+		else if (ch == '9')
 		{
 			if (ctl_type == 0)
 			{
@@ -141,7 +141,7 @@ void params_input()
 			}
 		}
 		//4
-		else if (ch == 52)
+		else if (ch == '4')
 		{
 			if (ctl_type == 0)
 			{
@@ -161,7 +161,7 @@ void params_input()
 			}
 		}
 		//5
-		else if (ch == 53)
+		else if (ch == '5')
 		{
 			if (ctl_type == 0)
 			{
@@ -181,7 +181,7 @@ void params_input()
 			}
 		}
 		//6
-		else if (ch == 54)
+		else if (ch == '6')
 		{
 			if (ctl_type == 0)
 			{
@@ -197,7 +197,7 @@ void params_input()
 			}
 		}
 		//-
-		else if (ch == 45)
+		else if (ch == '-')
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -205,7 +205,7 @@ void params_input()
 			}
 		}
 		//+
-		else if (ch == 43)
+		else if (ch == '+')
 		{
 			for (int i = 0; i < 4; i++)
 			{
