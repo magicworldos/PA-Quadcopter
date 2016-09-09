@@ -8,6 +8,7 @@
 
 #include <engine.h>
 #include <driver.h>
+#include <gy953.h>
 #include <paramsctl.h>
 
 //引擎
@@ -44,17 +45,25 @@ void engine_start(int argc, char *argv[])
 #ifndef __PC_DEBUG__
 			//初始化驱动
 			driver_setup();
+			//初始化GY953
+			u32 init = 0;
+			//电机所在GPIO引脚编号
+			if (argv[2] != null)
+			{
+				sscanf(argv[2], "%x", &init);
+			}
+			gy953_init(init);
 #endif
 			//重置引擎
 			engine_reset(&engine);
 			//载入参数
 			params_load();
 			//启动MPU6050陀螺仪数据读入线程
-			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &engine_mpu, null);
+			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &gy953_value, null);
 			//启动飞行引擎
 			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &engine_fly, null);
-			//启动参数调整
-			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &params_start, null);
+			//启动键盘接收
+			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &params_input, null);
 			//主线程休眠
 			sem_wait(&sem_engine);
 
@@ -317,8 +326,8 @@ void engine_reset(s_engine *e)
 	e->dy = 0;
 	e->dz = 0;
 	//陀螺仪中心校准补偿XY轴
-	e->cx = 15.0;
-	e->cy = 12.0;
+	e->cx = 0;
+	e->cy = 0;
 	//XYZ欧拉角
 	e->x = 0;
 	e->y = 0;
@@ -330,6 +339,10 @@ void engine_reset(s_engine *e)
 	e->gx = 0;
 	e->gy = 0;
 	e->gz = 0;
+	//XYZ轴加速度
+	e->ax = 0;
+	e->ay = 0;
+	e->az = 0;
 
 	//重置速度
 	for (int i = 0; i < 4; i++)
@@ -351,17 +364,6 @@ void engine_set_dxy()
 	e->dx = -e->x;
 	e->dy = -e->y;
 	e->dz = -e->z;
-}
-
-//取得MPU6050陀螺仪读数
-void engine_mpu()
-{
-	s_engine *e = &engine;
-	while (1)
-	{
-		//读取并设置陀螺仪读数到引擎
-		mpu6050_value(&e->z, &e->x, &e->y, &e->gy, &e->gx, &e->gz);
-	}
 }
 
 //读入摇控器“前/后”的PWM信号
@@ -398,7 +400,6 @@ void engine_exception()
 {
 	//引擎清理
 	engine_clear();
-	sleep(1);
 	//退出
 	exit(0);
 }
@@ -406,10 +407,13 @@ void engine_exception()
 //引擎清理
 void engine_clear()
 {
-	//重置引擎
-	engine_reset(&engine);
+
 	//清理驱动
 	driver_clear();
-	//清理调参
-	params_clear();
+	//恢复控制台
+	resetTermios();
+	//重置引擎
+	engine_reset(&engine);
+	//关闭gy953
+	gy953_close();
 }

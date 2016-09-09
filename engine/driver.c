@@ -8,7 +8,6 @@
 
 #include <driver.h>
 #include <engine.h>
-#include <if_mpu6050.h>
 
 //多线程描述符
 pthread_t pthdpwd[3];
@@ -41,12 +40,6 @@ void driver_setup()
 	drv1.speed = 0;
 	drv2.speed = 0;
 	drv3.speed = 0;
-
-	//初始化MPU6050
-	printf("Init mpu6050.\n");
-	mpu6050_setup();
-	usleep(1000000);
-	printf("Init mpu6050 finished.\n");
 
 	//初始化电调行程校准，通常是3秒最大油门，再3秒最小油门，但不是必要的，可以不做
 	//driver_init_speed0();
@@ -202,6 +195,8 @@ void driver_clear()
 	driver_set_speed1(0);
 	driver_set_speed2(0);
 	driver_set_speed3(0);
+
+	usleep(100 * 1000);
 }
 
 //将电机速度转为PWM信号

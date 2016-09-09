@@ -21,7 +21,7 @@
 #include <semaphore.h>
 
 #include <wiringPi.h>
-#include <if_mpu6050.h>
+#include <wiringSerial.h>
 
 
 #define null						((void *)0)

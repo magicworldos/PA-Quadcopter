@@ -20,9 +20,6 @@
 //高参幅度速度
 #define STEP_V			(10)
 
-//初始化参数控制
-void params_start();
-
 //保存参数
 void params_save();
 
@@ -34,8 +31,5 @@ void params_reset();
 
 //键盘接收按键
 void params_input();
-
-//清理控制器
-void params_clear();
 
 #endif /* _INCLUDE_PARAMSCTL_H_ */

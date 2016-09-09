@@ -44,6 +44,10 @@ typedef struct
 	float gx;
 	float gy;
 	float gz;
+	//XYZ轴加速度
+	float ax;
+	float ay;
+	float az;
 
 	//引擎速度
 	float v[4];
@@ -100,9 +104,6 @@ void engine_reset(s_engine *e);
 
 //陀螺仪补偿
 void engine_set_dxy();
-
-//取得MPU6050陀螺仪读数
-void engine_mpu();
 
 //读入摇控器“前/后”的PWM信号
 void engine_fb_pwm(int fb);

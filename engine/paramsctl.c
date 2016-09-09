@@ -22,21 +22,13 @@ extern s_engine engine;
 //参数
 extern s_params params;
 
-//初始化参数控制
-void params_start()
-{
-	//使用ctl状态置为1
-	use_ctl = 1;
-	//启动键盘接收
-	pthread_create(&pthdctl, (const pthread_attr_t*) null, (void* (*)(void*)) &params_input, null);
-}
-
 //保存参数
 void params_save()
 {
 	FILE *fp = fopen(QUAD_PMS_FILE, "wb");
 	if (fp == null)
 	{
+		printf("save params error!\n");
 		return;
 	}
 	fwrite(&params, sizeof(char), sizeof(s_params), fp);
@@ -49,6 +41,7 @@ void params_load()
 	FILE *fp = fopen(QUAD_PMS_FILE, "rb");
 	if (fp == null)
 	{
+		printf("save params error!\n");
 		//如果载入失败则重置参数
 		params_reset();
 		return;
@@ -241,24 +234,14 @@ void params_input()
 			ctl_type = 3;
 		}
 		//保存所有参数到文件
-		else if (ch == 'S')
+		else if (ch == 's')
 		{
 			params_save();
 		}
 		//读取文件中的所有参数
-		else if (ch == 'L')
+		else if (ch == 'l')
 		{
 			params_load();
 		}
 	}
-}
-
-//清理控制器
-void params_clear()
-{
-	if (use_ctl)
-	{
-		resetTermios();
-	}
-	exit(0);
 }

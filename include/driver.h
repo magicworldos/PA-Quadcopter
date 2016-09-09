@@ -17,10 +17,14 @@
 #define GPIO_PW				(13)
 
 //4个电机的GPIO引脚
-#define PORT_SPEED0	  		(1)
-#define PORT_SPEED1	  		(15)
-#define PORT_SPEED2	  		(6)
-#define PORT_SPEED3	  		(16)
+//#define PORT_SPEED0	  		(1)
+//#define PORT_SPEED1	  		(15)
+//#define PORT_SPEED2	  		(6)
+//#define PORT_SPEED3	  		(16)
+#define PORT_SPEED0	  		(28)
+#define PORT_SPEED1	  		(26)
+#define PORT_SPEED2	  		(29)
+#define PORT_SPEED3	  		(27)
 
 //摇控器接收机的3个通道初始值
 //前后
