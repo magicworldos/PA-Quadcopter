@@ -8,7 +8,6 @@
 
 #include <engine.h>
 #include <driver.h>
-#include <gy953.h>
 #include <paramsctl.h>
 
 //引擎
@@ -45,21 +44,15 @@ void engine_start(int argc, char *argv[])
 #ifndef __PC_DEBUG__
 			//初始化驱动
 			driver_setup();
-			//初始化GY953
-			u32 init = 0;
-			//电机所在GPIO引脚编号
-			if (argv[2] != null)
-			{
-				sscanf(argv[2], "%x", &init);
-			}
-			gy953_init(init);
+			mpu6050_setup();
 #endif
 			//重置引擎
 			engine_reset(&engine);
 			//载入参数
 			params_load();
 			//启动MPU6050陀螺仪数据读入线程
-			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &gy953_value, null);
+			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) engine_mpu, null);
+			//pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &gy953_value, null);
 			//启动飞行引擎
 			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &engine_fly, null);
 			//启动键盘接收
@@ -164,8 +157,8 @@ void engine_fly()
 		//使用XY轴的欧拉角的PID反馈控制算法
 		float y_devi = engine_pid(y_et, y_et_1, y_et_2);
 		//得出引擎的Y轴平衡补偿
-		e->v_devi[0] = +y_devi;
-		e->v_devi[2] = -y_devi;
+		e->v_devi[0] = -y_devi;
+		e->v_devi[2] = +y_devi;
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
@@ -201,8 +194,8 @@ void engine_fly()
 		yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
 		//对引擎的4个轴做角速度平衡补偿
-		e->v_devi[1] += -xv_devi;
-		e->v_devi[3] += +xv_devi;
+		e->v_devi[1] += +xv_devi;
+		e->v_devi[3] += -xv_devi;
 		e->v_devi[0] += +yv_devi;
 		e->v_devi[2] += -yv_devi;
 
@@ -283,6 +276,16 @@ void engine_rechk_speed(s_engine *e)
 			//在电机停转时，做陀螺仪补偿
 			engine_set_dxy();
 		}
+	}
+}
+
+//取得陀螺仪读数
+void engine_mpu()
+{
+	s_engine *e = &engine;
+	while (1)
+	{
+		mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ax, &e->ay, &e->az);
 	}
 }
 
@@ -415,5 +418,5 @@ void engine_clear()
 	//重置引擎
 	engine_reset(&engine);
 	//关闭gy953
-	gy953_close();
+	//gy953_close();
 }

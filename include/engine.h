@@ -10,7 +10,8 @@
 #define SRC_ENGINE_H_
 
 #include <typedef.h>
-
+#include <if_mpu6050.h>
+//#include <gy953.h>
 //#define								__PC_DEBUG__
 
 //原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
@@ -80,6 +81,9 @@ void engine_start(int argc, char *argv[]);
 
 //引擎核心算法平衡算法
 void engine_fly();
+
+//MPU6050
+void engine_mpu();
 
 //引擎运转
 void engine_move(s_engine *e);
