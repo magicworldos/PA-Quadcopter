@@ -382,7 +382,7 @@ void engine_lr_pwm(int lr)
 {
 	ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.my = ((float) (lr - CTL_LR)) / 50.0 * 4.0;
+	engine.my = -((float) (lr - CTL_LR)) / 50.0 * 4.0;
 }
 
 //读入摇控器“油门”的PWM信号
