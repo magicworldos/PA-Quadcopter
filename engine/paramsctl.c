@@ -66,6 +66,10 @@ void params_reset()
 	params.kp_z = 3.6;
 	params.ki_z = 0.8;
 	params.kd_z = 2.8;
+	//XY轴加速度PID参数
+	params.kp_a = 13.8;
+	params.ki_a = 12.6;
+	params.kd_a = 8.8;
 }
 
 //键盘接收按键
@@ -94,6 +98,10 @@ void params_input()
 			}
 			else if (ctl_type == 3)
 			{
+				params.kp_a += CTL_STEP;
+			}
+			else if (ctl_type == 4)
+			{
 				engine.cx += CTL_STEP;
 			}
 		}
@@ -114,6 +122,10 @@ void params_input()
 			}
 			else if (ctl_type == 3)
 			{
+				params.ki_a += CTL_STEP;
+			}
+			else if (ctl_type == 4)
+			{
 				engine.cy += CTL_STEP;
 			}
 		}
@@ -132,6 +144,10 @@ void params_input()
 			{
 				params.kd_z += CTL_STEP;
 			}
+			else if (ctl_type == 3)
+			{
+				params.kd_a += CTL_STEP;
+			}
 		}
 		//4
 		else if (ch == '4')
@@ -149,6 +165,10 @@ void params_input()
 				params.kp_z -= CTL_STEP;
 			}
 			else if (ctl_type == 3)
+			{
+				params.kp_a -= CTL_STEP;
+			}
+			else if (ctl_type == 4)
 			{
 				engine.cx -= CTL_STEP;
 			}
@@ -170,6 +190,10 @@ void params_input()
 			}
 			else if (ctl_type == 3)
 			{
+				params.ki_a -= CTL_STEP;
+			}
+			else if (ctl_type == 4)
+			{
 				engine.cy -= CTL_STEP;
 			}
 		}
@@ -187,6 +211,10 @@ void params_input()
 			else if (ctl_type == 2)
 			{
 				params.kd_z -= CTL_STEP;
+			}
+			else if (ctl_type == 3)
+			{
+				params.kd_a -= CTL_STEP;
 			}
 		}
 		//-
@@ -228,10 +256,15 @@ void params_input()
 		{
 			ctl_type = 2;
 		}
-		//陀螺仪校准参数cx、cy、cz
+		//xy轴加速度PID_A参数
 		else if (ch == 'r')
 		{
 			ctl_type = 3;
+		}
+		//陀螺仪校准参数cx、cy、cz
+		else if (ch == 't')
+		{
+			ctl_type = 4;
 		}
 		//保存所有参数到文件
 		else if (ch == 's')

@@ -126,8 +126,17 @@ void engine_fly()
 	float xv_et = 0.0, xv_et_1 = 0.0, xv_et_2 = 0.0;
 	float yv_et = 0.0, yv_et_1 = 0.0, yv_et_2 = 0.0;
 
+	//XY轴加速度的增量式PID处理数据，当前、上一次、上上次
+	float xa_et = 0.0, xa_et_1 = 0.0, xa_et_2 = 0.0;
+	float ya_et = 0.0, ya_et_1 = 0.0, ya_et_2 = 0.0;
+
 	while (1)
 	{
+		e->v_devi[0] = 0;
+		e->v_devi[1] = 0;
+		e->v_devi[2] = 0;
+		e->v_devi[3] = 0;
+
 		//处理X轴欧拉角平衡补偿
 		//计算角度：欧拉角x + 校准补偿dx + 中心补偿cx + 移动倾斜角mx
 		float x_angle = e->x + e->dx + e->cx + e->mx;
@@ -141,8 +150,8 @@ void engine_fly()
 		//使用XY轴的欧拉角的PID反馈控制算法
 		float x_devi = engine_pid(x_et, x_et_1, x_et_2);
 		//得出引擎的X轴平衡补偿
-		e->v_devi[0] = -x_devi;
-		e->v_devi[2] = +x_devi;
+		e->v_devi[0] += -x_devi;
+		e->v_devi[2] += +x_devi;
 
 		//处理Y轴欧拉角平衡补偿
 		//计算角度：欧拉角y + 校准补偿dy + 中心补偿cy + 移动倾斜角my
@@ -157,8 +166,8 @@ void engine_fly()
 		//使用XY轴的欧拉角的PID反馈控制算法
 		float y_devi = engine_pid(y_et, y_et_1, y_et_2);
 		//得出引擎的Y轴平衡补偿
-		e->v_devi[1] = +y_devi;
-		e->v_devi[3] = -y_devi;
+		e->v_devi[1] += +y_devi;
+		e->v_devi[3] += -y_devi;
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
@@ -169,7 +178,7 @@ void engine_fly()
 		z_et = z_angle;
 		//使用Z轴的欧拉角的PID反馈控制算法
 		float z_devi = engine_pid_z(z_et, z_et_1, z_et_2);
-		//得出引擎的Y轴平衡补偿
+		//处理Z轴自旋补偿
 		e->v_devi[0] += z_devi;
 		e->v_devi[2] += z_devi;
 		e->v_devi[1] += -z_devi;
@@ -199,10 +208,33 @@ void engine_fly()
 		e->v_devi[1] += +yv_devi;
 		e->v_devi[3] += -yv_devi;
 
+		//处理XY轴旋加速度平衡补偿
+		float xa_devi = 0;
+		float ya_devi = 0;
+		//设置X轴PID数据
+		xa_et_2 = xa_et_1;
+		xa_et_1 = xa_et;
+		xa_et = e->ax;
+		//使用X轴的旋转角速度的PID反馈控制算法
+		xa_devi = engine_pid_a(xa_et, xa_et_1, xa_et_2);
+
+		//设置Y轴PID数据
+		ya_et_2 = ya_et_1;
+		ya_et_1 = ya_et;
+		ya_et = e->ay;
+		//使用Y轴的旋转角速度的PID反馈控制算法
+		ya_devi = engine_pid_a(ya_et, ya_et_1, ya_et_2);
+
+		//对引擎的4个轴做加速度平衡补偿
+		e->v_devi[0] += +xa_devi;
+		e->v_devi[2] += -xa_devi;
+		e->v_devi[1] += +ya_devi;
+		e->v_devi[3] += -ya_devi;
+
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);
 
-		printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][s0: %3d %3d %3d %3d]", x_angle, y_angle, z_angle, e->gx, e->gy, e->gz, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+		printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][s0: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx, e->gy, e->gz, e->ax, e->ay, e->az, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 		if (ctl_type == 0)
 		{
 			printf("[pid: %+5.2f %+5.2f %+5.2f]", params.kp, params.ki, params.kd);
@@ -216,6 +248,10 @@ void engine_fly()
 			printf("[pid_z: %+5.2f %+5.2f %+5.2f]", params.kp_z, params.ki_z, params.kd_z);
 		}
 		else if (ctl_type == 3)
+		{
+			printf("[pid_a: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
+		}
+		else if (ctl_type == 4)
 		{
 			printf("[c_xy: %+5.2f %+5.2f]", e->cx, e->cy);
 		}
@@ -321,6 +357,16 @@ float engine_pid_v(float et, float et_1, float et_2)
 	return params.kp_v * (et - et_1) + (params.ki_v * et) + params.kd_v * (et - 2 * et_1 + et_2);
 }
 
+//对XY轴加速度做PID反馈控制
+float engine_pid_a(float et, float et_1, float et_2)
+{
+	et *= 10.0;
+	et_1 *= 10.0;
+	et_2 *= 10.0;
+	//增量式PID反馈控制
+	return params.kp_a * (et - et_1) + (params.ki_a * et) + params.kd_a * (et - 2 * et_1 + et_2);
+}
+
 //引擎重置
 void engine_reset(s_engine *e)
 {
@@ -346,6 +392,10 @@ void engine_reset(s_engine *e)
 	e->ax = 0;
 	e->ay = 0;
 	e->az = 0;
+	//加速度修正补偿XYZ轴
+	e->dax = 0;
+	e->day = 0;
+	e->daz = 0;
 
 	//重置速度
 	for (int i = 0; i < 4; i++)
@@ -367,6 +417,10 @@ void engine_set_dxy()
 	e->dx = -e->x;
 	e->dy = -e->y;
 	e->dz = -e->z;
+	//补偿陀螺仪读数，将3个轴的加速度都补偿为0
+	e->dax = -e->ax;
+	e->day = -e->ay;
+	e->daz = -e->az;
 }
 
 //读入摇控器“前/后”的PWM信号
@@ -410,7 +464,6 @@ void engine_exception()
 //引擎清理
 void engine_clear()
 {
-
 	//清理驱动
 	driver_clear();
 	//恢复控制台

@@ -4,13 +4,11 @@
 #include <stdint.h>
 #include <string.h>
 #include <math.h>
-#include <I2Cdev.h>
-#include <MPU6050_6Axis_MotionApps20.h>
-
+#include "I2Cdev.h"
+#include "MPU6050_6Axis_MotionApps20.h"
 #include <if_mpu6050.h>
 
 MPU6050 mpu;
-// MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
 uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
 uint8_t devStatus;      // return status after each device operation (0 = success, !0 = error)
@@ -24,7 +22,6 @@ VectorInt16 aa;         // [x, y, z]            accel sensor measurements
 VectorInt16 aaReal;     // [x, y, z]            gravity-free accel sensor measurements
 VectorInt16 aaWorld;    // [x, y, z]            world-frame accel sensor measurements
 VectorFloat gravity;    // [x, y, z]            gravity vector
-int16_t gyro[3];    	// [x, y, z]            gyro vector
 float euler[3];         // [psi, theta, phi]    Euler angle container
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
@@ -32,9 +29,6 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 uint8_t teapotPacket[14] =
 { '$', 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0x00, 0x00, '\r', '\n' };
 
-// ================================================================
-// ===                      INITIAL SETUP                       ===
-// ================================================================
 void mpu6050_setup()
 {
 	// initialize device
@@ -78,10 +72,6 @@ void mpu6050_setup()
 	}
 }
 
-// ================================================================
-// ===                    MAIN PROGRAM LOOP                     ===
-// ================================================================
-
 void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz, float *ax, float *ay, float *az)
 {
 	// if programming failed, don't try to do anything
@@ -94,41 +84,39 @@ void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz
 
 	if (fifoCount == 1024)
 	{
-		// reset so we can continue cleanly
 		mpu.resetFIFO();
 		printf("FIFO overflow!\n");
 
-		// otherwise, check for DMP data ready interrupt (this should happen frequently)
 	}
-	else
-
-	if (fifoCount >= 42)
+	else if (fifoCount >= 42)
 	{
-		//printf("%3.3f\t%3.3f\n", gravity.x, *gx);
+		short aax, aay, aaz;
+		short ggx, ggy, ggz;
 
 		// read a packet from FIFO
 		mpu.getFIFOBytes(fifoBuffer, packetSize);
 
+		// display Euler angles in degrees
 		mpu.dmpGetQuaternion(&q, fifoBuffer);
 		mpu.dmpGetGravity(&gravity, &q);
 		mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-		*x = (float) (ypr[0] * 180.0 / M_PI);
-		*y = (float) (ypr[1] * 180.0 / M_PI);
-		*z = (float) (ypr[2] * 180.0 / M_PI);
-		//printf("ypr  %7.2f %7.2f %7.2f\n", ypr[0] * 180 / M_PI, ypr[1] * 180 / M_PI, ypr[2] * 180 / M_PI);
+		*x = ypr[0] * 180 / M_PI;
+		*y = ypr[1] * 180 / M_PI;
+		*z = ypr[2] * 180 / M_PI;
 
-		short aax, aay, aaz;
-		short ggx, ggy, ggz;
+		// display real acceleration, adjusted to remove gravity
+		mpu.dmpGetQuaternion(&q, fifoBuffer);
+		mpu.dmpGetAccel(&aa, fifoBuffer);
+		mpu.dmpGetGravity(&gravity, &q);
+		mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
+		*ax = (float)aaReal.x / 16384.0;
+		*ay = (float)aaReal.y / 16384.0;
+		*az = (float)aaReal.z / 16384.0;
 
 		mpu.getRotation(&ggx, &ggy, &ggz);
 		*gx = (float) (ggx) / 131.0;
 		*gy = (float) (ggy) / 131.0;
 		*gz = (float) (ggz) / 131.0;
-
-	//	mpu.getAcceleration(&aax, &aay, &aaz);
-	//	*ax = (float) (aax) / 131.0;
-	//	*ay = (float) (aay) / 131.0;
-	//	*az = (float) (aaz) / 131.0;
-
 	}
 }
+

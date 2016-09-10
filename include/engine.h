@@ -49,6 +49,10 @@ typedef struct
 	float ax;
 	float ay;
 	float az;
+	//修正加速度补偿
+	float dax;
+	float day;
+	float daz;
 
 	//引擎速度
 	float v[4];
@@ -74,6 +78,10 @@ typedef struct
 	float kp_z;
 	float ki_z;
 	float kd_z;
+	//XY轴加速度PID参数
+	float kp_a;
+	float ki_a;
+	float kd_a;
 } s_params;
 
 //启动引擎
@@ -102,6 +110,9 @@ float engine_pid_z(float et, float et_1, float et_2);
 
 //对旋转角速度做PID反馈控制
 float engine_pid_v(float et, float et_1, float et_2);
+
+//对XY轴加速度做PID反馈控制
+float engine_pid_a(float et, float et_1, float et_2);
 
 //引擎重置
 void engine_reset(s_engine *e);
