@@ -1,11 +1,3 @@
-<style type="text/css">
-body,td,th 
-{
-	font-size: 12px;
-	font-style: normal;
-}
-</style>
-
 # mbh_arobotthatcanfly
 <br>
 <br>这是一个开源的四轴飞行器控制项目，使用树莓派3b型做四轴飞行器的控制器，通过gpio引脚读取摇控器的输入pwm信号，计算mpu-6050陀螺仪的读数，然后对欧拉角和旋转角速度做平衡修正，最后通过gpio引脚并对四轴上的4个电调输出。
