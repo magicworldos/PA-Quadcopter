@@ -141,8 +141,8 @@ void engine_fly()
 		//使用XY轴的欧拉角的PID反馈控制算法
 		float x_devi = engine_pid(x_et, x_et_1, x_et_2);
 		//得出引擎的X轴平衡补偿
-		e->v_devi[1] = x_devi;
-		e->v_devi[3] = -x_devi;
+		e->v_devi[0] = -x_devi;
+		e->v_devi[2] = +x_devi;
 
 		//处理Y轴欧拉角平衡补偿
 		//计算角度：欧拉角y + 校准补偿dy + 中心补偿cy + 移动倾斜角my
@@ -157,8 +157,8 @@ void engine_fly()
 		//使用XY轴的欧拉角的PID反馈控制算法
 		float y_devi = engine_pid(y_et, y_et_1, y_et_2);
 		//得出引擎的Y轴平衡补偿
-		e->v_devi[0] = -y_devi;
-		e->v_devi[2] = +y_devi;
+		e->v_devi[1] = +y_devi;
+		e->v_devi[3] = -y_devi;
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
@@ -194,10 +194,10 @@ void engine_fly()
 		yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
 		//对引擎的4个轴做角速度平衡补偿
-		e->v_devi[1] += +xv_devi;
-		e->v_devi[3] += -xv_devi;
-		e->v_devi[0] += +yv_devi;
-		e->v_devi[2] += -yv_devi;
+		e->v_devi[0] += +xv_devi;
+		e->v_devi[2] += -xv_devi;
+		e->v_devi[1] += +yv_devi;
+		e->v_devi[3] += -yv_devi;
 
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);
@@ -285,7 +285,7 @@ void engine_mpu()
 	s_engine *e = &engine;
 	while (1)
 	{
-		mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ax, &e->ay, &e->az);
+		mpu6050_value(&e->z, &e->x, &e->y, &e->gy, &e->gx, &e->gz, &e->ax, &e->ay, &e->az);
 	}
 }
 
@@ -382,7 +382,7 @@ void engine_lr_pwm(int lr)
 {
 	ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.my = ((float) (lr - CTL_LR)) / 50.0 * 4.0;
+	engine.my = -((float) (lr - CTL_LR)) / 50.0 * 4.0;
 }
 
 //读入摇控器“油门”的PWM信号
