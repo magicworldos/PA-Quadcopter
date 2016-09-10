@@ -53,7 +53,6 @@ typedef struct
 	float dax;
 	float day;
 	float daz;
-
 	//引擎速度
 	float v[4];
 	//速度补偿
@@ -62,27 +61,6 @@ typedef struct
 	int speed[4];
 
 } s_engine;
-
-//参数
-typedef struct
-{
-	//XY轴欧拉角PID参数
-	float kp;
-	float ki;
-	float kd;
-	//旋转角速度PID参数
-	float kp_v;
-	float ki_v;
-	float kd_v;
-	//Z轴欧拉角PID参数
-	float kp_z;
-	float ki_z;
-	float kd_z;
-	//XY轴加速度PID参数
-	float kp_a;
-	float ki_a;
-	float kd_a;
-} s_params;
 
 //启动引擎
 void engine_start(int argc, char *argv[]);

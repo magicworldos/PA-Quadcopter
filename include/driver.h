@@ -26,13 +26,9 @@
 #define PORT_SPEED2	  		(29)
 #define PORT_SPEED3	  		(27)
 
-//摇控器接收机的3个通道初始值
-//前后
-#define CTL_FB				(1600)
-//左右
-#define CTL_LR				(1600)
-//油门
-#define CTL_PW				(1100)
+//摇控器接收机的3个通道读数范围
+#define CTL_PWM_MIN				(1000)
+#define CTL_PWM_MAX				(2020)
 
 //最大调试时长10秒
 #define MAX_INIT_MS			(10000)

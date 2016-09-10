@@ -70,6 +70,10 @@ void params_reset()
 	params.kp_a = 13.8;
 	params.ki_a = 12.6;
 	params.kd_a = 8.8;
+	//摇控器3通道起始值
+	params.ctl_fb_zero = 1400;
+	params.ctl_lr_zero = 1600;
+	params.ctl_pw_zero = 1000;
 }
 
 //键盘接收按键

@@ -62,7 +62,6 @@ void engine_start(int argc, char *argv[])
 
 			return;
 		}
-
 		//校准摇控器模式
 		if (strcmp(argv[1], "--ctl") == 0)
 		{
@@ -70,15 +69,38 @@ void engine_start(int argc, char *argv[])
 			//初始化驱动
 			driver_setup();
 #endif
+			//载入参数
+			params_load();
+			//启动键盘接收
+			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &params_input, null);
 
+			int i = 0;
+			int n = 100;
+			int s_fb = 0;
+			int s_lr = 0;
+			int s_pw = 0;
 			while (1)
 			{
-				printf("FB: %4d\tLR: %4d\tPW: %4d\n", ctl_fb, ctl_lr, ctl_pw);
+				printf("[FB: %4d\tLR: %4d\tPW: %4d]\t-->\t[FB: %4d\tLR: %4d\tPW: %4d]\n", ctl_fb, ctl_lr, ctl_pw, params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
+				s_fb += ctl_fb;
+				s_lr += ctl_lr;
+				s_pw += ctl_pw;
+
+				if (i++ % n == 0)
+				{
+					params.ctl_fb_zero = s_fb / n;
+					params.ctl_lr_zero = s_lr / n;
+					params.ctl_pw_zero = s_pw / n;
+
+					s_fb = 0;
+					s_lr = 0;
+					s_pw = 0;
+				}
+
 				usleep(10 * 1000);
 			}
 			return;
 		}
-
 		//电机调试模式
 		if (strcmp(argv[1], "--test") == 0)
 		{
@@ -106,8 +128,8 @@ void engine_start(int argc, char *argv[])
 	printf("unknown option ...\n");
 	printf("usage: quadcopter\n");
 	printf("\t[--fly: Fly with remote control and adjust quadcopter's parameters by keybroad.]\n");
-	printf("\t[--ctl: Display remote control values.]\n");
 	printf("\t[--test: Test the connection to the motor come in raspberry.]\n");
+	printf("\t[--ctl: Display remote control values.]\n");
 	printf("\tex. quadcopter --test [GPIO] [SPEED] [MSECS]\n");
 	return;
 }
@@ -306,7 +328,7 @@ void engine_rechk_speed(s_engine *e)
 		}
 
 		//在电机低速时，停止转动，并禁用平衡补偿，保护措施
-		if (e->v[i] < 10)
+		if (e->v[i] < 30)
 		{
 			e->speed[i] = 0;
 			//在电机停转时，做陀螺仪补偿
@@ -396,7 +418,6 @@ void engine_reset(s_engine *e)
 	e->dax = 0;
 	e->day = 0;
 	e->daz = 0;
-
 	//重置速度
 	for (int i = 0; i < 4; i++)
 	{
@@ -426,25 +447,49 @@ void engine_set_dxy()
 //读入摇控器“前/后”的PWM信号
 void engine_fb_pwm(int fb)
 {
+	if (fb < CTL_PWM_MIN || fb > CTL_PWM_MAX)
+	{
+		return;
+	}
 	ctl_fb = fb;
+	if (params.ctl_fb_zero == 0)
+	{
+		params.ctl_fb_zero = 1400;
+	}
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.mx = ((float) (fb - CTL_FB)) / 50.0 * 4.0;
+	engine.mx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 8.0;
 }
 
 //读入摇控器“左/右”的PWM信号
 void engine_lr_pwm(int lr)
 {
+	if (lr < CTL_PWM_MIN || lr > CTL_PWM_MAX)
+	{
+		return;
+	}
 	ctl_lr = lr;
+	if (params.ctl_lr_zero == 0)
+	{
+		params.ctl_lr_zero = 1400;
+	}
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.my = -((float) (lr - CTL_LR)) / 50.0 * 4.0;
+	engine.my = -((float) (lr - params.ctl_lr_zero)) / 50.0 * 8.0;
 }
 
 //读入摇控器“油门”的PWM信号
 void engine_pw_pwm(int pw)
 {
+	if (pw < CTL_PWM_MIN || pw > CTL_PWM_MAX)
+	{
+		return;
+	}
 	ctl_pw = pw;
+	if (params.ctl_pw_zero == 0)
+	{
+		params.ctl_pw_zero = 1100;
+	}
 	//读入速度
-	float v = (float) (pw - CTL_PW);
+	float v = (float) (pw - (params.ctl_pw_zero + 100) < 0 ? 0 : pw - (params.ctl_pw_zero + 100));
 	//设置引擎的速度
 	for (int i = 0; i < 4; i++)
 	{

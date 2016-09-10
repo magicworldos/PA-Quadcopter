@@ -20,6 +20,31 @@
 //高参幅度速度
 #define STEP_V			(10)
 
+//参数
+typedef struct
+{
+	//XY轴欧拉角PID参数
+	float kp;
+	float ki;
+	float kd;
+	//旋转角速度PID参数
+	float kp_v;
+	float ki_v;
+	float kd_v;
+	//Z轴欧拉角PID参数
+	float kp_z;
+	float ki_z;
+	float kd_z;
+	//XY轴加速度PID参数
+	float kp_a;
+	float ki_a;
+	float kd_a;
+	//摇控器3通道起始读数
+	int ctl_fb_zero;
+	int ctl_lr_zero;
+	int ctl_pw_zero;
+} s_params;
+
 //保存参数
 void params_save();
 
