@@ -194,8 +194,8 @@ void engine_fly()
 		//使用XY轴的欧拉角的PID反馈控制算法
 		float y_devi = engine_pid(y_et, y_et_1, y_et_2);
 		//得出引擎的Y轴平衡补偿
-		e->v_devi[1] += +y_devi;
-		e->v_devi[3] += -y_devi;
+		e->v_devi[1] += -y_devi;
+		e->v_devi[3] += +y_devi;
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
@@ -231,8 +231,8 @@ void engine_fly()
 		yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
 		//对引擎的4个轴做角速度平衡补偿
-		e->v_devi[0] += +xv_devi;
-		e->v_devi[2] += -xv_devi;
+		e->v_devi[0] += -xv_devi;
+		e->v_devi[2] += +xv_devi;
 		e->v_devi[1] += +yv_devi;
 		e->v_devi[3] += -yv_devi;
 
@@ -255,8 +255,8 @@ void engine_fly()
 
 		//对引擎的4个轴做加速度平衡补偿
 		e->v_devi[0] += +xa_devi;
-		e->v_devi[2] += -xa_devi;
-		e->v_devi[1] += +ya_devi;
+		e->v_devi[2] += +xa_devi;
+		e->v_devi[1] += -ya_devi;
 		e->v_devi[3] += -ya_devi;
 
 		//引擎运转，调用驱动，调控电机转数
@@ -379,7 +379,7 @@ void engine_mpu()
 	s_engine *e = &engine;
 	while (1)
 	{
-		mpu6050_value(&e->z, &e->x, &e->y, &e->gy, &e->gx, &e->gz, &e->ax, &e->ay, &e->az);
+		mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ay, &e->ax, &e->az);
 		usleep(1);
 	}
 }
