@@ -113,6 +113,9 @@ void engine_lr_pwm(int lr);
 //读入摇控器“油门”的PWM信号
 void engine_pw_pwm(int pw);
 
+//电机锁定解锁处理
+void engine_lock();
+
 //异常处理
 void engine_exception();
 

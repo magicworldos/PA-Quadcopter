@@ -25,6 +25,9 @@ int ctl_fb = 0;
 int ctl_lr = 0;
 int ctl_pw = 0;
 
+//最低油门,最左，最右
+u32 lock_status = 0;
+
 //启动引擎
 void engine_start(int argc, char *argv[])
 {
@@ -52,7 +55,8 @@ void engine_start(int argc, char *argv[])
 			params_load();
 			//启动MPU6050陀螺仪数据读入线程
 			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) engine_mpu, null);
-			//pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &gy953_value, null);
+			//启动摇控器锁定、解锁电机
+			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &engine_lock, null);
 			//启动飞行引擎
 			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &engine_fly, null);
 			//启动键盘接收
@@ -415,7 +419,7 @@ float engine_pid_a(float et, float et_1, float et_2)
 //引擎重置
 void engine_reset(s_engine *e)
 {
-	e->lock = 0;
+	e->lock = 1;
 	//陀螺仪修正补偿XYZ轴
 	e->dx = 0;
 	e->dy = 0;
@@ -488,7 +492,7 @@ void engine_fb_pwm(int fb)
 	}
 	ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.mx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 8.0;
+	engine.mx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 5.0;
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -504,7 +508,27 @@ void engine_lr_pwm(int lr)
 	}
 	ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.my = -((float) (lr - params.ctl_lr_zero)) / 50.0 * 8.0;
+	engine.my = -((float) (lr - params.ctl_lr_zero)) / 50.0 * 5.0;
+
+	//如果是最左或最右
+	if (abs(lr - params.ctl_lr_zero) > 180)
+	{
+		//如果是最左
+		if (lr - params.ctl_lr_zero < 0)
+		{
+			lock_status |= (0x1 << 2);
+			lock_status &= ~(0x1 << 1);
+			return;
+		}
+		else
+		{
+			lock_status |= (0x1 << 1);
+			lock_status &= ~(0x1 << 2);
+			return;
+		}
+	}
+	lock_status &= ~(0x1 << 1);
+	lock_status &= ~(0x1 << 2);
 }
 
 //读入摇控器“油门”的PWM信号
@@ -520,9 +544,76 @@ void engine_pw_pwm(int pw)
 	}
 	ctl_pw = pw;
 	//读入速度
-	float v = (float) (pw - params.ctl_pw_zero < 0 ? 0 : pw - params.ctl_pw_zero);
+	float v = (float) (pw - params.ctl_pw_zero);
 	//设置引擎的速度
 	engine.v = v;
+
+	//如果是最低油门
+	if (abs(pw - params.ctl_pw_zero) < 30)
+	{
+		lock_status |= 0x1;
+	}
+	else
+	{
+		lock_status &= (~0x1);
+	}
+}
+
+//电机锁定解锁处理
+void engine_lock()
+{
+	//动作开始时间
+	struct timeval start;
+	//动作计时
+	struct timeval end;
+
+	while (1)
+	{
+		u32 status = lock_status;
+		//计时状态
+		int timer_start = 0;
+		while (1)
+		{
+			//最低油门方向最左方向最右
+			if (!timer_start && (lock_status == 3 || lock_status == 5))
+			{
+				//开始计时
+				gettimeofday(&start, NULL);
+				//计时状态
+				timer_start = 1;
+			}
+
+			if (timer_start)
+			{
+				if (status != lock_status)
+				{
+					break;
+				}
+
+				gettimeofday(&end, NULL);
+				long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+				if (timer >= 2 * 1000 * 1000)
+				{
+					//方向最左侧解锁电机
+					if ((lock_status >> 2) & 0x1)
+					{
+						printf("unlock engine\n");
+						engine.lock = 0;
+						break;
+					}
+					//方向最右侧锁定电机
+					if ((lock_status >> 1) & 0x1)
+					{
+						printf("lock engine\n");
+						engine.lock = 1;
+						break;
+					}
+				}
+			}
+			usleep(100 * 1000);
+		}
+		usleep(100 * 1000);
+	}
 }
 
 //异常处理
