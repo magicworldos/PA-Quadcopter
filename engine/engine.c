@@ -14,6 +14,9 @@
 s_engine engine;
 //参数
 s_params params;
+//参数缓存，保存用
+s_params params_cache;
+
 //信号量
 sem_t sem_engine;
 //多线程描述符
@@ -162,7 +165,7 @@ void engine_fly()
 
 		//处理X轴欧拉角平衡补偿
 		//计算角度：欧拉角x + 校准补偿dx + 中心补偿cx + 移动倾斜角mx
-		float x_angle = e->x + e->dx + e->cx + e->mx;
+		float x_angle = e->x + e->dx + params.cx + e->mx;
 		//角度范围校验
 		x_angle = x_angle < -MAX_ANGLE ? -MAX_ANGLE : x_angle;
 		x_angle = x_angle > MAX_ANGLE ? MAX_ANGLE : x_angle;
@@ -178,7 +181,7 @@ void engine_fly()
 
 		//处理Y轴欧拉角平衡补偿
 		//计算角度：欧拉角y + 校准补偿dy + 中心补偿cy + 移动倾斜角my
-		float y_angle = e->y + e->dy + e->cy + e->my;
+		float y_angle = e->y + e->dy + params.cy + e->my;
 		//角度范围校验
 		y_angle = y_angle < -MAX_ANGLE ? -MAX_ANGLE : y_angle;
 		y_angle = y_angle > MAX_ANGLE ? MAX_ANGLE : y_angle;
@@ -278,7 +281,7 @@ void engine_fly()
 		}
 		else if (ctl_type == 4)
 		{
-			printf("[c_xy: %+5.2f %+5.2f]", e->cx, e->cy);
+			printf("[c_xy: %+5.2f %+5.2f]", params.cx, params.cy);
 		}
 		else if (ctl_type == 5)
 		{
@@ -423,9 +426,6 @@ void engine_reset(s_engine *e)
 	e->dx = 0;
 	e->dy = 0;
 	e->dz = 0;
-	//陀螺仪中心校准补偿XY轴
-	e->cx = 0;
-	e->cy = 0;
 	//XYZ欧拉角
 	e->x = 0;
 	e->y = 0;
@@ -627,6 +627,8 @@ void engine_exception()
 //引擎清理
 void engine_clear()
 {
+	//保存缓存中的参数
+	params_save();
 	//清理驱动
 	driver_clear();
 	//恢复控制台

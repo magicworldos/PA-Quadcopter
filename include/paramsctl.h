@@ -39,6 +39,9 @@ typedef struct
 	float kp_a;
 	float ki_a;
 	float kd_a;
+	//中心校准补偿
+	float cx;
+	float cy;
 	//摇控器3通道起始读数
 	int ctl_fb_zero;
 	int ctl_lr_zero;

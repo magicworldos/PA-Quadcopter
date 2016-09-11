@@ -8,20 +8,19 @@
 
 #include <paramsctl.h>
 
-//使用ctl状态，退出时要重置console
-int use_ctl = 0;
 //q 0: x轴y轴PID参数
 //w 1: 角速度PID_V参数
 //e 2: z轴PID_Z参数
 //r 3: 陀螺仪校准参数cx、cy、cz
 int ctl_type = 9;
-int openfile = 0;
 //多线程描述符
 pthread_t pthdctl;
 //引擎
 extern s_engine engine;
 //参数
 extern s_params params;
+//参数缓存
+extern s_params params_cache;
 
 //保存参数
 void params_save()
@@ -32,10 +31,8 @@ void params_save()
 		printf("save params error!\n");
 		return;
 	}
-	openfile = 1;
-	fwrite(&params, sizeof(char), sizeof(s_params), fp);
+	fwrite(&params_cache, sizeof(char), sizeof(s_params), fp);
 	fclose(fp);
-	openfile = 0;
 }
 
 //载入参数
@@ -47,13 +44,25 @@ void params_load()
 		printf("save params error!\n");
 		//如果载入失败则重置参数
 		params_reset();
+		memcpy(&params_cache, &params, sizeof(s_params));
 		return;
 	}
-	openfile = 1;
 	//载入参数
 	fread(&params, sizeof(char), sizeof(s_params), fp);
+	memcpy(&params_cache, &params, sizeof(s_params));
 	fclose(fp);
-	openfile = 0;
+}
+
+//保存参数到缓存
+void params_to_cache()
+{
+	memcpy(&params_cache, &params, sizeof(s_params));
+}
+
+//从缓存载入参数
+void params_from_cache()
+{
+	memcpy(&params, &params_cache, sizeof(s_params));
 }
 
 //重置参数
@@ -111,7 +120,7 @@ void params_input()
 			}
 			else if (ctl_type == 4)
 			{
-				engine.cx += CTL_STEP;
+				params.cx += CTL_STEP;
 			}
 		}
 		//8
@@ -135,7 +144,7 @@ void params_input()
 			}
 			else if (ctl_type == 4)
 			{
-				engine.cy += CTL_STEP;
+				params.cy += CTL_STEP;
 			}
 		}
 		//9
@@ -179,7 +188,7 @@ void params_input()
 			}
 			else if (ctl_type == 4)
 			{
-				engine.cx -= CTL_STEP;
+				params.cx -= CTL_STEP;
 			}
 		}
 		//5
@@ -203,7 +212,7 @@ void params_input()
 			}
 			else if (ctl_type == 4)
 			{
-				engine.cy -= CTL_STEP;
+				params.cy -= CTL_STEP;
 			}
 		}
 		//6
@@ -293,21 +302,15 @@ void params_input()
 			ctl_type = 9;
 		}
 #endif
-		//保存所有参数到文件
-		else if (ch == 's')
+		//保存所有参数到缓存
+		else if (ch == 'S')
 		{
-			if (!openfile)
-			{
-				params_save();
-			}
+			params_to_cache();
 		}
-		//读取文件中的所有参数
-		else if (ch == 'l')
+		//读取缓存中的所有参数
+		else if (ch == 'L')
 		{
-			if (!openfile)
-			{
-				params_load();
-			}
+			params_from_cache();
 		}
 	}
 }

@@ -36,9 +36,6 @@ typedef struct
 	float dx;
 	float dy;
 	float dz;
-	//中心校准补偿
-	float cx;
-	float cy;
 	//飞行移动倾斜角
 	float mx;
 	float my;
