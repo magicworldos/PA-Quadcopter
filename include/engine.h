@@ -11,8 +11,7 @@
 
 #include <typedef.h>
 #include <if_mpu6050.h>
-//#include <gy953.h>
-//#define								__PC_DEBUG__
+#define								__DISPLAY_MODE_MORE__
 
 //原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 //10ms 100Hz

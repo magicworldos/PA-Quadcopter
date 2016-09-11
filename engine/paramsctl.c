@@ -266,11 +266,12 @@ void params_input()
 		{
 			ctl_type = 4;
 		}
-		//陀螺仪校准参数cx、cy、cz
+		//摇控器起始读数
 		else if (ch == 'y')
 		{
 			ctl_type = 5;
 		}
+#ifndef __DISPLAY_MODE_MORE__
 		//角度
 		else if (ch == 'u')
 		{
@@ -291,6 +292,7 @@ void params_input()
 		{
 			ctl_type = 9;
 		}
+#endif
 		//保存所有参数到文件
 		else if (ch == 's')
 		{

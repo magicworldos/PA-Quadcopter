@@ -43,12 +43,9 @@ void engine_start(int argc, char *argv[])
 		//正常模式，飞行，调参
 		if (strcmp(argv[1], "--fly") == 0)
 		{
-
-#ifndef __PC_DEBUG__
 			//初始化驱动
 			driver_setup();
 			mpu6050_setup();
-#endif
 			//重置引擎
 			engine_reset(&engine);
 			//载入参数
@@ -69,10 +66,8 @@ void engine_start(int argc, char *argv[])
 		//校准摇控器模式
 		if (strcmp(argv[1], "--ctl") == 0)
 		{
-#ifndef __PC_DEBUG__
 			//初始化驱动
 			driver_setup();
-#endif
 			//重置引擎
 			engine_reset(&engine);
 			//载入参数
@@ -262,6 +257,9 @@ void engine_fly()
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);
 
+#ifdef __DISPLAY_MODE_MORE__
+		printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][s0: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx, e->gy, e->gz, e->ax, e->ay, e->az, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+#endif
 		if (ctl_type == 0)
 		{
 			printf("[pid: %+5.2f %+5.2f %+5.2f]", params.kp, params.ki, params.kd);
@@ -286,6 +284,7 @@ void engine_fly()
 		{
 			printf("[ctl zero: %4d %4d %4d]", params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
 		}
+#ifndef __DISPLAY_MODE_MORE__
 		else if (ctl_type == 6)
 		{
 			printf("[xyz: %+7.3f %+7.3f %+7.3f]", x_angle, y_angle, z_angle);
@@ -302,7 +301,7 @@ void engine_fly()
 		{
 			printf("[s0: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 		}
-
+#endif
 		printf("\n");
 
 		//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
