@@ -47,6 +47,10 @@ typedef struct
 	float gx;
 	float gy;
 	float gz;
+	//补偿XYZ轴旋转角速度
+	float dgx;
+	float dgy;
+	float dgz;
 	//XYZ轴加速度
 	float ax;
 	float ay;

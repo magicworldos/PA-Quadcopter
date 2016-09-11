@@ -215,14 +215,14 @@ void engine_fly()
 		//设置X轴PID数据
 		xv_et_2 = xv_et_1;
 		xv_et_1 = xv_et;
-		xv_et = e->gx;
+		xv_et = e->gx + e->dgx;
 		//使用X轴的旋转角速度的PID反馈控制算法
 		xv_devi = engine_pid_v(xv_et, xv_et_1, xv_et_2);
 
 		//设置Y轴PID数据
 		yv_et_2 = yv_et_1;
 		yv_et_1 = yv_et;
-		yv_et = e->gy;
+		yv_et = e->gy + e->dgy;
 		//使用Y轴的旋转角速度的PID反馈控制算法
 		yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
@@ -238,14 +238,14 @@ void engine_fly()
 		//设置X轴PID数据
 		xa_et_2 = xa_et_1;
 		xa_et_1 = xa_et;
-		xa_et = e->ax;
+		xa_et = e->ax + e->dax;
 		//使用X轴的旋转角速度的PID反馈控制算法
 		xa_devi = engine_pid_a(xa_et, xa_et_1, xa_et_2);
 
 		//设置Y轴PID数据
 		ya_et_2 = ya_et_1;
 		ya_et_1 = ya_et;
-		ya_et = e->ay;
+		ya_et = e->ay + e->day;
 		//使用Y轴的旋转角速度的PID反馈控制算法
 		ya_devi = engine_pid_a(ya_et, ya_et_1, ya_et_2);
 
@@ -434,6 +434,10 @@ void engine_reset(s_engine *e)
 	e->gx = 0;
 	e->gy = 0;
 	e->gz = 0;
+	//XYZ轴旋转角速度修正补偿
+	e->dgx = 0;
+	e->dgy = 0;
+	e->dgz = 0;
 	//XYZ轴加速度
 	e->ax = 0;
 	e->ay = 0;
@@ -461,7 +465,11 @@ void engine_set_dxy()
 	e->dx = -e->x;
 	e->dy = -e->y;
 	e->dz = -e->z;
-	//补偿陀螺仪读数，将3个轴的加速度都补偿为0
+	//补偿角速度读数，将3个轴的角速度都补偿为0
+	e->dgx = -e->gx;
+	e->dgy = -e->gy;
+	e->dgz = -e->gz;
+	//补偿加速计仪读数，将3个轴的加速度都补偿为0
 	e->dax = -e->ax;
 	e->day = -e->ay;
 	e->daz = -e->az;
