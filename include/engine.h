@@ -11,7 +11,12 @@
 
 #include <typedef.h>
 #include <if_mpu6050.h>
-#define								__DISPLAY_MODE_MORE__
+//不显示输出
+//#define __DISPLAY_DISABLED__
+//多信息同行显示
+#define	__DISPLAY_MODE_MORE__
+//显示频度
+#define	DISPLAY_SPEED				(5)
 
 //原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 //10ms 100Hz

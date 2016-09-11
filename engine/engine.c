@@ -156,6 +156,8 @@ void engine_fly()
 	float xa_et = 0.0, xa_et_1 = 0.0, xa_et_2 = 0.0;
 	float ya_et = 0.0, ya_et_1 = 0.0, ya_et_2 = 0.0;
 
+	int i = 0;
+
 	while (1)
 	{
 		e->v_devi[0] = 0;
@@ -260,53 +262,57 @@ void engine_fly()
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);
 
+#ifndef __DISPLAY_DISABLED__
+		if (i++ % DISPLAY_SPEED == 0)
+		{
 #ifdef __DISPLAY_MODE_MORE__
-		printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][s0: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx, e->gy, e->gz, e->ax, e->ay, e->az, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+			printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][speed: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx, e->gy, e->gz, e->ax, e->ay, e->az, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 #endif
-		if (ctl_type == 0)
-		{
-			printf("[pid: %+5.2f %+5.2f %+5.2f]", params.kp, params.ki, params.kd);
-		}
-		else if (ctl_type == 1)
-		{
-			printf("[pid_v: %+5.2f %+5.2f %+5.2f]", params.kp_v, params.ki_v, params.kd_v);
-		}
-		else if (ctl_type == 2)
-		{
-			printf("[pid_z: %+5.2f %+5.2f %+5.2f]", params.kp_z, params.ki_z, params.kd_z);
-		}
-		else if (ctl_type == 3)
-		{
-			printf("[pid_a: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
-		}
-		else if (ctl_type == 4)
-		{
-			printf("[c_xy: %+5.2f %+5.2f]", params.cx, params.cy);
-		}
-		else if (ctl_type == 5)
-		{
-			printf("[ctl zero: %4d %4d %4d]", params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
-		}
+			if (ctl_type == 0)
+			{
+				printf("[pid: %+5.2f %+5.2f %+5.2f]", params.kp, params.ki, params.kd);
+			}
+			else if (ctl_type == 1)
+			{
+				printf("[pid_v: %+5.2f %+5.2f %+5.2f]", params.kp_v, params.ki_v, params.kd_v);
+			}
+			else if (ctl_type == 2)
+			{
+				printf("[pid_z: %+5.2f %+5.2f %+5.2f]", params.kp_z, params.ki_z, params.kd_z);
+			}
+			else if (ctl_type == 3)
+			{
+				printf("[pid_a: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
+			}
+			else if (ctl_type == 4)
+			{
+				printf("[c_xy: %+5.2f %+5.2f]", params.cx, params.cy);
+			}
+			else if (ctl_type == 5)
+			{
+				printf("[ctl zero: %4d %4d %4d]", params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
+			}
 #ifndef __DISPLAY_MODE_MORE__
-		else if (ctl_type == 6)
-		{
-			printf("[xyz: %+7.3f %+7.3f %+7.3f]", x_angle, y_angle, z_angle);
-		}
-		else if (ctl_type == 7)
-		{
-			printf("[gxyz: %+7.3f %+7.3f %+7.3f]", e->gx, e->gy, e->gz);
-		}
-		else if (ctl_type == 8)
-		{
-			printf("[axyz: %+7.3f %+7.3f %+7.3f]", e->ax, e->ay, e->az);
-		}
-		else if (ctl_type == 9)
-		{
-			printf("[s0: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+			else if (ctl_type == 6)
+			{
+				printf("[xyz: %+7.3f %+7.3f %+7.3f]", x_angle, y_angle, z_angle);
+			}
+			else if (ctl_type == 7)
+			{
+				printf("[gxyz: %+7.3f %+7.3f %+7.3f]", e->gx, e->gy, e->gz);
+			}
+			else if (ctl_type == 8)
+			{
+				printf("[axyz: %+7.3f %+7.3f %+7.3f]", e->ax, e->ay, e->az);
+			}
+			else if (ctl_type == 9)
+			{
+				printf("[speed: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+			}
+#endif
+			printf("\n");
 		}
 #endif
-		printf("\n");
-
 		//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 		usleep(ENG_TIMER * 1000);
 	}
@@ -358,6 +364,8 @@ void engine_rechk_speed(s_engine *e)
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < 30)
 		{
+			//设置速度为0
+			e->v = 0;
 			e->speed[i] = 0;
 			//在电机停转时，做陀螺仪补偿
 			engine_set_dxy();

@@ -235,21 +235,21 @@ void params_input()
 				params.kd_a -= CTL_STEP;
 			}
 		}
-		//-
-		else if (ch == '-')
-		{
-			engine.v -= STEP_V;
-		}
-		//+
-		else if (ch == '+')
-		{
-			engine.v += STEP_V;
-		}
-		//0
-		else if (ch == '0')
-		{
-			engine.v = 0;
-		}
+//		//-
+//		else if (ch == '-')
+//		{
+//			engine.v -= STEP_V;
+//		}
+//		//+
+//		else if (ch == '+')
+//		{
+//			engine.v += STEP_V;
+//		}
+//		//0
+//		else if (ch == '0')
+//		{
+//			engine.v = 0;
+//		}
 		//x轴y轴PID参数
 		else if (ch == 'q')
 		{
