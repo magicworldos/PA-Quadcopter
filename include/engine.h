@@ -27,6 +27,8 @@
 //引擎结构
 typedef struct
 {
+	//电机锁定状态，默认为锁定
+	int lock;
 	//XYZ欧拉角
 	float x;
 	float y;
@@ -54,7 +56,7 @@ typedef struct
 	float day;
 	float daz;
 	//引擎速度
-	float v[4];
+	float v;
 	//速度补偿
 	float v_devi[4];
 	//电机实际速度

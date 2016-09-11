@@ -21,10 +21,10 @@
 //#define PORT_SPEED1	  		(15)
 //#define PORT_SPEED2	  		(6)
 //#define PORT_SPEED3	  		(16)
-#define PORT_SPEED0	  		(28)
-#define PORT_SPEED1	  		(26)
-#define PORT_SPEED2	  		(29)
-#define PORT_SPEED3	  		(27)
+#define PORT_SPEED0	  		(27)
+#define PORT_SPEED1	  		(28)
+#define PORT_SPEED2	  		(26)
+#define PORT_SPEED3	  		(29)
 
 //摇控器接收机的3个通道读数范围
 #define CTL_PWM_MIN				(1000)

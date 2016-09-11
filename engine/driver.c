@@ -173,8 +173,8 @@ void driver_ctl_pwm(void (*set_pwm)(int pwm))
 					gettimeofday(&end, NULL);
 					//计算时长
 					long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-					//如果超过100毫秒的时长则结束本次信号读入
-					if (timer > 100000)
+					//如果超过2毫秒的时长则结束本次信号读入
+					if (timer > 2000)
 					{
 						break;
 					}

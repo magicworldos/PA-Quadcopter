@@ -14,7 +14,8 @@ int use_ctl = 0;
 //w 1: 角速度PID_V参数
 //e 2: z轴PID_Z参数
 //r 3: 陀螺仪校准参数cx、cy、cz
-int ctl_type = 0;
+int ctl_type = 9;
+int openfile = 0;
 //多线程描述符
 pthread_t pthdctl;
 //引擎
@@ -31,8 +32,10 @@ void params_save()
 		printf("save params error!\n");
 		return;
 	}
+	openfile = 1;
 	fwrite(&params, sizeof(char), sizeof(s_params), fp);
 	fclose(fp);
+	openfile = 0;
 }
 
 //载入参数
@@ -46,9 +49,11 @@ void params_load()
 		params_reset();
 		return;
 	}
+	openfile = 1;
 	//载入参数
 	fread(&params, sizeof(char), sizeof(s_params), fp);
 	fclose(fp);
+	openfile = 0;
 }
 
 //重置参数
@@ -224,26 +229,17 @@ void params_input()
 		//-
 		else if (ch == '-')
 		{
-			for (int i = 0; i < 4; i++)
-			{
-				engine.v[i] -= STEP_V;
-			}
+			engine.v -= STEP_V;
 		}
 		//+
 		else if (ch == '+')
 		{
-			for (int i = 0; i < 4; i++)
-			{
-				engine.v[i] += STEP_V;
-			}
+			engine.v += STEP_V;
 		}
 		//0
 		else if (ch == '0')
 		{
-			for (int i = 0; i < 4; i++)
-			{
-				engine.v[i] = 0;
-			}
+			engine.v = 0;
 		}
 		//x轴y轴PID参数
 		else if (ch == 'q')
@@ -270,15 +266,46 @@ void params_input()
 		{
 			ctl_type = 4;
 		}
+		//陀螺仪校准参数cx、cy、cz
+		else if (ch == 'y')
+		{
+			ctl_type = 5;
+		}
+		//角度
+		else if (ch == 'u')
+		{
+			ctl_type = 6;
+		}
+		//角速度
+		else if (ch == 'i')
+		{
+			ctl_type = 7;
+		}
+		//加速度
+		else if (ch == 'o')
+		{
+			ctl_type = 8;
+		}
+		//电机转速
+		else if (ch == 'p')
+		{
+			ctl_type = 9;
+		}
 		//保存所有参数到文件
 		else if (ch == 's')
 		{
-			params_save();
+			if (!openfile)
+			{
+				params_save();
+			}
 		}
 		//读取文件中的所有参数
 		else if (ch == 'l')
 		{
-			params_load();
+			if (!openfile)
+			{
+				params_load();
+			}
 		}
 	}
 }

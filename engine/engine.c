@@ -69,6 +69,8 @@ void engine_start(int argc, char *argv[])
 			//初始化驱动
 			driver_setup();
 #endif
+			//重置引擎
+			engine_reset(&engine);
 			//载入参数
 			params_load();
 			//启动键盘接收
@@ -81,7 +83,7 @@ void engine_start(int argc, char *argv[])
 			int s_pw = 0;
 			while (1)
 			{
-				printf("[FB: %4d\tLR: %4d\tPW: %4d]\t-->\t[FB: %4d\tLR: %4d\tPW: %4d]\n", ctl_fb, ctl_lr, ctl_pw, params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
+				printf("[FB: %4d\tLR: %4d\tPW: %4d]\t-[FB: %4d\tLR: %4d\tPW: %4d]\n", ctl_fb, ctl_lr, ctl_pw, params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
 				s_fb += ctl_fb;
 				s_lr += ctl_lr;
 				s_pw += ctl_pw;
@@ -256,7 +258,6 @@ void engine_fly()
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);
 
-		printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][s0: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx, e->gy, e->gz, e->ax, e->ay, e->az, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 		if (ctl_type == 0)
 		{
 			printf("[pid: %+5.2f %+5.2f %+5.2f]", params.kp, params.ki, params.kd);
@@ -277,6 +278,27 @@ void engine_fly()
 		{
 			printf("[c_xy: %+5.2f %+5.2f]", e->cx, e->cy);
 		}
+		else if (ctl_type == 5)
+		{
+			printf("[ctl zero: %4d %4d %4d]", params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
+		}
+		else if (ctl_type == 6)
+		{
+			printf("[xyz: %+7.3f %+7.3f %+7.3f]", x_angle, y_angle, z_angle);
+		}
+		else if (ctl_type == 7)
+		{
+			printf("[gxyz: %+7.3f %+7.3f %+7.3f]", e->gx, e->gy, e->gz);
+		}
+		else if (ctl_type == 8)
+		{
+			printf("[axyz: %+7.3f %+7.3f %+7.3f]", e->ax, e->ay, e->az);
+		}
+		else if (ctl_type == 9)
+		{
+			printf("[s0: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+		}
+
 		printf("\n");
 
 		//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
@@ -291,7 +313,7 @@ void engine_move(s_engine *e)
 	for (int i = 0; i < 4; i++)
 	{
 		//设置电机转数为做引擎速度 + 补偿
-		e->speed[i] = (int) (e->v[i] + e->v_devi[i]);
+		e->speed[i] = (int) (e->v + e->v_devi[i]);
 	}
 
 	//校验电机转数范围
@@ -307,17 +329,17 @@ void engine_move(s_engine *e)
 //校验电机转数范围
 void engine_rechk_speed(s_engine *e)
 {
+	if (e->v > MAX_SPEED_RUN_MAX)
+	{
+		e->v = MAX_SPEED_RUN_MAX;
+	}
+	if (e->v < MAX_SPEED_RUN_MIN)
+	{
+		e->v = MAX_SPEED_RUN_MIN;
+	}
+
 	for (int i = 0; i < 4; i++)
 	{
-		if (e->v[i] > MAX_SPEED_RUN_MAX)
-		{
-			e->v[i] = MAX_SPEED_RUN_MAX;
-		}
-		if (e->v[i] < MAX_SPEED_RUN_MIN)
-		{
-			e->v[i] = MAX_SPEED_RUN_MIN;
-		}
-
 		if (e->speed[i] > MAX_SPEED_RUN_MAX)
 		{
 			e->speed[i] = MAX_SPEED_RUN_MAX;
@@ -327,8 +349,8 @@ void engine_rechk_speed(s_engine *e)
 			e->speed[i] = MAX_SPEED_RUN_MIN;
 		}
 
-		//在电机低速时，停止转动，并禁用平衡补偿，保护措施
-		if (e->v[i] < 30)
+		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
+		if (e->lock || e->v < 30)
 		{
 			e->speed[i] = 0;
 			//在电机停转时，做陀螺仪补偿
@@ -344,6 +366,7 @@ void engine_mpu()
 	while (1)
 	{
 		mpu6050_value(&e->z, &e->x, &e->y, &e->gy, &e->gx, &e->gz, &e->ax, &e->ay, &e->az);
+		usleep(1);
 	}
 }
 
@@ -392,6 +415,7 @@ float engine_pid_a(float et, float et_1, float et_2)
 //引擎重置
 void engine_reset(s_engine *e)
 {
+	e->lock = 0;
 	//陀螺仪修正补偿XYZ轴
 	e->dx = 0;
 	e->dy = 0;
@@ -418,11 +442,10 @@ void engine_reset(s_engine *e)
 	e->dax = 0;
 	e->day = 0;
 	e->daz = 0;
-	//重置速度
+	//重置速度速度置为0
+	e->v = 0;
 	for (int i = 0; i < 4; i++)
 	{
-		//速度置为0
-		e->v[i] = 0;
 		//平衡补偿置为0
 		e->v_devi[i] = 0;
 		//电机实际速度置为0
@@ -451,11 +474,11 @@ void engine_fb_pwm(int fb)
 	{
 		return;
 	}
-	ctl_fb = fb;
-	if (params.ctl_fb_zero == 0)
+	if (params.ctl_fb_zero < CTL_PWM_MIN || params.ctl_fb_zero > CTL_PWM_MAX)
 	{
 		params.ctl_fb_zero = 1400;
 	}
+	ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	engine.mx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 8.0;
 }
@@ -467,11 +490,11 @@ void engine_lr_pwm(int lr)
 	{
 		return;
 	}
-	ctl_lr = lr;
-	if (params.ctl_lr_zero == 0)
+	if (params.ctl_lr_zero < CTL_PWM_MIN || params.ctl_lr_zero > CTL_PWM_MAX)
 	{
 		params.ctl_lr_zero = 1400;
 	}
+	ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	engine.my = -((float) (lr - params.ctl_lr_zero)) / 50.0 * 8.0;
 }
@@ -483,18 +506,15 @@ void engine_pw_pwm(int pw)
 	{
 		return;
 	}
+	if (params.ctl_pw_zero < CTL_PWM_MIN || params.ctl_pw_zero > CTL_PWM_MAX)
+	{
+		params.ctl_pw_zero = 1000;
+	}
 	ctl_pw = pw;
-	if (params.ctl_pw_zero == 0)
-	{
-		params.ctl_pw_zero = 1100;
-	}
 	//读入速度
-	float v = (float) (pw - (params.ctl_pw_zero + 100) < 0 ? 0 : pw - (params.ctl_pw_zero + 100));
+	float v = (float) (pw - params.ctl_pw_zero < 0 ? 0 : pw - params.ctl_pw_zero);
 	//设置引擎的速度
-	for (int i = 0; i < 4; i++)
-	{
-		engine.v[i] = v;
-	}
+	engine.v = v;
 }
 
 //异常处理
