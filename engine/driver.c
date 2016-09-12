@@ -125,6 +125,10 @@ void driver_ctl_pwm(void (*set_pwm)(int pwm))
 		gpio = GPIO_PW;
 	}
 
+	int i = 0;
+	int max = 0;
+	int ctlval = 0;
+
 	while (1)
 	{
 		//读取新信号
@@ -149,8 +153,15 @@ void driver_ctl_pwm(void (*set_pwm)(int pwm))
 				gettimeofday(&end, NULL);
 				//计算高电平时长
 				long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-				//设定PWM到引擎
-				set_pwm(timer);
+				ctlval += timer;
+				max = timer > max ? timer : max;
+				if (i++ % 5 == 0)
+				{
+					//设定PWM到引擎
+					set_pwm((ctlval - max) / 4);
+					max = 0;
+					ctlval = 0;
+				}
 				//结束本次信号读入
 				break;
 			}
