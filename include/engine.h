@@ -10,7 +10,7 @@
 #define SRC_ENGINE_H_
 
 #include <typedef.h>
-#include <if_mpu6050.h>
+#include <mpu6050.h>
 //不显示输出
 //#define __DISPLAY_DISABLED__
 //多信息同行显示

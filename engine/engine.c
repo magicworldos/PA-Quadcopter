@@ -254,10 +254,10 @@ void engine_fly()
 		ya_devi = engine_pid_a(ya_et, ya_et_1, ya_et_2);
 
 		//对引擎的4个轴做加速度平衡补偿
-		e->v_devi[0] += +xa_devi;
+		e->v_devi[0] += -xa_devi;
 		e->v_devi[2] += +xa_devi;
 		e->v_devi[1] += -ya_devi;
-		e->v_devi[3] += -ya_devi;
+		e->v_devi[3] += +ya_devi;
 
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);

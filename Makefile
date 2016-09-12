@@ -13,21 +13,20 @@ RELEASE_PATH		= release
 #头文件
 MOD_INCLUDE			= -Iinclude
 #编译选项
-C_FLAGS				= -g -pthread -lm -lwiringPi 
+C_FLAGS				= -g -pthread -lm -lwiringPi -std=gnu99
 
 all:	$(MOD_MKDIR)	$(MOD_PROJECT)
 
 run:	$(MOD_MKDIR)	$(MOD_PROJECT)
 
 $(MOD_PROJECT):
-	g++ $(C_FLAGS) -o $(RELEASE_PATH)/bin/$(MOD_PROJECT) $(MOD_INCLUDE)			\
+	gcc $(C_FLAGS) -o $(RELEASE_PATH)/bin/$(MOD_PROJECT) $(MOD_INCLUDE)			\
 	main/main.c								\
 	engine/engine.c							\
 	engine/paramsctl.c						\
 	engine/getch.c							\
-	mpu6050/I2Cdev.cpp						\
-	mpu6050/if_mpu6050.cpp					\
-	mpu6050/MPU6050.cpp						\
+	mpu6050/i2cdev.c						\
+	mpu6050/mpu6050.c						\
 	engine/driver.c
 
 $(MOD_MKDIR):
