@@ -16,7 +16,7 @@ int ctl_type = 9;
 //多线程描述符
 pthread_t pthdctl;
 //引擎
-extern s_engine engine;
+//extern s_engine engine;
 //参数
 extern s_params params;
 //参数缓存

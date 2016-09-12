@@ -379,6 +379,10 @@ void engine_mpu()
 	s_engine *e = &engine;
 	while (1)
 	{
+		//读取yxz轴欧拉角、旋转角速度、加速度
+		//xyz角速度，当x角变化时，y轴有旋转角速度；当月y角变化时，x轴有旋转角速度。
+		//但为了编写程序和书写方便，x轴的欧拉角和y轴的角速度统一为x；y轴的欧拉角和x轴的角速度统一为y
+		//mpu6050_value(&e->z, &e->y, &e->x, &e->gy, &e->gx, &e->gz, &e->ay, &e->ax, &e->az);
 		mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ay, &e->ax, &e->az);
 		usleep(1);
 	}
