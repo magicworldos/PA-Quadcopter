@@ -207,10 +207,10 @@ void engine_fly()
 		//使用Z轴的欧拉角的PID反馈控制算法
 		float z_devi = engine_pid_z(z_et, z_et_1, z_et_2);
 		//处理Z轴自旋补偿
-		e->v_devi[0] += z_devi;
-		e->v_devi[2] += z_devi;
-		e->v_devi[1] += -z_devi;
-		e->v_devi[3] += -z_devi;
+		e->v_devi[0] += -z_devi;
+		e->v_devi[2] += -z_devi;
+		e->v_devi[1] += +z_devi;
+		e->v_devi[3] += +z_devi;
 
 		//处理XY轴旋转角速度平衡补偿
 		float xv_devi = 0;
