@@ -81,9 +81,9 @@ void params_reset()
 	params.ki_z = 0.8;
 	params.kd_z = 2.8;
 	//XY轴加速度PID参数
-	params.kp_a = 13.8;
-	params.ki_a = 12.6;
-	params.kd_a = 8.8;
+	params.kp_a = 21.2;
+	params.ki_a = 16.8;
+	params.kd_a = 12.6;
 	//摇控器3通道起始值
 	params.ctl_fb_zero = 1407;
 	params.ctl_lr_zero = 1610;

@@ -453,6 +453,14 @@ u8 mpu6050_dmpGetYawPitchRoll(float *data, Quaternion *q, VectorFloat *gravity);
 u8 mpu6050_dmpGetAccel(VectorInt16 *v, u8* packet);
 u8 mpu6050_dmpGetLinearAccel(VectorInt16 *v, VectorInt16 *vRaw, VectorFloat *gravity);
 
+u8 mpu6050_dmpGetLinearAccelInWorld(VectorInt16 *v, VectorInt16 *vReal, Quaternion *q);
+
+void mpu6050_rotate(VectorInt16 *v, Quaternion *q);
+
+Quaternion mpu6050_getProduct(Quaternion *sq, Quaternion q);
+
+Quaternion mpu6050_getConjugate(Quaternion *q);
+
 void mpu6050_getRotation(int16_t* x, int16_t* y, int16_t* z);
 void mpu6050_setMemoryStartAddress(u8 address);
 

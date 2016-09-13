@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include <mpu6050.h>
 
-
 u8 dmpReady = 0;  // set true if DMP init was successful
 uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
 uint8_t devStatus;      // return status after each device operation (0 = success, !0 = error)
@@ -97,18 +96,19 @@ void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz
 		mpu6050_dmpGetQuaternion(&q, fifoBuffer);
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetYawPitchRoll(ypr, &q, &gravity);
-		*x = ypr[0] * 180 / M_PI;
-		*y = ypr[1] * 180 / M_PI;
-		*z = ypr[2] * 180 / M_PI;
+		*x = ypr[0] * 180.0 / M_PI;
+		*y = ypr[1] * 180.0 / M_PI;
+		*z = ypr[2] * 180.0 / M_PI;
 
 		// display real acceleration, adjusted to remove gravity
 		mpu6050_dmpGetQuaternion(&q, fifoBuffer);
 		mpu6050_dmpGetAccel(&aa, fifoBuffer);
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetLinearAccel(&aaReal, &aa, &gravity);
-		*ax = (float)aaReal.x / 16384.0;
-		*ay = (float)aaReal.y / 16384.0;
-		*az = (float)aaReal.z / 16384.0;
+		mpu6050_dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
+		*ax = (float) aaWorld.x / 16384.0;
+		*ay = (float) aaWorld.y / 16384.0;
+		*az = (float) aaWorld.z / 16384.0;
 
 		mpu6050_getRotation(&ggx, &ggy, &ggz);
 		*gx = (float) (ggx) / 131.0;
@@ -548,6 +548,54 @@ u8 mpu6050_dmpGetLinearAccel(VectorInt16 *v, VectorInt16 *vRaw, VectorFloat *gra
 	v->y = vRaw->y - gravity->y * 4096;
 	v->z = vRaw->z - gravity->z * 4096;
 	return 1;
+}
+
+u8 mpu6050_dmpGetLinearAccelInWorld(VectorInt16 *v, VectorInt16 *vReal, Quaternion *q)
+{
+	memcpy(v, vReal, sizeof(VectorInt16));
+	mpu6050_rotate(v, q);
+	return 1;
+}
+
+void mpu6050_rotate(VectorInt16 *v, Quaternion *q)
+{
+	Quaternion p;
+	p.w = 0;
+	p.x = v->x;
+	p.y = v->y;
+	p.z = v->z;
+
+	// quaternion multiplication: q * p, stored back in p
+	p = mpu6050_getProduct(q, p);
+
+	// quaternion multiplication: p * conj(q), stored back in p
+	p = mpu6050_getProduct(&p, mpu6050_getConjugate(q));
+
+	// p quaternion is now [0, x', y', z']
+	v->x = p.x;
+	v->y = p.y;
+	v->z = p.z;
+}
+
+Quaternion mpu6050_getProduct(Quaternion *sq, Quaternion q)
+{
+	Quaternion p;
+	p.w = sq->w * q.w - sq->x * q.x - sq->y * q.y - sq->z * q.z;  // new w
+	p.x = sq->w * q.x + sq->x * q.w + sq->y * q.z - sq->z * q.y;  // new x
+	p.y = sq->w * q.y - sq->x * q.z + sq->y * q.w + sq->z * q.x;  // new y
+	p.z = sq->w * q.z + sq->x * q.y - sq->y * q.x + sq->z * q.w;
+
+	return p;
+}
+
+Quaternion mpu6050_getConjugate(Quaternion *q)
+{
+	Quaternion p;
+	p.w = q->w;
+	p.x = -q->x;
+	p.y = -q->y;
+	p.z = -q->z;
+	return p;
 }
 
 void mpu6050_setMemoryStartAddress(uint8_t address)
@@ -2775,7 +2823,7 @@ void mpu6050_setExternalShadowDelayEnabled(int enabled)
  */
 int mpu6050_getSlaveDelayEnabled(uint8_t num)
 {
-	// MPU6050_DELAYCTRL_I2C_SLV4_DLY_EN_BIT is 4, SLV3 is 3, etc.
+// MPU6050_DELAYCTRL_I2C_SLV4_DLY_EN_BIT is 4, SLV3 is 3, etc.
 	if (num > 4)
 		return 0;
 	i2cdev_readBit(devAddr, MPU6050_RA_I2C_MST_DELAY_CTRL, num, buffer);
@@ -3111,7 +3159,7 @@ int mpu6050_getTempSensorEnabled()
  */
 void mpu6050_setTempSensorEnabled(int enabled)
 {
-	// 1 is actually disabled here
+// 1 is actually disabled here
 	i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_1, MPU6050_PWR1_TEMP_DIS_BIT, !enabled);
 }
 /** Get clock source setting.
@@ -3763,8 +3811,8 @@ int mpu6050_writeDMPConfigurationSet(const uint8_t *data, uint16_t dataSize, int
 		progBuffer = (uint8_t *) malloc(8); // assume 8-byte blocks, realloc later if necessary
 	}
 
-	// config set data is a long string of blocks with the following structure:
-	// [bank] [offset] [length] [byte[0], byte[1], ..., byte[length]]
+// config set data is a long string of blocks with the following structure:
+// [bank] [offset] [length] [byte[0], byte[1], ..., byte[length]]
 	uint8_t bank, offset, length;
 	for (i = 0; i < dataSize;)
 	{

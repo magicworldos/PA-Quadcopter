@@ -265,9 +265,9 @@ void engine_fly()
 #ifndef __DISPLAY_DISABLED__
 		if (i++ % DISPLAY_SPEED == 0)
 		{
-			printf("[%s]", e->lock == 1 ? "LOCK" : "UNLOCK");
+			printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
 #ifdef __DISPLAY_MODE_MORE__
-			printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][speed: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx, e->gy, e->gz, e->ax, e->ay, e->az, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+			printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][speed: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->ax + e->dax, e->ay + e->day, e->az + e->daz, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 #endif
 			if (ctl_type == 0)
 			{
@@ -300,11 +300,11 @@ void engine_fly()
 			}
 			else if (ctl_type == 7)
 			{
-				printf("[gxyz: %+7.3f %+7.3f %+7.3f]", e->gx, e->gy, e->gz);
+				printf("[gxyz: %+7.3f %+7.3f %+7.3f]", e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz);
 			}
 			else if (ctl_type == 8)
 			{
-				printf("[axyz: %+7.3f %+7.3f %+7.3f]", e->ax, e->ay, e->az);
+				printf("[axyz: %+7.3f %+7.3f %+7.3f]", e->ax + e->dax, e->ay + e->day, e->az + e->daz);
 			}
 			else if (ctl_type == 9)
 			{

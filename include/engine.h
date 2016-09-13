@@ -16,7 +16,7 @@
 //多信息同行显示
 #define	__DISPLAY_MODE_MORE__
 //显示频度
-#define	DISPLAY_SPEED				(5)
+#define	DISPLAY_SPEED				(10)
 
 //原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 //10ms 100Hz
