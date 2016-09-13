@@ -16,7 +16,7 @@ int ctl_type = 9;
 //多线程描述符
 pthread_t pthdctl;
 //引擎
-//extern s_engine engine;
+extern s_engine engine;
 //参数
 extern s_params params;
 //参数缓存
@@ -235,21 +235,28 @@ void params_input()
 				params.kd_a -= CTL_STEP;
 			}
 		}
-//		//-
-//		else if (ch == '-')
-//		{
-//			engine.v -= STEP_V;
-//		}
-//		//+
-//		else if (ch == '+')
-//		{
-//			engine.v += STEP_V;
-//		}
-//		//0
-//		else if (ch == '0')
-//		{
-//			engine.v = 0;
-//		}
+		//-
+		else if (ch == '-')
+		{
+			engine.v -= STEP_V;
+		}
+		//+
+		else if (ch == '+')
+		{
+			if (engine.v == 0)
+			{
+				engine.v = PROCTED_SPEED;
+			}
+			else
+			{
+				engine.v += STEP_V;
+			}
+		}
+		//0
+		else if (ch == '0')
+		{
+			engine.v = 0;
+		}
 		//x轴y轴PID参数
 		else if (ch == 'q')
 		{
@@ -311,6 +318,16 @@ void params_input()
 		else if (ch == 'L')
 		{
 			params_from_cache();
+		}
+		//锁定电机
+		else if (ch == 'F')
+		{
+			engine.lock = 1;
+		}
+		//解锁电机
+		else if (ch == 'J')
+		{
+			engine.lock = 0;
 		}
 	}
 }

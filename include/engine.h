@@ -23,6 +23,8 @@
 #define ENG_TIMER					(10)
 //最大角度
 #define MAX_ANGLE					(90.0)
+//电机保护速度
+#define PROCTED_SPEED				(30)
 //电机最大速度
 #define MAX_SPEED_RUN_MAX			(1000)
 //电机最小速度

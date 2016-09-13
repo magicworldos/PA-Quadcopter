@@ -265,6 +265,7 @@ void engine_fly()
 #ifndef __DISPLAY_DISABLED__
 		if (i++ % DISPLAY_SPEED == 0)
 		{
+			printf("[%s]", e->lock == 1 ? "LOCK" : "UNLOCK");
 #ifdef __DISPLAY_MODE_MORE__
 			printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][speed: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx, e->gy, e->gz, e->ax, e->ay, e->az, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 #endif
@@ -362,7 +363,7 @@ void engine_rechk_speed(s_engine *e)
 		}
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
-		if (e->lock || e->v < 30)
+		if (e->lock || e->v < PROCTED_SPEED)
 		{
 			//设置速度为0
 			e->v = 0;
@@ -608,14 +609,12 @@ void engine_lock()
 					//方向最左侧解锁电机
 					if ((lock_status >> 2) & 0x1)
 					{
-						printf("unlock engine\n");
 						engine.lock = 0;
 						break;
 					}
 					//方向最右侧锁定电机
 					if ((lock_status >> 1) & 0x1)
 					{
-						printf("lock engine\n");
 						engine.lock = 1;
 						break;
 					}
