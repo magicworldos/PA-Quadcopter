@@ -523,7 +523,7 @@ void engine_lr_pwm(int lr)
 	engine.my = ((float) (lr - params.ctl_lr_zero)) / 50.0 * 5.0;
 
 	//如果是最左或最右
-	if (abs(lr - params.ctl_lr_zero) > 180)
+	if (abs(lr - params.ctl_lr_zero) > 160)
 	{
 		//如果是最左
 		if (lr - params.ctl_lr_zero < 0)
@@ -561,7 +561,7 @@ void engine_pw_pwm(int pw)
 	engine.v = v;
 
 	//如果是最低油门
-	if (abs(pw - params.ctl_pw_zero) < 30)
+	if (abs(pw - params.ctl_pw_zero) < 50)
 	{
 		lock_status |= 0x1;
 	}
