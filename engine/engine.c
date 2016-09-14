@@ -506,7 +506,7 @@ void engine_fb_pwm(int fb)
 	}
 	ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.mx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 5.0;
+	engine.mx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 8.0;
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -522,7 +522,7 @@ void engine_lr_pwm(int lr)
 	}
 	ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.my = ((float) (lr - params.ctl_lr_zero)) / 50.0 * 5.0;
+	engine.my = ((float) (lr - params.ctl_lr_zero)) / 50.0 * 8.0;
 
 	//如果是最左或最右
 	if (abs(lr - params.ctl_lr_zero) > 160)
