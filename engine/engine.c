@@ -46,9 +46,11 @@ void engine_start(int argc, char *argv[])
 		//正常模式，飞行，调参
 		if (strcmp(argv[1], "--fly") == 0)
 		{
+#ifndef __PC_TEST__
 			//初始化驱动
 			driver_setup();
 			mpu6050_setup();
+#endif
 			//重置引擎
 			engine_reset(&engine);
 			//载入参数
