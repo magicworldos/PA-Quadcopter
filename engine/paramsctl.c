@@ -86,7 +86,7 @@ void params_reset()
 	params.kd_a = 23.8;
 	//XY轴中心点校正补偿
 	params.cx = 0.0;
-	params.cy = 12.0;
+	params.cy = -3.5;
 	//摇控器3通道起始值
 	params.ctl_fb_zero = 1407;
 	params.ctl_lr_zero = 1610;
