@@ -167,6 +167,25 @@ void engine_fly()
 		e->v_devi[2] = 0;
 		e->v_devi[3] = 0;
 
+		//渐进式方向舵X轴
+		if (e->mx < e->ctlmx)
+		{
+			e->mx += DIRECT_VALUE;
+		}
+		else if (e->mx > e->ctlmx)
+		{
+			e->mx -= DIRECT_VALUE;
+		}
+		//渐进式方向舵Y轴
+		if (e->my < e->ctlmy)
+		{
+			e->my += DIRECT_VALUE;
+		}
+		else if (e->my > e->ctlmy)
+		{
+			e->my -= DIRECT_VALUE;
+		}
+
 		//处理X轴欧拉角平衡补偿
 		//计算角度：欧拉角x + 校准补偿dx + 中心补偿cx + 移动倾斜角mx
 		float x_angle = e->x + e->dx + params.cx + e->mx;
@@ -448,6 +467,9 @@ void engine_reset(s_engine *e)
 	//飞行移动倾斜角
 	e->mx = 0;
 	e->my = 0;
+	//摇控器飞行移动倾斜角
+	e->ctlmx = 0;
+	e->ctlmy = 0;
 	//XYZ轴旋转角速度
 	e->gx = 0;
 	e->gy = 0;
@@ -506,7 +528,7 @@ void engine_fb_pwm(int fb)
 	}
 	ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.mx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 8.0;
+	engine.ctlmx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 6.0;
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -522,7 +544,7 @@ void engine_lr_pwm(int lr)
 	}
 	ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.my = ((float) (lr - params.ctl_lr_zero)) / 50.0 * 8.0;
+	engine.ctlmy = ((float) (lr - params.ctl_lr_zero)) / 50.0 * 6.0;
 
 	//如果是最左或最右
 	if (abs(lr - params.ctl_lr_zero) > 160)

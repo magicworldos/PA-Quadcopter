@@ -323,12 +323,12 @@ void params_input()
 			params_from_cache();
 		}
 		//锁定电机
-		else if (ch == 'F')
+		else if (ch == 'J')
 		{
 			engine.lock = 1;
 		}
 		//解锁电机
-		else if (ch == 'J')
+		else if (ch == 'F')
 		{
 			engine.lock = 0;
 		}

@@ -31,6 +31,8 @@
 #define MAX_SPEED_RUN_MAX			(1000)
 //电机最小速度
 #define MAX_SPEED_RUN_MIN			(0)
+//渐进式方向增量
+#define DIRECT_VALUE				(0.3)
 
 //引擎结构
 typedef struct
@@ -45,9 +47,12 @@ typedef struct
 	float dx;
 	float dy;
 	float dz;
-	//飞行移动倾斜角
+	//渐进式移动倾斜角
 	float mx;
 	float my;
+	//摇控器移动倾角
+	float ctlmx;
+	float ctlmy;
 	//XYZ轴旋转角速度
 	float gx;
 	float gy;
