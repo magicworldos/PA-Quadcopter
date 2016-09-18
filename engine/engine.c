@@ -302,7 +302,7 @@ void engine_fly()
 		{
 			printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
 #ifdef __DISPLAY_MODE_MORE__
-			printf("[xyz: %+7.3f %+7.3f %+7.3f][gxyz: %+7.3f %+7.3f %+7.3f][axyz: %+7.3f %+7.3f %+7.3f][speed: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->ax + e->dax, e->ay + e->day, e->az + e->daz, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+			printf("[xyz: %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][a: %+7.3f %+7.3f %+7.3f][s: %4d %4d %4d %4d]", x_angle, y_angle, z_angle, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->ax + e->dax, e->ay + e->day, e->az + e->daz, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 #endif
 			if (ctl_type == 0)
 			{
@@ -310,15 +310,15 @@ void engine_fly()
 			}
 			else if (ctl_type == 1)
 			{
-				printf("[pid_v: %+5.2f %+5.2f %+5.2f]", params.kp_v, params.ki_v, params.kd_v);
+				printf("[pidv: %+5.2f %+5.2f %+5.2f]", params.kp_v, params.ki_v, params.kd_v);
 			}
 			else if (ctl_type == 2)
 			{
-				printf("[pid_a: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
+				printf("[pida: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
 			}
 			else if (ctl_type == 3)
 			{
-				printf("[c_xy: %+5.2f %+5.2f]", params.cx, params.cy);
+				printf("[cxy: %+5.2f %+5.2f]", params.cx, params.cy);
 			}
 			else if (ctl_type == 4)
 			{
@@ -331,15 +331,15 @@ void engine_fly()
 			}
 			else if (ctl_type == 6)
 			{
-				printf("[gxyz: %+7.3f %+7.3f %+7.3f]", e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz);
+				printf("[g: %+7.3f %+7.3f %+7.3f]", e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz);
 			}
 			else if (ctl_type == 7)
 			{
-				printf("[axyz: %+7.3f %+7.3f %+7.3f]", e->ax + e->dax, e->ay + e->day, e->az + e->daz);
+				printf("[a: %+7.3f %+7.3f %+7.3f]", e->ax + e->dax, e->ay + e->day, e->az + e->daz);
 			}
 			else if (ctl_type == 8)
 			{
-				printf("[speed: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+				printf("[s: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 			}
 #endif
 			printf("\n");

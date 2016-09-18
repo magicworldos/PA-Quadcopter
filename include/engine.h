@@ -12,7 +12,7 @@
 #include <typedef.h>
 #include <mpu6050.h>
 
-//#define __PC_TEST__
+#define __PC_TEST__
 //不显示输出
 //#define __DISPLAY_DISABLED__
 //多信息同行显示
