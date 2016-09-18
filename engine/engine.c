@@ -150,9 +150,10 @@ void engine_fly()
 	float y_et = 0.0, y_et_1 = 0.0, y_et_2 = 0.0;
 	float z_et = 0.0, z_et_1 = 0.0, z_et_2 = 0.0;
 
-	//XY轴旋转角速度的增量式PID处理数据，当前、上一次、上上次
+	//XYZ轴旋转角速度的增量式PID处理数据，当前、上一次、上上次
 	float xv_et = 0.0, xv_et_1 = 0.0, xv_et_2 = 0.0;
 	float yv_et = 0.0, yv_et_1 = 0.0, yv_et_2 = 0.0;
+	float zv_et = 0.0, zv_et_1 = 0.0, zv_et_2 = 0.0;
 
 	//XY轴加速度的增量式PID处理数据，当前、上一次、上上次
 	float xa_et = 0.0, xa_et_1 = 0.0, xa_et_2 = 0.0;
@@ -236,6 +237,7 @@ void engine_fly()
 		//处理XY轴旋转角速度平衡补偿
 		float xv_devi = 0;
 		float yv_devi = 0;
+		float zv_devi = 0;
 
 		//设置X轴PID数据
 		xv_et_2 = xv_et_1;
@@ -256,6 +258,18 @@ void engine_fly()
 		e->v_devi[2] += +xv_devi;
 		e->v_devi[1] += +yv_devi;
 		e->v_devi[3] += -yv_devi;
+
+		//设置X轴PID数据
+		zv_et_2 = zv_et_1;
+		zv_et_1 = zv_et;
+		zv_et = e->gz + e->dgz;
+		//使用X轴的旋转角速度的PID反馈控制算法
+		zv_devi = engine_pid_zv(zv_et, zv_et_1, zv_et_2);
+		//处理Z轴自旋角速度补偿
+		e->v_devi[0] += +zv_devi;
+		e->v_devi[2] += +zv_devi;
+		e->v_devi[1] += -zv_devi;
+		e->v_devi[3] += -zv_devi;
 
 		//处理XY轴旋加速度平衡补偿
 		float xa_devi = 0;
@@ -304,30 +318,34 @@ void engine_fly()
 			}
 			else if (ctl_type == 3)
 			{
-				printf("[pid_a: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
+				printf("[pid_zv: %+5.2f %+5.2f %+5.2f]", params.kp_zv, params.ki_zv, params.kd_zv);
 			}
 			else if (ctl_type == 4)
 			{
-				printf("[c_xy: %+5.2f %+5.2f]", params.cx, params.cy);
+				printf("[pid_a: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
 			}
 			else if (ctl_type == 5)
+			{
+				printf("[c_xy: %+5.2f %+5.2f]", params.cx, params.cy);
+			}
+			else if (ctl_type == 6)
 			{
 				printf("[ctl zero: %4d %4d %4d]", params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
 			}
 #ifndef __DISPLAY_MODE_MORE__
-			else if (ctl_type == 6)
+			else if (ctl_type == 7)
 			{
 				printf("[xyz: %+7.3f %+7.3f %+7.3f]", x_angle, y_angle, z_angle);
 			}
-			else if (ctl_type == 7)
+			else if (ctl_type == 8)
 			{
 				printf("[gxyz: %+7.3f %+7.3f %+7.3f]", e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz);
 			}
-			else if (ctl_type == 8)
+			else if (ctl_type == 9)
 			{
 				printf("[axyz: %+7.3f %+7.3f %+7.3f]", e->ax + e->dax, e->ay + e->day, e->az + e->daz);
 			}
-			else if (ctl_type == 9)
+			else if (ctl_type == 10)
 			{
 				printf("[speed: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 			}
@@ -435,6 +453,13 @@ float engine_pid_z(float et, float et_1, float et_2)
 	return params.kp_z * (et - et_1) + (params.ki_z * et) + params.kd_z * (et - 2 * et_1 + et_2);
 }
 
+//对Z轴旋转角速度做PID反馈控制
+float engine_pid_zv(float et, float et_1, float et_2)
+{
+	//增量式PID反馈控制
+	return params.kp_zv * (et - et_1) + (params.ki_zv * et) + params.kd_zv * (et - 2 * et_1 + et_2);
+}
+
 //对旋转角速度做PID反馈控制
 float engine_pid_v(float et, float et_1, float et_2)
 {
@@ -445,9 +470,9 @@ float engine_pid_v(float et, float et_1, float et_2)
 //对XY轴加速度做PID反馈控制
 float engine_pid_a(float et, float et_1, float et_2)
 {
-	et *= 10.0;
-	et_1 *= 10.0;
-	et_2 *= 10.0;
+	et *= 20.0;
+	et_1 *= 20.0;
+	et_2 *= 20.0;
 	//增量式PID反馈控制
 	return params.kp_a * (et - et_1) + (params.ki_a * et) + params.kd_a * (et - 2 * et_1 + et_2);
 }
@@ -527,8 +552,8 @@ void engine_fb_pwm(int fb)
 		params.ctl_fb_zero = 1400;
 	}
 	ctl_fb = fb;
-	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.ctlmx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 6.0;
+	//由2000～1600信号修正为-24.0 ～ +24.0角度
+	engine.ctlmx = ((float) (fb - params.ctl_fb_zero)) / 50.0 * 4.0;
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -543,8 +568,8 @@ void engine_lr_pwm(int lr)
 		params.ctl_lr_zero = 1400;
 	}
 	ctl_lr = lr;
-	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	engine.ctlmy = ((float) (lr - params.ctl_lr_zero)) / 50.0 * 6.0;
+	//由2000～1600信号修正为-24.0 ～ +24.0角度
+	engine.ctlmy = ((float) (lr - params.ctl_lr_zero)) / 50.0 * 4.0;
 
 	//如果是最左或最右
 	if (abs(lr - params.ctl_lr_zero) > 160)

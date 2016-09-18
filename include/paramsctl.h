@@ -35,6 +35,10 @@ typedef struct
 	float kp_z;
 	float ki_z;
 	float kd_z;
+	//Z旋转角速度PID参数
+	float kp_zv;
+	float ki_zv;
+	float kd_zv;
 	//XY轴加速度PID参数
 	float kp_a;
 	float ki_a;

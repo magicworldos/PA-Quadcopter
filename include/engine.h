@@ -12,7 +12,7 @@
 #include <typedef.h>
 #include <mpu6050.h>
 
-//#define __PC_TEST__
+#define __PC_TEST__
 //不显示输出
 //#define __DISPLAY_DISABLED__
 //多信息同行显示
@@ -101,6 +101,9 @@ float engine_pid(float et, float et_1, float et_2);
 
 //Z轴的欧拉角PID反馈控制，参数与XY轴的PID不一样
 float engine_pid_z(float et, float et_1, float et_2);
+
+//对Z轴旋转角速度做PID反馈控制
+float engine_pid_zv(float et, float et_1, float et_2);
 
 //对旋转角速度做PID反馈控制
 float engine_pid_v(float et, float et_1, float et_2);
