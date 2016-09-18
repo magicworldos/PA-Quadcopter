@@ -191,10 +191,10 @@ void driver_ctl_pwm(void (*set_pwm)(int pwm))
 					}
 				}
 			}
+			//每次读入信号休眠1微秒
+			usleep(1);
 		}
 		while (1);
-		//每次读入信号休眠1微秒
-		usleep(1);
 	}
 }
 
