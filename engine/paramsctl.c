@@ -76,14 +76,14 @@ void params_reset()
 	params.kp_v = 9.3;
 	params.ki_v = 5.4;
 	params.kd_v = 8.2;
-//	//Z轴欧拉角PID参数
-//	params.kp_z = 3.6;
-//	params.ki_z = 0.8;
-//	params.kd_z = 2.8;
-//	//Z旋转角速度PID参数
-//	params.kp_zv = 16.6;
-//	params.ki_zv = 8.8;
-//	params.kd_zv = 12.8;
+	//Z轴欧拉角PID参数
+	params.kp_z = 3.6;
+	params.ki_z = 0.8;
+	params.kd_z = 2.8;
+	//Z旋转角速度PID参数
+	params.kp_zv = 0;
+	params.ki_zv = 0;
+	params.kd_zv = 0;
 	//XY轴加速度PID参数
 	params.kp_a = 28.0;
 	params.ki_a = 18.6;
@@ -117,6 +117,14 @@ void params_input()
 			{
 				params.kp_v += CTL_STEP;
 			}
+			else if (ctl_type == 2)
+			{
+				params.kp_z += CTL_STEP;
+			}
+			else if (ctl_type == 3)
+			{
+				params.kp_zv += CTL_STEP;
+			}
 			else if (ctl_type == 4)
 			{
 				params.kp_a += CTL_STEP;
@@ -136,6 +144,14 @@ void params_input()
 			else if (ctl_type == 1)
 			{
 				params.ki_v += CTL_STEP;
+			}
+			else if (ctl_type == 2)
+			{
+				params.ki_z += CTL_STEP;
+			}
+			else if (ctl_type == 3)
+			{
+				params.ki_zv += CTL_STEP;
 			}
 			else if (ctl_type == 4)
 			{
@@ -157,6 +173,14 @@ void params_input()
 			{
 				params.kd_v += CTL_STEP;
 			}
+			else if (ctl_type == 2)
+			{
+				params.kd_z += CTL_STEP;
+			}
+			else if (ctl_type == 3)
+			{
+				params.kd_zv += CTL_STEP;
+			}
 			else if (ctl_type == 4)
 			{
 				params.kd_a += CTL_STEP;
@@ -172,6 +196,14 @@ void params_input()
 			else if (ctl_type == 1)
 			{
 				params.kp_v -= CTL_STEP;
+			}
+			else if (ctl_type == 2)
+			{
+				params.kp_z -= CTL_STEP;
+			}
+			else if (ctl_type == 3)
+			{
+				params.kp_zv -= CTL_STEP;
 			}
 			else if (ctl_type == 4)
 			{
@@ -193,6 +225,14 @@ void params_input()
 			{
 				params.ki_v -= CTL_STEP;
 			}
+			else if (ctl_type == 2)
+			{
+				params.ki_z -= CTL_STEP;
+			}
+			else if (ctl_type == 3)
+			{
+				params.ki_zv -= CTL_STEP;
+			}
 			else if (ctl_type == 4)
 			{
 				params.ki_a -= CTL_STEP;
@@ -212,6 +252,14 @@ void params_input()
 			else if (ctl_type == 1)
 			{
 				params.kd_v -= CTL_STEP;
+			}
+			else if (ctl_type == 2)
+			{
+				params.kd_z -= CTL_STEP;
+			}
+			else if (ctl_type == 3)
+			{
+				params.kd_zv -= CTL_STEP;
 			}
 			else if (ctl_type == 4)
 			{
@@ -250,41 +298,51 @@ void params_input()
 		{
 			ctl_type = 1;
 		}
-		//xy轴加速度PID_A参数
+		//z轴PID参数
 		else if (ch == 'e')
 		{
 			ctl_type = 2;
 		}
-		//陀螺仪校准参数cx、cy、cz
+		//z角速度PID_ZV参数
 		else if (ch == 'r')
 		{
 			ctl_type = 3;
 		}
-		//摇控器起始读数
+		//xy轴加速度PID_A参数
 		else if (ch == 't')
 		{
 			ctl_type = 4;
 		}
-#ifndef __DISPLAY_MODE_MORE__
-		//角度
+		//陀螺仪校准参数cx、cy、cz
 		else if (ch == 'y')
 		{
 			ctl_type = 5;
 		}
-		//角速度
+		//摇控器起始读数
 		else if (ch == 'u')
 		{
 			ctl_type = 6;
 		}
-		//加速度
-		else if (ch == 'i')
+#ifndef __DISPLAY_MODE_MORE__
+		//角度
+		else if (ch == 'z')
 		{
 			ctl_type = 7;
 		}
-		//电机转速
-		else if (ch == 'o')
+		//角速度
+		else if (ch == 'x')
 		{
 			ctl_type = 8;
+		}
+		//加速度
+		else if (ch == 'c')
+		{
+			ctl_type = 9;
+		}
+		//电机转速
+		else if (ch == 'v')
+		{
+			ctl_type = 10;
 		}
 #endif
 		//保存所有参数到缓存

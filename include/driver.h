@@ -27,7 +27,7 @@
 #define PORT_SPEED3	  		(29)
 
 //摇控器接收机的3个通道读数范围
-#define CTL_PWM_MIN				(1000)
+#define CTL_PWM_MIN				(980)
 #define CTL_PWM_MAX				(2020)
 
 //最大调试时长10秒
@@ -53,14 +53,30 @@ typedef struct
 	int speed;
 } s_driver;
 
+typedef struct
+{
+	struct timeval timer_start;
+	struct timeval timer_end;
+	long timer;
+} s_ctl_pwm;
+
 //驱动程序初始化
 void driver_setup();
 
 //电机调试
 void driver_ent_run(int en_port, int en_speed, int en_msecs);
 
+//读取摇控器接收机的PWM信号“前后”
+void driver_ctl_pwm_fb();
+
+//读取摇控器接收机的PWM信号“左右”
+void driver_ctl_pwm_lr();
+
+//读取摇控器接收机的PWM信号“油门”
+void driver_ctl_pwm_pw();
+
 //读取摇控器接收机的PWM信号
-void driver_ctl_pwm(void (*set_pwd)(int pwm));
+void driver_ctl_pwm();
 
 //清理驱动
 void driver_clear();
