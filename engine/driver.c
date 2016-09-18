@@ -52,6 +52,21 @@ void driver_setup()
 	//driver_init_speed3();
 
 	//启动摇控器接收机信号输入线程
+	ctl_pwm_fb.timer_sum = 0;
+	ctl_pwm_fb.timer_max = 0;
+	ctl_pwm_fb.timer_min = 9999;
+	ctl_pwm_fb.timer_n = 0;
+
+	ctl_pwm_lr.timer_sum = 0;
+	ctl_pwm_lr.timer_max = 0;
+	ctl_pwm_lr.timer_min = 9999;
+	ctl_pwm_lr.timer_n = 0;
+
+	ctl_pwm_pw.timer_sum = 0;
+	ctl_pwm_pw.timer_max = 0;
+	ctl_pwm_pw.timer_min = 9999;
+	ctl_pwm_pw.timer_n = 0;
+
 	wiringPiISR(GPIO_FB, INT_EDGE_BOTH, &driver_ctl_pwm_fb);
 	wiringPiISR(GPIO_LR, INT_EDGE_BOTH, &driver_ctl_pwm_lr);
 	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &driver_ctl_pwm_pw);
@@ -121,29 +136,41 @@ void driver_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 	//计时结束
 	gettimeofday(&ctl_pwm->timer_end, NULL);
 	//计算高电平时长
-	ctl_pwm->timer = (ctl_pwm->timer_end.tv_sec - ctl_pwm->timer_start.tv_sec) * 1000000 + (ctl_pwm->timer_end.tv_usec - ctl_pwm->timer_start.tv_usec);
+	long timer = (ctl_pwm->timer_end.tv_sec - ctl_pwm->timer_start.tv_sec) * 1000000 + (ctl_pwm->timer_end.tv_usec - ctl_pwm->timer_start.tv_usec);
 	//如果超过低于1.0ms或大于2ms则视为无效
-	if (ctl_pwm->timer < CTL_PWM_MIN || ctl_pwm->timer > CTL_PWM_MAX)
+	if (timer < CTL_PWM_MIN || timer > CTL_PWM_MAX)
 	{
 		return;
 	}
-	//向引擎发送“前后”数值
-	if (gpio_port == GPIO_FB)
+
+	ctl_pwm->timer_sum += timer;
+	ctl_pwm->timer_max = timer > ctl_pwm->timer_max ? timer : ctl_pwm->timer_max;
+	ctl_pwm->timer_min = timer < ctl_pwm->timer_min ? timer : ctl_pwm->timer_min;
+	ctl_pwm->timer_n++;
+	if (ctl_pwm->timer_n >= 5)
 	{
-		engine_fb_pwm(ctl_pwm->timer);
-		return;
-	}
-	//向引擎发送“左右”数值
-	if (gpio_port == GPIO_LR)
-	{
-		engine_lr_pwm(ctl_pwm->timer);
-		return;
-	}
-	//向引擎发送“油门”数值
-	if (gpio_port == GPIO_PW)
-	{
-		engine_pw_pwm(ctl_pwm->timer);
-		return;
+		ctl_pwm->timer_avg = (ctl_pwm->timer_sum - ctl_pwm->timer_max - ctl_pwm->timer_min) / (ctl_pwm->timer_n - 2);
+
+		//向引擎发送“前后”数值
+		if (gpio_port == GPIO_FB)
+		{
+			engine_fb_pwm(ctl_pwm->timer_avg);
+		}
+		//向引擎发送“左右”数值
+		else if (gpio_port == GPIO_LR)
+		{
+			engine_lr_pwm(ctl_pwm->timer_avg);
+		}
+		//向引擎发送“油门”数值
+		else if (gpio_port == GPIO_PW)
+		{
+			engine_pw_pwm(ctl_pwm->timer_avg);
+		}
+
+		ctl_pwm->timer_sum = 0;
+		ctl_pwm->timer_max = 0;
+		ctl_pwm->timer_min = 9999;
+		ctl_pwm->timer_n = 0;
 	}
 }
 
