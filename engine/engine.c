@@ -226,8 +226,8 @@ void engine_fly()
 		z_et_2 = z_et_1;
 		z_et_1 = z_et;
 		z_et = z_angle;
-		//使用Z轴的欧拉角的PID反馈控制算法
-		float z_devi = engine_pid_z(z_et, z_et_1, z_et_2);
+		//使用欧拉角的PID反馈控制算法
+		float z_devi = engine_pid(z_et, z_et_1, z_et_2);
 		//处理Z轴自旋补偿
 		e->v_devi[0] += +z_devi;
 		e->v_devi[2] += +z_devi;
@@ -263,8 +263,8 @@ void engine_fly()
 		zv_et_2 = zv_et_1;
 		zv_et_1 = zv_et;
 		zv_et = e->gz + e->dgz;
-		//使用X轴的旋转角速度的PID反馈控制算法
-		zv_devi = engine_pid_zv(zv_et, zv_et_1, zv_et_2);
+		//使用旋转角速度的PID反馈控制算法
+		zv_devi = engine_pid_v(zv_et, zv_et_1, zv_et_2);
 		//处理Z轴自旋角速度补偿
 		e->v_devi[0] += +zv_devi;
 		e->v_devi[2] += +zv_devi;
@@ -314,38 +314,30 @@ void engine_fly()
 			}
 			else if (ctl_type == 2)
 			{
-				printf("[pid_z: %+5.2f %+5.2f %+5.2f]", params.kp_z, params.ki_z, params.kd_z);
+				printf("[pid_a: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
 			}
 			else if (ctl_type == 3)
 			{
-				printf("[pid_zv: %+5.2f %+5.2f %+5.2f]", params.kp_zv, params.ki_zv, params.kd_zv);
-			}
-			else if (ctl_type == 4)
-			{
-				printf("[pid_a: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
-			}
-			else if (ctl_type == 5)
-			{
 				printf("[c_xy: %+5.2f %+5.2f]", params.cx, params.cy);
 			}
-			else if (ctl_type == 6)
+			else if (ctl_type == 4)
 			{
 				printf("[ctl zero: %4d %4d %4d]", params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
 			}
 #ifndef __DISPLAY_MODE_MORE__
-			else if (ctl_type == 7)
+			else if (ctl_type == 5)
 			{
 				printf("[xyz: %+7.3f %+7.3f %+7.3f]", x_angle, y_angle, z_angle);
 			}
-			else if (ctl_type == 8)
+			else if (ctl_type == 6)
 			{
 				printf("[gxyz: %+7.3f %+7.3f %+7.3f]", e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz);
 			}
-			else if (ctl_type == 9)
+			else if (ctl_type == 7)
 			{
 				printf("[axyz: %+7.3f %+7.3f %+7.3f]", e->ax + e->dax, e->ay + e->day, e->az + e->daz);
 			}
-			else if (ctl_type == 10)
+			else if (ctl_type == 8)
 			{
 				printf("[speed: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
 			}
@@ -444,20 +436,6 @@ float engine_pid(float et, float et_1, float et_2)
 {
 	//增量式PID反馈控制
 	return params.kp * (et - et_1) + (params.ki * et) + params.kd * (et - 2 * et_1 + et_2);
-}
-
-//Z轴的欧拉角PID反馈控制，参数与XY轴的PID不一样
-float engine_pid_z(float et, float et_1, float et_2)
-{
-	//增量式PID反馈控制
-	return params.kp_z * (et - et_1) + (params.ki_z * et) + params.kd_z * (et - 2 * et_1 + et_2);
-}
-
-//对Z轴旋转角速度做PID反馈控制
-float engine_pid_zv(float et, float et_1, float et_2)
-{
-	//增量式PID反馈控制
-	return params.kp_zv * (et - et_1) + (params.ki_zv * et) + params.kd_zv * (et - 2 * et_1 + et_2);
 }
 
 //对旋转角速度做PID反馈控制
