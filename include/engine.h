@@ -32,7 +32,7 @@
 //电机最小速度
 #define MAX_SPEED_RUN_MIN			(0)
 //渐进式方向增量
-#define DIRECT_VALUE				(0.5)
+#define DIRECT_VALUE				(0.3)
 
 //引擎结构
 typedef struct
@@ -84,17 +84,32 @@ void engine_start(int argc, char *argv[]);
 //引擎核心算法平衡算法
 void engine_fly();
 
-//MPU6050
-void engine_mpu();
-
 //引擎运转
 void engine_move(s_engine *e);
 
 //校验电机转数范围
 void engine_rechk_speed(s_engine *e);
 
+//取得陀螺仪读数
+void engine_mpu();
+
 //取绝对值
 float engine_abs(float value);
+
+//读入摇控器“前/后”的PWM信号
+void engine_fb_pwm(int fb);
+
+//读入摇控器“左/右”的PWM信号
+void engine_lr_pwm(int lr);
+
+//读入摇控器“油门”的PWM信号
+void engine_pw_pwm(int pw);
+
+//电机锁定解锁处理
+void engine_lock();
+
+//二次曲线函数
+float parabola(float x);
 
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2);
@@ -117,22 +132,13 @@ void engine_reset(s_engine *e);
 //陀螺仪补偿
 void engine_set_dxy();
 
-//读入摇控器“前/后”的PWM信号
-void engine_fb_pwm(int fb);
-
-//读入摇控器“左/右”的PWM信号
-void engine_lr_pwm(int lr);
-
-//读入摇控器“油门”的PWM信号
-void engine_pw_pwm(int pw);
-
-//电机锁定解锁处理
-void engine_lock();
-
 //异常处理
 void engine_exception();
 
 //引擎清理
 void engine_clear();
+
+//显示输出
+void engine_display(s_engine *e, int i);
 
 #endif /* SRC_ENGINE_H_ */
