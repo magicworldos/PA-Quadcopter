@@ -109,7 +109,7 @@ void engine_pw_pwm(int pw);
 void engine_lock();
 
 //二次曲线函数
-float parabola(float x);
+float engine_parabola(float x);
 
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2);

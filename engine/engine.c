@@ -391,7 +391,7 @@ void engine_fb_pwm(int fb)
 	ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	engine.ctlmx = parabola(((float) (fb - params.ctl_fb_zero)) / 50.0 * 4.0);
+	engine.ctlmx = engine_parabola(((float) (fb - params.ctl_fb_zero)) / 50.0 * 4.0);
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -408,7 +408,7 @@ void engine_lr_pwm(int lr)
 	ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	engine.ctlmy = parabola(((float) (lr - params.ctl_lr_zero)) / 50.0 * 4.0);
+	engine.ctlmy = engine_parabola(((float) (lr - params.ctl_lr_zero)) / 50.0 * 4.0);
 
 	//如果是最左或最右
 	if (abs(lr - params.ctl_lr_zero) > 160)
@@ -515,9 +515,10 @@ void engine_lock()
 }
 
 //二次曲线函数
-float parabola(float x)
+float engine_parabola(float x)
 {
-	return (1.0 / 36.0) * (x * x);
+	float flag = x / engine_abs(x);
+	return flag * (1.0 / 36.0) * (x * x);
 }
 
 //XY轴的欧拉角PID反馈控制
