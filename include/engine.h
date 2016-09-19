@@ -32,7 +32,7 @@
 //电机最小速度
 #define MAX_SPEED_RUN_MIN			(0)
 //渐进式方向增量
-#define DIRECT_VALUE				(0.3)
+#define DIRECT_VALUE				(0.2)
 
 //引擎结构
 typedef struct

@@ -74,8 +74,8 @@ void params_reset()
 	params.kd = 8.0;
 	//旋转角速度PID参数
 	params.kp_v = 9.3;
-	params.ki_v = 5.4;
-	params.kd_v = 8.2;
+	params.ki_v = 5.2;
+	params.kd_v = 8.0;
 	//Z轴欧拉角PID参数
 	params.kp_z = 3.6;
 	params.ki_z = 0.8;

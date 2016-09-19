@@ -518,7 +518,7 @@ void engine_lock()
 float engine_parabola(float x)
 {
 	float flag = x / engine_abs(x);
-	return flag * (1.0 / 36.0) * (x * x);
+	return flag * (1.0 / 22.0) * (x * x);
 }
 
 //XY轴的欧拉角PID反馈控制
