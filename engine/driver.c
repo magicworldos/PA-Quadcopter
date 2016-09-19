@@ -18,6 +18,10 @@ s_driver drv1;
 s_driver drv2;
 s_driver drv3;
 
+s_ctl_pwm ctl_pwm_fb;
+s_ctl_pwm ctl_pwm_lr;
+s_ctl_pwm ctl_pwm_pw;
+
 //驱动程序初始化
 void driver_setup()
 {
@@ -48,9 +52,27 @@ void driver_setup()
 	//driver_init_speed3();
 
 	//启动摇控器接收机信号输入线程
-	pthread_create(&pthdpwd[0], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_fb_pwm);
-	pthread_create(&pthdpwd[1], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_lr_pwm);
-	pthread_create(&pthdpwd[2], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_pw_pwm);
+	ctl_pwm_fb.timer_sum = 0;
+	ctl_pwm_fb.timer_max = 0;
+	ctl_pwm_fb.timer_min = 9999;
+	ctl_pwm_fb.timer_n = 0;
+
+	ctl_pwm_lr.timer_sum = 0;
+	ctl_pwm_lr.timer_max = 0;
+	ctl_pwm_lr.timer_min = 9999;
+	ctl_pwm_lr.timer_n = 0;
+
+	ctl_pwm_pw.timer_sum = 0;
+	ctl_pwm_pw.timer_max = 0;
+	ctl_pwm_pw.timer_min = 9999;
+	ctl_pwm_pw.timer_n = 0;
+
+	wiringPiISR(GPIO_FB, INT_EDGE_BOTH, &driver_ctl_pwm_fb);
+	wiringPiISR(GPIO_LR, INT_EDGE_BOTH, &driver_ctl_pwm_lr);
+	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &driver_ctl_pwm_pw);
+//	pthread_create(&pthdpwd[0], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_fb_pwm);
+//	pthread_create(&pthdpwd[1], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_lr_pwm);
+//	pthread_create(&pthdpwd[2], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_pw_pwm);
 
 	//启动电机信号输出线程
 	pthread_create(&pthddr[0], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_run0, null);
@@ -99,104 +121,175 @@ void driver_ent_run(int en_port, int en_speed, int en_msecs)
 	}
 }
 
-//读取摇控器接收机的PWM信号
-void driver_ctl_pwm(void (*set_pwm)(int pwm))
+void driver_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 {
-	//高电平开始时间
-	struct timeval start;
-	//高电平结束时间
-	struct timeval end;
-	//状态 1:已开始读入高电平; 0: 未读入高电平
-	int status_read_h = 0;
-	//引脚值 1:高; 0: 低
-	int value = 0;
-
-	int gpio = GPIO_PW;
-	if (set_pwm == engine_fb_pwm)
+	//读取电平信号
+	int value = digitalRead(gpio_port);
+	//如果是高电平
+	if (value)
 	{
-		gpio = GPIO_FB;
-	}
-	else if (set_pwm == engine_lr_pwm)
-	{
-		gpio = GPIO_LR;
-	}
-	else if (set_pwm == engine_pw_pwm)
-	{
-		gpio = GPIO_PW;
+		//计时开始
+		gettimeofday(&ctl_pwm->timer_start, NULL);
+		return;
 	}
 
-	int i = 0;
-	int max = 0;
-	int ctlval = 0;
-
-	while (1)
+	//计时结束
+	gettimeofday(&ctl_pwm->timer_end, NULL);
+	//计算高电平时长
+	long timer = (ctl_pwm->timer_end.tv_sec - ctl_pwm->timer_start.tv_sec) * 1000000 + (ctl_pwm->timer_end.tv_usec - ctl_pwm->timer_start.tv_usec);
+	//如果超过低于1.0ms或大于2ms则视为无效
+	if (timer < CTL_PWM_MIN || timer > CTL_PWM_MAX)
 	{
-		//读取新信号
-		status_read_h = 0;
-		value = 0;
-		do
+		return;
+	}
+
+	ctl_pwm->timer_sum += timer;
+	ctl_pwm->timer_max = timer > ctl_pwm->timer_max ? timer : ctl_pwm->timer_max;
+	ctl_pwm->timer_min = timer < ctl_pwm->timer_min ? timer : ctl_pwm->timer_min;
+	ctl_pwm->timer_n++;
+	if (ctl_pwm->timer_n >= 5)
+	{
+		ctl_pwm->timer_avg = (ctl_pwm->timer_sum - ctl_pwm->timer_max - ctl_pwm->timer_min) / (ctl_pwm->timer_n - 2);
+
+		//向引擎发送“前后”数值
+		if (gpio_port == GPIO_FB)
 		{
-			//读取引脚的值
-			value = digitalRead(gpio);
-			//如果是高电平，且未开始计时
-			if (value == 1 && !status_read_h)
-			{
-				//开始计时
-				gettimeofday(&start, NULL);
-				//修改状态为已开始计时
-				status_read_h = 1;
-			}
-			//如果已开始计时，且读入低电平
-			if (status_read_h && !value)
-			{
-				//结束计时
-				gettimeofday(&end, NULL);
-				//计算高电平时长
-				long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-				ctlval += timer;
-				max = timer > max ? timer : max;
-				if (i++ % 5 == 0)
-				{
-					//设定PWM到引擎
-					set_pwm((ctlval - max) / 4);
-					max = 0;
-					ctlval = 0;
-				}
-				//结束本次信号读入
-				break;
-			}
-			//如果已经开始，且未读到高电平
-			if (!status_read_h && !value)
-			{
-				//状态 1:已开始读入低电平; 0: 未读入低电平
-				int status_read_l = 0;
-				//如是低电平
-				if (!value)
-				{
-					//计时开始，并更新数值，表示已读入
-					gettimeofday(&start, NULL);
-					status_read_l = 1;
-				}
-				//如果已读入
-				if (status_read_l)
-				{
-					//读取当前时间
-					gettimeofday(&end, NULL);
-					//计算时长
-					long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-					//如果超过2毫秒的时长则结束本次信号读入
-					if (timer > 2000)
-					{
-						break;
-					}
-				}
-			}
-			//每次读入信号休眠1微秒
-			usleep(1);
+			engine_fb_pwm(ctl_pwm->timer_avg);
 		}
-		while (1);
+		//向引擎发送“左右”数值
+		else if (gpio_port == GPIO_LR)
+		{
+			engine_lr_pwm(ctl_pwm->timer_avg);
+		}
+		//向引擎发送“油门”数值
+		else if (gpio_port == GPIO_PW)
+		{
+			engine_pw_pwm(ctl_pwm->timer_avg);
+		}
+
+		ctl_pwm->timer_sum = 0;
+		ctl_pwm->timer_max = 0;
+		ctl_pwm->timer_min = 9999;
+		ctl_pwm->timer_n = 0;
 	}
 }
+
+//读取摇控器接收机的PWM信号“前后”
+void driver_ctl_pwm_fb()
+{
+	driver_ctl_pwm(GPIO_FB, &ctl_pwm_fb);
+}
+
+//读取摇控器接收机的PWM信号“左右”
+void driver_ctl_pwm_lr()
+{
+	driver_ctl_pwm(GPIO_LR, &ctl_pwm_lr);
+}
+
+//读取摇控器接收机的PWM信号“油门”
+void driver_ctl_pwm_pw()
+{
+	driver_ctl_pwm(GPIO_PW, &ctl_pwm_pw);
+}
+
+////读取摇控器接收机的PWM信号
+//void driver_ctl_pwm(void (*set_pwm)(int pwm))
+//{
+//	//高电平开始时间
+//	struct timeval start;
+//	//高电平结束时间
+//	struct timeval end;
+//	//状态 1:已开始读入高电平; 0: 未读入高电平
+//	int status_read_h = 0;
+//	//引脚值 1:高; 0: 低
+//	int value = 0;
+//
+//	int gpio = GPIO_PW;
+//	if (set_pwm == engine_fb_pwm)
+//	{
+//		gpio = GPIO_FB;
+//	}
+//	else if (set_pwm == engine_lr_pwm)
+//	{
+//		gpio = GPIO_LR;
+//	}
+//	else if (set_pwm == engine_pw_pwm)
+//	{
+//		gpio = GPIO_PW;
+//	}
+//
+//	int i = 0;
+//	int max = 0;
+//	int ctlval = 0;
+//
+//	while (1)
+//	{
+//		//读取新信号
+//		status_read_h = 0;
+//		value = 0;
+//		do
+//		{
+//			//读取引脚的值
+//			value = digitalRead(gpio);
+//			//如果是高电平，且未开始计时
+//			if (value == 1 && !status_read_h)
+//			{
+//				//开始计时
+//				gettimeofday(&start, NULL);
+//				//修改状态为已开始计时
+//				status_read_h = 1;
+//			}
+//			//如果已开始计时，且读入低电平
+//			if (status_read_h && !value)
+//			{
+//				//结束计时
+//				gettimeofday(&end, NULL);
+//				//计算高电平时长
+//				long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+//				ctlval += timer;
+//				max = timer > max ? timer : max;
+//				if (i++ % 5 == 0)
+//				{
+//					//设定PWM到引擎
+//					set_pwm((ctlval - max) / 4);
+//					max = 0;
+//					ctlval = 0;
+//				}
+//				//结束本次信号读入
+//				break;
+//			}
+//			//如果已经开始，且未读到高电平
+//			if (!status_read_h && !value)
+//			{
+//				//状态 1:已开始读入低电平; 0: 未读入低电平
+//				int status_read_l = 0;
+//				//如是低电平
+//				if (!value)
+//				{
+//					//计时开始，并更新数值，表示已读入
+//					gettimeofday(&start, NULL);
+//					status_read_l = 1;
+//				}
+//				//如果已读入
+//				if (status_read_l)
+//				{
+//					//读取当前时间
+//					gettimeofday(&end, NULL);
+//					//计算时长
+//					long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+//					//如果超过2毫秒的时长则结束本次信号读入
+//					if (timer > 2000)
+//					{
+//						break;
+//					}
+//				}
+//			}
+//			//每次读入信号休眠1微秒
+//			//usleep(1);
+//		}
+//		while (1);
+//	}
+//}
 
 //清理驱动
 void driver_clear()
