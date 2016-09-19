@@ -12,7 +12,7 @@
 //w 1: 角速度PID_V参数
 //e 2: z轴PID_Z参数
 //r 3: 陀螺仪校准参数cx、cy、cz
-int ctl_type = 9;
+int ctl_type = 10;
 //多线程描述符
 pthread_t pthdctl;
 //引擎
