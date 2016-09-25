@@ -69,12 +69,12 @@ void params_from_cache()
 void params_reset()
 {
 	//XY轴欧拉角PID参数
-	params.kp = 9.4;
-	params.ki = 1.8;
-	params.kd = 8.0;
+	params.kp = 12.8;
+	params.ki = 5.8;
+	params.kd = 9.5;
 	//旋转角速度PID参数
-	params.kp_v = 9.3;
-	params.ki_v = 5.2;
+	params.kp_v = 13.8;
+	params.ki_v = 8.10;
 	params.kd_v = 8.0;
 	//Z轴欧拉角PID参数
 	params.kp_z = 3.6;
@@ -89,7 +89,7 @@ void params_reset()
 	params.ki_a = 18.6;
 	params.kd_a = 23.8;
 	//XY轴中心点校正补偿
-	params.cx = 0.0;
+	params.cx = -7.8;
 	params.cy = -3.8;
 	//摇控器3通道起始值
 	params.ctl_fb_zero = 1407;
