@@ -260,28 +260,28 @@ void engine_fly()
 		e->v_devi[1] += +yv_devi;
 		e->v_devi[3] += -yv_devi;
 
-		//处理XY轴旋加速度平衡补偿
-		float xa_devi = 0;
-		float ya_devi = 0;
-		//设置X轴PID数据
-		xa_et_2 = xa_et_1;
-		xa_et_1 = xa_et;
-		xa_et = e->ax + e->dax;
-		//使用X轴的旋转角速度的PID反馈控制算法
-		xa_devi = engine_pid_a(xa_et, xa_et_1, xa_et_2);
-
-		//设置Y轴PID数据
-		ya_et_2 = ya_et_1;
-		ya_et_1 = ya_et;
-		ya_et = e->ay + e->day;
-		//使用Y轴的旋转角速度的PID反馈控制算法
-		ya_devi = engine_pid_a(ya_et, ya_et_1, ya_et_2);
-
-		//对引擎的4个轴做加速度平衡补偿
-		//e->v_devi[0] += +xa_devi;
-		//e->v_devi[2] += -xa_devi;
-		//e->v_devi[1] += +ya_devi;
-		//e->v_devi[3] += -ya_devi;
+//		//处理XY轴旋加速度平衡补偿
+//		float xa_devi = 0;
+//		float ya_devi = 0;
+//		//设置X轴PID数据
+//		xa_et_2 = xa_et_1;
+//		xa_et_1 = xa_et;
+//		xa_et = e->ax + e->dax;
+//		//使用X轴的旋转角速度的PID反馈控制算法
+//		xa_devi = engine_pid_a(xa_et, xa_et_1, xa_et_2);
+//
+//		//设置Y轴PID数据
+//		ya_et_2 = ya_et_1;
+//		ya_et_1 = ya_et;
+//		ya_et = e->ay + e->day;
+//		//使用Y轴的旋转角速度的PID反馈控制算法
+//		ya_devi = engine_pid_a(ya_et, ya_et_1, ya_et_2);
+//
+//		//对引擎的4个轴做加速度平衡补偿
+//		e->v_devi[0] += +xa_devi;
+//		e->v_devi[2] += -xa_devi;
+//		e->v_devi[1] += +ya_devi;
+//		e->v_devi[3] += -ya_devi;
 
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);
