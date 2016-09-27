@@ -50,6 +50,8 @@ typedef struct
 	int ctl_fb_zero;
 	int ctl_lr_zero;
 	int ctl_pw_zero;
+
+	int ctl_type;
 } s_params;
 
 //保存参数

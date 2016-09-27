@@ -19,6 +19,8 @@
 #include <pthread.h>
 #include <sys/time.h>
 #include <semaphore.h>
+#include <dlfcn.h>
+#include <dirent.h>
 
 #include <wiringPi.h>
 #include <wiringSerial.h>

@@ -11,14 +11,9 @@
 
 #include <typedef.h>
 #include <mpu6050.h>
+#include <dlmod.h>
 
-//#define __PC_TEST__
-//不显示输出
-//#define __DISPLAY_DISABLED__
-//多信息同行显示
-#define	__DISPLAY_MODE_MORE__
-//显示频度
-#define	DISPLAY_SPEED				(10)
+#define __PC_TEST__
 
 //原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 //10ms 100Hz
@@ -137,8 +132,5 @@ void engine_exception();
 
 //引擎清理
 void engine_clear();
-
-//显示输出
-void engine_display(s_engine *e, int i);
 
 #endif /* SRC_ENGINE_H_ */

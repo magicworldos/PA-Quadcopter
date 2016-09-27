@@ -21,8 +21,6 @@ s_params params_cache;
 sem_t sem_engine;
 //多线程描述符
 pthread_t pthd;
-//显示状态
-extern int ctl_type;
 //显示摇控器读数
 int ctl_fb = 0;
 int ctl_lr = 0;
@@ -63,6 +61,9 @@ void engine_start(int argc, char *argv[])
 			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &engine_fly, null);
 			//启动键盘接收
 			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &params_input, null);
+			//载入并执行动态链接库
+			dlmod_init();
+
 			//主线程休眠
 			sem_wait(&sem_engine);
 
@@ -159,8 +160,6 @@ void engine_fly()
 	//XY轴加速度的增量式PID处理数据，当前、上一次、上上次
 	float xa_et = 0.0, xa_et_1 = 0.0, xa_et_2 = 0.0;
 	float ya_et = 0.0, ya_et_1 = 0.0, ya_et_2 = 0.0;
-
-	int i = 0;
 
 	while (1)
 	{
@@ -285,11 +284,6 @@ void engine_fly()
 
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);
-
-#ifndef __DISPLAY_DISABLED__
-		//显示输出
-		engine_display(e, i++);
-#endif
 
 		//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 		usleep(ENG_TIMER * 1000);
@@ -627,6 +621,8 @@ void engine_exception()
 {
 	//引擎清理
 	engine_clear();
+	//清理动态链接库
+	dlmod_destory();
 	//退出
 	exit(0);
 }
@@ -644,67 +640,4 @@ void engine_clear()
 	engine_reset(&engine);
 	//关闭gy953
 	//gy953_close();
-}
-
-//显示输出
-void engine_display(s_engine *e, int i)
-{
-	if (i % DISPLAY_SPEED == 0)
-	{
-		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
-
-#ifdef __DISPLAY_MODE_MORE__
-		printf("[xyz: %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][a: %+7.3f %+7.3f %+7.3f][s: %4d %4d %4d %4d]", e->x + e->dx + e->mx, e->y + e->dy + e->my, e->z + e->dz, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->ax + e->dax, e->ay + e->day, e->az + e->daz, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
-#endif
-
-		if (ctl_type == 0)
-		{
-			printf("[pid: %+5.2f %+5.2f %+5.2f]", params.kp, params.ki, params.kd);
-		}
-		else if (ctl_type == 1)
-		{
-			printf("[pidv: %+5.2f %+5.2f %+5.2f]", params.kp_v, params.ki_v, params.kd_v);
-		}
-		if (ctl_type == 2)
-		{
-			printf("[pidz: %+5.2f %+5.2f %+5.2f]", params.kp_z, params.ki_z, params.kd_z);
-		}
-		else if (ctl_type == 3)
-		{
-			printf("[pidzv: %+5.2f %+5.2f %+5.2f]", params.kp_zv, params.ki_zv, params.kd_zv);
-		}
-		else if (ctl_type == 4)
-		{
-			printf("[pida: %+5.2f %+5.2f %+5.2f]", params.kp_a, params.ki_a, params.kd_a);
-		}
-		else if (ctl_type == 5)
-		{
-			printf("[cxy: %+5.2f %+5.2f]", params.cx, params.cy);
-		}
-		else if (ctl_type == 6)
-		{
-			printf("[ctl zero: %4d %4d %4d]", params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
-		}
-
-#ifndef __DISPLAY_MODE_MORE__
-		else if (ctl_type == 7)
-		{
-			printf("[xyz: %+7.3f %+7.3f %+7.3f]", x_angle, y_angle, z_angle);
-		}
-		else if (ctl_type == 8)
-		{
-			printf("[g: %+7.3f %+7.3f %+7.3f]", e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz);
-		}
-		else if (ctl_type == 9)
-		{
-			printf("[a: %+7.3f %+7.3f %+7.3f]", e->ax + e->dax, e->ay + e->day, e->az + e->daz);
-		}
-		else if (ctl_type == 10)
-		{
-			printf("[s: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
-		}
-#endif
-
-		printf("\n");
-	}
 }
