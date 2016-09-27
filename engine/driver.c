@@ -70,15 +70,15 @@ void driver_setup()
 	wiringPiISR(GPIO_FB, INT_EDGE_BOTH, &driver_ctl_pwm_fb);
 	wiringPiISR(GPIO_LR, INT_EDGE_BOTH, &driver_ctl_pwm_lr);
 	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &driver_ctl_pwm_pw);
-//	pthread_create(&pthdpwd[0], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_fb_pwm);
-//	pthread_create(&pthdpwd[1], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_lr_pwm);
-//	pthread_create(&pthdpwd[2], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_pw_pwm);
+//	pthread_create(&pthdpwd[0], (const pthread_attr_t*) NULL, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_fb_pwm);
+//	pthread_create(&pthdpwd[1], (const pthread_attr_t*) NULL, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_lr_pwm);
+//	pthread_create(&pthdpwd[2], (const pthread_attr_t*) NULL, (void* (*)(void*)) &driver_ctl_pwm, (void *) &engine_pw_pwm);
 
 	//启动电机信号输出线程
-	pthread_create(&pthddr[0], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_run0, null);
-	pthread_create(&pthddr[1], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_run1, null);
-	pthread_create(&pthddr[2], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_run2, null);
-	pthread_create(&pthddr[3], (const pthread_attr_t*) null, (void* (*)(void*)) &driver_run3, null);
+	pthread_create(&pthddr[0], (const pthread_attr_t*) NULL, (void* (*)(void*)) &driver_run0, NULL);
+	pthread_create(&pthddr[1], (const pthread_attr_t*) NULL, (void* (*)(void*)) &driver_run1, NULL);
+	pthread_create(&pthddr[2], (const pthread_attr_t*) NULL, (void* (*)(void*)) &driver_run2, NULL);
+	pthread_create(&pthddr[3], (const pthread_attr_t*) NULL, (void* (*)(void*)) &driver_run3, NULL);
 
 	printf("Init engine finished.\n");
 }

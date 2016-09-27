@@ -17,7 +17,7 @@ int __init(s_engine *engine, s_params *params)
 	e = engine;
 	p = params;
 	r = 1;
-	pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &run, NULL);
+	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &run, NULL);
 
 	return 0;
 }

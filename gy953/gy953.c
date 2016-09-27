@@ -85,12 +85,12 @@ int gy953_init(u32 init)
 
 	struct timeval start;
 	struct timeval end;
-	gettimeofday(&start, null);
+	gettimeofday(&start, NULL);
 	//初始化
 	printf("Init GY053 ....\n");
 	while (1)
 	{
-		gettimeofday(&end, null);
+		gettimeofday(&end, NULL);
 		long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
 		if (timer > 3000000)
 		{

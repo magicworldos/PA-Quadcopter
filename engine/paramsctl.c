@@ -25,7 +25,7 @@ extern s_params params_cache;
 void params_save()
 {
 	FILE *fp = fopen(QUAD_PMS_FILE, "wb");
-	if (fp == null)
+	if (fp == NULL)
 	{
 		printf("save params error!\n");
 		return;
@@ -38,7 +38,7 @@ void params_save()
 void params_load()
 {
 	FILE *fp = fopen(QUAD_PMS_FILE, "rb");
-	if (fp == null)
+	if (fp == NULL)
 	{
 		printf("save params error!\n");
 		//如果载入失败则重置参数

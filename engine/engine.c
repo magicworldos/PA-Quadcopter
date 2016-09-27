@@ -54,13 +54,13 @@ void engine_start(int argc, char *argv[])
 			//载入参数
 			params_load();
 			//启动MPU6050陀螺仪数据读入线程
-			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) engine_mpu, null);
+			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) engine_mpu, NULL);
 			//启动摇控器锁定、解锁电机
-			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &engine_lock, null);
+			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_lock, NULL);
 			//启动飞行引擎
-			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &engine_fly, null);
+			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_fly, NULL);
 			//启动键盘接收
-			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &params_input, null);
+			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &params_input, NULL);
 			//载入并执行动态链接库
 			dlmod_init();
 
@@ -79,7 +79,7 @@ void engine_start(int argc, char *argv[])
 			//载入参数
 			params_load();
 			//启动键盘接收
-			pthread_create(&pthd, (const pthread_attr_t*) null, (void* (*)(void*)) &params_input, null);
+			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &params_input, NULL);
 
 			int i = 0;
 			int n = 100;

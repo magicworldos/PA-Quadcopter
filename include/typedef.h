@@ -26,10 +26,6 @@
 #include <wiringSerial.h>
 
 
-#define null						((void *)0)
-
-typedef unsigned int boolean;
-
 typedef char s8;
 typedef unsigned char u8;
 
