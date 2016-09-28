@@ -37,7 +37,7 @@ $(MOD_MODULES):
 	#cd mods/gy953/			&& make
 
 $(MOD_MKDIR):
-	mkdir -p $(RELEASE_PATH)/bin/
+	mkdir -p $(RELEASE_PATH)/bin/ lib/
 	
 clean:
 	rm -rvf $(RELEASE_PATH)
