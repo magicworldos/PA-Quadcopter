@@ -156,14 +156,24 @@ int dlmod_init()
 				continue;
 			}
 
+			int (*status)()= dlsym(handler, "__status");
+			if (status == NULL)
+			{
+				dlclose(handler);
+				continue;
+			}
+
 			s_dlmod *mod = malloc(sizeof(s_dlmod));
 			mod->handler = handler;
 			mod->init = init;
 			mod->destory = destory;
-			mod->args = malloc(sizeof(void *) * 3);
+			mod->status = status;
+
+			mod->args = malloc(sizeof(void *) * 4);
 			mod->args[0] = mod;
 			mod->args[1] = &engine;
 			mod->args[2] = &params;
+			mod->args[3] = &status;
 
 			list_insert(&list, mod);
 		}
@@ -176,11 +186,36 @@ int dlmod_init()
 	return 0;
 }
 
+int dlmod_mods_status()
+{
+	s_node *p = list.header;
+	while (p != NULL)
+	{
+		s_dlmod *mod = (s_dlmod *) p->data;
+		if (mod->status())
+		{
+			return 1;
+		}
+		p = p->next;
+	}
+	printf("all clear.\n");
+	return 0;
+}
+
 int dlmod_destory()
 {
 	list_visit(&list, (void *) &dlmod_run_pt_destory);
+	for (int i = 0; i < 3000; i++)
+	{
+		if (dlmod_mods_status() == 0)
+		{
+			printf("Done.\n");
+			break;
+		}
+
+		usleep(1000);
+	}
 	list_visit(&list, (void *) &dlmod_dlclose);
-	list_visit(&list, (void *) &dlmod_free_mod);
 	list_destroy(&list);
 
 	return 0;

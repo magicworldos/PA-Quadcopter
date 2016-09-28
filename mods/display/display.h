@@ -9,10 +9,9 @@
 #define MODS_DISPLAY_DISPLAY_H_
 
 #include <typedef.h>
-#include <engine.h>
 
 //不显示输出
-#define __DISPLAY_DISABLED__
+//#define __DISPLAY_DISABLED__
 //多信息同行显示
 #define	__DISPLAY_MODE_MORE__
 //显示频度
@@ -21,6 +20,8 @@
 int __init(s_engine *engine, s_params *params);
 
 int __destory(s_engine *e, s_params *p);
+
+int __status();
 
 void run();
 

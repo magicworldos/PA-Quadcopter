@@ -8,7 +8,6 @@
 
 #include <engine.h>
 #include <driver.h>
-#include <paramsctl.h>
 
 //引擎
 s_engine engine;
@@ -47,20 +46,13 @@ void engine_start(int argc, char *argv[])
 #ifndef __PC_TEST__
 			//初始化驱动
 			driver_setup();
-			//mpu6050_setup();
 #endif
 			//重置引擎
 			engine_reset(&engine);
-			//载入参数
-			params_load();
-			//启动MPU6050陀螺仪数据读入线程
-//			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) engine_mpu, NULL);
 			//启动摇控器锁定、解锁电机
 			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_lock, NULL);
 			//启动飞行引擎
 			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_fly, NULL);
-			//启动键盘接收
-			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &params_input, NULL);
 			//载入并执行动态链接库
 			dlmod_init();
 
@@ -72,14 +64,16 @@ void engine_start(int argc, char *argv[])
 		//校准摇控器模式
 		if (strcmp(argv[1], "--ctl") == 0)
 		{
+#ifndef __PC_TEST__
 			//初始化驱动
 			driver_setup();
+#endif
 			//重置引擎
 			engine_reset(&engine);
 			//载入参数
-			params_load();
+			//params_load();
 			//启动键盘接收
-			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &params_input, NULL);
+			//pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &params_input, NULL);
 
 			int i = 0;
 			int n = 100;
@@ -345,21 +339,6 @@ void engine_rechk_speed(s_engine *e)
 	}
 }
 
-//取得陀螺仪读数
-void engine_mpu()
-{
-	s_engine *e = &engine;
-	while (1)
-	{
-		//读取yxz轴欧拉角、旋转角速度、加速度
-		//xyz角速度，当x角变化时，y轴有旋转角速度；当月y角变化时，x轴有旋转角速度。
-		//但为了编写程序和书写方便，x轴的欧拉角和y轴的角速度统一为x；y轴的欧拉角和x轴的角速度统一为y
-		//mpu6050_value(&e->z, &e->y, &e->x, &e->gy, &e->gx, &e->gz, &e->ay, &e->ax, &e->az);
-		//mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ay, &e->ax, &e->az);
-		usleep(1);
-	}
-}
-
 //取绝对值
 float engine_abs(float value)
 {
@@ -619,25 +598,13 @@ void engine_set_dxy()
 //异常处理
 void engine_exception()
 {
-	//引擎清理
-	engine_clear();
-	//清理动态链接库
-	dlmod_destory();
-	//退出
-	exit(0);
-}
-
-//引擎清理
-void engine_clear()
-{
-	//保存缓存中的参数
-	params_save();
-	//清理驱动
-	driver_clear();
-	//恢复控制台
-	resetTermios();
 	//重置引擎
 	engine_reset(&engine);
-	//关闭gy953
-	//gy953_close();
+	//清理驱动
+	driver_clear();
+	//清理动态链接库
+	dlmod_destory();
+
+	//退出
+	exit(0);
 }

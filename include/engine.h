@@ -21,57 +21,13 @@
 //最大角度
 #define MAX_ANGLE					(90.0)
 //电机保护速度
-#define PROCTED_SPEED				(30)
+#define PROCTED_SPEED				(50)
 //电机最大速度
 #define MAX_SPEED_RUN_MAX			(1000)
 //电机最小速度
 #define MAX_SPEED_RUN_MIN			(0)
 //渐进式方向增量
 #define DIRECT_VALUE				(0.2)
-
-//引擎结构
-typedef struct
-{
-	//电机锁定状态，默认为锁定
-	int lock;
-	//XYZ欧拉角
-	float x;
-	float y;
-	float z;
-	//修正补偿
-	float dx;
-	float dy;
-	float dz;
-	//渐进式移动倾斜角
-	float mx;
-	float my;
-	//摇控器移动倾角
-	float ctlmx;
-	float ctlmy;
-	//XYZ轴旋转角速度
-	float gx;
-	float gy;
-	float gz;
-	//补偿XYZ轴旋转角速度
-	float dgx;
-	float dgy;
-	float dgz;
-	//XYZ轴加速度
-	float ax;
-	float ay;
-	float az;
-	//修正加速度补偿
-	float dax;
-	float day;
-	float daz;
-	//引擎速度
-	float v;
-	//速度补偿
-	float v_devi[4];
-	//电机实际速度
-	int speed[4];
-
-} s_engine;
 
 //启动引擎
 void engine_start(int argc, char *argv[]);
@@ -84,9 +40,6 @@ void engine_move(s_engine *e);
 
 //校验电机转数范围
 void engine_rechk_speed(s_engine *e);
-
-//取得陀螺仪读数
-void engine_mpu();
 
 //取绝对值
 float engine_abs(float value);
@@ -129,8 +82,5 @@ void engine_set_dxy();
 
 //异常处理
 void engine_exception();
-
-//引擎清理
-void engine_clear();
 
 #endif /* SRC_ENGINE_H_ */

@@ -9,10 +9,11 @@
 #define MODS_COMMAND_COMMAND_H_
 
 #include <typedef.h>
-#include <engine.h>
 
 int __init(s_engine *e, s_params *p);
 
 int __destory(s_engine *e, s_params *p);
+
+int __status();
 
 #endif /* MODS_COMMAND_COMMAND_H_ */

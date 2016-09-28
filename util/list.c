@@ -49,10 +49,10 @@ int list_clear(s_list *list)
 	s_node *p = list->header;
 	while (p != NULL)
 	{
-		//释放内存
-		list->free_node(p->data);
 		s_node *t = p;
 		p = p->next;
+		//释放内存
+		list->free_node(t->data);
 		free(t);
 	}
 	list->header = NULL;
@@ -89,8 +89,9 @@ int list_visit(s_list *list, void (*callback)())
 	s_node *p = list->header;
 	while (p != NULL)
 	{
-		callback(p->data);
+		s_node *pvisit = p;
 		p = p->next;
+		callback(pvisit->data);
 	}
 
 	return 0;

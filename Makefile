@@ -24,19 +24,19 @@ $(MOD_PROJECT):
 	gcc $(C_FLAGS) -o $(RELEASE_PATH)/bin/$(MOD_PROJECT) $(MOD_INCLUDE)			\
 	main/main.c								\
 	engine/engine.c							\
-	engine/paramsctl.c						\
-	engine/getch.c							\
 	engine/dlmod.c							\
 	engine/driver.c							\
 	util/list.c
 	
 $(MOD_MODULES):
-	cd mods/mpu6050/ && make
-	cd mods/display/ && make
-	cd mods/command/ && make
+	cd mods/paramsctl/		&& make
+	#cd mods/mpu6050/		&& make
+	cd mods/display/		&& make
+	#cd mods/command/		&& make
 
 $(MOD_MKDIR):
 	mkdir -p $(RELEASE_PATH)/bin/
 	
 clean:
 	rm -rvf $(RELEASE_PATH)
+	rm -rvf lib/*

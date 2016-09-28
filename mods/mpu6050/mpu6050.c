@@ -28,12 +28,14 @@ uint8_t teapotPacket[14] =
 pthread_t pthd;
 s_engine *e = NULL;
 s_params *p = NULL;
+int st = 0;
 int r = 0;
 
 int __init(s_engine *engine, s_params *params)
 {
 	e = engine;
 	p = params;
+	st = 1;
 	r = 1;
 
 	mpu6050_setup();
@@ -45,7 +47,7 @@ int __init(s_engine *engine, s_params *params)
 
 int __destory(s_engine *e, s_params *p)
 {
-
+	r = 0;
 	return 0;
 }
 
@@ -61,6 +63,8 @@ void mpu6050_run()
 		mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ay, &e->ax, &e->az);
 		usleep(1);
 	}
+
+	st = 0;
 }
 
 void mpu6050_setup()

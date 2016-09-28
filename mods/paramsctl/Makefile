@@ -1,9 +1,9 @@
-MOD_NAME = mpu6050
+MOD_NAME = paramsctl
 
 all:
 	gcc -I../../include/ -I./ -lm -fPIC -shared -o lib$(MOD_NAME).so	\
-		 $(MOD_NAME).c														\
-		 i2cdev.c
+		 $(MOD_NAME).c													\
+		 getch.c
 		 
 	mv lib$(MOD_NAME).so ../../lib/
 clean:

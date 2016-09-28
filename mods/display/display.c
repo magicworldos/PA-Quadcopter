@@ -8,6 +8,7 @@
 #include <display.h>
 
 int r = 0;
+int st = 0;
 pthread_t pthd;
 s_engine *e = NULL;
 s_params *p = NULL;
@@ -16,8 +17,12 @@ int __init(s_engine *engine, s_params *params)
 {
 	e = engine;
 	p = params;
+
+#ifndef __DISPLAY_DISABLED__
+	st = 1;
 	r = 1;
 	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &run, NULL);
+#endif
 
 	return 0;
 }
@@ -27,6 +32,11 @@ int __destory(s_engine *e, s_params *p)
 	r = 0;
 
 	return 0;
+}
+
+int __status()
+{
+	return st;
 }
 
 void run()
@@ -91,4 +101,6 @@ void run()
 
 		usleep(DISPLAY_SPEED * 1000);
 	}
+
+	st = 0;
 }

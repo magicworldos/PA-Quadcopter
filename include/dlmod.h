@@ -11,13 +11,13 @@
 #include <typedef.h>
 #include <list.h>
 #include <engine.h>
-#include <paramsctl.h>
 
 typedef struct s_dlmod
 {
 	void *handler;
 	int (*init)();
 	int (*destory)();
+	int (*status)();
 	void **args;
 } s_dlmod;
 
@@ -34,6 +34,8 @@ int dlmod_dlclose(s_dlmod *mod);
 int dlmod_free_mod(s_dlmod *mod);
 
 int dlmod_init();
+
+int dlmod_mods_status();
 
 int dlmod_destory();
 
