@@ -30,9 +30,10 @@ $(MOD_PROJECT):
 	
 $(MOD_MODULES):
 	cd mods/paramsctl/		&& make
-	#cd mods/mpu6050/		&& make
+	cd mods/controller/		&& make
+	cd mods/mpu6050/		&& make
 	cd mods/display/		&& make
-	#cd mods/command/		&& make
+	cd mods/command/		&& make
 
 $(MOD_MKDIR):
 	mkdir -p $(RELEASE_PATH)/bin/

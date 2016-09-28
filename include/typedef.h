@@ -37,11 +37,15 @@ typedef unsigned int u32;
 typedef signed long long s64;
 typedef unsigned long long u64;
 
+//保护最低速度
+#define PROCTED_SPEED	(50)
+
 //引擎结构
 typedef struct
 {
 	//电机锁定状态，默认为锁定
 	int lock;
+
 	//XYZ欧拉角
 	float x;
 	float y;
@@ -78,6 +82,14 @@ typedef struct
 	float v_devi[4];
 	//电机实际速度
 	int speed[4];
+
+	//其它参数
+	//显示摇控器读数
+	int ctl_fb;
+	int ctl_lr;
+	int ctl_pw;
+	//最低油门,最左，最右
+	u32 lock_status;
 
 } s_engine;
 

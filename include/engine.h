@@ -20,8 +20,6 @@
 #define ENG_TIMER					(10)
 //最大角度
 #define MAX_ANGLE					(90.0)
-//电机保护速度
-#define PROCTED_SPEED				(50)
 //电机最大速度
 #define MAX_SPEED_RUN_MAX			(1000)
 //电机最小速度
@@ -44,20 +42,8 @@ void engine_rechk_speed(s_engine *e);
 //取绝对值
 float engine_abs(float value);
 
-//读入摇控器“前/后”的PWM信号
-void engine_fb_pwm(int fb);
-
-//读入摇控器“左/右”的PWM信号
-void engine_lr_pwm(int lr);
-
-//读入摇控器“油门”的PWM信号
-void engine_pw_pwm(int pw);
-
 //电机锁定解锁处理
 void engine_lock();
-
-//二次曲线函数
-float engine_parabola(float x);
 
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2);

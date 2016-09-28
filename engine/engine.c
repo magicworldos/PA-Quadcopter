@@ -20,13 +20,6 @@ s_params params_cache;
 sem_t sem_engine;
 //多线程描述符
 pthread_t pthd;
-//显示摇控器读数
-int ctl_fb = 0;
-int ctl_lr = 0;
-int ctl_pw = 0;
-
-//最低油门,最左，最右
-u32 lock_status = 0;
 
 //启动引擎
 void engine_start(int argc, char *argv[])
@@ -70,11 +63,9 @@ void engine_start(int argc, char *argv[])
 #endif
 			//重置引擎
 			engine_reset(&engine);
-			//载入参数
-			//params_load();
-			//启动键盘接收
-			//pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &params_input, NULL);
 
+			s_engine *e = &engine;
+			s_params *p = &params;
 			int i = 0;
 			int n = 100;
 			int s_fb = 0;
@@ -82,11 +73,11 @@ void engine_start(int argc, char *argv[])
 			int s_pw = 0;
 			while (1)
 			{
-				printf("[FB: %4d LR: %4d PW: %4d] - [FB: %4d LR: %4d PW: %4d]\n", ctl_fb, ctl_lr, ctl_pw, params.ctl_fb_zero, params.ctl_lr_zero, params.ctl_pw_zero);
+				printf("[FB: %4d LR: %4d PW: %4d] - [FB: %4d LR: %4d PW: %4d]\n", e->ctl_fb, e->ctl_lr, e->ctl_pw, p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero);
 
-				s_fb += ctl_fb;
-				s_lr += ctl_lr;
-				s_pw += ctl_pw;
+				s_fb += e->ctl_fb;
+				s_lr += e->ctl_lr;
+				s_pw += e->ctl_pw;
 
 				if (i++ % n == 0)
 				{
@@ -350,91 +341,11 @@ float engine_abs(float value)
 	return value;
 }
 
-//读入摇控器“前/后”的PWM信号
-void engine_fb_pwm(int fb)
-{
-	if (fb < CTL_PWM_MIN || fb > CTL_PWM_MAX)
-	{
-		return;
-	}
-	if (params.ctl_fb_zero < CTL_PWM_MIN || params.ctl_fb_zero > CTL_PWM_MAX)
-	{
-		params.ctl_fb_zero = 1400;
-	}
-	ctl_fb = fb;
-	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	engine.ctlmx = engine_parabola(((float) (fb - params.ctl_fb_zero)) / 50.0 * 4.0);
-}
-
-//读入摇控器“左/右”的PWM信号
-void engine_lr_pwm(int lr)
-{
-	if (lr < CTL_PWM_MIN || lr > CTL_PWM_MAX)
-	{
-		return;
-	}
-	if (params.ctl_lr_zero < CTL_PWM_MIN || params.ctl_lr_zero > CTL_PWM_MAX)
-	{
-		params.ctl_lr_zero = 1400;
-	}
-	ctl_lr = lr;
-	//由2000～1600信号修正为-32.0 ～ +32.0角度
-	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	engine.ctlmy = engine_parabola(((float) (lr - params.ctl_lr_zero)) / 50.0 * 4.0);
-
-	//如果是最左或最右
-	if (abs(lr - params.ctl_lr_zero) > 160)
-	{
-		//如果是最左
-		if (lr - params.ctl_lr_zero < 0)
-		{
-			lock_status |= (0x1 << 2);
-			lock_status &= ~(0x1 << 1);
-			return;
-		}
-		else
-		{
-			lock_status |= (0x1 << 1);
-			lock_status &= ~(0x1 << 2);
-			return;
-		}
-	}
-	lock_status &= ~(0x1 << 1);
-	lock_status &= ~(0x1 << 2);
-}
-
-//读入摇控器“油门”的PWM信号
-void engine_pw_pwm(int pw)
-{
-	if (pw < CTL_PWM_MIN || pw > CTL_PWM_MAX)
-	{
-		return;
-	}
-	if (params.ctl_pw_zero < CTL_PWM_MIN || params.ctl_pw_zero > CTL_PWM_MAX)
-	{
-		params.ctl_pw_zero = 1000;
-	}
-	ctl_pw = pw;
-	//读入速度
-	float v = (float) (pw - params.ctl_pw_zero);
-	//设置引擎的速度
-	engine.v = v;
-
-	//如果是最低油门
-	if (abs(pw - params.ctl_pw_zero) < 50)
-	{
-		lock_status |= 0x1;
-	}
-	else
-	{
-		lock_status &= (~0x1);
-	}
-}
-
 //电机锁定解锁处理
 void engine_lock()
 {
+	s_engine *e = &engine;
+
 	//动作开始时间
 	struct timeval start;
 	//动作计时
@@ -442,13 +353,13 @@ void engine_lock()
 
 	while (1)
 	{
-		u32 status = lock_status;
+		u32 status = e->lock_status;
 		//计时状态
 		int timer_start = 0;
 		while (1)
 		{
 			//最低油门方向最左方向最右
-			if (!timer_start && (lock_status == 3 || lock_status == 5))
+			if (!timer_start && (e->lock_status == 3 || e->lock_status == 5))
 			{
 				//开始计时
 				gettimeofday(&start, NULL);
@@ -458,7 +369,7 @@ void engine_lock()
 
 			if (timer_start)
 			{
-				if (status != lock_status)
+				if (status != e->lock_status)
 				{
 					break;
 				}
@@ -468,13 +379,13 @@ void engine_lock()
 				if (timer >= 2 * 1000 * 1000)
 				{
 					//方向最左侧解锁电机
-					if ((lock_status >> 2) & 0x1)
+					if ((e->lock_status >> 2) & 0x1)
 					{
 						engine.lock = 0;
 						break;
 					}
 					//方向最右侧锁定电机
-					if ((lock_status >> 1) & 0x1)
+					if ((e->lock_status >> 1) & 0x1)
 					{
 						engine.lock = 1;
 						break;
@@ -485,13 +396,6 @@ void engine_lock()
 		}
 		usleep(100 * 1000);
 	}
-}
-
-//二次曲线函数
-float engine_parabola(float x)
-{
-	float flag = x / engine_abs(x);
-	return flag * (1.0 / 22.0) * (x * x);
 }
 
 //XY轴的欧拉角PID反馈控制
@@ -575,6 +479,13 @@ void engine_reset(s_engine *e)
 		//电机实际速度置为0
 		e->speed[i] = 0;
 	}
+
+	//显示摇控器读数
+	e->ctl_fb = 0;
+	e->ctl_lr = 0;
+	e->ctl_pw = 0;
+	//最低油门,最左，最右
+	e->lock_status = 0;
 }
 
 //陀螺仪补偿

@@ -18,8 +18,6 @@
 #define CTL_STEP		(0.1)
 //高参幅度速度
 #define STEP_V			(10)
-//保护最低速度
-#define PROCTED_SPEED	(50)
 
 int __init(s_engine *engine, s_params *params);
 

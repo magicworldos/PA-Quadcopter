@@ -11,24 +11,20 @@
 
 #include <typedef.h>
 
-//摇控器接收机的3个通道引脚
-#define GPIO_FB				(12)
-#define GPIO_LR				(14)
-#define GPIO_PW				(13)
+////摇控器接收机的3个通道引脚
+//#define GPIO_FB				(12)
+//#define GPIO_LR				(14)
+//#define GPIO_PW				(13)
 
 //4个电机的GPIO引脚
-//#define PORT_SPEED0	  		(1)
-//#define PORT_SPEED1	  		(15)
-//#define PORT_SPEED2	  		(6)
-//#define PORT_SPEED3	  		(16)
 #define PORT_SPEED0	  		(27)
 #define PORT_SPEED1	  		(28)
 #define PORT_SPEED2	  		(26)
 #define PORT_SPEED3	  		(29)
 
-//摇控器接收机的3个通道读数范围
-#define CTL_PWM_MIN				(980)
-#define CTL_PWM_MAX				(2020)
+////摇控器接收机的3个通道读数范围
+//#define CTL_PWM_MIN				(980)
+//#define CTL_PWM_MAX				(2020)
 
 //最大调试时长10秒
 #define MAX_INIT_MS			(10000)
@@ -52,17 +48,6 @@ typedef struct
 	//电机实际速度
 	int speed;
 } s_driver;
-
-typedef struct
-{
-	struct timeval timer_start;
-	struct timeval timer_end;
-	long timer_avg;
-	long timer_sum;
-	long timer_max;
-	long timer_min;
-	long timer_n;
-} s_ctl_pwm;
 
 //驱动程序初始化
 void driver_setup();
