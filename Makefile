@@ -25,10 +25,10 @@ $(MOD_PROJECT):
 	main/main.c								\
 	engine/engine.c							\
 	engine/dlmod.c							\
-	engine/driver.c							\
 	util/list.c
 	
 $(MOD_MODULES):
+	cd mods/motor/			&& make
 	cd mods/paramsctl/		&& make
 	cd mods/controller/		&& make
 	cd mods/mpu6050/		&& make

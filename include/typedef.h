@@ -38,7 +38,11 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 
 //保护最低速度
-#define PROCTED_SPEED	(50)
+#define PROCTED_SPEED				(50)
+//电机最大速度
+#define MAX_SPEED_RUN_MAX			(1000)
+//电机最小速度
+#define MAX_SPEED_RUN_MIN			(0)
 
 //引擎结构
 typedef struct

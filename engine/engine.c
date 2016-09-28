@@ -7,7 +7,6 @@
  */
 
 #include <engine.h>
-#include <driver.h>
 
 //引擎
 s_engine engine;
@@ -33,13 +32,15 @@ void engine_start(int argc, char *argv[])
 	//处理启动参数
 	if (argc >= 2)
 	{
+
+#ifndef __PC_TEST__
+		//初始化WiringPi
+		wiringPiSetup();
+#endif
+
 		//正常模式，飞行，调参
 		if (strcmp(argv[1], "--fly") == 0)
 		{
-#ifndef __PC_TEST__
-			//初始化驱动
-			driver_setup();
-#endif
 			//重置引擎
 			engine_reset(&engine);
 			//启动摇控器锁定、解锁电机
@@ -57,10 +58,6 @@ void engine_start(int argc, char *argv[])
 		//校准摇控器模式
 		if (strcmp(argv[1], "--ctl") == 0)
 		{
-#ifndef __PC_TEST__
-			//初始化驱动
-			driver_setup();
-#endif
 			//重置引擎
 			engine_reset(&engine);
 
@@ -111,7 +108,7 @@ void engine_start(int argc, char *argv[])
 				//调试时长，毫秒
 				sscanf(argv[4], "%d", &en_msecs);
 				//开始调试电机
-				driver_ent_run(en_port, en_speed, en_msecs);
+				engine_ent_run(en_port, en_speed, en_msecs);
 
 				return;
 			}
@@ -287,12 +284,6 @@ void engine_move(s_engine *e)
 
 	//校验电机转数范围
 	engine_rechk_speed(e);
-
-	//调用驱动设置电机转数
-	driver_set_speed0(e->speed[0]);
-	driver_set_speed1(e->speed[1]);
-	driver_set_speed2(e->speed[2]);
-	driver_set_speed3(e->speed[3]);
 }
 
 //校验电机转数范围
@@ -328,17 +319,6 @@ void engine_rechk_speed(s_engine *e)
 			engine_set_dxy();
 		}
 	}
-}
-
-//取绝对值
-float engine_abs(float value)
-{
-	if (value < 0)
-	{
-		return -value;
-	}
-
-	return value;
 }
 
 //电机锁定解锁处理
@@ -506,16 +486,44 @@ void engine_set_dxy()
 	e->daz = -e->az;
 }
 
+//电机调试
+void engine_ent_run(int en_port, int en_speed, int en_msecs)
+{
+	//设置指定的GPIO引脚为输出引脚
+	pinMode(en_port, OUTPUT);
+
+	//开始调试运行en_msecs毫秒，最多运行10000毫秒（10秒）
+	en_msecs = en_msecs > TEST_MAX_MS ? TEST_MAX_MS : en_msecs;
+	//由于一个PWM信号周期为2毫秒，所以调试时长要要除以2
+	for (int i = 0; i < en_msecs / 2; i++)
+	{
+		//高电平
+		digitalWrite(en_port, HIGH);
+		usleep(TEST_ZERO_MS + en_speed);
+		//低电平
+		digitalWrite(en_port, LOW);
+		usleep(TEST_ZERO_MS - en_speed);
+	}
+
+	//停止
+	for (int i = 0; i < 100; i++)
+	{
+		//高电平
+		digitalWrite(en_port, HIGH);
+		usleep(1000);
+		//低电平
+		digitalWrite(en_port, LOW);
+		usleep(1000);
+	}
+}
+
 //异常处理
 void engine_exception()
 {
 	//重置引擎
 	engine_reset(&engine);
-	//清理驱动
-	driver_clear();
 	//清理动态链接库
 	dlmod_destory();
-
 	//退出
 	exit(0);
 }

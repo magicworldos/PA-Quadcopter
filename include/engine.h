@@ -20,12 +20,14 @@
 #define ENG_TIMER					(10)
 //最大角度
 #define MAX_ANGLE					(90.0)
-//电机最大速度
-#define MAX_SPEED_RUN_MAX			(1000)
-//电机最小速度
-#define MAX_SPEED_RUN_MIN			(0)
 //渐进式方向增量
 #define DIRECT_VALUE				(0.2)
+
+//电调起始时长(仅在--ctl模式下用)
+#define TEST_ZERO_MS				(1000)
+//最大调试时长10秒(仅在--ctl模式下用)
+#define TEST_MAX_MS					(10000)
+
 
 //启动引擎
 void engine_start(int argc, char *argv[]);
@@ -38,9 +40,6 @@ void engine_move(s_engine *e);
 
 //校验电机转数范围
 void engine_rechk_speed(s_engine *e);
-
-//取绝对值
-float engine_abs(float value);
 
 //电机锁定解锁处理
 void engine_lock();
@@ -65,6 +64,9 @@ void engine_reset(s_engine *e);
 
 //陀螺仪补偿
 void engine_set_dxy();
+
+//电机调试
+void engine_ent_run(int en_port, int en_speed, int en_msecs);
 
 //异常处理
 void engine_exception();
