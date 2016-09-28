@@ -32,12 +32,18 @@ int __init(s_engine *engine, s_params *params)
 	{
 		//状态
 		st[i] = 1;
-		//设置电机GPIO为输出引脚
-		pinMode(ports[i], OUTPUT);
 		//电机初始速度为0
 		speed[i] = 0;
+
+		//设置电机GPIO为输出引脚
+		pinMode(ports[i], OUTPUT);
+
+#ifndef __PC_TEST__
+
 		//启动电机信号输出线程
 		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_run, (void *) (u64) i);
+#endif
+
 	}
 
 	return 0;
@@ -54,7 +60,13 @@ int __destory(s_engine *e, s_params *p)
 		speed[i] = 0;
 	}
 
-	usleep(100 * 1000);
+	usleep(10 * 1000);
+
+	for (int i = 0; i < MOTOR_COUNT; i++)
+	{
+		//状态
+		st[i] = 0;
+	}
 
 	return 0;
 }
@@ -98,6 +110,9 @@ void motor_run(void *args)
 	motor_pwm pwm;
 	while (r)
 	{
+		//校验电机有效范围
+		speed[motor] = motor_rechk_speed(e->speed[motor]);
+
 		//将电机速度转为PWM信号
 		motor_set_pwm(speed[motor], &pwm);
 
@@ -106,4 +121,25 @@ void motor_run(void *args)
 	}
 
 	st[motor] = 0;
+}
+
+//校验电机转数范围
+int motor_rechk_speed(int speed)
+{
+	if (speed > MAX_SPEED_RUN_MAX)
+	{
+		speed = MAX_SPEED_RUN_MAX;
+	}
+	if (speed < MAX_SPEED_RUN_MIN)
+	{
+		speed = MAX_SPEED_RUN_MIN;
+	}
+
+	//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
+	if (e->lock || e->v < PROCTED_SPEED)
+	{
+		speed = 0;
+	}
+
+	return speed;
 }

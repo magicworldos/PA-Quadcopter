@@ -10,10 +10,7 @@
 #define SRC_ENGINE_H_
 
 #include <typedef.h>
-//#include <mpu6050.h>
 #include <dlmod.h>
-
-#define __PC_TEST__
 
 //原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 //10ms 100Hz
@@ -68,7 +65,7 @@ void engine_set_dxy();
 //电机调试
 void engine_ent_run(int en_port, int en_speed, int en_msecs);
 
-//异常处理
-void engine_exception();
+//系统信号处理
+void engine_handler();
 
 #endif /* SRC_ENGINE_H_ */

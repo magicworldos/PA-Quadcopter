@@ -14,6 +14,8 @@ s_engine engine;
 s_params params;
 //参数缓存，保存用
 s_params params_cache;
+//用于存放动态链接库
+s_list list;
 
 //信号量
 sem_t sem_engine;
@@ -24,7 +26,7 @@ pthread_t pthd;
 void engine_start(int argc, char *argv[])
 {
 	//处理Ctrl + C退出信号
-	signal(SIGINT, (void (*)(int)) &engine_exception);
+	signal(SIGINT, (void (*)(int)) &engine_handler);
 
 	//初始化引擎信号量
 	sem_init(&sem_engine, 0, 0);
@@ -55,14 +57,34 @@ void engine_start(int argc, char *argv[])
 
 			return;
 		}
+
 		//校准摇控器模式
 		if (strcmp(argv[1], "--ctl") == 0)
 		{
 			//重置引擎
 			engine_reset(&engine);
-
 			s_engine *e = &engine;
 			s_params *p = &params;
+
+			s_dlmod *mod_paramsctl = dlmod_open("./lib/libparamsctl.so");
+			if (mod_paramsctl == NULL)
+			{
+				printf("Can not found ./lib/libparamsctl.so library.\n");
+				return;
+			}
+
+			s_dlmod *mod_controller = dlmod_open("./lib/libcontroller.so");
+			if (mod_controller == NULL)
+			{
+				printf("Can not found ./lib/libcontroller.so library.\n");
+				return;
+			}
+
+			list_init(&list, &dlmod_free_mod);
+			list_insert(&list, mod_paramsctl);
+			list_insert(&list, mod_controller);
+			list_visit(&list, (void *) &dlmod_run_pt_init);
+
 			int i = 0;
 			int n = 100;
 			int s_fb = 0;
@@ -89,8 +111,10 @@ void engine_start(int argc, char *argv[])
 
 				usleep(10 * 1000);
 			}
+
 			return;
 		}
+
 		//电机调试模式
 		if (strcmp(argv[1], "--test") == 0)
 		{
@@ -241,28 +265,28 @@ void engine_fly()
 		e->v_devi[1] += +yv_devi;
 		e->v_devi[3] += -yv_devi;
 
-//		//处理XY轴旋加速度平衡补偿
-//		float xa_devi = 0;
-//		float ya_devi = 0;
-//		//设置X轴PID数据
-//		xa_et_2 = xa_et_1;
-//		xa_et_1 = xa_et;
-//		xa_et = e->ax + e->dax;
-//		//使用X轴的旋转角速度的PID反馈控制算法
-//		xa_devi = engine_pid_a(xa_et, xa_et_1, xa_et_2);
-//
-//		//设置Y轴PID数据
-//		ya_et_2 = ya_et_1;
-//		ya_et_1 = ya_et;
-//		ya_et = e->ay + e->day;
-//		//使用Y轴的旋转角速度的PID反馈控制算法
-//		ya_devi = engine_pid_a(ya_et, ya_et_1, ya_et_2);
-//
-//		//对引擎的4个轴做加速度平衡补偿
-//		e->v_devi[0] += +xa_devi;
-//		e->v_devi[2] += -xa_devi;
-//		e->v_devi[1] += +ya_devi;
-//		e->v_devi[3] += -ya_devi;
+		////处理XY轴旋加速度平衡补偿
+		//float xa_devi = 0;
+		//float ya_devi = 0;
+		////设置X轴PID数据
+		//xa_et_2 = xa_et_1;
+		//xa_et_1 = xa_et;
+		//xa_et = e->ax + e->dax;
+		////使用X轴的旋转角速度的PID反馈控制算法
+		//xa_devi = engine_pid_a(xa_et, xa_et_1, xa_et_2);
+		//
+		////设置Y轴PID数据
+		//ya_et_2 = ya_et_1;
+		//ya_et_1 = ya_et;
+		//ya_et = e->ay + e->day;
+		////使用Y轴的旋转角速度的PID反馈控制算法
+		//ya_devi = engine_pid_a(ya_et, ya_et_1, ya_et_2);
+		//
+		////对引擎的4个轴做加速度平衡补偿
+		//e->v_devi[0] += +xa_devi;
+		//e->v_devi[2] += -xa_devi;
+		//e->v_devi[1] += +ya_devi;
+		//e->v_devi[3] += -ya_devi;
 
 		//引擎运转，调用驱动，调控电机转数
 		engine_move(e);
@@ -409,9 +433,6 @@ float engine_pid_zv(float et, float et_1, float et_2)
 //对XY轴加速度做PID反馈控制
 float engine_pid_a(float et, float et_1, float et_2)
 {
-	et *= 40.0;
-	et_1 *= 40.0;
-	et_2 *= 40.0;
 	//增量式PID反馈控制
 	return params.kp_a * (et - et_1) + (params.ki_a * et) + params.kd_a * (et - 2 * et_1 + et_2);
 }
@@ -517,13 +538,15 @@ void engine_ent_run(int en_port, int en_speed, int en_msecs)
 	}
 }
 
-//异常处理
-void engine_exception()
+//系统信号处理
+void engine_handler()
 {
 	//重置引擎
 	engine_reset(&engine);
+
 	//清理动态链接库
 	dlmod_destory();
+
 	//退出
 	exit(0);
 }

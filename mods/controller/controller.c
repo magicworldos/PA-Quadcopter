@@ -43,9 +43,11 @@ int __init(s_engine *engine, s_params *params)
 	ctl_pwm_pw.timer_min = 9999;
 	ctl_pwm_pw.timer_n = 0;
 
+#ifndef __PC_TEST__
 	wiringPiISR(GPIO_FB, INT_EDGE_BOTH, &controller_ctl_pwm_fb);
 	wiringPiISR(GPIO_LR, INT_EDGE_BOTH, &controller_ctl_pwm_lr);
 	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &controller_ctl_pwm_pw);
+#endif
 
 	return 0;
 }

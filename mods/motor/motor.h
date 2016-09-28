@@ -53,4 +53,7 @@ void motor_run_pwm(int motor, motor_pwm *pwm);
 //向电机0发送PWM信号
 void motor_run(void *args);
 
+//校验电机转数范围
+int motor_rechk_speed(int speed);
+
 #endif /* INCLUDE_DRIVER_H_ */

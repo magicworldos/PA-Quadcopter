@@ -37,6 +37,8 @@ typedef unsigned int u32;
 typedef signed long long s64;
 typedef unsigned long long u64;
 
+#define __PC_TEST__
+
 //保护最低速度
 #define PROCTED_SPEED				(50)
 //电机最大速度

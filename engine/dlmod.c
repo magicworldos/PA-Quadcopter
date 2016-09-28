@@ -12,9 +12,11 @@ extern s_engine engine;
 //参数
 extern s_params params;
 
+extern s_list list;
+
 pthread_t pthdmod;
 
-s_list list;
+
 
 void dlmod_run_init(void *args)
 {
@@ -136,44 +138,11 @@ int dlmod_init()
 			//文件名
 			printf("%s\n", filename);
 
-			void *handler = dlopen(filename, RTLD_LAZY);
-			if (handler == NULL)
+			s_dlmod *mod = dlmod_open(filename);
+			if (mod == NULL)
 			{
 				continue;
 			}
-
-			int (*init)()= dlsym(handler, "__init");
-			if (init == NULL)
-			{
-				dlclose(handler);
-				continue;
-			}
-
-			int (*destory)()= dlsym(handler, "__destory");
-			if (destory == NULL)
-			{
-				dlclose(handler);
-				continue;
-			}
-
-			int (*status)()= dlsym(handler, "__status");
-			if (status == NULL)
-			{
-				dlclose(handler);
-				continue;
-			}
-
-			s_dlmod *mod = malloc(sizeof(s_dlmod));
-			mod->handler = handler;
-			mod->init = init;
-			mod->destory = destory;
-			mod->status = status;
-
-			mod->args = malloc(sizeof(void *) * 4);
-			mod->args[0] = mod;
-			mod->args[1] = &engine;
-			mod->args[2] = &params;
-			mod->args[3] = &status;
 
 			list_insert(&list, mod);
 		}
@@ -198,7 +167,6 @@ int dlmod_mods_status()
 		}
 		p = p->next;
 	}
-	printf("all clear.\n");
 	return 0;
 }
 
@@ -209,7 +177,6 @@ int dlmod_destory()
 	{
 		if (dlmod_mods_status() == 0)
 		{
-			printf("Done.\n");
 			break;
 		}
 
@@ -219,4 +186,65 @@ int dlmod_destory()
 	list_destroy(&list);
 
 	return 0;
+}
+
+s_dlmod* dlmod_open(char *filename)
+{
+	s_dlmod *mod = malloc(sizeof(s_dlmod));
+	if (mod == NULL)
+	{
+		goto _label_ret;
+	}
+
+	void *handler = dlopen(filename, RTLD_LAZY);
+	if (handler == NULL)
+	{
+		goto _label_mod;
+	}
+
+	int (*init)()= dlsym(handler, "__init");
+	if (init == NULL)
+	{
+		goto _label_mod;
+	}
+
+	int (*destory)()= dlsym(handler, "__destory");
+	if (destory == NULL)
+	{
+		goto _label_mod;
+	}
+
+	int (*status)()= dlsym(handler, "__status");
+	if (status == NULL)
+	{
+		goto _label_mod;
+	}
+
+	mod->handler = handler;
+	mod->init = init;
+	mod->destory = destory;
+	mod->status = status;
+
+	mod->args = malloc(sizeof(void *) * 4);
+	if (mod->args == NULL)
+	{
+		goto _label_mod;
+	}
+
+	mod->args[0] = mod;
+	mod->args[1] = &engine;
+	mod->args[2] = &params;
+	mod->args[3] = &status;
+
+	goto _label_ret;
+
+	_label_mod:
+
+	dlclose(handler);
+	free(mod);
+	return NULL;
+
+	_label_ret: ;
+
+	return mod;
 }

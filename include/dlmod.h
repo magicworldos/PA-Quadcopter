@@ -39,4 +39,6 @@ int dlmod_mods_status();
 
 int dlmod_destory();
 
+s_dlmod* dlmod_open(char *filename);
+
 #endif /* INCLUDE_DLMOD_H_ */
