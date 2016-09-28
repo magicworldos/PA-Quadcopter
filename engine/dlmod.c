@@ -16,105 +16,7 @@ extern s_list list;
 
 pthread_t pthdmod;
 
-
-
-void dlmod_run_init(void *args)
-{
-	if (args == NULL)
-	{
-		return;
-	}
-	void **ags = (void **) args;
-	s_dlmod *mod = ags[0];
-	if (mod == NULL)
-	{
-		return;
-	}
-	mod->init(ags[1], ags[2]);
-}
-
-int dlmod_run_pt_init(s_dlmod *mod)
-{
-	if (mod == NULL)
-	{
-		return -1;
-	}
-
-	if (mod->init == NULL)
-	{
-		return -1;
-	}
-
-	pthread_create(&pthdmod, (const pthread_attr_t*) NULL, (void* (*)(void*)) &dlmod_run_init, mod->args);
-
-	return 0;
-}
-
-void dlmod_run_destory(void *args)
-{
-	if (args == NULL)
-	{
-		return;
-	}
-	void **ags = (void **) args;
-	s_dlmod *mod = ags[0];
-	if (mod == NULL)
-	{
-		return;
-	}
-	mod->destory(ags[1], ags[2]);
-}
-
-int dlmod_run_pt_destory(s_dlmod *mod)
-{
-	if (mod == NULL)
-	{
-		return -1;
-	}
-
-	if (mod->init == NULL)
-	{
-		return -1;
-	}
-
-	pthread_create(&pthdmod, (const pthread_attr_t*) NULL, (void* (*)(void*)) &dlmod_run_destory, mod->args);
-
-	return 0;
-}
-
-int dlmod_dlclose(s_dlmod *mod)
-{
-	if (mod == NULL)
-	{
-		return -1;
-	}
-
-	if (mod->handler == NULL)
-	{
-		return -1;
-	}
-
-	dlclose(mod->handler);
-
-	return 0;
-}
-
-int dlmod_free_mod(s_dlmod *mod)
-{
-	if (mod == NULL)
-	{
-		return -1;
-	}
-
-	if (mod->args != NULL)
-	{
-		free(mod->args);
-	}
-
-	free(mod);
-	return 0;
-}
-
+//读取lib文件夹，并载入*.so动态链接库
 int dlmod_init()
 {
 	list_init(&list, &dlmod_free_mod);
@@ -155,21 +57,7 @@ int dlmod_init()
 	return 0;
 }
 
-int dlmod_mods_status()
-{
-	s_node *p = list.header;
-	while (p != NULL)
-	{
-		s_dlmod *mod = (s_dlmod *) p->data;
-		if (mod->status())
-		{
-			return 1;
-		}
-		p = p->next;
-	}
-	return 0;
-}
-
+//销毁模块链表
 int dlmod_destory()
 {
 	list_visit(&list, (void *) &dlmod_run_pt_destory);
@@ -188,6 +76,7 @@ int dlmod_destory()
 	return 0;
 }
 
+//载入一个*.so的动态链接库
 s_dlmod* dlmod_open(char *filename)
 {
 	s_dlmod *mod = malloc(sizeof(s_dlmod));
@@ -247,4 +136,123 @@ s_dlmod* dlmod_open(char *filename)
 	_label_ret: ;
 
 	return mod;
+}
+
+//关闭一个动态链接库
+int dlmod_dlclose(s_dlmod *mod)
+{
+	if (mod == NULL)
+	{
+		return -1;
+	}
+
+	if (mod->handler == NULL)
+	{
+		return -1;
+	}
+
+	dlclose(mod->handler);
+
+	return 0;
+}
+
+//释放内存资源
+int dlmod_free_mod(s_dlmod *mod)
+{
+	if (mod == NULL)
+	{
+		return -1;
+	}
+
+	if (mod->args != NULL)
+	{
+		free(mod->args);
+	}
+
+	free(mod);
+	return 0;
+}
+
+//取得当前模块状态
+int dlmod_mods_status()
+{
+	s_node *p = list.header;
+	while (p != NULL)
+	{
+		s_dlmod *mod = (s_dlmod *) p->data;
+		if (mod->status())
+		{
+			return 1;
+		}
+		p = p->next;
+	}
+	return 0;
+}
+
+//执行__init函数
+void dlmod_run_init(void *args)
+{
+	if (args == NULL)
+	{
+		return;
+	}
+	void **ags = (void **) args;
+	s_dlmod *mod = ags[0];
+	if (mod == NULL)
+	{
+		return;
+	}
+	mod->init(ags[1], ags[2]);
+}
+
+//采用多线程方式调用__init函数
+int dlmod_run_pt_init(s_dlmod *mod)
+{
+	if (mod == NULL)
+	{
+		return -1;
+	}
+
+	if (mod->init == NULL)
+	{
+		return -1;
+	}
+
+	pthread_create(&pthdmod, (const pthread_attr_t*) NULL, (void* (*)(void*)) &dlmod_run_init, mod->args);
+
+	return 0;
+}
+
+//执行__destory函数
+void dlmod_run_destory(void *args)
+{
+	if (args == NULL)
+	{
+		return;
+	}
+	void **ags = (void **) args;
+	s_dlmod *mod = ags[0];
+	if (mod == NULL)
+	{
+		return;
+	}
+	mod->destory(ags[1], ags[2]);
+}
+
+//采用多线程方式调用__destory函数
+int dlmod_run_pt_destory(s_dlmod *mod)
+{
+	if (mod == NULL)
+	{
+		return -1;
+	}
+
+	if (mod->init == NULL)
+	{
+		return -1;
+	}
+
+	pthread_create(&pthdmod, (const pthread_attr_t*) NULL, (void* (*)(void*)) &dlmod_run_destory, mod->args);
+
+	return 0;
 }
