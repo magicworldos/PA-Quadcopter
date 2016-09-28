@@ -5,7 +5,7 @@
  *      Author: lidq
  */
 
-#include <command.h>
+#include "../../mods/command/command.h"
 
 int __init(s_engine *e, s_params *p)
 {

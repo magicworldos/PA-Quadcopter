@@ -47,14 +47,14 @@ void engine_start(int argc, char *argv[])
 #ifndef __PC_TEST__
 			//初始化驱动
 			driver_setup();
-			mpu6050_setup();
+			//mpu6050_setup();
 #endif
 			//重置引擎
 			engine_reset(&engine);
 			//载入参数
 			params_load();
 			//启动MPU6050陀螺仪数据读入线程
-			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) engine_mpu, NULL);
+//			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) engine_mpu, NULL);
 			//启动摇控器锁定、解锁电机
 			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_lock, NULL);
 			//启动飞行引擎
@@ -355,7 +355,7 @@ void engine_mpu()
 		//xyz角速度，当x角变化时，y轴有旋转角速度；当月y角变化时，x轴有旋转角速度。
 		//但为了编写程序和书写方便，x轴的欧拉角和y轴的角速度统一为x；y轴的欧拉角和x轴的角速度统一为y
 		//mpu6050_value(&e->z, &e->y, &e->x, &e->gy, &e->gx, &e->gz, &e->ay, &e->ax, &e->az);
-		mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ay, &e->ax, &e->az);
+		//mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ay, &e->ax, &e->az);
 		usleep(1);
 	}
 }

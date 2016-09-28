@@ -5,8 +5,8 @@
  *      Author: lidq
  */
 
-#ifndef MODULES_DISPLAY_DISPLAY_H_
-#define MODULES_DISPLAY_DISPLAY_H_
+#ifndef MODS_DISPLAY_DISPLAY_H_
+#define MODS_DISPLAY_DISPLAY_H_
 
 #include <typedef.h>
 #include <engine.h>
@@ -24,4 +24,4 @@ int __destory(s_engine *e, s_params *p);
 
 void run();
 
-#endif /* MODULES_DISPLAY_DISPLAY_H_ */
+#endif /* MODS_DISPLAY_DISPLAY_H_ */

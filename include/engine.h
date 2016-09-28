@@ -10,7 +10,7 @@
 #define SRC_ENGINE_H_
 
 #include <typedef.h>
-#include <mpu6050.h>
+//#include <mpu6050.h>
 #include <dlmod.h>
 
 #define __PC_TEST__

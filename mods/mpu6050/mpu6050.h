@@ -3,6 +3,15 @@
 
 #include <typedef.h>
 #include <i2cdev.h>
+#include <engine.h>
+#include <paramsctl.h>
+
+int __init(s_engine *engine, s_params *params);
+
+int __destory(s_engine *e, s_params *p);
+
+//取得陀螺仪读数
+void mpu6050_run();
 
 void mpu6050_setup();
 

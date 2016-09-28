@@ -25,6 +25,44 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 uint8_t teapotPacket[14] =
 { '$', 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0x00, 0x00, '\r', '\n' };
 
+pthread_t pthd;
+s_engine *e = NULL;
+s_params *p = NULL;
+int r = 0;
+
+int __init(s_engine *engine, s_params *params)
+{
+	e = engine;
+	p = params;
+	r = 1;
+
+	mpu6050_setup();
+
+	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &mpu6050_run, NULL);
+
+	return 0;
+}
+
+int __destory(s_engine *e, s_params *p)
+{
+
+	return 0;
+}
+
+//取得陀螺仪读数
+void mpu6050_run()
+{
+	while (r)
+	{
+		//读取yxz轴欧拉角、旋转角速度、加速度
+		//xyz角速度，当x角变化时，y轴有旋转角速度；当月y角变化时，x轴有旋转角速度。
+		//但为了编写程序和书写方便，x轴的欧拉角和y轴的角速度统一为x；y轴的欧拉角和x轴的角速度统一为y
+		//mpu6050_value(&e->z, &e->y, &e->x, &e->gy, &e->gx, &e->gz, &e->ay, &e->ax, &e->az);
+		mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &e->ay, &e->ax, &e->az);
+		usleep(1);
+	}
+}
+
 void mpu6050_setup()
 {
 	// initialize device

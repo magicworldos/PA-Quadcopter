@@ -7,7 +7,7 @@
 #工程
 MOD_PROJECT			= quadcopter
 #模块动态链接库
-MOD_MODULES			= mods
+MOD_MODULES			= modlibs
 
 #编译目录
 MOD_MKDIR			= mkdir
@@ -27,14 +27,13 @@ $(MOD_PROJECT):
 	engine/paramsctl.c						\
 	engine/getch.c							\
 	engine/dlmod.c							\
-	mpu6050/i2cdev.c						\
-	mpu6050/mpu6050.c						\
 	engine/driver.c							\
 	util/list.c
 	
 $(MOD_MODULES):
-	cd modules/display/ && make
-	cd modules/command/ && make
+	cd mods/mpu6050/ && make
+	cd mods/display/ && make
+	cd mods/command/ && make
 
 $(MOD_MKDIR):
 	mkdir -p $(RELEASE_PATH)/bin/
