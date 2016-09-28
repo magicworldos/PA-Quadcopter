@@ -34,6 +34,7 @@ $(MOD_MODULES):
 	cd mods/mpu6050/		&& make
 	cd mods/display/		&& make
 	cd mods/command/		&& make
+	#cd mods/gy953/			&& make
 
 $(MOD_MKDIR):
 	mkdir -p $(RELEASE_PATH)/bin/

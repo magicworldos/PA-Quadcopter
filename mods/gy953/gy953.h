@@ -10,7 +10,12 @@
 #define INCLUDE_GY953_H_
 
 #include <typedef.h>
-#include <engine.h>
+
+int __init(s_engine *engine, s_params *params);
+
+int __destory(s_engine *e, s_params *p);
+
+int __status();
 
 //初始化陀螺仪
 int gy953_init(u32 init);

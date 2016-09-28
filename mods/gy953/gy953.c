@@ -9,10 +9,15 @@
 #include <gy953.h>
 
 int fd = 0;
-extern s_engine engine;
+u32 init = 0;
+int r = 0;
+int st = 0;
+pthread_t pthd;
+s_engine *e = NULL;
+s_params *p = NULL;
 
 //初始化陀螺仪
-int gy953_init(u32 init)
+int __init(s_engine *engine, s_params *params)
 {
 	fd = serialOpen("/dev/ttyS0", 115200);
 	if (fd <= 0)
@@ -141,12 +146,37 @@ int gy953_init(u32 init)
 		}
 	}
 	printf("Init OK\n");
+
+	st = 1;
+	r = 1;
+	e = engine;
+	p = params;
+
+	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &gy953_value, NULL);
+
+	return 0;
+}
+
+int __destory(s_engine *e, s_params *p)
+{
+	r = 0;
+	if (fd != 0)
+	{
+		serialClose(fd);
+		fd = 0;
+	}
+	return 0;
+}
+
+int __status()
+{
+	return st;
 }
 
 //循环读取陀螺仪读数
 void gy953_value()
 {
-	while (1)
+	while (r)
 	{
 		usleep(1);
 
@@ -167,23 +197,23 @@ void gy953_value()
 		//欧拉角读数
 		if (byte2 == 0x45)
 		{
-			gy953_read(&engine.x, &engine.y, &engine.z);
+			gy953_read(&e->x, &e->y, &e->z);
 			continue;
 		}
 		//陀螺仪读数
 		if (byte2 == 0x25)
 		{
-			gy953_read(&engine.gx, &engine.gy, &engine.gz);
+			gy953_read(&e->gx, &e->gy, &e->gz);
 			continue;
 		}
 		//加速计
 		if (byte2 == 0x15)
 		{
-			gy953_read(&engine.ax, &engine.ay, &engine.az);
+			gy953_read(&e->ax, &e->ay, &e->az);
 			continue;
 		}
 	}
-	gy953_close();
+	st = 0;
 }
 
 //读取一个类型的数值
@@ -211,14 +241,4 @@ int gy953_read(float *x, float *y, float *z)
 	*z = (float) zz / 100.0;
 
 	return 0;
-}
-
-//关闭陀螺仪
-void gy953_close()
-{
-	if (fd != 0)
-	{
-		serialClose(fd);
-		fd = 0;
-	}
 }
