@@ -18,11 +18,9 @@ int __init(s_engine *engine, s_params *params)
 	e = engine;
 	p = params;
 
-#ifndef __DISPLAY_DISABLED__
 	st = 1;
 	r = 1;
 	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &run, NULL);
-#endif
 
 	printf("[ OK ] Display Init.\n");
 
@@ -50,7 +48,7 @@ void run()
 		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
 
 #ifdef __DISPLAY_MODE_MORE__
-		printf("[xyz: %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][a: %+7.3f %+7.3f %+7.3f][s: %4d %4d %4d %4d]", e->x + e->dx + e->mx, e->y + e->dy + e->my, e->z + e->dz, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->ax + e->dax, e->ay + e->day, e->az + e->daz, e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+		printf("[xyz: %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+7.3f y:%+7.3f z:%+7.3f xv:%+7.3f yv:%+7.3f]", e->x + e->dx + e->mx, e->y + e->dy + e->my, e->z + e->dz, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi, e->xv_devi, e->yv_devi);
 #endif
 
 		if (p->ctl_type == 0)

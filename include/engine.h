@@ -12,9 +12,6 @@
 #include <typedef.h>
 #include <dlmod.h>
 
-//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
-//10ms 100Hz
-#define ENG_TIMER					(10)
 //最大角度
 #define MAX_ANGLE					(90.0)
 //渐进式方向增量
@@ -32,10 +29,7 @@ void engine_start(int argc, char *argv[]);
 //引擎核心算法平衡算法
 void engine_fly();
 
-//引擎运转
-void engine_move(s_engine *e);
-
-//校验电机转数范围
+//校验速度范围
 void engine_rechk_speed(s_engine *e);
 
 //电机锁定解锁处理

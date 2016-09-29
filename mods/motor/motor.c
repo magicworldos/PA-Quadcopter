@@ -15,6 +15,7 @@ int ports[MOTOR_COUNT] =
 
 pthread_t pthddr;
 
+int sts = 0;
 int st[MOTOR_COUNT];
 int r = 0;
 pthread_t pthd;
@@ -28,6 +29,7 @@ int __init(s_engine *engine, s_params *params)
 	p = params;
 
 	r = 1;
+	sts = 1;
 	for (int i = 0; i < MOTOR_COUNT; i++)
 	{
 		//状态
@@ -40,8 +42,11 @@ int __init(s_engine *engine, s_params *params)
 
 #ifndef __PC_TEST__
 
+		//启动速度平衡补偿
+		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_balance_compensation, NULL);
+
 		//启动电机信号输出线程
-		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_run, (void *) (long)i);
+		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_run, (void *) (long) i);
 #endif
 
 	}
@@ -82,7 +87,8 @@ int __status()
 			return st[i];
 		}
 	}
-	return 0;
+
+	return sts;
 }
 
 //将电机速度转为PWM信号
@@ -112,9 +118,6 @@ void motor_run(void *args)
 	motor_pwm pwm;
 	while (r)
 	{
-		//校验电机有效范围
-		speed[motor] = motor_rechk_speed(e->speed[motor]);
-
 		//将电机速度转为PWM信号
 		motor_set_pwm(speed[motor], &pwm);
 
@@ -125,23 +128,38 @@ void motor_run(void *args)
 	st[motor] = 0;
 }
 
-//校验电机转数范围
-int motor_rechk_speed(int speed)
+//速度平衡补偿
+void motor_balance_compensation()
 {
-	if (speed > MAX_SPEED_RUN_MAX)
+	while (r)
 	{
-		speed = MAX_SPEED_RUN_MAX;
-	}
-	if (speed < MAX_SPEED_RUN_MIN)
-	{
-		speed = MAX_SPEED_RUN_MIN;
+		e->v = e->v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : e->v;
+		e->v = e->v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : e->v;
+
+		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
+		if (e->lock || e->v < PROCTED_SPEED)
+		{
+			for (int i = 0; i < MOTOR_COUNT; i++)
+			{
+				speed[i] = 0;
+			}
+			continue;
+		}
+
+		//标准四轴平衡补偿
+		speed[0] = (int) e->v - e->x_devi + e->z_devi - e->xv_devi;
+		speed[1] = (int) e->v - e->y_devi + e->z_devi + e->yv_devi;
+		speed[2] = (int) e->v + e->x_devi - e->z_devi + e->xv_devi;
+		speed[3] = (int) e->v + e->y_devi - e->z_devi - e->yv_devi;
+
+		for (int i = 0; i < MOTOR_COUNT; i++)
+		{
+			speed[i] = speed[i] > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : speed[i];
+			speed[i] = speed[i] < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : speed[i];
+		}
+
+		usleep(ENG_TIMER * 1000);
 	}
 
-	//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
-	if (e->lock || e->v < PROCTED_SPEED)
-	{
-		speed = 0;
-	}
-
-	return speed;
+	sts = 0;
 }

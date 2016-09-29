@@ -10,8 +10,6 @@
 
 #include <typedef.h>
 
-//不显示输出
-//#define __DISPLAY_DISABLED__
 //多信息同行显示
 #define	__DISPLAY_MODE_MORE__
 //显示频度

@@ -45,6 +45,9 @@ typedef unsigned long long u64;
 #define MAX_SPEED_RUN_MAX			(1000)
 //电机最小速度
 #define MAX_SPEED_RUN_MIN			(0)
+//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
+//10ms 100Hz
+#define ENG_TIMER					(10)
 
 //引擎结构
 typedef struct
@@ -84,10 +87,13 @@ typedef struct
 	float daz;
 	//引擎速度
 	float v;
-	//速度补偿
-	float v_devi[4];
-	//电机实际速度
-	int speed[4];
+	//XYZ欧拉角补偿
+	float x_devi;
+	float y_devi;
+	float z_devi;
+	//XYZ角速度补偿
+	float xv_devi;
+	float yv_devi;
 
 	//其它参数
 	//显示摇控器读数

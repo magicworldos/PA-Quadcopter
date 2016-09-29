@@ -69,14 +69,12 @@ void engine_start(int argc, char *argv[])
 			s_dlmod *mod_paramsctl = dlmod_open("./lib/libparamsctl.so");
 			if (mod_paramsctl == NULL)
 			{
-				printf("Can not found ./lib/libparamsctl.so library.\n");
 				return;
 			}
 
 			s_dlmod *mod_controller = dlmod_open("./lib/libcontroller.so");
 			if (mod_controller == NULL)
 			{
-				printf("Can not found ./lib/libcontroller.so library.\n");
 				return;
 			}
 
@@ -169,11 +167,6 @@ void engine_fly()
 
 	while (1)
 	{
-		e->v_devi[0] = 0;
-		e->v_devi[1] = 0;
-		e->v_devi[2] = 0;
-		e->v_devi[3] = 0;
-
 		//渐进式方向舵X轴
 		if (e->mx < e->ctlmx)
 		{
@@ -204,10 +197,8 @@ void engine_fly()
 		x_et_1 = x_et;
 		x_et = x_angle;
 		//使用XY轴的欧拉角的PID反馈控制算法
-		float x_devi = engine_pid(x_et, x_et_1, x_et_2);
+		e->x_devi = engine_pid(x_et, x_et_1, x_et_2);
 		//得出引擎的X轴平衡补偿
-		e->v_devi[0] += -x_devi;
-		e->v_devi[2] += +x_devi;
 
 		//处理Y轴欧拉角平衡补偿
 		//计算角度：欧拉角y + 校准补偿dy + 中心补偿cy + 移动倾斜角my
@@ -220,10 +211,7 @@ void engine_fly()
 		y_et_1 = y_et;
 		y_et = y_angle;
 		//使用XY轴的欧拉角的PID反馈控制算法
-		float y_devi = engine_pid(y_et, y_et_1, y_et_2);
-		//得出引擎的Y轴平衡补偿
-		e->v_devi[1] += -y_devi;
-		e->v_devi[3] += +y_devi;
+		e->y_devi = engine_pid(y_et, y_et_1, y_et_2);
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
@@ -233,115 +221,44 @@ void engine_fly()
 		z_et_1 = z_et;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		float z_devi = engine_pid_z(z_et, z_et_1, z_et_2);
-		//处理Z轴自旋补偿
-		e->v_devi[0] += +z_devi;
-		e->v_devi[2] += +z_devi;
-		e->v_devi[1] += -z_devi;
-		e->v_devi[3] += -z_devi;
+		e->z_devi = engine_pid_z(z_et, z_et_1, z_et_2);
 
 		//处理XY轴旋转角速度平衡补偿
-		float xv_devi = 0;
-		float yv_devi = 0;
-		float zv_devi = 0;
-
 		//设置X轴PID数据
 		xv_et_2 = xv_et_1;
 		xv_et_1 = xv_et;
 		xv_et = e->gx + e->dgx;
 		//使用X轴的旋转角速度的PID反馈控制算法
-		xv_devi = engine_pid_v(xv_et, xv_et_1, xv_et_2);
+		e->xv_devi = engine_pid_v(xv_et, xv_et_1, xv_et_2);
 
 		//设置Y轴PID数据
 		yv_et_2 = yv_et_1;
 		yv_et_1 = yv_et;
 		yv_et = e->gy + e->dgy;
 		//使用Y轴的旋转角速度的PID反馈控制算法
-		yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
+		e->yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
-		//对引擎的4个轴做角速度平衡补偿
-		e->v_devi[0] += -xv_devi;
-		e->v_devi[2] += +xv_devi;
-		e->v_devi[1] += +yv_devi;
-		e->v_devi[3] += -yv_devi;
-
-		////处理XY轴旋加速度平衡补偿
-		//float xa_devi = 0;
-		//float ya_devi = 0;
-		////设置X轴PID数据
-		//xa_et_2 = xa_et_1;
-		//xa_et_1 = xa_et;
-		//xa_et = e->ax + e->dax;
-		////使用X轴的旋转角速度的PID反馈控制算法
-		//xa_devi = engine_pid_a(xa_et, xa_et_1, xa_et_2);
-		//
-		////设置Y轴PID数据
-		//ya_et_2 = ya_et_1;
-		//ya_et_1 = ya_et;
-		//ya_et = e->ay + e->day;
-		////使用Y轴的旋转角速度的PID反馈控制算法
-		//ya_devi = engine_pid_a(ya_et, ya_et_1, ya_et_2);
-		//
-		////对引擎的4个轴做加速度平衡补偿
-		//e->v_devi[0] += +xa_devi;
-		//e->v_devi[2] += -xa_devi;
-		//e->v_devi[1] += +ya_devi;
-		//e->v_devi[3] += -ya_devi;
-
-		//引擎运转，调用驱动，调控电机转数
-		engine_move(e);
+		//校验速度范围
+		engine_rechk_speed(e);
 
 		//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 		usleep(ENG_TIMER * 1000);
 	}
 }
 
-//引擎运转
-void engine_move(s_engine *e)
-{
-	//设置电机实际转数
-	for (int i = 0; i < 4; i++)
-	{
-		//设置电机转数为做引擎速度 + 补偿
-		e->speed[i] = (int) (e->v + e->v_devi[i]);
-	}
-
-	//校验电机转数范围
-	engine_rechk_speed(e);
-}
-
-//校验电机转数范围
+//校验速度范围
 void engine_rechk_speed(s_engine *e)
 {
-	if (e->v > MAX_SPEED_RUN_MAX)
-	{
-		e->v = MAX_SPEED_RUN_MAX;
-	}
-	if (e->v < MAX_SPEED_RUN_MIN)
-	{
-		e->v = MAX_SPEED_RUN_MIN;
-	}
+	e->v = e->v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : e->v;
+	e->v = e->v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : e->v;
 
-	for (int i = 0; i < 4; i++)
+	//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
+	if (e->lock || e->v < PROCTED_SPEED)
 	{
-		if (e->speed[i] > MAX_SPEED_RUN_MAX)
-		{
-			e->speed[i] = MAX_SPEED_RUN_MAX;
-		}
-		if (e->speed[i] < MAX_SPEED_RUN_MIN)
-		{
-			e->speed[i] = MAX_SPEED_RUN_MIN;
-		}
-
-		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
-		if (e->lock || e->v < PROCTED_SPEED)
-		{
-			//设置速度为0
-			e->v = 0;
-			e->speed[i] = 0;
-			//在电机停转时，做陀螺仪补偿
-			engine_set_dxy();
-		}
+		//设置速度为0
+		e->v = 0;
+		//在电机停转时，做陀螺仪补偿
+		engine_set_dxy();
 	}
 }
 
@@ -473,13 +390,13 @@ void engine_reset(s_engine *e)
 	e->daz = 0;
 	//重置速度速度置为0
 	e->v = 0;
-	for (int i = 0; i < 4; i++)
-	{
-		//平衡补偿置为0
-		e->v_devi[i] = 0;
-		//电机实际速度置为0
-		e->speed[i] = 0;
-	}
+	//XYZ欧拉角补偿
+	e->x_devi = 0;
+	e->y_devi = 0;
+	e->z_devi = 0;
+	//XYZ角速度补偿
+	e->xv_devi = 0;
+	e->yv_devi = 0;
 
 	//显示摇控器读数
 	e->ctl_fb = 0;

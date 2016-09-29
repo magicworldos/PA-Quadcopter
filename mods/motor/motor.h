@@ -11,6 +11,7 @@
 
 #include <typedef.h>
 
+//电机数量
 #define MOTOR_COUNT			(4)
 
 //4个电机的GPIO引脚
@@ -53,7 +54,7 @@ void motor_run_pwm(int motor, motor_pwm *pwm);
 //向电机0发送PWM信号
 void motor_run(void *args);
 
-//校验电机转数范围
-int motor_rechk_speed(int speed);
+//速度平衡补偿
+void motor_balance_compensation();
 
 #endif /* INCLUDE_DRIVER_H_ */
