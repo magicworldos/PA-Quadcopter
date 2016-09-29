@@ -82,30 +82,35 @@ s_dlmod* dlmod_open(char *filename)
 	s_dlmod *mod = malloc(sizeof(s_dlmod));
 	if (mod == NULL)
 	{
+		printf("Can not malloc memory.\n");
 		goto _label_ret;
 	}
 
 	void *handler = dlopen(filename, RTLD_LAZY);
 	if (handler == NULL)
 	{
+		printf("Can not load library %s\n", filename);
 		goto _label_mod;
 	}
 
 	int (*init)()= dlsym(handler, "__init");
 	if (init == NULL)
 	{
+		printf("Can not find __init function in %s\n", filename);
 		goto _label_mod;
 	}
 
 	int (*destory)()= dlsym(handler, "__destory");
 	if (destory == NULL)
 	{
+		printf("Can not find __destory function in %s\n", filename);
 		goto _label_mod;
 	}
 
 	int (*status)()= dlsym(handler, "__status");
 	if (status == NULL)
 	{
+		printf("Can not find __status function in %s\n", filename);
 		goto _label_mod;
 	}
 
