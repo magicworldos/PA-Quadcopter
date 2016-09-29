@@ -44,6 +44,8 @@ int __init(s_engine *engine, s_params *params)
 
 	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &mpu6050_run, NULL);
 
+	printf("[ OK ] MPU-6050 Init.\n");
+
 	return 0;
 }
 
@@ -53,9 +55,15 @@ int __destory(s_engine *e, s_params *p)
 	return 0;
 }
 
+int __status()
+{
+	return st;
+}
+
 //取得陀螺仪读数
 void mpu6050_run()
 {
+	usleep(1000);
 	while (r)
 	{
 		//读取yxz轴欧拉角、旋转角速度、加速度

@@ -24,6 +24,8 @@ int __init(s_engine *engine, s_params *params)
 	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &run, NULL);
 #endif
 
+	printf("[ OK ] Display Init.\n");
+
 	return 0;
 }
 
@@ -41,6 +43,8 @@ int __status()
 
 void run()
 {
+	usleep(1000);
+
 	while (r)
 	{
 		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");

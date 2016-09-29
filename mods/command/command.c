@@ -12,6 +12,9 @@ int st = 0;
 int __init(s_engine *e, s_params *p)
 {
 	st = 1;
+
+	printf("[ OK ] Command Init.\n");
+
 	return 0;
 }
 

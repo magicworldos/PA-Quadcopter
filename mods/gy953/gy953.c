@@ -145,7 +145,6 @@ int __init(s_engine *engine, s_params *params)
 			}
 		}
 	}
-	printf("Init OK\n");
 
 	st = 1;
 	r = 1;
@@ -153,6 +152,8 @@ int __init(s_engine *engine, s_params *params)
 	p = params;
 
 	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &gy953_value, NULL);
+
+	printf("[ OK ] GY-953 Init.\n");
 
 	return 0;
 }
@@ -176,6 +177,8 @@ int __status()
 //循环读取陀螺仪读数
 void gy953_value()
 {
+	usleep(1000);
+
 	while (r)
 	{
 		usleep(1);

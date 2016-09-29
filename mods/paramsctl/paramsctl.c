@@ -29,6 +29,8 @@ int __init(s_engine *engine, s_params *params)
 	//启动键盘接收
 	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &params_input, NULL);
 
+	printf("[ OK ] Paramsctl Init.\n");
+
 	return 0;
 }
 
@@ -132,6 +134,8 @@ void params_reset()
 //键盘接收按键
 void params_input()
 {
+	usleep(1000);
+
 	//按键
 	char ch = 0;
 	while (r)

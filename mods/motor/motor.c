@@ -46,6 +46,8 @@ int __init(s_engine *engine, s_params *params)
 
 	}
 
+	printf("[ OK ] Motor Init.\n");
+
 	return 0;
 }
 

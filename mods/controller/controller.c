@@ -49,6 +49,9 @@ int __init(s_engine *engine, s_params *params)
 	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &controller_ctl_pwm_pw);
 #endif
 
+
+	printf("[ OK ] Controller Init.\n");
+
 	return 0;
 }
 
