@@ -39,6 +39,8 @@ int __init(s_engine *engine, s_params *params)
 
 		//设置电机GPIO为输出引脚
 		pinMode(ports[i], OUTPUT);
+		//初始值为低电平,保护措施
+		digitalWrite(ports[i], LOW);
 
 #ifndef __PC_TEST__
 
@@ -118,6 +120,15 @@ void motor_run(void *args)
 	motor_pwm pwm;
 	while (r)
 	{
+		//在速度为0时不对电机输出pwm信号，只输出低电平
+		if (speed[motor] == 0)
+		{
+			//低电平
+			digitalWrite(ports[motor], LOW);
+			usleep(TIME_PWM_WIDTH);
+			continue;
+		}
+
 		//将电机速度转为PWM信号
 		motor_set_pwm(speed[motor], &pwm);
 
