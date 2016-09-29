@@ -83,7 +83,7 @@ void run()
 #ifndef __DISPLAY_MODE_MORE__
 		else if (p->ctl_type == 7)
 		{
-			printf("[xyz: %+7.3f %+7.3f %+7.3f]", x_angle, y_angle, z_angle);
+			printf("[xyz: %+7.3f %+7.3f %+7.3f]", e->x, e->y, e->z);
 		}
 		else if (p->ctl_type == 8)
 		{
@@ -95,7 +95,7 @@ void run()
 		}
 		else if (p->ctl_type == 10)
 		{
-			printf("[s: %4d %4d %4d %4d]", e->speed[0], e->speed[1], e->speed[2], e->speed[3]);
+			printf("[x:%+7.3f y:%+7.3f z:%+7.3f xv:%+7.3f yv:%+7.3f]", e->x_devi, e->y_devi, e->z_devi, e->xv_devi, e->yv_devi);
 		}
 #endif
 

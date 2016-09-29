@@ -84,7 +84,7 @@ void engine_start(int argc, char *argv[])
 			list_visit(&list, (void *) &dlmod_run_pt_init);
 
 			int i = 0;
-			int n = 100;
+			int n = 300;
 			int s_fb = 0;
 			int s_lr = 0;
 			int s_pw = 0;
