@@ -16,7 +16,7 @@ RELEASE_PATH		= release
 #头文件
 MOD_INCLUDE			= -Iinclude
 #编译选项
-C_FLAGS				= -g -pthread -lm -ldl -lwiringPi -std=gnu11
+C_FLAGS				= -pthread -lm -ldl -lwiringPi -std=gnu11
 
 all:	$(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES)
 

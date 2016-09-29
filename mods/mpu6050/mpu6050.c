@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdint.h>
+#include <time.h>
+#include <sys/time.h>
 #include <mpu6050.h>
 
 u8 dmpReady = 0;  // set true if DMP init was successful

@@ -41,7 +41,7 @@ int __init(s_engine *engine, s_params *params)
 #ifndef __PC_TEST__
 
 		//启动电机信号输出线程
-		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_run, (void *) (u64) i);
+		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_run, (void *) (long)i);
 #endif
 
 	}
@@ -106,7 +106,7 @@ void motor_run_pwm(int motor, motor_pwm *pwm)
 //向电机发送PWM信号
 void motor_run(void *args)
 {
-	u64 motor = (u64) args;
+	long motor = (long) args;
 	motor_pwm pwm;
 	while (r)
 	{
