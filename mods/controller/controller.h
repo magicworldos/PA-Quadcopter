@@ -23,11 +23,6 @@ typedef struct
 {
 	struct timeval timer_start;
 	struct timeval timer_end;
-	long timer_avg;
-	long timer_sum;
-	long timer_max;
-	long timer_min;
-	long timer_n;
 } s_ctl_pwm;
 
 int __init(s_engine *engine, s_params *params);

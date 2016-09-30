@@ -16,6 +16,16 @@ s_ctl_pwm ctl_pwm_fb;
 s_ctl_pwm ctl_pwm_lr;
 s_ctl_pwm ctl_pwm_pw;
 
+//摇控器pwm信号噪声
+float ctl_est_devi = 1;
+float ctl_measure_devi = 5;
+//前后卡尔曼滤波
+float fb_est = 0.0, fb_devi = 0.0, fb_est1 = 0.0, fb_devi1 = 0.0, fb_est2 = 0.0, fb_devi2 = 0.0;
+//左右卡尔曼滤波
+float lr_est = 0.0, lr_devi = 0.0, lr_est1 = 0.0, lr_devi1 = 0.0, lr_est2 = 0.0, lr_devi2 = 0.0;
+//油门卡尔曼滤波
+float pw_est = 0.0, pw_devi = 0.0, pw_est1 = 0.0, pw_devi1 = 0.0, pw_est2 = 0.0, pw_devi2 = 0.0;
+
 int __init(s_engine *engine, s_params *params)
 {
 	e = engine;
@@ -27,28 +37,11 @@ int __init(s_engine *engine, s_params *params)
 	pinMode(GPIO_LR, INPUT);
 	pinMode(GPIO_PW, INPUT);
 
-	//启动摇控器接收机信号输入线程
-	ctl_pwm_fb.timer_sum = 0;
-	ctl_pwm_fb.timer_max = 0;
-	ctl_pwm_fb.timer_min = 9999;
-	ctl_pwm_fb.timer_n = 0;
-
-	ctl_pwm_lr.timer_sum = 0;
-	ctl_pwm_lr.timer_max = 0;
-	ctl_pwm_lr.timer_min = 9999;
-	ctl_pwm_lr.timer_n = 0;
-
-	ctl_pwm_pw.timer_sum = 0;
-	ctl_pwm_pw.timer_max = 0;
-	ctl_pwm_pw.timer_min = 9999;
-	ctl_pwm_pw.timer_n = 0;
-
 #ifndef __PC_TEST__
 	wiringPiISR(GPIO_FB, INT_EDGE_BOTH, &controller_ctl_pwm_fb);
 	wiringPiISR(GPIO_LR, INT_EDGE_BOTH, &controller_ctl_pwm_lr);
 	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &controller_ctl_pwm_pw);
 #endif
-
 
 	printf("[ OK ] Controller Init.\n");
 
@@ -89,35 +82,34 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 		return;
 	}
 
-	ctl_pwm->timer_sum += timer;
-	ctl_pwm->timer_max = timer > ctl_pwm->timer_max ? timer : ctl_pwm->timer_max;
-	ctl_pwm->timer_min = timer < ctl_pwm->timer_min ? timer : ctl_pwm->timer_min;
-	ctl_pwm->timer_n++;
-	if (ctl_pwm->timer_n >= 5)
+	//向引擎发送“前后”数值
+	if (gpio_port == GPIO_FB)
 	{
-		ctl_pwm->timer_avg = (ctl_pwm->timer_sum - ctl_pwm->timer_max - ctl_pwm->timer_min) / (ctl_pwm->timer_n - 2);
-
-		//向引擎发送“前后”数值
-		if (gpio_port == GPIO_FB)
-		{
-			controller_fb_pwm(ctl_pwm->timer_avg);
-		}
-		//向引擎发送“左右”数值
-		else if (gpio_port == GPIO_LR)
-		{
-			controller_lr_pwm(ctl_pwm->timer_avg);
-		}
-		//向引擎发送“油门”数值
-		else if (gpio_port == GPIO_PW)
-		{
-			controller_pw_pwm(ctl_pwm->timer_avg);
-		}
-
-		ctl_pwm->timer_sum = 0;
-		ctl_pwm->timer_max = 0;
-		ctl_pwm->timer_min = 9999;
-		ctl_pwm->timer_n = 0;
+		//对方向舵前后通道做卡尔曼滤波
+		fb_est = engine_kalman_filter(fb_est, ctl_est_devi, timer, ctl_measure_devi, &fb_devi);
+		fb_est1 = engine_kalman_filter(fb_est1, ctl_est_devi, fb_est, ctl_measure_devi, &fb_devi1);
+		fb_est2 = engine_kalman_filter(fb_est2, ctl_est_devi, fb_est1, ctl_measure_devi, &fb_devi2);
+		controller_fb_pwm(fb_est2);
 	}
+	//向引擎发送“左右”数值
+	else if (gpio_port == GPIO_LR)
+	{
+		//对方向舵左右通道做卡尔曼滤波
+		lr_est = engine_kalman_filter(lr_est, ctl_est_devi, timer, ctl_measure_devi, &lr_devi);
+		lr_est1 = engine_kalman_filter(lr_est1, ctl_est_devi, lr_est, ctl_measure_devi, &lr_devi1);
+		lr_est2 = engine_kalman_filter(lr_est2, ctl_est_devi, lr_est1, ctl_measure_devi, &lr_devi2);
+		controller_lr_pwm(lr_est2);
+	}
+	//向引擎发送“油门”数值
+	else if (gpio_port == GPIO_PW)
+	{
+		//对油门通道做卡尔曼滤波
+		pw_est = engine_kalman_filter(pw_est, ctl_est_devi, timer, ctl_measure_devi, &pw_devi);
+		pw_est1 = engine_kalman_filter(pw_est1, ctl_est_devi, pw_est, ctl_measure_devi, &pw_devi1);
+		pw_est2 = engine_kalman_filter(pw_est2, ctl_est_devi, pw_est1, ctl_measure_devi, &pw_devi2);
+		controller_pw_pwm(pw_est2);
+	}
+
 }
 
 //读取摇控器接收机的PWM信号“前后”
