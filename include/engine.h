@@ -50,6 +50,9 @@ float engine_pid_zv(float et, float et_1, float et_2);
 //对XY轴加速度做PID反馈控制
 float engine_pid_a(float et, float et_1, float et_2);
 
+//卡尔曼滤波
+float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);
+
 //引擎重置
 void engine_reset(s_engine *e);
 
