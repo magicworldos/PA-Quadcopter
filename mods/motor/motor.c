@@ -120,14 +120,14 @@ void motor_run(void *args)
 	motor_pwm pwm;
 	while (r)
 	{
-		//在速度为0时不对电机输出pwm信号，只输出低电平
-		if (speed[motor] == 0)
-		{
-			//低电平
-			digitalWrite(ports[motor], LOW);
-			usleep(TIME_PWM_WIDTH);
-			continue;
-		}
+//		//在速度为0时不对电机输出pwm信号，只输出低电平
+//		if (speed[motor] == 0)
+//		{
+//			//低电平
+//			digitalWrite(ports[motor], LOW);
+//			usleep(TIME_PWM_WIDTH);
+//			continue;
+//		}
 
 		//将电机速度转为PWM信号
 		motor_set_pwm(speed[motor], &pwm);
@@ -159,8 +159,8 @@ void motor_balance_compensation()
 
 		//标准四轴平衡补偿
 		speed[0] = (int) e->v - e->x_devi + e->z_devi - e->xv_devi;
-		speed[1] = (int) e->v - e->y_devi + e->z_devi + e->yv_devi;
-		speed[2] = (int) e->v + e->x_devi - e->z_devi + e->xv_devi;
+		speed[1] = (int) e->v - e->y_devi - e->z_devi + e->yv_devi;
+		speed[2] = (int) e->v + e->x_devi + e->z_devi + e->xv_devi;
 		speed[3] = (int) e->v + e->y_devi - e->z_devi - e->yv_devi;
 
 		for (int i = 0; i < MOTOR_COUNT; i++)

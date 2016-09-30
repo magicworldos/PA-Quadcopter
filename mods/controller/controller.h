@@ -57,4 +57,13 @@ float controller_abs(float x);
 //二次曲线函数
 float controller_parabola(float x);
 
+/***
+ * est预估值
+ * est_devi预估偏差
+ * measure测量读数
+ * measure_devi测量噪声
+ * devi上一次最优偏差
+ */
+float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);
+
 #endif /* MODS_CONTROLLER_CONTROLLER_H_ */

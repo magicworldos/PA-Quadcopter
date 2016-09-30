@@ -18,7 +18,7 @@
 #define PORT_MOTOR0	  		(27)
 #define PORT_MOTOR1	  		(28)
 #define PORT_MOTOR2	  		(26)
-#define PORT_MOTOR3	  		(29)
+#define PORT_MOTOR3	  		(25)
 
 //PWM信号时长
 #define TIME_PWM_WIDTH		(2000)

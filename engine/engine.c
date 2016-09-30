@@ -280,7 +280,7 @@ void engine_fly()
 		//处理Y轴旋转角速度平衡补偿
 		float gyv = e->gy + e->dgy;
 		//对X轴角速度三次卡尔曼滤波
-		yv_est = engine_kalman_filter(yv_est, xyz_v_est_devi, gxv, xyz_v_measure_devi, &yv_devi);
+		yv_est = engine_kalman_filter(yv_est, xyz_v_est_devi, gyv, xyz_v_measure_devi, &yv_devi);
 		yv_est1 = engine_kalman_filter(yv_est1, xyz_v_est_devi, yv_est, xyz_v_measure_devi, &yv_devi1);
 		yv_est2 = engine_kalman_filter(yv_est2, xyz_v_est_devi, yv_est1, xyz_v_measure_devi, &yv_devi2);
 		gyv = yv_est2;
@@ -291,27 +291,16 @@ void engine_fly()
 		//使用Y轴的旋转角速度的PID反馈控制算法
 		e->yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
-		//校验速度范围
-		engine_rechk_speed(e);
-
+		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
+		if (e->lock || e->v < PROCTED_SPEED)
+		{
+			//设置速度为0
+			e->v = 0;
+			//在电机停转时，做陀螺仪补偿
+			engine_set_dxy();
+		}
 		//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 		usleep(ENG_TIMER * 1000);
-	}
-}
-
-//校验速度范围
-void engine_rechk_speed(s_engine *e)
-{
-	e->v = e->v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : e->v;
-	e->v = e->v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : e->v;
-
-	//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
-	if (e->lock || e->v < PROCTED_SPEED)
-	{
-		//设置速度为0
-		e->v = 0;
-		//在电机停转时，做陀螺仪补偿
-		engine_set_dxy();
 	}
 }
 

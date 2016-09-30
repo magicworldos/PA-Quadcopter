@@ -306,6 +306,7 @@ void params_input()
 		else if (ch == '-')
 		{
 			e->v -= STEP_V;
+			e->v = e->v < 0 ? 0 : e->v;
 		}
 		//+
 		else if (ch == '+')

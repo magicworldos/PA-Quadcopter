@@ -86,27 +86,27 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 	if (gpio_port == GPIO_FB)
 	{
 		//对方向舵前后通道做卡尔曼滤波
-		fb_est = engine_kalman_filter(fb_est, ctl_est_devi, timer, ctl_measure_devi, &fb_devi);
-		fb_est1 = engine_kalman_filter(fb_est1, ctl_est_devi, fb_est, ctl_measure_devi, &fb_devi1);
-		fb_est2 = engine_kalman_filter(fb_est2, ctl_est_devi, fb_est1, ctl_measure_devi, &fb_devi2);
+		fb_est = controller_kalman_filter(fb_est, ctl_est_devi, timer, ctl_measure_devi, &fb_devi);
+		fb_est1 = controller_kalman_filter(fb_est1, ctl_est_devi, fb_est, ctl_measure_devi, &fb_devi1);
+		fb_est2 = controller_kalman_filter(fb_est2, ctl_est_devi, fb_est1, ctl_measure_devi, &fb_devi2);
 		controller_fb_pwm(fb_est2);
 	}
 	//向引擎发送“左右”数值
 	else if (gpio_port == GPIO_LR)
 	{
 		//对方向舵左右通道做卡尔曼滤波
-		lr_est = engine_kalman_filter(lr_est, ctl_est_devi, timer, ctl_measure_devi, &lr_devi);
-		lr_est1 = engine_kalman_filter(lr_est1, ctl_est_devi, lr_est, ctl_measure_devi, &lr_devi1);
-		lr_est2 = engine_kalman_filter(lr_est2, ctl_est_devi, lr_est1, ctl_measure_devi, &lr_devi2);
+		lr_est = controller_kalman_filter(lr_est, ctl_est_devi, timer, ctl_measure_devi, &lr_devi);
+		lr_est1 = controller_kalman_filter(lr_est1, ctl_est_devi, lr_est, ctl_measure_devi, &lr_devi1);
+		lr_est2 = controller_kalman_filter(lr_est2, ctl_est_devi, lr_est1, ctl_measure_devi, &lr_devi2);
 		controller_lr_pwm(lr_est2);
 	}
 	//向引擎发送“油门”数值
 	else if (gpio_port == GPIO_PW)
 	{
 		//对油门通道做卡尔曼滤波
-		pw_est = engine_kalman_filter(pw_est, ctl_est_devi, timer, ctl_measure_devi, &pw_devi);
-		pw_est1 = engine_kalman_filter(pw_est1, ctl_est_devi, pw_est, ctl_measure_devi, &pw_devi1);
-		pw_est2 = engine_kalman_filter(pw_est2, ctl_est_devi, pw_est1, ctl_measure_devi, &pw_devi2);
+		pw_est = controller_kalman_filter(pw_est, ctl_est_devi, timer, ctl_measure_devi, &pw_devi);
+		pw_est1 = controller_kalman_filter(pw_est1, ctl_est_devi, pw_est, ctl_measure_devi, &pw_devi1);
+		pw_est2 = controller_kalman_filter(pw_est2, ctl_est_devi, pw_est1, ctl_measure_devi, &pw_devi2);
 		controller_pw_pwm(pw_est2);
 	}
 
@@ -198,6 +198,17 @@ void controller_pw_pwm(int pw)
 	e->ctl_pw = pw;
 	//读入速度
 	float v = (float) (pw - p->ctl_pw_zero);
+	//校验速度范围
+	v = v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : v;
+	v = v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : v;
+
+	//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
+	if (e->lock || v < PROCTED_SPEED)
+	{
+		//设置速度为0
+		v = 0;
+	}
+
 	//设置引擎的速度
 	e->v = v;
 
@@ -227,4 +238,25 @@ float controller_parabola(float x)
 {
 	float flag = x / controller_abs(x);
 	return flag * (1.0 / 22.0) * (x * x);
+}
+
+/***
+ * est预估值
+ * est_devi预估偏差
+ * measure测量读数
+ * measure_devi测量噪声
+ * devi上一次最优偏差
+ */
+float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi)
+{
+	//预估高斯噪声的偏差
+	float q = sqrt((*devi) * (*devi) + est_devi * est_devi);
+	//卡尔曼增益
+	float kg = q * q / (q * q + measure_devi * measure_devi);
+	//滤波结果
+	float val = est + kg * (measure - est);
+	//最优偏差
+	*devi = sqrt((1.0 - kg) * q * q);
+
+	return val;
 }

@@ -29,9 +29,6 @@ void engine_start(int argc, char *argv[]);
 //引擎核心算法平衡算法
 void engine_fly();
 
-//校验速度范围
-void engine_rechk_speed(s_engine *e);
-
 //电机锁定解锁处理
 void engine_lock();
 
