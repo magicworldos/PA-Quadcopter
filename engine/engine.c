@@ -87,11 +87,11 @@ void engine_start(int argc, char *argv[])
 			float ctl_est_devi = 1;
 			float ctl_measure_devi = 5;
 			//前后卡尔曼滤波
-			float fb_est = 0.0, fb_devi = 0.0, fb_est1 = 0.0, fb_devi1 = 0.0, fb_est2 = 0.0, fb_devi2 = 0.0;
+			float fb_est = 0.0, fb_devi = 0.0, fb_est1 = 0.0, fb_devi1 = 0.0;
 			//左右卡尔曼滤波
-			float lr_est = 0.0, lr_devi = 0.0, lr_est1 = 0.0, lr_devi1 = 0.0, lr_est2 = 0.0, lr_devi2 = 0.0;
+			float lr_est = 0.0, lr_devi = 0.0, lr_est1 = 0.0, lr_devi1 = 0.0;
 			//油门卡尔曼滤波
-			float pw_est = 0.0, pw_devi = 0.0, pw_est1 = 0.0, pw_devi1 = 0.0, pw_est2 = 0.0, pw_devi2 = 0.0;
+			float pw_est = 0.0, pw_devi = 0.0, pw_est1 = 0.0, pw_devi1 = 0.0;
 
 			while (1)
 			{
@@ -99,20 +99,17 @@ void engine_start(int argc, char *argv[])
 				e->ctl_fb;
 				fb_est = engine_kalman_filter(fb_est, ctl_est_devi, e->ctl_fb, ctl_measure_devi, &fb_devi);
 				fb_est1 = engine_kalman_filter(fb_est1, ctl_est_devi, fb_est, ctl_measure_devi, &fb_devi1);
-				fb_est2 = engine_kalman_filter(fb_est2, ctl_est_devi, fb_est1, ctl_measure_devi, &fb_devi2);
-				params.ctl_fb_zero = fb_est2;
+				params.ctl_fb_zero = fb_est1;
 				//对方向舵左右通道做卡尔曼滤波
 				e->ctl_lr;
 				lr_est = engine_kalman_filter(lr_est, ctl_est_devi, e->ctl_lr, ctl_measure_devi, &lr_devi);
 				lr_est1 = engine_kalman_filter(lr_est1, ctl_est_devi, lr_est, ctl_measure_devi, &lr_devi1);
-				lr_est2 = engine_kalman_filter(lr_est2, ctl_est_devi, lr_est1, ctl_measure_devi, &lr_devi2);
-				params.ctl_lr_zero = lr_est2;
+				params.ctl_lr_zero = lr_est1;
 				//对油门通道做卡尔曼滤波
 				e->ctl_pw;
 				pw_est = engine_kalman_filter(pw_est, ctl_est_devi, e->ctl_pw, ctl_measure_devi, &pw_devi);
 				pw_est1 = engine_kalman_filter(pw_est1, ctl_est_devi, pw_est, ctl_measure_devi, &pw_devi1);
-				pw_est2 = engine_kalman_filter(pw_est2, ctl_est_devi, pw_est1, ctl_measure_devi, &pw_devi2);
-				params.ctl_pw_zero = pw_est2;
+				params.ctl_pw_zero = pw_est1;
 
 				printf("[FB: %4d LR: %4d PW: %4d] - [FB: %4d LR: %4d PW: %4d]\n", e->ctl_fb, e->ctl_lr, e->ctl_pw, p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero);
 
@@ -178,18 +175,18 @@ void engine_fly()
 	float xyz_est_devi = 0.01;
 	float xyz_measure_devi = 0.01;
 	//x轴欧拉角卡尔曼滤波
-	float x_est = 0.0, x_devi = 0.0, x_est1 = 0.0, x_devi1 = 0.0, x_est2 = 0.0, x_devi2 = 0.0;
+	float x_est = 0.0, x_devi = 0.0;
 	//y轴欧拉角卡尔曼滤波
-	float y_est = 0.0, y_devi = 0.0, y_est1 = 0.0, y_devi1 = 0.0, y_est2 = 0.0, y_devi2 = 0.0;
+	float y_est = 0.0, y_devi = 0.0;
 	//z轴欧拉角卡尔曼滤波
-	float z_est = 0.0, z_devi = 0.0, z_est1 = 0.0, z_devi1 = 0.0, z_est2 = 0.0, z_devi2 = 0.0;
+	float z_est = 0.0, z_devi = 0.0;
 	//xy轴角速度噪声
 	float xyz_v_est_devi = 0.01;
 	float xyz_v_measure_devi = 0.01;
 	//x轴角速度卡尔曼滤波
-	float xv_est = 0.0, xv_devi = 0.0, xv_est1 = 0.0, xv_devi1 = 0.0, xv_est2 = 0.0, xv_devi2 = 0.0;
+	float xv_est = 0.0, xv_devi = 0.0;
 	//y轴角速度卡尔曼滤波
-	float yv_est = 0.0, yv_devi = 0.0, yv_est1 = 0.0, yv_devi1 = 0.0, yv_est2 = 0.0, yv_devi2 = 0.0;
+	float yv_est = 0.0, yv_devi = 0.0;
 
 	while (1)
 	{
@@ -215,11 +212,9 @@ void engine_fly()
 		//处理X轴欧拉角平衡补偿
 		//计算角度：欧拉角x + 校准补偿dx + 中心补偿cx + 移动倾斜角mx
 		float x_angle = e->x + e->dx + params.cx + e->mx;
-		//对X轴欧拉角三次卡尔曼滤波
+		//对X轴欧拉角卡尔曼滤波
 		x_est = engine_kalman_filter(x_est, xyz_est_devi, x_angle, xyz_measure_devi, &x_devi);
-		x_est1 = engine_kalman_filter(x_est1, xyz_est_devi, x_est, xyz_measure_devi, &x_devi1);
-		x_est2 = engine_kalman_filter(x_est2, xyz_est_devi, x_est1, xyz_measure_devi, &x_devi2);
-		x_angle = x_est2;
+		x_angle = x_est;
 		//角度范围校验
 		x_angle = x_angle < -MAX_ANGLE ? -MAX_ANGLE : x_angle;
 		x_angle = x_angle > MAX_ANGLE ? MAX_ANGLE : x_angle;
@@ -234,11 +229,9 @@ void engine_fly()
 		//处理Y轴欧拉角平衡补偿
 		//计算角度：欧拉角y + 校准补偿dy + 中心补偿cy + 移动倾斜角my
 		float y_angle = e->y + e->dy + params.cy + e->my;
-		//对Y轴欧拉角三次卡尔曼滤波
+		//对Y轴欧拉角卡尔曼滤波
 		y_est = engine_kalman_filter(y_est, xyz_est_devi, y_angle, xyz_measure_devi, &y_devi);
-		y_est1 = engine_kalman_filter(y_est1, xyz_est_devi, y_est, xyz_measure_devi, &y_devi1);
-		y_est2 = engine_kalman_filter(y_est2, xyz_est_devi, y_est1, xyz_measure_devi, &y_devi2);
-		y_angle = y_est2;
+		y_angle = y_est;
 		//角度范围校验
 		y_angle = y_angle < -MAX_ANGLE ? -MAX_ANGLE : y_angle;
 		y_angle = y_angle > MAX_ANGLE ? MAX_ANGLE : y_angle;
@@ -252,11 +245,9 @@ void engine_fly()
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
 		float z_angle = e->z + e->dz;
-		//对Z轴欧拉角三次卡尔曼滤波
+		//对Z轴欧拉角卡尔曼滤波
 		z_est = engine_kalman_filter(z_est, xyz_est_devi, z_angle, xyz_measure_devi, &z_devi);
-		z_est1 = engine_kalman_filter(z_est1, xyz_est_devi, z_est, xyz_measure_devi, &z_devi1);
-		z_est2 = engine_kalman_filter(z_est2, xyz_est_devi, z_est1, xyz_measure_devi, &z_devi2);
-		z_angle = z_est2;
+		z_angle = z_est;
 		//设置PID数据
 		z_et_2 = z_et_1;
 		z_et_1 = z_et;
@@ -266,11 +257,9 @@ void engine_fly()
 
 		//处理X轴旋转角速度平衡补偿
 		float gxv = e->gx + e->dgx;
-		//对X轴角速度三次卡尔曼滤波
+		//对X轴角速度卡尔曼滤波
 		xv_est = engine_kalman_filter(xv_est, xyz_v_est_devi, gxv, xyz_v_measure_devi, &xv_devi);
-		xv_est1 = engine_kalman_filter(xv_est1, xyz_v_est_devi, xv_est, xyz_v_measure_devi, &xv_devi1);
-		xv_est2 = engine_kalman_filter(xv_est2, xyz_v_est_devi, xv_est1, xyz_v_measure_devi, &xv_devi2);
-		gxv = xv_est2;
+		gxv = xv_est;
 		//设置X轴PID数据
 		xv_et_2 = xv_et_1;
 		xv_et_1 = xv_et;
@@ -279,17 +268,17 @@ void engine_fly()
 		e->xv_devi = engine_pid_v(xv_et, xv_et_1, xv_et_2);
 		//处理Y轴旋转角速度平衡补偿
 		float gyv = e->gy + e->dgy;
-		//对X轴角速度三次卡尔曼滤波
+		//对X轴角速度卡尔曼滤波
 		yv_est = engine_kalman_filter(yv_est, xyz_v_est_devi, gyv, xyz_v_measure_devi, &yv_devi);
-		yv_est1 = engine_kalman_filter(yv_est1, xyz_v_est_devi, yv_est, xyz_v_measure_devi, &yv_devi1);
-		yv_est2 = engine_kalman_filter(yv_est2, xyz_v_est_devi, yv_est1, xyz_v_measure_devi, &yv_devi2);
-		gyv = yv_est2;
+		gyv = yv_est;
 		//设置Y轴PID数据
 		yv_et_2 = yv_et_1;
 		yv_et_1 = yv_et;
 		yv_et = gyv;
 		//使用Y轴的旋转角速度的PID反馈控制算法
 		e->yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
+
+		float ax = e->ax + e->dax;
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)

@@ -20,6 +20,8 @@ C_FLAGS				= -pthread -lm -ldl -lwiringPi -std=gnu11
 
 all:	$(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES)
 
+engine:	$(MOD_PROJECT)
+
 $(MOD_PROJECT):
 	gcc $(C_FLAGS) -o $(RELEASE_PATH)/bin/$(MOD_PROJECT) $(MOD_INCLUDE)			\
 	main/main.c								\

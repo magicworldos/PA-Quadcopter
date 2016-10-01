@@ -20,11 +20,11 @@ s_ctl_pwm ctl_pwm_pw;
 float ctl_est_devi = 1;
 float ctl_measure_devi = 5;
 //前后卡尔曼滤波
-float fb_est = 0.0, fb_devi = 0.0, fb_est1 = 0.0, fb_devi1 = 0.0, fb_est2 = 0.0, fb_devi2 = 0.0;
+float fb_est = 0.0, fb_devi = 0.0, fb_est1 = 0.0, fb_devi1 = 0.0;
 //左右卡尔曼滤波
-float lr_est = 0.0, lr_devi = 0.0, lr_est1 = 0.0, lr_devi1 = 0.0, lr_est2 = 0.0, lr_devi2 = 0.0;
+float lr_est = 0.0, lr_devi = 0.0, lr_est1 = 0.0, lr_devi1 = 0.0;
 //油门卡尔曼滤波
-float pw_est = 0.0, pw_devi = 0.0, pw_est1 = 0.0, pw_devi1 = 0.0, pw_est2 = 0.0, pw_devi2 = 0.0;
+float pw_est = 0.0, pw_devi = 0.0, pw_est1 = 0.0, pw_devi1 = 0.0;
 
 int __init(s_engine *engine, s_params *params)
 {
@@ -88,8 +88,7 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 		//对方向舵前后通道做卡尔曼滤波
 		fb_est = controller_kalman_filter(fb_est, ctl_est_devi, timer, ctl_measure_devi, &fb_devi);
 		fb_est1 = controller_kalman_filter(fb_est1, ctl_est_devi, fb_est, ctl_measure_devi, &fb_devi1);
-		fb_est2 = controller_kalman_filter(fb_est2, ctl_est_devi, fb_est1, ctl_measure_devi, &fb_devi2);
-		controller_fb_pwm(fb_est2);
+		controller_fb_pwm(fb_est1);
 	}
 	//向引擎发送“左右”数值
 	else if (gpio_port == GPIO_LR)
@@ -97,8 +96,7 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 		//对方向舵左右通道做卡尔曼滤波
 		lr_est = controller_kalman_filter(lr_est, ctl_est_devi, timer, ctl_measure_devi, &lr_devi);
 		lr_est1 = controller_kalman_filter(lr_est1, ctl_est_devi, lr_est, ctl_measure_devi, &lr_devi1);
-		lr_est2 = controller_kalman_filter(lr_est2, ctl_est_devi, lr_est1, ctl_measure_devi, &lr_devi2);
-		controller_lr_pwm(lr_est2);
+		controller_lr_pwm(lr_est1);
 	}
 	//向引擎发送“油门”数值
 	else if (gpio_port == GPIO_PW)
@@ -106,8 +104,7 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 		//对油门通道做卡尔曼滤波
 		pw_est = controller_kalman_filter(pw_est, ctl_est_devi, timer, ctl_measure_devi, &pw_devi);
 		pw_est1 = controller_kalman_filter(pw_est1, ctl_est_devi, pw_est, ctl_measure_devi, &pw_devi1);
-		pw_est2 = controller_kalman_filter(pw_est2, ctl_est_devi, pw_est1, ctl_measure_devi, &pw_devi2);
-		controller_pw_pwm(pw_est2);
+		controller_pw_pwm(pw_est1);
 	}
 
 }
