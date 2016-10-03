@@ -514,7 +514,7 @@ void engine_ent_run(int en_port, int en_speed, int en_msecs)
 	}
 
 	//停止
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 3000; i++)
 	{
 		//高电平
 		digitalWrite(en_port, HIGH);
