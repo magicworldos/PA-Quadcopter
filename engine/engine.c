@@ -355,7 +355,7 @@ void engine_lock()
 float engine_pid(float et, float et_1, float et_2, float *sum)
 {
 	s_engine *e = &engine;
-	*sum += params.ki / 10.0 * et;
+	*sum += params.ki / 20.0 * et;
 	*sum = *sum > e->v / 5.0 ? e->v / 5.0 : *sum;
 	*sum = *sum < -e->v / 5.0 ? -e->v / 5.0 : *sum;
 	//增量式PID反馈控制
@@ -366,7 +366,7 @@ float engine_pid(float et, float et_1, float et_2, float *sum)
 float engine_pid_z(float et, float et_1, float et_2, float *sum)
 {
 	s_engine *e = &engine;
-	*sum += params.ki_z / 10.0 * et;
+	*sum += params.ki_z / 20.0 * et;
 	*sum = *sum > e->v / 5.0 ? e->v / 5.0 : *sum;
 	*sum = *sum < -e->v / 5.0 ? -e->v / 5.0 : *sum;
 	//增量式PID反馈控制
