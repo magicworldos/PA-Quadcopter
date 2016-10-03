@@ -95,6 +95,11 @@ typedef struct
 	float xv_devi;
 	float yv_devi;
 
+	//XYZ欧拉角补偿
+	float x_sum;
+	float y_sum;
+	float z_sum;
+
 	//其它参数
 	//显示摇控器读数
 	int ctl_fb;

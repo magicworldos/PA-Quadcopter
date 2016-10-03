@@ -223,7 +223,7 @@ void engine_fly()
 		x_et_1 = x_et;
 		x_et = x_angle;
 		//使用XY轴的欧拉角的PID反馈控制算法
-		e->x_devi = engine_pid(x_et, x_et_1, x_et_2);
+		e->x_devi = engine_pid(x_et, x_et_1, x_et_2, &e->x_sum);
 		//得出引擎的X轴平衡补偿
 
 		//处理Y轴欧拉角平衡补偿
@@ -240,7 +240,7 @@ void engine_fly()
 		y_et_1 = y_et;
 		y_et = y_angle;
 		//使用XY轴的欧拉角的PID反馈控制算法
-		e->y_devi = engine_pid(y_et, y_et_1, y_et_2);
+		e->y_devi = engine_pid(y_et, y_et_1, y_et_2, &e->y_sum);
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
@@ -253,7 +253,7 @@ void engine_fly()
 		z_et_1 = z_et;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pid_z(z_et, z_et_1, z_et_2);
+		e->z_devi = engine_pid_z(z_et, z_et_1, z_et_2, &e->z_sum);
 
 		//处理X轴旋转角速度平衡补偿
 		float gxv = e->gx + e->dgx;
@@ -266,6 +266,7 @@ void engine_fly()
 		xv_et = gxv;
 		//使用X轴的旋转角速度的PID反馈控制算法
 		e->xv_devi = engine_pid_v(xv_et, xv_et_1, xv_et_2);
+
 		//处理Y轴旋转角速度平衡补偿
 		float gyv = e->gy + e->dgy;
 		//对X轴角速度卡尔曼滤波
@@ -351,15 +352,23 @@ void engine_lock()
 }
 
 //XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float et_1, float et_2)
+float engine_pid(float et, float et_1, float et_2, float *sum)
 {
+	s_engine *e = &engine;
+	*sum += params.ki / 10.0 * et;
+	*sum = *sum > e->v / 5.0 ? e->v / 5.0 : *sum;
+	*sum = *sum < -e->v / 5.0 ? -e->v / 5.0 : *sum;
 	//增量式PID反馈控制
-	return params.kp * (et - et_1) + (params.ki * et) + params.kd * (et - 2 * et_1 + et_2);
+	return params.kp * (et - et_1) + (params.ki * et) + (*sum) + params.kd * (et - 2 * et_1 + et_2);
 }
 
 //Z轴的欧拉角PID反馈控制，参数与XY轴的PID不一样
-float engine_pid_z(float et, float et_1, float et_2)
+float engine_pid_z(float et, float et_1, float et_2, float *sum)
 {
+	s_engine *e = &engine;
+	*sum += params.ki_z / 10.0 * et;
+	*sum = *sum > e->v / 5.0 ? e->v / 5.0 : *sum;
+	*sum = *sum < -e->v / 5.0 ? -e->v / 5.0 : *sum;
 	//增量式PID反馈控制
 	return params.kp_z * (et - et_1) + (params.ki_z * et) + params.kd_z * (et - 2 * et_1 + et_2);
 }
@@ -450,6 +459,11 @@ void engine_reset(s_engine *e)
 	e->xv_devi = 0;
 	e->yv_devi = 0;
 
+	//XYZ欧拉角补偿
+	e->x_sum = 0;
+	e->y_sum = 0;
+	e->z_sum = 0;
+
 	//显示摇控器读数
 	e->ctl_fb = 0;
 	e->ctl_lr = 0;
@@ -474,6 +488,10 @@ void engine_set_dxy()
 	e->dax = -e->ax;
 	e->day = -e->ay;
 	e->daz = -e->az;
+
+	e->x_sum = 0;
+	e->y_sum = 0;
+	e->z_sum = 0;
 }
 
 //电机调试

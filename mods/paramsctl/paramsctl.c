@@ -121,8 +121,8 @@ void params_reset()
 	p->ki_a = 0;
 	p->kd_a = 0;
 	//XY轴中心点校正补偿
-	p->cx = 3.8;
-	p->cy = 2.9;
+	p->cx = 0;
+	p->cy = 0;
 	//摇控器3通道起始值
 	p->ctl_fb_zero = 1407;
 	p->ctl_lr_zero = 1610;

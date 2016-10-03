@@ -33,10 +33,10 @@ void engine_fly();
 void engine_lock();
 
 //XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float et_1, float et_2);
+float engine_pid(float et, float et_1, float et_2, float *sum);
 
 //Z轴的欧拉角PID反馈控制，参数与XY轴的PID不一样
-float engine_pid_z(float et, float et_1, float et_2);
+float engine_pid_z(float et, float et_1, float et_2, float *sum);
 
 //对旋转角速度做PID反馈控制
 float engine_pid_v(float et, float et_1, float et_2);
