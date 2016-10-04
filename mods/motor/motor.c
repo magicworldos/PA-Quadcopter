@@ -154,6 +154,7 @@ void motor_balance_compensation()
 			{
 				speed[i] = 0;
 			}
+			usleep(ENG_TIMER * 1000);
 			continue;
 		}
 
