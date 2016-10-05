@@ -45,7 +45,7 @@ float engine_pid_v(float et, float et_1, float et_2);
 float engine_pid_zv(float et, float et_1, float et_2);
 
 //对XY轴加速度做PID反馈控制
-float engine_pid_a(float et, float et_1, float et_2);
+float engine_pid_a(float *sum, float et, float et_1);
 
 //卡尔曼滤波
 float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);
@@ -55,6 +55,9 @@ void engine_reset(s_engine *e);
 
 //陀螺仪补偿
 void engine_set_dxy();
+
+//绝对值
+float engine_abs(float v);
 
 //电机调试
 void engine_ent_run(int en_port, int en_speed, int en_msecs);

@@ -188,6 +188,14 @@ void engine_fly()
 	//y轴角速度卡尔曼滤波
 	float yv_est = 0.0, yv_devi = 0.0;
 
+	//xy轴角速度噪声
+	float xyz_a_est_devi = 0.1;
+	float xyz_a_measure_devi = 0.2;
+	//x轴角速度卡尔曼滤波
+	float xa_est = 0.0, xa_devi = 0.0;
+	//y轴角速度卡尔曼滤波
+	float ya_est = 0.0, ya_devi = 0.0;
+
 	while (1)
 	{
 		//渐进式方向舵X轴
@@ -279,7 +287,27 @@ void engine_fly()
 		//使用Y轴的旋转角速度的PID反馈控制算法
 		e->yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
-		float ax = e->ax + e->dax;
+		if (engine_abs(e->mx) < 1.0)
+		{
+			float xa = e->ax + e->dax;
+			xa_est = engine_kalman_filter(xa_est, xyz_a_est_devi, xa, xyz_a_measure_devi, &xa_devi);
+			xa = xa_est;
+			xa_et_2 = xa_et_1;
+			xa_et_1 = xa_et;
+			xa_et = xa;
+			e->xa_devi = engine_pid_a(&e->xa_sum, xa_et, xa_et_1);
+		}
+
+		if (engine_abs(e->my) < 1.0)
+		{
+			float ya = e->ay + e->day;
+			ya_est = engine_kalman_filter(ya_est, xyz_a_est_devi, ya, xyz_a_measure_devi, &ya_devi);
+			ya = ya_est;
+			ya_et_2 = ya_et_1;
+			ya_et_1 = ya_et;
+			ya_et = ya;
+			e->ya_devi = engine_pid_a(&e->ya_sum, ya_et, ya_et_1);
+		}
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -388,10 +416,14 @@ float engine_pid_zv(float et, float et_1, float et_2)
 }
 
 //对XY轴加速度做PID反馈控制
-float engine_pid_a(float et, float et_1, float et_2)
+float engine_pid_a(float *sum, float et, float et_1)
 {
+	s_engine *e = &engine;
+	*sum += params.ki_a * et;
+	*sum = *sum > e->v / 5.0 ? e->v / 5.0 : *sum;
+	*sum = *sum < -e->v / 5.0 ? -e->v / 5.0 : *sum;
 	//增量式PID反馈控制
-	return params.kp_a * (et - et_1) + (params.ki_a * et) + params.kd_a * (et - 2 * et_1 + et_2);
+	return params.kp_a * et + (*sum) + params.kd_a * (et - et_1);
 }
 
 /***
@@ -492,17 +524,31 @@ void engine_set_dxy()
 	e->x_sum = 0;
 	e->y_sum = 0;
 	e->z_sum = 0;
+
+	e->xa_sum = 0;
+	e->ya_sum = 0;
+	e->za_sum = 0;
+}
+
+//绝对值
+float engine_abs(float v)
+{
+	if (v < 0)
+	{
+		return -v;
+	}
+	return v;
 }
 
 //电机调试
 void engine_ent_run(int en_port, int en_speed, int en_msecs)
 {
-	//设置指定的GPIO引脚为输出引脚
+//设置指定的GPIO引脚为输出引脚
 	pinMode(en_port, OUTPUT);
 
-	//开始调试运行en_msecs毫秒，最多运行10000毫秒（10秒）
+//开始调试运行en_msecs毫秒，最多运行10000毫秒（10秒）
 	en_msecs = en_msecs > TEST_MAX_MS ? TEST_MAX_MS : en_msecs;
-	//由于一个PWM信号周期为2毫秒，所以调试时长要要除以2
+//由于一个PWM信号周期为2毫秒，所以调试时长要要除以2
 	for (int i = 0; i < en_msecs / 2; i++)
 	{
 		//高电平
@@ -513,7 +559,7 @@ void engine_ent_run(int en_port, int en_speed, int en_msecs)
 		usleep(TEST_ZERO_MS - en_speed);
 	}
 
-	//停止
+//停止
 	for (int i = 0; i < 3000; i++)
 	{
 		//高电平
@@ -528,12 +574,12 @@ void engine_ent_run(int en_port, int en_speed, int en_msecs)
 //系统信号处理
 void engine_handler()
 {
-	//重置引擎
+//重置引擎
 	engine_reset(&engine);
 
-	//清理动态链接库
+//清理动态链接库
 	dlmod_destory();
 
-	//退出
+//退出
 	exit(0);
 }

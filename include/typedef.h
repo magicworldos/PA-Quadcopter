@@ -95,10 +95,17 @@ typedef struct
 	float xv_devi;
 	float yv_devi;
 
-	//XYZ欧拉角补偿
+	float xa_devi;
+	float ya_devi;
+	float za_devi;
+
 	float x_sum;
 	float y_sum;
 	float z_sum;
+
+	float xa_sum;
+	float ya_sum;
+	float za_sum;
 
 	//其它参数
 	//显示摇控器读数
