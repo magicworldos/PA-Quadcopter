@@ -16,12 +16,13 @@
 #define MAX_ANGLE					(90.0)
 //渐进式方向增量
 #define DIRECT_VALUE				(0.2)
+//渐进重力加速度增量
+#define GRA_DIRECT_VALUE			(0.2)
 
 //电调起始时长(仅在--ctl模式下用)
 #define TEST_ZERO_MS				(1000)
 //最大调试时长10秒(仅在--ctl模式下用)
 #define TEST_MAX_MS					(10000)
-
 
 //启动引擎
 void engine_start(int argc, char *argv[]);

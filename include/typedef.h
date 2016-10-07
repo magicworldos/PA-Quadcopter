@@ -69,6 +69,12 @@ typedef struct
 	//摇控器移动倾角
 	float ctlmx;
 	float ctlmy;
+	//渐进式重力倾斜角
+	float grax;
+	float gray;
+	//目标重力倾角
+	float dgrax;
+	float dgray;
 	//XYZ轴旋转角速度
 	float gx;
 	float gy;
@@ -94,15 +100,11 @@ typedef struct
 	//XYZ角速度补偿
 	float xv_devi;
 	float yv_devi;
-
-	float xa_devi;
-	float ya_devi;
-	float za_devi;
-
+	//欧拉角累加值
 	float x_sum;
 	float y_sum;
 	float z_sum;
-
+	//重力加速度累加值
 	float xa_sum;
 	float ya_sum;
 	float za_sum;
