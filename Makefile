@@ -6,8 +6,15 @@
 
 #工程
 MOD_PROJECT			= quadcopter
+
 #模块动态链接库
 MOD_MODULES			= modlibs
+MOD_MOTOR			= motor
+MOD_PARAMSCTL		= paramsctl
+MOD_CONTROLLER		= controller
+MOD_MPU6050			= mpu6050
+MOD_DISPLAY			= display
+MOD_COMMAND			= command
 
 #编译目录
 MOD_MKDIR			= mkdir
@@ -29,18 +36,29 @@ $(MOD_PROJECT):
 	engine/dlmod.c							\
 	util/list.c
 	
-$(MOD_MODULES):
+$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_DISPLAY)	$(MOD_COMMAND)
+
+$(MOD_MOTOR):
 	cd mods/motor/			&& make
+
+$(MOD_PARAMSCTL):
 	cd mods/paramsctl/		&& make
+
+$(MOD_CONTROLLER):
 	cd mods/controller/		&& make
+
+$(MOD_MPU6050):
 	cd mods/mpu6050/		&& make
+
+$(MOD_DISPLAY):
 	cd mods/display/		&& make
+
+$(MOD_COMMAND):
 	cd mods/command/		&& make
-	#cd mods/gy953/			&& make
 
 $(MOD_MKDIR):
 	mkdir -p $(RELEASE_PATH)/bin/ lib/
-	
+
 clean:
 	rm -rvf $(RELEASE_PATH)
 	rm -rvf lib/*

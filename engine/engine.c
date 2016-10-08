@@ -443,8 +443,8 @@ float engine_pid_a(float *sum, float et, float et_1)
 {
 	s_engine *e = &engine;
 	*sum += params.ki_a / 10.0 * et;
-	*sum = *sum > 10.0 ? 10.0 : *sum;
-	*sum = *sum < -10.0 ? -10.0 : *sum;
+	*sum = *sum > 15.0 ? 15.0 : *sum;
+	*sum = *sum < -15.0 ? -15.0 : *sum;
 	//增量式PID反馈控制
 	return params.kp_a * et + (*sum) + params.kd_a * (et - et_1);
 }
