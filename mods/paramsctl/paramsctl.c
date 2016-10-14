@@ -117,9 +117,9 @@ void params_reset()
 	p->ki_zv = 0;
 	p->kd_zv = 0;
 	//XY轴加速度PID参数
-	p->kp_a = 1.5;
-	p->ki_a = 0.2;
-	p->kd_a = 0.8;
+	p->kp_a = 1.0;
+	p->ki_a = 0.1;
+	p->kd_a = 5.4;
 	//XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
