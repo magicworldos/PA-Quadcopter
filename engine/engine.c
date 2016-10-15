@@ -306,31 +306,29 @@ void engine_fly()
 		//使用Y轴的旋转角速度的PID反馈控制算法
 		e->yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
-		//对X轴欧拉角卡尔曼滤波
-		float xa = e->ax + e->dax;
-		float ya = e->ay + e->day;
-
-		//对xy轴重力加速度做卡尔曼滤波
-		xa_est = engine_kalman_filter(xa_est, xyz_a_est_devi, xa, xyz_a_measure_devi, &xa_devi);
-		ya_est = engine_kalman_filter(ya_est, xyz_a_est_devi, ya, xyz_a_measure_devi, &ya_devi);
-
-		//printf("%8.3f %8.3f %8.3f %8.3f %8.3f\n", e->y + e->dy, e->my, e->gray, e->dgray, ya_est);
-
-		if (engine_abs(e->mx) < 1.0)
-		{
-			xa_et_2 = xa_et_1;
-			xa_et_1 = xa_et;
-			xa_et = xa_est;
-			e->dgrax = engine_pid_a(&e->xa_sum, xa_et, xa_et_1);
-		}
-
-		if (engine_abs(e->my) < 1.0)
-		{
-			ya_et_2 = ya_et_1;
-			ya_et_1 = ya_et;
-			ya_et = ya_est;
-			e->dgray = engine_pid_a(&e->ya_sum, ya_et, ya_et_1);
-		}
+//		float xa = e->ax + e->dax;
+//		float ya = e->ay + e->day;
+//		//对xy轴重力加速度做卡尔曼滤波
+//		xa_est = engine_kalman_filter(xa_est, xyz_a_est_devi, xa, xyz_a_measure_devi, &xa_devi);
+//		ya_est = engine_kalman_filter(ya_est, xyz_a_est_devi, ya, xyz_a_measure_devi, &ya_devi);
+//
+//		//printf("%8.3f %8.3f %8.3f %8.3f %8.3f\n", e->y + e->dy, e->my, e->gray, e->dgray, ya_est);
+//
+//		if (engine_abs(e->mx) < 1.0)
+//		{
+//			xa_et_2 = xa_et_1;
+//			xa_et_1 = xa_et;
+//			xa_et = xa_est;
+//			e->dgrax = engine_pid_a(&e->xa_sum, xa_et, xa_et_1);
+//		}
+//
+//		if (engine_abs(e->my) < 1.0)
+//		{
+//			ya_et_2 = ya_et_1;
+//			ya_et_1 = ya_et;
+//			ya_et = ya_est;
+//			e->dgray = engine_pid_a(&e->ya_sum, ya_et, ya_et_1);
+//		}
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
