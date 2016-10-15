@@ -109,9 +109,9 @@ void params_reset()
 	p->ki_v = 8.8;
 	p->kd_v = 9.8;
 	//Z轴欧拉角PID参数
-	p->kp_z = 3.8;
-	p->ki_z = 1.6;
-	p->kd_z = 2.1;
+	p->kp_z = 4.5;
+	p->ki_z = 3.3;
+	p->kd_z = 2.8;
 	//Z旋转角速度PID参数
 	p->kp_zv = 0;
 	p->ki_zv = 0;
