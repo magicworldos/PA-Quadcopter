@@ -33,20 +33,14 @@ void engine_fly();
 //电机锁定解锁处理
 void engine_lock();
 
+//线性计算PID参数,以0.5为起始到1.5结束,速度为500时,此参数为1.0
+float engine_present(float v, float par);
+
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2, float *sum);
 
-//Z轴的欧拉角PID反馈控制，参数与XY轴的PID不一样
-float engine_pid_z(float et, float et_1, float et_2, float *sum);
-
 //对旋转角速度做PID反馈控制
 float engine_pid_v(float et, float et_1, float et_2);
-
-//对Z轴旋转角速度做PID反馈控制
-float engine_pid_zv(float et, float et_1, float et_2);
-
-//对XY轴加速度做PID反馈控制
-float engine_pid_a(float *sum, float et, float et_1);
 
 //卡尔曼滤波
 float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);

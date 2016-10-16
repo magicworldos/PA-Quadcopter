@@ -188,14 +188,6 @@ void engine_fly()
 	//y轴角速度卡尔曼滤波
 	float yv_est = 0.0, yv_devi = 0.0;
 
-	//xyz轴重力加速度噪声
-	float xyz_a_est_devi = 0.1;
-	float xyz_a_measure_devi = 0.2;
-	//x轴重力加速度卡尔曼滤波
-	float xa_est = 0.0, xa_devi = 0.0;
-	//y轴重力加速度卡尔曼滤波
-	float ya_est = 0.0, ya_devi = 0.0;
-
 	while (1)
 	{
 		//渐进式方向舵X轴
@@ -217,28 +209,9 @@ void engine_fly()
 			e->my -= DIRECT_VALUE;
 		}
 
-		//渐进式重力加速度X轴
-		if (e->grax < e->dgrax)
-		{
-			e->grax += GRA_DIRECT_VALUE;
-		}
-		else if (e->grax > e->dgrax)
-		{
-			e->grax -= GRA_DIRECT_VALUE;
-		}
-		//渐进式重力加速度Y轴
-		if (e->gray < e->dgray)
-		{
-			e->gray += GRA_DIRECT_VALUE;
-		}
-		else if (e->gray > e->dgray)
-		{
-			e->gray -= GRA_DIRECT_VALUE;
-		}
-
 		//处理X轴欧拉角平衡补偿
 		//计算角度：欧拉角x + 校准补偿dx + 中心补偿cx + 移动倾斜角mx
-		float x_angle = e->x + e->dx + e->grax + params.cx + e->mx;
+		float x_angle = e->x + e->dx + params.cx + e->mx;
 		//对X轴欧拉角卡尔曼滤波
 		x_est = engine_kalman_filter(x_est, xyz_est_devi, x_angle, xyz_measure_devi, &x_devi);
 		x_angle = x_est;
@@ -255,7 +228,7 @@ void engine_fly()
 
 		//处理Y轴欧拉角平衡补偿
 		//计算角度：欧拉角y + 校准补偿dy + 中心补偿cy + 移动倾斜角my
-		float y_angle = e->y + e->dy + e->gray + params.cy + e->my;
+		float y_angle = e->y + e->dy + params.cy + e->my;
 		//对Y轴欧拉角卡尔曼滤波
 		y_est = engine_kalman_filter(y_est, xyz_est_devi, y_angle, xyz_measure_devi, &y_devi);
 		y_angle = y_est;
@@ -280,7 +253,7 @@ void engine_fly()
 		z_et_1 = z_et;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pid_z(z_et, z_et_1, z_et_2, &e->z_sum);
+		e->z_devi = engine_pid(z_et, z_et_1, z_et_2, NULL);
 
 		//处理X轴旋转角速度平衡补偿
 		float gxv = e->gx + e->dgx;
@@ -305,30 +278,6 @@ void engine_fly()
 		yv_et = gyv;
 		//使用Y轴的旋转角速度的PID反馈控制算法
 		e->yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
-
-//		float xa = e->ax + e->dax;
-//		float ya = e->ay + e->day;
-//		//对xy轴重力加速度做卡尔曼滤波
-//		xa_est = engine_kalman_filter(xa_est, xyz_a_est_devi, xa, xyz_a_measure_devi, &xa_devi);
-//		ya_est = engine_kalman_filter(ya_est, xyz_a_est_devi, ya, xyz_a_measure_devi, &ya_devi);
-//
-//		//printf("%8.3f %8.3f %8.3f %8.3f %8.3f\n", e->y + e->dy, e->my, e->gray, e->dgray, ya_est);
-//
-//		if (engine_abs(e->mx) < 1.0)
-//		{
-//			xa_et_2 = xa_et_1;
-//			xa_et_1 = xa_et;
-//			xa_et = xa_est;
-//			e->dgrax = engine_pid_a(&e->xa_sum, xa_et, xa_et_1);
-//		}
-//
-//		if (engine_abs(e->my) < 1.0)
-//		{
-//			ya_et_2 = ya_et_1;
-//			ya_et_1 = ya_et;
-//			ya_et = ya_est;
-//			e->dgray = engine_pid_a(&e->ya_sum, ya_et, ya_et_1);
-//		}
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -400,51 +349,36 @@ void engine_lock()
 	}
 }
 
+float engine_present(float v, float par)
+{
+	return par * (v / 2000.0 + 0.75) ;
+}
+
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2, float *sum)
 {
 	s_engine *e = &engine;
-	*sum += params.ki / 40.0 * et;
-	*sum = *sum > e->v / 5.0 ? e->v / 5.0 : *sum;
-	*sum = *sum < -e->v / 5.0 ? -e->v / 5.0 : *sum;
-	//增量式PID反馈控制
-	return params.kp * (et - et_1) + (params.ki * et) + (*sum) + params.kd * (et - 2 * et_1 + et_2);
-}
+	
+	if (sum == NULL)
+	{
+		return params.kp * (et - et_1) + params.ki * et + params.kd * (et - 2 * et_1 + et_2);
+	}
 
-//Z轴的欧拉角PID反馈控制，参数与XY轴的PID不一样
-float engine_pid_z(float et, float et_1, float et_2, float *sum)
-{
-	s_engine *e = &engine;
-	*sum += params.ki_z / 40.0 * et;
+	*sum += engine_present(e->v, params.ki) / 50.0 * et;
 	*sum = *sum > e->v / 5.0 ? e->v / 5.0 : *sum;
 	*sum = *sum < -e->v / 5.0 ? -e->v / 5.0 : *sum;
+	*sum = 0;
 	//增量式PID反馈控制
-	return params.kp_z * (et - et_1) + (params.ki_z * et) + params.kd_z * (et - 2 * et_1 + et_2);
+	return engine_present(e->v, params.kp) * (et - et_1) + engine_present(e->v, params.ki) * et + (*sum) + engine_present(e->v, params.kd) * (et - 2 * et_1 + et_2);
 }
 
 //对旋转角速度做PID反馈控制
 float engine_pid_v(float et, float et_1, float et_2)
 {
-	//增量式PID反馈控制
-	return params.kp_v * (et - et_1) + (params.ki_v * et) + params.kd_v * (et - 2 * et_1 + et_2);
-}
-
-//对Z轴旋转角速度做PID反馈控制
-float engine_pid_zv(float et, float et_1, float et_2)
-{
-	//增量式PID反馈控制
-	return params.kp_zv * (et - et_1) + (params.ki_zv * et) + params.kd_zv * (et - 2 * et_1 + et_2);
-}
-
-//对XY轴加速度做PID反馈控制
-float engine_pid_a(float *sum, float et, float et_1)
-{
 	s_engine *e = &engine;
-	*sum += params.ki_a / 10.0 * et;
-	*sum = *sum > 15.0 ? 15.0 : *sum;
-	*sum = *sum < -15.0 ? -15.0 : *sum;
+
 	//增量式PID反馈控制
-	return params.kp_a * et + (*sum) + params.kd_a * (et - et_1);
+	return engine_present(e->v, params.kp_v) * (et - et_1) + engine_present(e->v, params.ki_v) * et + engine_present(e->v, params.kd_v) * (et - 2 * et_1 + et_2);
 }
 
 /***
@@ -486,12 +420,6 @@ void engine_reset(s_engine *e)
 	//摇控器飞行移动倾斜角
 	e->ctlmx = 0;
 	e->ctlmy = 0;
-	//渐进式重力倾斜角
-	e->grax = 0;
-	e->gray = 0;
-	//目标重力倾角
-	e->dgrax = 0;
-	e->dgray = 0;
 	//XYZ轴旋转角速度
 	e->gx = 0;
 	e->gy = 0;
@@ -500,14 +428,6 @@ void engine_reset(s_engine *e)
 	e->dgx = 0;
 	e->dgy = 0;
 	e->dgz = 0;
-	//XYZ轴加速度
-	e->ax = 0;
-	e->ay = 0;
-	e->az = 0;
-	//加速度修正补偿XYZ轴
-	e->dax = 0;
-	e->day = 0;
-	e->daz = 0;
 	//重置速度速度置为0
 	e->v = 0;
 	//XYZ欧拉角补偿
@@ -522,12 +442,6 @@ void engine_reset(s_engine *e)
 	e->x_sum = 0;
 	e->y_sum = 0;
 	e->z_sum = 0;
-
-	//重力加速度累加值
-	e->xa_sum = 0;
-	e->ya_sum = 0;
-	e->za_sum = 0;
-
 	//显示摇控器读数
 	e->ctl_fb = 0;
 	e->ctl_lr = 0;
@@ -548,18 +462,10 @@ void engine_set_dxy()
 	e->dgx = -e->gx;
 	e->dgy = -e->gy;
 	e->dgz = -e->gz;
-	//补偿加速计仪读数，将3个轴的加速度都补偿为0
-	e->dax = -e->ax;
-	e->day = -e->ay;
-	e->daz = -e->az;
 
 	e->x_sum = 0;
 	e->y_sum = 0;
 	e->z_sum = 0;
-
-	e->xa_sum = 0;
-	e->ya_sum = 0;
-	e->za_sum = 0;
 }
 
 //绝对值
@@ -575,12 +481,12 @@ float engine_abs(float v)
 //电机调试
 void engine_ent_run(int en_port, int en_speed, int en_msecs)
 {
-//设置指定的GPIO引脚为输出引脚
+	//设置指定的GPIO引脚为输出引脚
 	pinMode(en_port, OUTPUT);
 
-//开始调试运行en_msecs毫秒，最多运行10000毫秒（10秒）
+	//开始调试运行en_msecs毫秒，最多运行10000毫秒（10秒）
 	en_msecs = en_msecs > TEST_MAX_MS ? TEST_MAX_MS : en_msecs;
-//由于一个PWM信号周期为2毫秒，所以调试时长要要除以2
+	//由于一个PWM信号周期为2毫秒，所以调试时长要要除以2
 	for (int i = 0; i < en_msecs / 2; i++)
 	{
 		//高电平
@@ -591,7 +497,7 @@ void engine_ent_run(int en_port, int en_speed, int en_msecs)
 		usleep(TEST_ZERO_MS - en_speed);
 	}
 
-//停止
+	//停止
 	for (int i = 0; i < 3000; i++)
 	{
 		//高电平
@@ -606,12 +512,12 @@ void engine_ent_run(int en_port, int en_speed, int en_msecs)
 //系统信号处理
 void engine_handler()
 {
-//重置引擎
+	//重置引擎
 	engine_reset(&engine);
 
-//清理动态链接库
+	//清理动态链接库
 	dlmod_destory();
 
-//退出
+	//退出
 	exit(0);
 }

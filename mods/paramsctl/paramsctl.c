@@ -108,25 +108,13 @@ void params_reset()
 	p->kp_v = 12.7;
 	p->ki_v = 8.8;
 	p->kd_v = 9.8;
-	//Z轴欧拉角PID参数
-	p->kp_z = 4.5;
-	p->ki_z = 3.3;
-	p->kd_z = 2.8;
-	//Z旋转角速度PID参数
-	p->kp_zv = 0;
-	p->ki_zv = 0;
-	p->kd_zv = 0;
-	//XY轴加速度PID参数
-	p->kp_a = 0;
-	p->ki_a = 0;
-	p->kd_a = 0;
 	//XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
 	//摇控器3通道起始值
-	p->ctl_fb_zero = 1407;
+	p->ctl_fb_zero = 1410;
 	p->ctl_lr_zero = 1610;
-	p->ctl_pw_zero = 1011;
+	p->ctl_pw_zero = 1020;
 	//显示类型
 	p->ctl_type = 10;
 }
@@ -155,18 +143,6 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->kp_z += CTL_STEP;
-			}
-			else if (p->ctl_type == 3)
-			{
-				p->kp_zv += CTL_STEP;
-			}
-			else if (p->ctl_type == 4)
-			{
-				p->kp_a += CTL_STEP;
-			}
-			else if (p->ctl_type == 5)
-			{
 				p->cx += CTL_STEP;
 			}
 		}
@@ -183,18 +159,6 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->ki_z += CTL_STEP;
-			}
-			else if (p->ctl_type == 3)
-			{
-				p->ki_zv += CTL_STEP;
-			}
-			else if (p->ctl_type == 4)
-			{
-				p->ki_a += CTL_STEP;
-			}
-			else if (p->ctl_type == 5)
-			{
 				p->cy += CTL_STEP;
 			}
 		}
@@ -209,18 +173,6 @@ void params_input()
 			{
 				p->kd_v += CTL_STEP;
 			}
-			else if (p->ctl_type == 2)
-			{
-				p->kd_z += CTL_STEP;
-			}
-			else if (p->ctl_type == 3)
-			{
-				p->kd_zv += CTL_STEP;
-			}
-			else if (p->ctl_type == 4)
-			{
-				p->kd_a += CTL_STEP;
-			}
 		}
 		//4
 		else if (ch == '4')
@@ -234,18 +186,6 @@ void params_input()
 				p->kp_v -= CTL_STEP;
 			}
 			else if (p->ctl_type == 2)
-			{
-				p->kp_z -= CTL_STEP;
-			}
-			else if (p->ctl_type == 3)
-			{
-				p->kp_zv -= CTL_STEP;
-			}
-			else if (p->ctl_type == 4)
-			{
-				p->kp_a -= CTL_STEP;
-			}
-			else if (p->ctl_type == 5)
 			{
 				p->cx -= CTL_STEP;
 			}
@@ -263,18 +203,6 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->ki_z -= CTL_STEP;
-			}
-			else if (p->ctl_type == 3)
-			{
-				p->ki_zv -= CTL_STEP;
-			}
-			else if (p->ctl_type == 4)
-			{
-				p->ki_a -= CTL_STEP;
-			}
-			else if (p->ctl_type == 5)
-			{
 				p->cy -= CTL_STEP;
 			}
 		}
@@ -288,18 +216,6 @@ void params_input()
 			else if (p->ctl_type == 1)
 			{
 				p->kd_v -= CTL_STEP;
-			}
-			else if (p->ctl_type == 2)
-			{
-				p->kd_z -= CTL_STEP;
-			}
-			else if (p->ctl_type == 3)
-			{
-				p->kd_zv -= CTL_STEP;
-			}
-			else if (p->ctl_type == 4)
-			{
-				p->kd_a -= CTL_STEP;
 			}
 		}
 		//-
@@ -335,50 +251,30 @@ void params_input()
 		{
 			p->ctl_type = 1;
 		}
-		//z轴PID参数
-		else if (ch == 'e')
-		{
-			p->ctl_type = 2;
-		}
-		//z角速度PID_ZV参数
-		else if (ch == 'r')
-		{
-			p->ctl_type = 3;
-		}
-		//xy轴加速度PID_A参数
-		else if (ch == 't')
-		{
-			p->ctl_type = 4;
-		}
 		//陀螺仪校准参数cx、cy、cz
 		else if (ch == 'y')
 		{
-			p->ctl_type = 5;
+			p->ctl_type = 2;
 		}
 		//摇控器起始读数
 		else if (ch == 'u')
 		{
-			p->ctl_type = 6;
+			p->ctl_type = 3;
 		}
 		//角度
 		else if (ch == 'z')
 		{
-			p->ctl_type = 7;
+			p->ctl_type = 4;
 		}
 		//角速度
 		else if (ch == 'x')
 		{
-			p->ctl_type = 8;
-		}
-		//加速度
-		else if (ch == 'c')
-		{
-			p->ctl_type = 9;
+			p->ctl_type = 5;
 		}
 		//电机转速
 		else if (ch == 'v')
 		{
-			p->ctl_type = 10;
+			p->ctl_type = 6;
 		}
 		//保存所有参数到缓存
 		else if (ch == 'S')

@@ -69,12 +69,6 @@ typedef struct
 	//摇控器移动倾角
 	float ctlmx;
 	float ctlmy;
-	//渐进式重力倾斜角
-	float grax;
-	float gray;
-	//目标重力倾角
-	float dgrax;
-	float dgray;
 	//XYZ轴旋转角速度
 	float gx;
 	float gy;
@@ -83,14 +77,6 @@ typedef struct
 	float dgx;
 	float dgy;
 	float dgz;
-	//XYZ轴加速度
-	float ax;
-	float ay;
-	float az;
-	//修正加速度补偿
-	float dax;
-	float day;
-	float daz;
 	//引擎速度
 	float v;
 	//XYZ欧拉角补偿
@@ -104,10 +90,6 @@ typedef struct
 	float x_sum;
 	float y_sum;
 	float z_sum;
-	//重力加速度累加值
-	float xa_sum;
-	float ya_sum;
-	float za_sum;
 
 	//其它参数
 	//显示摇控器读数
@@ -130,18 +112,6 @@ typedef struct
 	float kp_v;
 	float ki_v;
 	float kd_v;
-	//Z轴欧拉角PID参数
-	float kp_z;
-	float ki_z;
-	float kd_z;
-	//Z旋转角速度PID参数
-	float kp_zv;
-	float ki_zv;
-	float kd_zv;
-	//XY轴加速度PID参数
-	float kp_a;
-	float ki_a;
-	float kd_a;
 	//中心校准补偿
 	float cx;
 	float cy;
