@@ -367,7 +367,6 @@ float engine_pid(float et, float et_1, float et_2, float *sum)
 	*sum += engine_present(e->v, params.ki) / 50.0 * et;
 	*sum = *sum > e->v / 5.0 ? e->v / 5.0 : *sum;
 	*sum = *sum < -e->v / 5.0 ? -e->v / 5.0 : *sum;
-	*sum = 0;
 	//增量式PID反馈控制
 	return engine_present(e->v, params.kp) * (et - et_1) + engine_present(e->v, params.ki) * et + (*sum) + engine_present(e->v, params.kd) * (et - 2 * et_1 + et_2);
 }
