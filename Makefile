@@ -13,6 +13,7 @@ MOD_MOTOR			= motor
 MOD_PARAMSCTL		= paramsctl
 MOD_CONTROLLER		= controller
 MOD_MPU6050			= mpu6050
+MOD_HCSR04			= hcsr04
 MOD_DISPLAY			= display
 MOD_COMMAND			= command
 
@@ -36,7 +37,7 @@ $(MOD_PROJECT):
 	engine/dlmod.c							\
 	util/list.c
 	
-$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_DISPLAY)	$(MOD_COMMAND)
+$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_HCSR04)	$(MOD_DISPLAY)	$(MOD_COMMAND)
 
 $(MOD_MOTOR):
 	cd mods/motor/			&& make
@@ -49,6 +50,9 @@ $(MOD_CONTROLLER):
 
 $(MOD_MPU6050):
 	cd mods/mpu6050/		&& make
+	
+$(MOD_HCSR04):
+	cd mods/hcsr04/			&& make
 
 $(MOD_DISPLAY):
 	cd mods/display/		&& make

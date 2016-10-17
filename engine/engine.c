@@ -34,11 +34,8 @@ void engine_start(int argc, char *argv[])
 	//处理启动参数
 	if (argc >= 2)
 	{
-
-#ifndef __PC_TEST__
 		//初始化WiringPi
 		wiringPiSetup();
-#endif
 
 		//正常模式，飞行，调参
 		if (strcmp(argv[1], "--fly") == 0)
@@ -327,7 +324,7 @@ void engine_lock()
 
 				gettimeofday(&end, NULL);
 				long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-				if (timer >= 2 * 1000 * 1000)
+				if (timer >= 1000 * 1000)
 				{
 					//方向最左侧解锁电机
 					if ((e->lock_status >> 2) & 0x1)
@@ -349,16 +346,23 @@ void engine_lock()
 	}
 }
 
+//设定PID参数随引擎速度的线性变化系数
 float engine_present(float v, float par)
 {
-	return par * (v / 1000.0 + 0.5) ;
+	v /= 1000.0;
+	v += 0.5;
+	if (v >= 1.0)
+	{
+		return 1.0;
+	}
+	return par * (v * 1.5 - 0.5);
 }
 
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2, float *sum)
 {
 	s_engine *e = &engine;
-	
+
 	if (sum == NULL)
 	{
 		return params.kp * (et - et_1) + params.ki * et + params.kd * (et - 2 * et_1 + et_2);
@@ -440,13 +444,19 @@ void engine_reset(s_engine *e)
 	//XYZ欧拉角累加值
 	e->x_sum = 0;
 	e->y_sum = 0;
-	e->z_sum = 0;
 	//显示摇控器读数
 	e->ctl_fb = 0;
 	e->ctl_lr = 0;
 	e->ctl_pw = 0;
+	e->ctl_md = 0;
 	//最低油门,最左，最右
 	e->lock_status = 0;
+	//0手动模式
+	//1自动起飞模式
+	//2自动降落模式
+	e->mode = 0;
+	//高度
+	e->height = 0;
 }
 
 //陀螺仪补偿
@@ -464,7 +474,6 @@ void engine_set_dxy()
 
 	e->x_sum = 0;
 	e->y_sum = 0;
-	e->z_sum = 0;
 }
 
 //绝对值

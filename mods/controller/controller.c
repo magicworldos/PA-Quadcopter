@@ -15,6 +15,7 @@ s_params *p = NULL;
 s_ctl_pwm ctl_pwm_fb;
 s_ctl_pwm ctl_pwm_lr;
 s_ctl_pwm ctl_pwm_pw;
+s_ctl_pwm ctl_pwm_md;
 
 //摇控器pwm信号噪声
 float ctl_est_devi = 1;
@@ -25,6 +26,8 @@ float fb_est = 0.0, fb_devi = 0.0;
 float lr_est = 0.0, lr_devi = 0.0;
 //油门卡尔曼滤波
 float pw_est = 0.0, pw_devi = 0.0;
+//模式卡尔曼滤波
+float md_est = 0.0, md_devi = 0.0;
 
 int __init(s_engine *engine, s_params *params)
 {
@@ -36,12 +39,12 @@ int __init(s_engine *engine, s_params *params)
 	pinMode(GPIO_FB, INPUT);
 	pinMode(GPIO_LR, INPUT);
 	pinMode(GPIO_PW, INPUT);
+	pinMode(GPIO_MD, INPUT);
 
-#ifndef __PC_TEST__
 	wiringPiISR(GPIO_FB, INT_EDGE_BOTH, &controller_ctl_pwm_fb);
 	wiringPiISR(GPIO_LR, INT_EDGE_BOTH, &controller_ctl_pwm_lr);
 	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &controller_ctl_pwm_pw);
-#endif
+	wiringPiISR(GPIO_MD, INT_EDGE_BOTH, &controller_ctl_pwm_md);
 
 	printf("[ OK ] Controller Init.\n");
 
@@ -72,7 +75,7 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 		return;
 	}
 
-	//计时结束
+	//如果是低电平,计时结束
 	gettimeofday(&ctl_pwm->timer_end, NULL);
 	//计算高电平时长
 	long timer = (ctl_pwm->timer_end.tv_sec - ctl_pwm->timer_start.tv_sec) * 1000000 + (ctl_pwm->timer_end.tv_usec - ctl_pwm->timer_start.tv_usec);
@@ -88,22 +91,32 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 		//对方向舵前后通道做卡尔曼滤波
 		fb_est = controller_kalman_filter(fb_est, ctl_est_devi, timer, ctl_measure_devi, &fb_devi);
 		controller_fb_pwm(fb_est);
+		return;
 	}
 	//向引擎发送“左右”数值
-	else if (gpio_port == GPIO_LR)
+	if (gpio_port == GPIO_LR)
 	{
 		//对方向舵左右通道做卡尔曼滤波
 		lr_est = controller_kalman_filter(lr_est, ctl_est_devi, timer, ctl_measure_devi, &lr_devi);
 		controller_lr_pwm(lr_est);
+		return;
 	}
 	//向引擎发送“油门”数值
-	else if (gpio_port == GPIO_PW)
+	if (gpio_port == GPIO_PW)
 	{
 		//对油门通道做卡尔曼滤波
 		pw_est = controller_kalman_filter(pw_est, ctl_est_devi, timer, ctl_measure_devi, &pw_devi);
 		controller_pw_pwm(pw_est);
+		return;
 	}
-
+	//向引擎发送“模式”数值
+	if (gpio_port == GPIO_MD)
+	{
+		//对模式通道做卡尔曼滤波
+		md_est = controller_kalman_filter(md_est, ctl_est_devi, timer, ctl_measure_devi, &md_devi);
+		controller_md_pwm(md_est);
+		return;
+	}
 }
 
 //读取摇控器接收机的PWM信号“前后”
@@ -124,6 +137,12 @@ void controller_ctl_pwm_pw()
 	controller_ctl_pwm(GPIO_PW, &ctl_pwm_pw);
 }
 
+//读取摇控器接收机的PWM信号“模式”
+void controller_ctl_pwm_md()
+{
+	controller_ctl_pwm(GPIO_MD, &ctl_pwm_md);
+}
+
 //读入摇控器“前/后”的PWM信号
 void controller_fb_pwm(int fb)
 {
@@ -133,7 +152,7 @@ void controller_fb_pwm(int fb)
 	}
 	if (p->ctl_fb_zero < CTL_PWM_MIN || p->ctl_fb_zero > CTL_PWM_MAX)
 	{
-		p->ctl_fb_zero = 1400;
+		p->ctl_fb_zero = 1500;
 	}
 	e->ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
@@ -150,7 +169,7 @@ void controller_lr_pwm(int lr)
 	}
 	if (p->ctl_lr_zero < CTL_PWM_MIN || p->ctl_lr_zero > CTL_PWM_MAX)
 	{
-		p->ctl_lr_zero = 1400;
+		p->ctl_lr_zero = 1500;
 	}
 	e->ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
@@ -167,13 +186,12 @@ void controller_lr_pwm(int lr)
 			e->lock_status &= ~(0x1 << 1);
 			return;
 		}
-		else
-		{
-			e->lock_status |= (0x1 << 1);
-			e->lock_status &= ~(0x1 << 2);
-			return;
-		}
+
+		e->lock_status |= (0x1 << 1);
+		e->lock_status &= ~(0x1 << 2);
+		return;
 	}
+
 	e->lock_status &= ~(0x1 << 1);
 	e->lock_status &= ~(0x1 << 2);
 }
@@ -187,7 +205,7 @@ void controller_pw_pwm(int pw)
 	}
 	if (p->ctl_pw_zero < CTL_PWM_MIN || p->ctl_pw_zero > CTL_PWM_MAX)
 	{
-		p->ctl_pw_zero = 1000;
+		p->ctl_pw_zero = 1100;
 	}
 	e->ctl_pw = pw;
 	//读入速度
@@ -203,8 +221,11 @@ void controller_pw_pwm(int pw)
 		v = 0;
 	}
 
-	//设置引擎的速度
-	e->v = v;
+	if (e->mode == 0)
+	{
+		//设置引擎的速度
+		e->v = v;
+	}
 
 	//如果是最低油门
 	if (abs(pw - p->ctl_pw_zero) < 50)
@@ -215,6 +236,45 @@ void controller_pw_pwm(int pw)
 	{
 		e->lock_status &= (~0x1);
 	}
+}
+
+//读入摇控器“模式”的PWM信号
+void controller_md_pwm(int md)
+{
+	if (md < CTL_PWM_MIN || md > CTL_PWM_MAX)
+	{
+		return;
+	}
+	if (p->ctl_md_zero < CTL_PWM_MIN || p->ctl_md_zero > CTL_PWM_MAX)
+	{
+		p->ctl_md_zero = 1500;
+	}
+	e->ctl_md = md;
+	//读入读数
+	float val = (float) (md - p->ctl_md_zero);
+	//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
+	if (e->lock)
+	{
+		return;
+	}
+
+	//如果是最左或最右
+	if (abs(md - p->ctl_md_zero) > 160)
+	{
+		//如果是最左
+		if (md - p->ctl_md_zero < 0)
+		{
+			//自动起飞
+			e->mode = 1;
+			return;
+		}
+
+		//自动降落
+		e->mode = 2;
+		return;
+	}
+	//手动模式
+	e->mode = 0;
 }
 
 //取绝对值

@@ -112,9 +112,10 @@ void params_reset()
 	p->cx = 0;
 	p->cy = 0;
 	//摇控器3通道起始值
-	p->ctl_fb_zero = 1410;
-	p->ctl_lr_zero = 1610;
-	p->ctl_pw_zero = 1020;
+	p->ctl_fb_zero = 1500;
+	p->ctl_lr_zero = 1500;
+	p->ctl_pw_zero = 1100;
+	p->ctl_md_zero = 1500;
 	//显示类型
 	p->ctl_type = 10;
 }

@@ -37,8 +37,6 @@ typedef unsigned int u32;
 typedef signed long long s64;
 typedef unsigned long long u64;
 
-//#define __PC_TEST__
-
 //保护最低速度
 #define PROCTED_SPEED				(50)
 //电机最大速度
@@ -89,15 +87,18 @@ typedef struct
 	//欧拉角累加值
 	float x_sum;
 	float y_sum;
-	float z_sum;
 
 	//其它参数
 	//显示摇控器读数
 	int ctl_fb;
 	int ctl_lr;
 	int ctl_pw;
+	int ctl_md;
 	//最低油门,最左，最右
 	u32 lock_status;
+	u32 mode;
+	//高度
+	float height;
 
 } s_engine;
 
@@ -115,10 +116,11 @@ typedef struct
 	//中心校准补偿
 	float cx;
 	float cy;
-	//摇控器3通道起始读数
+	//摇控器4通道起始读数
 	int ctl_fb_zero;
 	int ctl_lr_zero;
 	int ctl_pw_zero;
+	int ctl_md_zero;
 
 	int ctl_type;
 } s_params;

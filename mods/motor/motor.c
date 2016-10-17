@@ -42,15 +42,11 @@ int __init(s_engine *engine, s_params *params)
 		//初始值为低电平,保护措施
 		digitalWrite(ports[i], LOW);
 
-#ifndef __PC_TEST__
-
 		//启动速度平衡补偿
 		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_balance_compensation, NULL);
 
 		//启动电机信号输出线程
 		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_run, (void *) (long) i);
-#endif
-
 	}
 
 	printf("[ OK ] Motor Init.\n");

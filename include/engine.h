@@ -33,7 +33,7 @@ void engine_fly();
 //电机锁定解锁处理
 void engine_lock();
 
-//线性计算PID参数,以0.5为起始到1.5结束,速度为500时,此参数为1.0
+//设定PID参数随引擎速度的线性变化系数
 float engine_present(float v, float par);
 
 //XY轴的欧拉角PID反馈控制
