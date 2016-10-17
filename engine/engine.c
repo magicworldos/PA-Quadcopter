@@ -351,7 +351,7 @@ void engine_lock()
 
 float engine_present(float v, float par)
 {
-	return par * (v / 2000.0 + 0.75) ;
+	return par * (v / 1000.0 + 0.5) ;
 }
 
 //XY轴的欧拉角PID反馈控制
