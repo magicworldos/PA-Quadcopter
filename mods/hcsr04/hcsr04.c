@@ -9,6 +9,8 @@
 #include <hcsr04.h>
 
 int st = 0;
+int r = 0;
+
 pthread_t pthd;
 s_engine *e = NULL;
 s_params *p = NULL;
@@ -27,32 +29,41 @@ int __init(s_engine *engine, s_params *params)
 	e = engine;
 	p = params;
 	st = 1;
+	r = 1;
 
 	//设置引脚为输出引脚
 	pinMode(PORT_CS_TRIG, OUTPUT);
 	pinMode(PORT_CS_ECHO, INPUT);
 
-	//初始化HC-SR04
-	digitalWrite(PORT_CS_TRIG, HIGH);
-	//持续15微秒
-	usleep(15);
-	digitalWrite(PORT_CS_TRIG, LOW);
-
 	wiringPiISR(PORT_CS_ECHO, INT_EDGE_BOTH, &distance);
+
+	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &distance_trig, NULL);
 
 	return 0;
 }
 
 int __destory(s_engine *e, s_params *p)
 {
-	st = 0;
-
 	return 0;
 }
 
 int __status()
 {
 	return st;
+}
+
+void distance_trig()
+{
+	while (r)
+	{
+		//初始化HC-SR04
+		digitalWrite(PORT_CS_TRIG, HIGH);
+		//持续15微秒
+		usleep(15);
+		digitalWrite(PORT_CS_TRIG, LOW);
+		usleep(50 * 1000);
+	}
+	st = 0;
 }
 
 void distance()
@@ -82,9 +93,8 @@ void distance()
 	else
 	{
 		//声音在空气中传播速度3.40m/s，距离往返除以2。
-		height = timer * 340.0 / 2.0;
+		height = (timer / 1000000.0) * 340.0 / 2.0;
 	}
-
 	//对高度卡尔曼滤波
 	h_est = kalman_filter(h_est, h_est_devi, height, h_measure_devi, &h_devi);
 	//设定引擎中调试值

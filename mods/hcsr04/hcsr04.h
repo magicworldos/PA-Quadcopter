@@ -12,8 +12,8 @@
 #include <typedef.h>
 
 //定义HC-SR04引脚
-#define PORT_CS_TRIG        (22)
-#define PORT_CS_ECHO        (13)
+#define PORT_CS_TRIG        (15)
+#define PORT_CS_ECHO        (16)
 
 typedef struct
 {
@@ -26,6 +26,8 @@ int __init(s_engine *engine, s_params *params);
 int __destory(s_engine *e, s_params *p);
 
 int __status();
+
+void distance_trig();
 
 void distance();
 

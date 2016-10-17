@@ -14,7 +14,7 @@
 #define GPIO_FB						(12)
 #define GPIO_LR						(14)
 #define GPIO_PW						(13)
-#define GPIO_MD						(15)
+#define GPIO_MD						(1)
 
 //摇控器接收机的4个通道读数范围
 #define CTL_PWM_MIN					(980)
