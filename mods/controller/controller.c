@@ -230,13 +230,9 @@ void controller_pw_pwm(int pw)
 	{
 		//最大高度4米
 		float h = v / 1000.0 * 4.0;
-		if (h < 0.2)
+		if (h < 0.15)
 		{
 			h = 0;
-		}
-		else if (h < 1.0)
-		{
-			h = 1.0;
 		}
 		e->target_height = h;
 	}
