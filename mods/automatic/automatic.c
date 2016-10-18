@@ -42,11 +42,17 @@ int __status()
 
 void automatic()
 {
+	//XYZ的增量式PID处理数据，当前、上一次
+	float h_et = 0.0, h_et_1 = 0.0;
+	float sum = 0;
 	while (1)
 	{
 		if (e->mode == MODE_TAKEOFF)
 		{
+			h_et_1 = h_et;
+			h_et = (e->target_height - e->height) * 100;
 
+			float v = automatic_pid(h_et, h_et_1, &sum);
 		}
 		else if (e->mode == MODE_FALLINGOFF)
 		{
@@ -55,4 +61,11 @@ void automatic()
 
 		usleep(50 * 1000);
 	}
+}
+
+float automatic_pid(float et, float et_1, float *sum)
+{
+	*sum += p->ki_h * et;
+	//增量式PID反馈控制
+	return p->kp_h * et + (*sum) + p->kd_h * (et - et_1);
 }

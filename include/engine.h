@@ -33,9 +33,6 @@ void engine_fly();
 //电机锁定解锁处理
 void engine_lock();
 
-//设定PID参数随引擎速度的线性变化系数
-float engine_present(float v, float par);
-
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2, float *sum);
 

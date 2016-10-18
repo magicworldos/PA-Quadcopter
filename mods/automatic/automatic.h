@@ -18,4 +18,6 @@ int __status();
 
 void automatic();
 
+float automatic_pid(float et, float et_1, float *sum);
+
 #endif /* MODS_AUTOMATIC_AUTOMATIC_H_ */

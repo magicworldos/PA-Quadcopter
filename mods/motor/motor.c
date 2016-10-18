@@ -146,10 +146,10 @@ void motor_balance_compensation()
 		}
 
 		//标准四轴平衡补偿
-		speed[0] = (int) e->v - e->x_devi + e->z_devi - e->xv_devi;
-		speed[1] = (int) e->v - e->y_devi - e->z_devi + e->yv_devi;
-		speed[2] = (int) e->v + e->x_devi + e->z_devi + e->xv_devi;
-		speed[3] = (int) e->v + e->y_devi - e->z_devi - e->yv_devi;
+		speed[0] = (int) ((e->v / (MAX_SPEED_RUN_MAX / 2.0)) * (e->v - e->x_devi + e->z_devi - e->xv_devi));
+		speed[1] = (int) ((e->v / (MAX_SPEED_RUN_MAX / 2.0)) * (e->v - e->y_devi - e->z_devi + e->yv_devi));
+		speed[2] = (int) ((e->v / (MAX_SPEED_RUN_MAX / 2.0)) * (e->v + e->x_devi + e->z_devi + e->xv_devi));
+		speed[3] = (int) ((e->v / (MAX_SPEED_RUN_MAX / 2.0)) * (e->v + e->y_devi - e->z_devi - e->yv_devi));
 
 		for (int i = 0; i < MOTOR_COUNT; i++)
 		{

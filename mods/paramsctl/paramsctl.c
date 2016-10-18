@@ -108,6 +108,10 @@ void params_reset()
 	p->kp_v = 12.7;
 	p->ki_v = 8.8;
 	p->kd_v = 9.8;
+	//旋转角速度PID参数
+	p->kp_h = 0.8;
+	p->ki_h = 0.5;
+	p->kd_h = 1.2;
 	//XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;

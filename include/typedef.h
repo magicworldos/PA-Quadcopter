@@ -121,6 +121,10 @@ typedef struct
 	float kp_v;
 	float ki_v;
 	float kd_v;
+	//高度PID参数
+	float kp_h;
+	float ki_h;
+	float kd_h;
 	//中心校准补偿
 	float cx;
 	float cy;
