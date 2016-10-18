@@ -47,12 +47,18 @@ typedef unsigned long long u64;
 //10ms 100Hz
 #define ENG_TIMER					(10)
 
+#define MODE_MANUAL					(0)
+#define MODE_TAKEOFF				(1)
+#define MODE_FALLINGOFF				(2)
+
 //引擎结构
 typedef struct
 {
 	//电机锁定状态，默认为锁定
 	int lock;
-
+	//实际欧拉角
+	float tx;
+	float ty;
 	//XYZ欧拉角
 	float x;
 	float y;
@@ -99,6 +105,8 @@ typedef struct
 	u32 mode;
 	//高度
 	float height;
+	//目标高度
+	float target_height;
 
 } s_engine;
 

@@ -116,16 +116,7 @@ void motor_run(void *args)
 	motor_pwm pwm;
 	while (r)
 	{
-//		//在速度为0时不对电机输出pwm信号，只输出低电平
-//		if (speed[motor] == 0)
-//		{
-//			//低电平
-//			digitalWrite(ports[motor], LOW);
-//			usleep(TIME_PWM_WIDTH);
-//			continue;
-//		}
-
-//将电机速度转为PWM信号
+		//将电机速度转为PWM信号
 		motor_set_pwm(speed[motor], &pwm);
 
 		//对电机发送PWM信号

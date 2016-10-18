@@ -219,6 +219,7 @@ void engine_fly()
 		x_et_2 = x_et_1;
 		x_et_1 = x_et;
 		x_et = x_angle;
+		e->tx = x_angle;
 		//使用XY轴的欧拉角的PID反馈控制算法
 		e->x_devi = engine_pid(x_et, x_et_1, x_et_2, &e->x_sum);
 		//得出引擎的X轴平衡补偿
@@ -236,6 +237,7 @@ void engine_fly()
 		y_et_2 = y_et_1;
 		y_et_1 = y_et;
 		y_et = y_angle;
+		e->ty = y_angle;
 		//使用XY轴的欧拉角的PID反馈控制算法
 		e->y_devi = engine_pid(y_et, y_et_1, y_et_2, &e->y_sum);
 
@@ -409,6 +411,9 @@ float engine_kalman_filter(float est, float est_devi, float measure, float measu
 void engine_reset(s_engine *e)
 {
 	e->lock = 1;
+	//实际欧拉角
+	e->tx = 0;
+	e->ty = 0;
 	//陀螺仪修正补偿XYZ轴
 	e->dx = 0;
 	e->dy = 0;
@@ -454,9 +459,11 @@ void engine_reset(s_engine *e)
 	//0手动模式
 	//1自动起飞模式
 	//2自动降落模式
-	e->mode = 0;
+	e->mode = MODE_MANUAL;
 	//高度
 	e->height = 0;
+	//目标高度
+	e->target_height = 0;
 }
 
 //陀螺仪补偿
@@ -474,6 +481,8 @@ void engine_set_dxy()
 
 	e->x_sum = 0;
 	e->y_sum = 0;
+
+	e->mode = MODE_MANUAL;
 }
 
 //绝对值

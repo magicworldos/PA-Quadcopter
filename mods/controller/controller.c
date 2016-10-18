@@ -221,10 +221,28 @@ void controller_pw_pwm(int pw)
 		v = 0;
 	}
 
-	if (e->mode == 0)
+	if (e->mode == MODE_MANUAL)
 	{
 		//设置引擎的速度
 		e->v = v;
+	}
+	else if (e->mode == MODE_TAKEOFF)
+	{
+		//最大高度4米
+		float h = v / 1000.0 * 4.0;
+		if (h < 0.2)
+		{
+			h = 0;
+		}
+		else if (h < 1.0)
+		{
+			h = 1.0;
+		}
+		e->target_height = h;
+	}
+	else if (e->mode == MODE_FALLINGOFF)
+	{
+
 	}
 
 	//如果是最低油门
@@ -265,16 +283,16 @@ void controller_md_pwm(int md)
 		if (md - p->ctl_md_zero < 0)
 		{
 			//自动起飞
-			e->mode = 1;
+			e->mode = MODE_TAKEOFF;
 			return;
 		}
 
 		//自动降落
-		e->mode = 2;
+		e->mode = MODE_FALLINGOFF;
 		return;
 	}
 	//手动模式
-	e->mode = 0;
+	e->mode = MODE_MANUAL;
 }
 
 //取绝对值
