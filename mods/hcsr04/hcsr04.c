@@ -99,7 +99,7 @@ void distance()
 	h_est = kalman_filter(h_est, h_est_devi, height, h_measure_devi, &h_devi);
 
 	//设定引擎中调试值
-	e->height = h_est * cos(e->tx * M_PI / 180.0) * cos(e->ty * M_PI / 180.0);
+	e->height = h_est * cos(e->tx) * cos(e->ty);
 }
 
 /***

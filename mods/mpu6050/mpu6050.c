@@ -149,12 +149,12 @@ void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz
 		mpu6050_dmpGetQuaternion(&q, fifoBuffer);
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetYawPitchRoll(ypr, &q, &gravity);
-//		*x = ypr[0] * 180.0 / M_PI;
-//		*y = ypr[1] * 180.0 / M_PI;
-//		*z = ypr[2] * 180.0 / M_PI;
-		*x = ypr[0];
-		*y = ypr[1];
-		*z = ypr[2];
+		*x = ypr[0] * 180.0 / M_PI;
+		*y = ypr[1] * 180.0 / M_PI;
+		*z = ypr[2] * 180.0 / M_PI;
+//		*x = ypr[0];
+//		*y = ypr[1];
+//		*z = ypr[2];
 
 		// display real acceleration, adjusted to remove gravity
 		mpu6050_dmpGetQuaternion(&q, fifoBuffer);

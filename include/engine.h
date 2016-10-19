@@ -15,9 +15,7 @@
 //最大角度
 #define MAX_ANGLE					(90.0)
 //渐进式方向增量
-#define DIRECT_VALUE				(0.2)
-//渐进重力加速度增量
-#define GRA_DIRECT_VALUE			(0.2)
+#define DIRECT_VALUE				(1.0)
 
 //电调起始时长(仅在--ctl模式下用)
 #define TEST_ZERO_MS				(1000)
@@ -29,6 +27,9 @@ void engine_start(int argc, char *argv[]);
 
 //引擎核心算法平衡算法
 void engine_fly();
+
+//设定PID参数随引擎速度的线性变化系数
+float engine_present(float v, float par);
 
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2, float *sum);
