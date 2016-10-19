@@ -30,9 +30,6 @@ void engine_start(int argc, char *argv[]);
 //引擎核心算法平衡算法
 void engine_fly();
 
-//电机锁定解锁处理
-void engine_lock();
-
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2, float *sum);
 
@@ -50,6 +47,9 @@ void engine_set_dxy();
 
 //绝对值
 float engine_abs(float v);
+
+//电机锁定解锁处理
+void engine_lock();
 
 //电机调试
 void engine_ent_run(int en_port, int en_speed, int en_msecs);

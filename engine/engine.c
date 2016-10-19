@@ -169,8 +169,8 @@ void engine_fly()
 	float ya_et = 0.0, ya_et_1 = 0.0, ya_et_2 = 0.0;
 
 	//xyz欧拉角噪声
-	float xyz_est_devi = 0.01;
-	float xyz_measure_devi = 0.01;
+	float xyz_est_devi = 0.0001;
+	float xyz_measure_devi = 0.0002;
 	//x轴欧拉角卡尔曼滤波
 	float x_est = 0.0, x_devi = 0.0;
 	//y轴欧拉角卡尔曼滤波
@@ -218,7 +218,7 @@ void engine_fly()
 		//设置PID数据
 		x_et_2 = x_et_1;
 		x_et_1 = x_et;
-		x_et = x_angle;
+		x_et = sin(x_angle);
 		e->tx = x_angle;
 		//使用XY轴的欧拉角的PID反馈控制算法
 		e->x_devi = engine_pid(x_et, x_et_1, x_et_2, &e->x_sum);
@@ -236,7 +236,7 @@ void engine_fly()
 		//设置PID数据
 		y_et_2 = y_et_1;
 		y_et_1 = y_et;
-		y_et = y_angle;
+		y_et = sin(y_angle);
 		e->ty = y_angle;
 		//使用XY轴的欧拉角的PID反馈控制算法
 		e->y_devi = engine_pid(y_et, y_et_1, y_et_2, &e->y_sum);
@@ -252,7 +252,7 @@ void engine_fly()
 		z_et_1 = z_et;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pid(z_et, z_et_1, z_et_2, NULL);
+		e->z_devi = 0;		//engine_pid(z_et, z_et_1, z_et_2, NULL);
 
 		//处理X轴旋转角速度平衡补偿
 		float gxv = e->gx + e->dgx;
@@ -264,7 +264,7 @@ void engine_fly()
 		xv_et_1 = xv_et;
 		xv_et = gxv;
 		//使用X轴的旋转角速度的PID反馈控制算法
-		e->xv_devi = engine_pid_v(xv_et, xv_et_1, xv_et_2);
+		e->xv_devi = 0;		//engine_pid_v(xv_et, xv_et_1, xv_et_2);
 
 		//处理Y轴旋转角速度平衡补偿
 		float gyv = e->gy + e->dgy;
@@ -276,7 +276,7 @@ void engine_fly()
 		yv_et_1 = yv_et;
 		yv_et = gyv;
 		//使用Y轴的旋转角速度的PID反馈控制算法
-		e->yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
+		e->yv_devi = 0;		//engine_pid_v(yv_et, yv_et_1, yv_et_2);
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -291,79 +291,21 @@ void engine_fly()
 	}
 }
 
-//电机锁定解锁处理
-void engine_lock()
-{
-	s_engine *e = &engine;
-
-	//动作开始时间
-	struct timeval start;
-	//动作计时
-	struct timeval end;
-
-	while (1)
-	{
-		u32 status = e->lock_status;
-		//计时状态
-		int timer_start = 0;
-		while (1)
-		{
-			//最低油门方向最左方向最右
-			if (!timer_start && (e->lock_status == 3 || e->lock_status == 5))
-			{
-				//开始计时
-				gettimeofday(&start, NULL);
-				//计时状态
-				timer_start = 1;
-			}
-
-			if (timer_start)
-			{
-				if (status != e->lock_status)
-				{
-					break;
-				}
-
-				gettimeofday(&end, NULL);
-				long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-				if (timer >= 1000 * 1000)
-				{
-					//方向最左侧解锁电机
-					if ((e->lock_status >> 2) & 0x1)
-					{
-						engine.lock = 0;
-						break;
-					}
-					//方向最右侧锁定电机
-					if ((e->lock_status >> 1) & 0x1)
-					{
-						engine.lock = 1;
-						break;
-					}
-				}
-			}
-			usleep(100 * 1000);
-		}
-		usleep(100 * 1000);
-	}
-}
-
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2, float *sum)
 {
 	s_engine *e = &engine;
 
-	if (sum == NULL)
-	{
-		return params.kp * (et - et_1) + params.ki * et + params.kd * (et - 2 * et_1 + et_2);
-	}
+	et *= 100.0;
+	et_1 *= 100.0;
+	et_2 *= 100.0;
 
-	float a = 5.0;
-	*sum += e->v, params.ki / 30.0 * et;
+	float a = 2.0;
+	*sum += params.ki * et;
 	*sum = *sum > e->v / a ? e->v / a : *sum;
 	*sum = *sum < -e->v / a ? -e->v / a : *sum;
 	//增量式PID反馈控制
-	return params.kp * (et - et_1) + params.ki * et + (*sum) + params.kd * (et - 2 * et_1 + et_2);
+	return params.kp * et + (*sum) + params.kd * (et - et_1);
 }
 
 //对旋转角速度做PID反馈控制
@@ -482,6 +424,63 @@ float engine_abs(float v)
 		return -v;
 	}
 	return v;
+}
+
+//电机锁定解锁处理
+void engine_lock()
+{
+	s_engine *e = &engine;
+
+	//动作开始时间
+	struct timeval start;
+	//动作计时
+	struct timeval end;
+
+	while (1)
+	{
+		u32 status = e->lock_status;
+		//计时状态
+		int timer_start = 0;
+		while (1)
+		{
+			//最低油门方向最左方向最右
+			if (!timer_start && (e->lock_status == 3 || e->lock_status == 5))
+			{
+				//开始计时
+				gettimeofday(&start, NULL);
+				//计时状态
+				timer_start = 1;
+			}
+
+			if (timer_start)
+			{
+				if (status != e->lock_status)
+				{
+					break;
+				}
+
+				gettimeofday(&end, NULL);
+				long timer = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+				if (timer >= 1000 * 1000)
+				{
+					//方向最左侧解锁电机
+					if ((e->lock_status >> 2) & 0x1)
+					{
+						engine.lock = 0;
+						break;
+					}
+					//方向最右侧锁定电机
+					if ((e->lock_status >> 1) & 0x1)
+					{
+						engine.lock = 1;
+						break;
+					}
+				}
+			}
+			usleep(100 * 1000);
+		}
+		usleep(100 * 1000);
+	}
 }
 
 //电机调试
