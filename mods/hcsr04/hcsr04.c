@@ -44,6 +44,8 @@ int __init(s_engine *engine, s_params *params)
 
 int __destory(s_engine *e, s_params *p)
 {
+	r = 0;
+
 	return 0;
 }
 

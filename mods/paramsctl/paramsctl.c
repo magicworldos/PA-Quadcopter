@@ -148,6 +148,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
+				p->kp_h += CTL_STEP;
+			}
+			else if (p->ctl_type == 3)
+			{
 				p->cx += CTL_STEP;
 			}
 		}
@@ -164,6 +168,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
+				p->ki_h += CTL_STEP;
+			}
+			else if (p->ctl_type == 3)
+			{
 				p->cy += CTL_STEP;
 			}
 		}
@@ -178,6 +186,10 @@ void params_input()
 			{
 				p->kd_v += CTL_STEP;
 			}
+			else if (p->ctl_type == 2)
+			{
+				p->kd_h += CTL_STEP;
+			}
 		}
 		//4
 		else if (ch == '4')
@@ -191,6 +203,10 @@ void params_input()
 				p->kp_v -= CTL_STEP;
 			}
 			else if (p->ctl_type == 2)
+			{
+				p->kp_h -= CTL_STEP;
+			}
+			else if (p->ctl_type == 3)
 			{
 				p->cx -= CTL_STEP;
 			}
@@ -208,6 +224,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
+				p->ki_h -= CTL_STEP;
+			}
+			else if (p->ctl_type == 3)
+			{
 				p->cy -= CTL_STEP;
 			}
 		}
@@ -221,6 +241,10 @@ void params_input()
 			else if (p->ctl_type == 1)
 			{
 				p->kd_v -= CTL_STEP;
+			}
+			else if (p->ctl_type == 2)
+			{
+				p->kd_h -= CTL_STEP;
 			}
 		}
 		//-
@@ -256,30 +280,40 @@ void params_input()
 		{
 			p->ctl_type = 1;
 		}
-		//陀螺仪校准参数cx、cy、cz
-		else if (ch == 'y')
+		//角速度PID_V参数
+		else if (ch == 'e')
 		{
 			p->ctl_type = 2;
 		}
-		//摇控器起始读数
-		else if (ch == 'u')
+		//陀螺仪校准参数cx、cy、cz
+		else if (ch == 'o')
 		{
 			p->ctl_type = 3;
+		}
+		//摇控器起始读数
+		else if (ch == 'p')
+		{
+			p->ctl_type = 4;
 		}
 		//角度
 		else if (ch == 'z')
 		{
-			p->ctl_type = 4;
+			p->ctl_type = 5;
 		}
 		//角速度
 		else if (ch == 'x')
 		{
-			p->ctl_type = 5;
+			p->ctl_type = 6;
+		}
+		//电机转速
+		else if (ch == 'c')
+		{
+			p->ctl_type = 7;
 		}
 		//电机转速
 		else if (ch == 'v')
 		{
-			p->ctl_type = 6;
+			p->ctl_type = 8;
 		}
 		//保存所有参数到缓存
 		else if (ch == 'S')

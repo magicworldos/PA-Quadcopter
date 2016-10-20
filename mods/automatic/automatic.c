@@ -45,7 +45,7 @@ void automatic()
 	//XYZ的增量式PID处理数据，当前、上一次
 	float h_et = 0.0, h_et_1 = 0.0;
 	float sum = 0;
-	while (1)
+	while (r)
 	{
 		if (e->mode == MODE_TAKEOFF)
 		{
@@ -61,6 +61,8 @@ void automatic()
 
 		usleep(50 * 1000);
 	}
+
+	st = 0;
 }
 
 float automatic_pid(float et, float et_1, float *sum)
