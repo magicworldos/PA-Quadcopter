@@ -19,7 +19,7 @@ s_ctl_pwm ctl_pwm_md;
 
 //摇控器pwm信号噪声
 float ctl_est_devi = 1;
-float ctl_measure_devi = 5;
+float ctl_measure_devi = 15;
 //前后卡尔曼滤波
 float fb_est = 0.0, fb_devi = 0.0;
 //左右卡尔曼滤波

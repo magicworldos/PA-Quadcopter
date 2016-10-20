@@ -170,7 +170,7 @@ void engine_fly()
 
 	//xyz欧拉角噪声
 	float xyz_est_devi = 0.01;
-	float xyz_measure_devi = 0.01;
+	float xyz_measure_devi = 0.05;
 	//x轴欧拉角卡尔曼滤波
 	float x_est = 0.0, x_devi = 0.0;
 	//y轴欧拉角卡尔曼滤波
