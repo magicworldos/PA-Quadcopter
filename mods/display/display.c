@@ -48,7 +48,7 @@ void run()
 		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
 
 #ifdef __DISPLAY_MODE_MORE__
-		printf("[v: %4.0f][h: %+4.2f][xyz: %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+8.3f y:%+8.3f z:%+8.3f xv:%+8.3f yv:%+8.3f]", e->v, e->height, e->x + e->dx + e->mx, e->y + e->dy + e->my, e->z + e->dz, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi, e->xv_devi, e->yv_devi);
+		printf("[v: %4.0f][h: %+4.2f %+4.2f][xyz: %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+8.3f y:%+8.3f z:%+8.3f xv:%+8.3f yv:%+8.3f]", e->v, e->height, e->target_height, e->x + e->dx + e->mx, e->y + e->dy + e->my, e->z + e->dz, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi, e->xv_devi, e->yv_devi);
 #endif
 
 		if (p->ctl_type == 0)
