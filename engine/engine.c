@@ -348,12 +348,6 @@ void engine_lock()
 	}
 }
 
-//设定PID参数随引擎速度的线性变化系数
-float engine_present(float v, float par)
-{
-	return par;
-}
-
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float et_1, float et_2, float *sum)
 {
@@ -365,11 +359,11 @@ float engine_pid(float et, float et_1, float et_2, float *sum)
 	}
 
 	float a = 2.0;
-	*sum += engine_present(e->v, params.ki) / 20.0 * et;
+	*sum += params.ki / 20.0 * et;
 	*sum = *sum > e->v / a ? e->v / a : *sum;
 	*sum = *sum < -e->v / a ? -e->v / a : *sum;
 	//增量式PID反馈控制
-	return engine_present(e->v, params.kp) * (et - et_1) + engine_present(e->v, params.ki) * et + (*sum) + engine_present(e->v, params.kd) * (et - 2 * et_1 + et_2);
+	return params.kp * (et - et_1) + params.ki * et + (*sum) + params.kd * (et - 2 * et_1 + et_2);
 }
 
 //对旋转角速度做PID反馈控制
@@ -378,7 +372,7 @@ float engine_pid_v(float et, float et_1, float et_2)
 	s_engine *e = &engine;
 
 	//增量式PID反馈控制
-	return engine_present(e->v, params.kp_v) * (et - et_1) + engine_present(e->v, params.ki_v) * et + engine_present(e->v, params.kd_v) * (et - 2 * et_1 + et_2);
+	return params.kp_v * (et - et_1) + params.ki_v * et + params.kd_v * (et - 2 * et_1 + et_2);
 }
 
 /***
