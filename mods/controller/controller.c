@@ -16,6 +16,8 @@ s_ctl_pwm ctl_pwm_fb;
 s_ctl_pwm ctl_pwm_lr;
 s_ctl_pwm ctl_pwm_pw;
 s_ctl_pwm ctl_pwm_md;
+s_ctl_pwm ctl_pwm_ud;
+s_ctl_pwm ctl_pwm_di;
 
 //摇控器pwm信号噪声
 float ctl_est_devi = 1;
@@ -29,6 +31,10 @@ float pw_est = 0.0, pw_devi = 0.0;
 //模式卡尔曼滤波
 float md_est = 0.0, md_devi = 0.0;
 
+float ud_est = 0.0, ud_devi = 0.0;
+
+float di_est = 0.0, di_devi = 0.0;
+
 int __init(s_engine *engine, s_params *params)
 {
 	e = engine;
@@ -40,11 +46,15 @@ int __init(s_engine *engine, s_params *params)
 	pinMode(GPIO_LR, INPUT);
 	pinMode(GPIO_PW, INPUT);
 	pinMode(GPIO_MD, INPUT);
+	pinMode(GPIO_UD, INPUT);
+	pinMode(GPIO_DI, INPUT);
 
 	wiringPiISR(GPIO_FB, INT_EDGE_BOTH, &controller_ctl_pwm_fb);
 	wiringPiISR(GPIO_LR, INT_EDGE_BOTH, &controller_ctl_pwm_lr);
 	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &controller_ctl_pwm_pw);
 	wiringPiISR(GPIO_MD, INT_EDGE_BOTH, &controller_ctl_pwm_md);
+	wiringPiISR(GPIO_UD, INT_EDGE_BOTH, &controller_ctl_pwm_ud);
+	wiringPiISR(GPIO_DI, INT_EDGE_BOTH, &controller_ctl_pwm_di);
 
 	printf("[ OK ] Controller Init.\n");
 
@@ -112,9 +122,20 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 	//向引擎发送“模式”数值
 	if (gpio_port == GPIO_MD)
 	{
-		//对模式通道做卡尔曼滤波
-		md_est = controller_kalman_filter(md_est, ctl_est_devi, timer, ctl_measure_devi, &md_devi);
-		controller_md_pwm(md_est);
+		controller_md_pwm(timer);
+		return;
+	}
+
+//	if (gpio_port == GPIO_UD)
+//	{
+//		controller_ud_pwm(timer);
+//		return;
+//	}
+
+	if (gpio_port == GPIO_DI)
+	{
+		di_est = controller_kalman_filter(di_est, ctl_est_devi, timer, ctl_measure_devi, &di_devi);
+		controller_di_pwm(di_est);
 		return;
 	}
 }
@@ -143,6 +164,16 @@ void controller_ctl_pwm_md()
 	controller_ctl_pwm(GPIO_MD, &ctl_pwm_md);
 }
 
+void controller_ctl_pwm_ud()
+{
+	controller_ctl_pwm(GPIO_UD, &ctl_pwm_ud);
+}
+
+void controller_ctl_pwm_di()
+{
+	controller_ctl_pwm(GPIO_DI, &ctl_pwm_di);
+}
+
 //读入摇控器“前/后”的PWM信号
 void controller_fb_pwm(int fb)
 {
@@ -157,7 +188,7 @@ void controller_fb_pwm(int fb)
 	e->ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	e->ctlmx = controller_parabola(((float) (fb - p->ctl_fb_zero)) / 50.0 * 8.0);
+	e->ctlmx = controller_parabola(((float) (fb - p->ctl_fb_zero)) / 50.0 * 5.0);
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -174,7 +205,7 @@ void controller_lr_pwm(int lr)
 	e->ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	e->ctlmy = controller_parabola(((float) (lr - p->ctl_lr_zero)) / 50.0 * 8.0);
+	e->ctlmy = controller_parabola(((float) (lr - p->ctl_lr_zero)) / 50.0 * 5.0);
 
 	//如果是最左或最右
 	if (abs(lr - p->ctl_lr_zero) > 160)
@@ -226,20 +257,6 @@ void controller_pw_pwm(int pw)
 		//设置引擎的速度
 		e->v = v;
 	}
-	else if (e->mode == MODE_TAKEOFF)
-	{
-		//最大高度4米
-		float h = v / 1000.0 * 4.0;
-		if (h < 0.15)
-		{
-			h = 0;
-		}
-		e->target_height = h;
-	}
-	else if (e->mode == MODE_FALLINGOFF)
-	{
-
-	}
 
 	//如果是最低油门
 	if (abs(pw - p->ctl_pw_zero) < 50)
@@ -261,34 +278,67 @@ void controller_md_pwm(int md)
 	}
 	if (p->ctl_md_zero < CTL_PWM_MIN || p->ctl_md_zero > CTL_PWM_MAX)
 	{
-		p->ctl_md_zero = 1500;
+		p->ctl_md_zero = 2000;
 	}
 	e->ctl_md = md;
 	//读入读数
 	float val = (float) (md - p->ctl_md_zero);
-	//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
-	if (e->lock)
+	if (abs(val) < 500)
 	{
+		//手动模式
+		e->mode = MODE_MANUAL;
 		return;
 	}
 
-	//如果是最左或最右
-	if (abs(md - p->ctl_md_zero) > 160)
-	{
-		//如果是最左
-		if (md - p->ctl_md_zero < 0)
-		{
-			//自动起飞
-			e->mode = MODE_TAKEOFF;
-			return;
-		}
+	//自动模式
+	e->mode = MODE_AUTO;
+}
 
-		//自动降落
-		e->mode = MODE_FALLINGOFF;
+//void controller_ud_pwm(int ud)
+//{
+//	if (ud < CTL_PWM_MIN || ud > CTL_PWM_MAX)
+//	{
+//		return;
+//	}
+//	if (p->ctl_ud_zero < CTL_PWM_MIN || p->ctl_ud_zero > CTL_PWM_MAX)
+//	{
+//		p->ctl_ud_zero = 1060;
+//	}
+//	e->ctl_ud = ud;
+//
+//	//定高飞行
+//	e->mode_auto = MODE_AUTO_TAKEOFF;
+//	return;
+//
+//	//读入读数
+//	float val = (float) (ud - p->ctl_ud_zero);
+//	if (abs(val) < 100)
+//	{
+//		//自动起飞
+//		e->mode_auto = MODE_AUTO_TAKEOFF;
+//		return;
+//	}
+//
+//	//自动降落
+//	e->mode_auto = MODE_AUTO_FALLINGOFF;
+//	return;
+//
+//}
+
+void controller_di_pwm(int di)
+{
+	if (di < CTL_PWM_MIN || di > CTL_PWM_MAX)
+	{
 		return;
 	}
-	//手动模式
-	e->mode = MODE_MANUAL;
+	if (p->ctl_di_zero < CTL_PWM_MIN || p->ctl_di_zero > CTL_PWM_MAX)
+	{
+		p->ctl_di_zero = 1000;
+	}
+	e->ctl_di = di;
+	//读入读数
+	float val = (float) (di - p->ctl_di_zero);
+	e->target_height = abs(val) / 1000.0 * 4.0;
 }
 
 //取绝对值

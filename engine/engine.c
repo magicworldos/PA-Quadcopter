@@ -89,6 +89,10 @@ void engine_start(int argc, char *argv[])
 			float lr_est = 0.0, lr_devi = 0.0, lr_est1 = 0.0, lr_devi1 = 0.0;
 			//油门卡尔曼滤波
 			float pw_est = 0.0, pw_devi = 0.0, pw_est1 = 0.0, pw_devi1 = 0.0;
+			//模式卡尔曼滤波
+			float md_est = 0.0, md_devi = 0.0, md_est1 = 0.0, md_devi1 = 0.0;
+			float ud_est = 0.0, ud_devi = 0.0, ud_est1 = 0.0, ud_devi1 = 0.0;
+			float di_est = 0.0, di_devi = 0.0, di_est1 = 0.0, di_devi1 = 0.0;
 
 			while (1)
 			{
@@ -108,7 +112,23 @@ void engine_start(int argc, char *argv[])
 				pw_est1 = engine_kalman_filter(pw_est1, ctl_est_devi, pw_est, ctl_measure_devi, &pw_devi1);
 				params.ctl_pw_zero = pw_est1;
 
-				printf("[FB: %4d LR: %4d PW: %4d] - [FB: %4d LR: %4d PW: %4d]\n", e->ctl_fb, e->ctl_lr, e->ctl_pw, p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero);
+				//对模式通道做卡尔曼滤波
+				e->ctl_md;
+				md_est = engine_kalman_filter(md_est, ctl_est_devi, e->ctl_md, ctl_measure_devi, &md_devi);
+				md_est1 = engine_kalman_filter(md_est1, ctl_est_devi, md_est, ctl_measure_devi, &md_devi1);
+				params.ctl_md_zero = md_est1;
+
+				e->ctl_ud;
+				ud_est = engine_kalman_filter(ud_est, ctl_est_devi, e->ctl_ud, ctl_measure_devi, &ud_devi);
+				ud_est1 = engine_kalman_filter(ud_est1, ctl_est_devi, ud_est, ctl_measure_devi, &ud_devi1);
+				params.ctl_ud_zero = ud_est1;
+
+				e->ctl_di;
+				di_est = engine_kalman_filter(di_est, ctl_est_devi, e->ctl_di, ctl_measure_devi, &di_devi);
+				di_est1 = engine_kalman_filter(di_est1, ctl_est_devi, di_est, ctl_measure_devi, &di_devi1);
+				params.ctl_di_zero = di_est1;
+
+				printf("[FB: %4d LR: %4d PW: %4d MD: %4d UD: %4d DI: %4d ] - [FB: %4d LR: %4d PW: %4d MD: %4d UD: %4d DI: %4d]\n", e->ctl_fb, e->ctl_lr, e->ctl_pw, e->ctl_md, e->ctl_ud, e->ctl_di, p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero, p->ctl_md_zero, p->ctl_ud_zero, p->ctl_di_zero);
 
 				usleep(2 * 1000);
 			}
@@ -443,6 +463,8 @@ void engine_reset(s_engine *e)
 	e->ctl_lr = 0;
 	e->ctl_pw = 0;
 	e->ctl_md = 0;
+	e->ctl_ud = 0;
+	e->ctl_di = 0;
 	//最低油门,最左，最右
 	e->lock_status = 0;
 	//0手动模式
@@ -470,8 +492,6 @@ void engine_set_dxy()
 
 	e->x_sum = 0;
 	e->y_sum = 0;
-
-	e->mode = MODE_MANUAL;
 }
 
 //绝对值

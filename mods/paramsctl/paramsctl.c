@@ -119,9 +119,11 @@ void params_reset()
 	p->ctl_fb_zero = 1500;
 	p->ctl_lr_zero = 1500;
 	p->ctl_pw_zero = 1100;
-	p->ctl_md_zero = 1500;
+	p->ctl_md_zero = 1000;
+	p->ctl_ud_zero = 1060;
+	p->ctl_di_zero = 1000;
 	//显示类型
-	p->ctl_type = 10;
+	p->ctl_type = 1;
 }
 
 //键盘接收按键

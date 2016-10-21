@@ -43,12 +43,13 @@ void automatic()
 	//高度的增量式PID处理数据，当前、上一次
 	float h_et = 0.0, h_et_1 = 0.0, h_et_2 = 0.0;
 	int status = 0;
+	float target_height = 0;
 
 	while (r)
 	{
 		usleep(50 * 1000);
 
-		if (e->mode == MODE_TAKEOFF)
+		if (e->mode == MODE_AUTO)
 		{
 			status = 0;
 			if (e->lock || e->v < PROCTED_SPEED)
@@ -61,47 +62,53 @@ void automatic()
 			h_et = e->target_height - e->height;
 
 			float h_devi = automatic_pid(h_et, h_et_1, h_et_2);
-			e->v += h_devi;
+			float v = e->v + h_devi;
+			v = v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : v;
+			v = v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : v;
+			e->v = v;
 		}
-		else if (e->mode == MODE_FALLINGOFF)
-		{
-			if (e->lock || e->v < PROCTED_SPEED)
-			{
-				continue;
-			}
-
-			//开始
-			if (status == 0)
-			{
-				status = 1;
-			}
-			if (status == 1)
-			{
-				e->target_height = e->height + 2;
-				status = 2;
-			}
-			if (status == 2)
-			{
-				h_et_2 = h_et_1;
-				h_et_1 = h_et;
-				h_et = e->target_height - e->height;
-
-				float h_devi = automatic_pid(h_et, h_et_1, h_et_2);
-				e->v += h_devi;
-				if (e->target_height > 1.2)
-				{
-					e->target_height -= 0.005;
-				}
-				else if (e->target_height > 0.5)
-				{
-					e->target_height -= 0.003;
-				}
-				else
-				{
-					e->target_height -= 0.001;
-				}
-			}
-		}
+//		else if (e->mode == MODE_AUTO && e->mode_auto == MODE_AUTO_FALLINGOFF)
+//		{
+//			if (e->lock || e->v < PROCTED_SPEED)
+//			{
+//				continue;
+//			}
+//
+//			//开始
+//			if (status == 0)
+//			{
+//				status = 1;
+//			}
+//			if (status == 1)
+//			{
+//				target_height = e->height;
+//				status = 2;
+//			}
+//			if (status == 2)
+//			{
+//				h_et_2 = h_et_1;
+//				h_et_1 = h_et;
+//				h_et = target_height - e->height;
+//
+//				float h_devi = automatic_pid(h_et, h_et_1, h_et_2);
+//				float v = e->v + h_devi;
+//				v = v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : v;
+//				v = v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : v;
+//				e->v = v;
+//				if (target_height > 1.2)
+//				{
+//					target_height -= 0.005;
+//				}
+//				else if (target_height > 0.6)
+//				{
+//					target_height -= 0.003;
+//				}
+//				else
+//				{
+//					target_height -= 0.001;
+//				}
+//			}
+//		}
 		else if (e->mode == MODE_MANUAL)
 		{
 			status = 0;

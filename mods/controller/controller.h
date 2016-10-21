@@ -15,6 +15,8 @@
 #define GPIO_LR						(14)
 #define GPIO_PW						(13)
 #define GPIO_MD						(1)
+#define GPIO_UD						(5)
+#define GPIO_DI						(4)
 
 //摇控器接收机的4个通道读数范围
 #define CTL_PWM_MIN					(980)
@@ -46,6 +48,10 @@ void controller_ctl_pwm_pw();
 //读取摇控器接收机的PWM信号“模式”
 void controller_ctl_pwm_md();
 
+void controller_ctl_pwm_ud();
+
+void controller_ctl_pwm_di();
+
 //读入摇控器“前/后”的PWM信号
 void controller_fb_pwm(int fb);
 
@@ -57,6 +63,10 @@ void controller_pw_pwm(int pw);
 
 //读入摇控器“模式”的PWM信号
 void controller_md_pwm(int md);
+
+//void controller_ud_pwm(int md);
+
+void controller_di_pwm(int md);
 
 //取绝对值
 float controller_abs(float x);

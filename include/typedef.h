@@ -48,8 +48,7 @@ typedef unsigned long long u64;
 #define ENG_TIMER					(10)
 
 #define MODE_MANUAL					(0)
-#define MODE_TAKEOFF				(1)
-#define MODE_FALLINGOFF				(2)
+#define MODE_AUTO					(1)
 
 //引擎结构
 typedef struct
@@ -100,9 +99,12 @@ typedef struct
 	int ctl_lr;
 	int ctl_pw;
 	int ctl_md;
+	int ctl_ud;
+	int ctl_di;
 	//最低油门,最左，最右
 	u32 lock_status;
 	u32 mode;
+	u32 mode_auto;
 	//高度
 	float height;
 	//目标高度
@@ -133,6 +135,8 @@ typedef struct
 	int ctl_lr_zero;
 	int ctl_pw_zero;
 	int ctl_md_zero;
+	int ctl_ud_zero;
+	int ctl_di_zero;
 
 	int ctl_type;
 } s_params;
