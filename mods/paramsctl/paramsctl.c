@@ -101,16 +101,16 @@ void params_from_cache()
 void params_reset()
 {
 	//XY轴欧拉角PID参数
-	p->kp = 4.5;
-	p->ki = 3.3;
-	p->kd = 2.8;
+	p->kp = 4.8;
+	p->ki = 2.6;
+	p->kd = 3.8;
 	//旋转角速度PID参数
-	p->kp_v = 12.7;
-	p->ki_v = 8.8;
-	p->kd_v = 9.8;
+	p->kp_v = 15.3;
+	p->ki_v = 12.8;
+	p->kd_v = 14.5;
 	//旋转角速度PID参数
-	p->kp_h = 0.8;
-	p->ki_h = 0.5;
+	p->kp_h = 4.5;
+	p->ki_h = 3.3;
 	p->kd_h = 1.2;
 	//XY轴中心点校正补偿
 	p->cx = 0;
