@@ -375,15 +375,15 @@ float engine_pid(float et, float et_1, float et_2, float *sum)
 
 	if (sum == NULL)
 	{
-		return 2.0 * params.kp * (et - et_1) + 4.0 * params.ki * et + 2.0 * params.kd * (et - 2 * et_1 + et_2);
+		return params.kp * (et - et_1) + params.ki * et + params.kd * (et - 2 * et_1 + et_2);
 	}
 
-	float a = 2.0;
-	*sum += params.ki / 20.0 * et;
-	*sum = *sum > e->v / a ? e->v / a : *sum;
-	*sum = *sum < -e->v / a ? -e->v / a : *sum;
+	*sum += params.ki / 50.0 * et;
+	*sum = *sum > e->v / 2.0  ? e->v / 2.0 : *sum;
+	*sum = *sum < -e->v / 2.0 ? -e->v / 2.0 : *sum;
 	//增量式PID反馈控制
 	return params.kp * (et - et_1) + params.ki * et + (*sum) + params.kd * (et - 2 * et_1 + et_2);
+
 }
 
 //对旋转角速度做PID反馈控制

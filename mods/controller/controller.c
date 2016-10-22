@@ -355,7 +355,10 @@ float controller_abs(float x)
 float controller_parabola(float x)
 {
 	float flag = x / controller_abs(x);
-	return flag * (1.0 / 36.0) * (x * x);
+	float mxy = flag * (1.0 / 36.0) * (x * x);
+	mxy = mxy > 30.0 ? 30.0 : mxy;
+	mxy = mxy < -30.0 ? -30.0 : mxy;
+	return mxy;
 }
 
 /***
@@ -378,3 +381,4 @@ float controller_kalman_filter(float est, float est_devi, float measure, float m
 
 	return val;
 }
+
