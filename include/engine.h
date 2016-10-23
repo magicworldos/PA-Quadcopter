@@ -12,10 +12,8 @@
 #include <typedef.h>
 #include <dlmod.h>
 
-//最大角度
-#define MAX_ANGLE					(90.0)
 //渐进式方向增量
-#define DIRECT_VALUE				(1.0)
+#define DIRECT_VALUE				(0.005)
 
 //电调起始时长(仅在--ctl模式下用)
 #define TEST_ZERO_MS				(1000)
@@ -29,10 +27,7 @@ void engine_start(int argc, char *argv[]);
 void engine_fly();
 
 //XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float et_1, float et_2, float *sum);
-
-//对旋转角速度做PID反馈控制
-float engine_pid_v(float et, float et_1, float et_2);
+float engine_pid(float et, float et_1, float dg, float *sum);
 
 //卡尔曼滤波
 float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);

@@ -188,7 +188,7 @@ void controller_fb_pwm(int fb)
 	e->ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	e->ctlmx = controller_parabola(((float) (fb - p->ctl_fb_zero)) / 50.0 * 5.0);
+	e->ctlmx = controller_parabola(((float) (fb - p->ctl_fb_zero)) / 10.0);
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -205,7 +205,7 @@ void controller_lr_pwm(int lr)
 	e->ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	e->ctlmy = controller_parabola(((float) (lr - p->ctl_lr_zero)) / 50.0 * 5.0);
+	e->ctlmy = controller_parabola(((float) (lr - p->ctl_lr_zero)) / 10.0);
 
 	//如果是最左或最右
 	if (abs(lr - p->ctl_lr_zero) > 160)
@@ -358,7 +358,7 @@ float controller_parabola(float x)
 	float mxy = flag * (1.0 / 36.0) * (x * x);
 	mxy = mxy > 30.0 ? 30.0 : mxy;
 	mxy = mxy < -30.0 ? -30.0 : mxy;
-	return mxy;
+	return mxy * M_PI / 180.0;
 }
 
 /***

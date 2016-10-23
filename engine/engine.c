@@ -175,14 +175,9 @@ void engine_fly()
 	s_engine *e = &engine;
 
 	//XYZ的增量式PID处理数据，当前、上一次、上上次
-	float x_et = 0.0, x_et_1 = 0.0, x_et_2 = 0.0;
-	float y_et = 0.0, y_et_1 = 0.0, y_et_2 = 0.0;
-	float z_et = 0.0, z_et_1 = 0.0, z_et_2 = 0.0;
-
-	//XYZ轴旋转角速度的增量式PID处理数据，当前、上一次、上上次
-	float xv_et = 0.0, xv_et_1 = 0.0, xv_et_2 = 0.0;
-	float yv_et = 0.0, yv_et_1 = 0.0, yv_et_2 = 0.0;
-	float zv_et = 0.0, zv_et_1 = 0.0, zv_et_2 = 0.0;
+	float x_et = 0.0, x_et_1 = 0.0;
+	float y_et = 0.0, y_et_1 = 0.0;
+	float z_et = 0.0, z_et_1 = 0.0;
 
 	//XY轴加速度的增量式PID处理数据，当前、上一次、上上次
 	float xa_et = 0.0, xa_et_1 = 0.0, xa_et_2 = 0.0;
@@ -227,39 +222,23 @@ void engine_fly()
 		}
 
 		//处理X轴欧拉角平衡补偿
-		//计算角度：欧拉角x + 校准补偿dx + 中心补偿cx + 移动倾斜角mx
-		float x_angle = e->x + e->dx + params.cx + e->mx;
 		//对X轴欧拉角卡尔曼滤波
-		x_est = engine_kalman_filter(x_est, xyz_est_devi, x_angle, xyz_measure_devi, &x_devi);
-		x_angle = x_est;
-		//角度范围校验
-		x_angle = x_angle < -MAX_ANGLE ? -MAX_ANGLE : x_angle;
-		x_angle = x_angle > MAX_ANGLE ? MAX_ANGLE : x_angle;
-		//设置PID数据
-		x_et_2 = x_et_1;
+		x_est = engine_kalman_filter(x_est, xyz_est_devi, e->x, xyz_measure_devi, &x_devi);
+		e->tx = x_est + e->dx + params.cx + e->mx;
 		x_et_1 = x_et;
-		x_et = x_angle;
-		e->tx = x_angle;
+		x_et = e->tx;
 		//使用XY轴的欧拉角的PID反馈控制算法
-		e->x_devi = engine_pid(x_et, x_et_1, x_et_2, &e->x_sum);
+		e->x_devi = engine_pid(x_et, x_et_1, e->dgx + e->gx, &e->x_sum);
 		//得出引擎的X轴平衡补偿
 
 		//处理Y轴欧拉角平衡补偿
-		//计算角度：欧拉角y + 校准补偿dy + 中心补偿cy + 移动倾斜角my
-		float y_angle = e->y + e->dy + params.cy + e->my;
 		//对Y轴欧拉角卡尔曼滤波
-		y_est = engine_kalman_filter(y_est, xyz_est_devi, y_angle, xyz_measure_devi, &y_devi);
-		y_angle = y_est;
-		//角度范围校验
-		y_angle = y_angle < -MAX_ANGLE ? -MAX_ANGLE : y_angle;
-		y_angle = y_angle > MAX_ANGLE ? MAX_ANGLE : y_angle;
-		//设置PID数据
-		y_et_2 = y_et_1;
+		y_est = engine_kalman_filter(y_est, xyz_est_devi, e->y, xyz_measure_devi, &y_devi);
+		e->ty = y_est + e->dy + params.cy + e->my;
 		y_et_1 = y_et;
-		y_et = y_angle;
-		e->ty = y_angle;
+		y_et = e->ty;
 		//使用XY轴的欧拉角的PID反馈控制算法
-		e->y_devi = engine_pid(y_et, y_et_1, y_et_2, &e->y_sum);
+		e->y_devi = engine_pid(y_et, y_et_1, e->dgy + e->gy, &e->y_sum);
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
@@ -268,35 +247,10 @@ void engine_fly()
 		z_est = engine_kalman_filter(z_est, xyz_est_devi, z_angle, xyz_measure_devi, &z_devi);
 		z_angle = z_est;
 		//设置PID数据
-		z_et_2 = z_et_1;
 		z_et_1 = z_et;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pid(z_et, z_et_1, z_et_2, NULL);
-
-		//处理X轴旋转角速度平衡补偿
-		float gxv = e->gx + e->dgx;
-		//对X轴角速度卡尔曼滤波
-		xv_est = engine_kalman_filter(xv_est, xyz_v_est_devi, gxv, xyz_v_measure_devi, &xv_devi);
-		gxv = xv_est;
-		//设置X轴PID数据
-		xv_et_2 = xv_et_1;
-		xv_et_1 = xv_et;
-		xv_et = gxv;
-		//使用X轴的旋转角速度的PID反馈控制算法
-		e->xv_devi = engine_pid_v(xv_et, xv_et_1, xv_et_2);
-
-		//处理Y轴旋转角速度平衡补偿
-		float gyv = e->gy + e->dgy;
-		//对X轴角速度卡尔曼滤波
-		yv_est = engine_kalman_filter(yv_est, xyz_v_est_devi, gyv, xyz_v_measure_devi, &yv_devi);
-		gyv = yv_est;
-		//设置Y轴PID数据
-		yv_et_2 = yv_et_1;
-		yv_et_1 = yv_et;
-		yv_et = gyv;
-		//使用Y轴的旋转角速度的PID反馈控制算法
-		e->yv_devi = engine_pid_v(yv_et, yv_et_1, yv_et_2);
+		e->z_devi = engine_pid(z_et, z_et_1, e->dgz + e->gz, &e->z_sum);
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -369,30 +323,19 @@ void engine_lock()
 }
 
 //XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float et_1, float et_2, float *sum)
+float engine_pid(float et, float et_1, float dg, float *sum)
 {
 	s_engine *e = &engine;
 
-	if (sum == NULL)
-	{
-		return params.kp * (et - et_1) + params.ki * et + params.kd * (et - 2 * et_1 + et_2);
-	}
+	float mval = e->v / 2.0;
+	*sum += params.ki * et;
+	*sum = *sum > mval ? mval : *sum;
+	*sum = *sum < -mval ? -mval : *sum;
+	float devi = params.kp * et + (*sum) + params.kd * dg;
+	devi = devi > e->v ? e->v : devi;
+	devi = devi < -e->v ? -e->v : devi;
 
-	*sum += params.ki / 50.0 * et;
-	*sum = *sum > e->v / 2.0  ? e->v / 2.0 : *sum;
-	*sum = *sum < -e->v / 2.0 ? -e->v / 2.0 : *sum;
-	//增量式PID反馈控制
-	return params.kp * (et - et_1) + params.ki * et + (*sum) + params.kd * (et - 2 * et_1 + et_2);
-
-}
-
-//对旋转角速度做PID反馈控制
-float engine_pid_v(float et, float et_1, float et_2)
-{
-	s_engine *e = &engine;
-
-	//增量式PID反馈控制
-	return params.kp_v * (et - et_1) + params.ki_v * et + params.kd_v * (et - 2 * et_1 + et_2);
+	return devi;
 }
 
 /***
@@ -451,13 +394,11 @@ void engine_reset(s_engine *e)
 	e->x_devi = 0;
 	e->y_devi = 0;
 	e->z_devi = 0;
-	//XYZ角速度补偿
-	e->xv_devi = 0;
-	e->yv_devi = 0;
 
 	//XYZ欧拉角累加值
 	e->x_sum = 0;
 	e->y_sum = 0;
+	e->z_sum = 0;
 	//显示摇控器读数
 	e->ctl_fb = 0;
 	e->ctl_lr = 0;
@@ -492,6 +433,7 @@ void engine_set_dxy()
 
 	e->x_sum = 0;
 	e->y_sum = 0;
+	e->z_sum = 0;
 }
 
 //绝对值

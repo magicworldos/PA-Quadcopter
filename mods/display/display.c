@@ -43,12 +43,13 @@ void run()
 {
 	usleep(1000);
 
+
 	while (r)
 	{
 		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
 
 #ifdef __DISPLAY_MODE_MORE__
-		printf("[m: %d][v: %4.0f][h: %+4.2f %+4.2f][xyz: %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+8.3f y:%+8.3f z:%+8.3f xv:%+8.3f yv:%+8.3f]",e->mode, e->v, e->height, e->target_height, e->x + e->dx + e->mx, e->y + e->dy + e->my, e->z + e->dz, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi, e->xv_devi, e->yv_devi);
+		printf("[m: %d][v: %4.0f][h: %+4.3f %+4.3f][xyz: %+7.3f %+7.3f %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+8.3f y:%+8.3f z:%+8.3f]",e->mode, e->v, e->height, e->target_height, e->tx, e->ty, e->z + e->dz, e->mx, e->my, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi);
 #endif
 
 		if (p->ctl_type == 0)
@@ -57,37 +58,29 @@ void run()
 		}
 		else if (p->ctl_type == 1)
 		{
-			printf("[pidv: %+5.2f %+5.2f %+5.2f]", p->kp_v, p->ki_v, p->kd_v);
+			printf("[pidh: %+5.2f %+5.2f %+5.2f]", p->kp_h, p->ki_h, p->kd_h);
 		}
 		else if (p->ctl_type == 2)
 		{
-			printf("[pidh: %+5.2f %+5.2f %+5.2f]", p->kp_h, p->ki_h, p->kd_h);
+			printf("[cxy: %+5.2f %+5.2f]", p->cx, p->cy);
 		}
 		else if (p->ctl_type == 3)
 		{
-			printf("[cxy: %+5.2f %+5.2f]", p->cx, p->cy);
-		}
-		else if (p->ctl_type == 4)
-		{
-			printf("[ctl zero: %4d %4d %4d]", p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero);
+			printf("[ctl zero: %4d %4d %4d %4d %4d %4d]", p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero,  p->ctl_md_zero, p->ctl_ud_zero, p->ctl_di_zero);
 		}
 
 #ifndef __DISPLAY_MODE_MORE__
-		else if (p->ctl_type == 5)
+		else if (p->ctl_type == 4)
 		{
 			printf("[xyz: %+7.3f %+7.3f %+7.3f]", e->x + e->dx + e->mx, e->y + e->dy + e->my, e->z + e->dz);
 		}
-		else if (p->ctl_type == 6)
+		else if (p->ctl_type == 5)
 		{
 			printf("[g: %+7.3f %+7.3f %+7.3f]", e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz);
 		}
-		else if (p->ctl_type == 7)
+		else if (p->ctl_type == 6)
 		{
 			printf("[x:%+8.3f y:%+8.3f z:%+8.3f]", e->x_devi, e->y_devi, e->z_devi);
-		}
-		else if (p->ctl_type == 8)
-		{
-			printf("[xv:%+8.3f yv:%+8.3f]", e->xv_devi, e->yv_devi);
 		}
 #endif
 
