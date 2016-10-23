@@ -174,14 +174,10 @@ void engine_fly()
 {
 	s_engine *e = &engine;
 
-	//XYZ的增量式PID处理数据，当前、上一次、上上次
-	float x_et = 0.0, x_et_1 = 0.0;
-	float y_et = 0.0, y_et_1 = 0.0;
-	float z_et = 0.0, z_et_1 = 0.0;
-
-	//XY轴加速度的增量式PID处理数据，当前、上一次、上上次
-	float xa_et = 0.0, xa_et_1 = 0.0, xa_et_2 = 0.0;
-	float ya_et = 0.0, ya_et_1 = 0.0, ya_et_2 = 0.0;
+	//XYZ的增量式PID处理数据
+	float x_et = 0.0;
+	float y_et = 0.0;
+	float z_et = 0.0;
 
 	//xyz欧拉角噪声
 	float xyz_est_devi = 0.01;
@@ -225,20 +221,18 @@ void engine_fly()
 		//对X轴欧拉角卡尔曼滤波
 		x_est = engine_kalman_filter(x_est, xyz_est_devi, e->x, xyz_measure_devi, &x_devi);
 		e->tx = x_est + e->dx + params.cx + e->mx;
-		x_et_1 = x_et;
 		x_et = e->tx;
 		//使用XY轴的欧拉角的PID反馈控制算法
-		e->x_devi = engine_pid(x_et, x_et_1, e->dgx + e->gx, &e->x_sum);
+		e->x_devi = engine_pid(x_et, e->dgx + e->gx, &e->x_sum);
 		//得出引擎的X轴平衡补偿
 
 		//处理Y轴欧拉角平衡补偿
 		//对Y轴欧拉角卡尔曼滤波
 		y_est = engine_kalman_filter(y_est, xyz_est_devi, e->y, xyz_measure_devi, &y_devi);
 		e->ty = y_est + e->dy + params.cy + e->my;
-		y_et_1 = y_et;
 		y_et = e->ty;
 		//使用XY轴的欧拉角的PID反馈控制算法
-		e->y_devi = engine_pid(y_et, y_et_1, e->dgy + e->gy, &e->y_sum);
+		e->y_devi = engine_pid(y_et, e->dgy + e->gy, &e->y_sum);
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
@@ -246,11 +240,9 @@ void engine_fly()
 		//对Z轴欧拉角卡尔曼滤波
 		z_est = engine_kalman_filter(z_est, xyz_est_devi, z_angle, xyz_measure_devi, &z_devi);
 		z_angle = z_est;
-		//设置PID数据
-		z_et_1 = z_et;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pid(z_et, z_et_1, e->dgz + e->gz, &e->z_sum);
+		e->z_devi = engine_pid(z_et, e->dgz + e->gz, NULL);
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -323,18 +315,26 @@ void engine_lock()
 }
 
 //XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float et_1, float dg, float *sum)
+float engine_pid(float et, float dg, float *sum)
 {
 	s_engine *e = &engine;
+
+	if (sum == NULL)
+	{
+		float devi = params.kp * et + params.kd * dg;
+		devi = devi > e->v ? e->v : devi;
+		devi = devi < -e->v ? -e->v : devi;
+		return devi;
+	}
 
 	float mval = e->v / 2.0;
 	*sum += params.ki * et;
 	*sum = *sum > mval ? mval : *sum;
 	*sum = *sum < -mval ? -mval : *sum;
+
 	float devi = params.kp * et + (*sum) + params.kd * dg;
 	devi = devi > e->v ? e->v : devi;
 	devi = devi < -e->v ? -e->v : devi;
-
 	return devi;
 }
 
