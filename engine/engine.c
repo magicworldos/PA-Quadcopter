@@ -409,8 +409,7 @@ void engine_reset(s_engine *e)
 	//最低油门,最左，最右
 	e->lock_status = 0;
 	//0手动模式
-	//1自动起飞模式
-	//2自动降落模式
+	//1自动定高模式
 	e->mode = MODE_MANUAL;
 	//高度
 	e->height = 0;
