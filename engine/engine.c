@@ -327,8 +327,9 @@ float engine_pid(float et, float dg, float *sum)
 		return devi;
 	}
 
-	float mval = e->v / 2.0;
-	*sum += params.ki * et;
+	float mval = e->v / 8.0;
+	float sv = engine_abs(et);
+	*sum += sv < 0.1 ? params.ki * et : params.ki * (et / sv) * 0.1;
 	*sum = *sum > mval ? mval : *sum;
 	*sum = *sum < -mval ? -mval : *sum;
 
