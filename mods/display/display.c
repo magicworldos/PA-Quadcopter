@@ -43,13 +43,12 @@ void run()
 {
 	usleep(1000);
 
-
 	while (r)
 	{
 		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
 
 #ifdef __DISPLAY_MODE_MORE__
-		printf("[m: %d][v: %4.0f][h: %+4.3f %+4.3f][xyz: %+7.3f %+7.3f %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+8.3f y:%+8.3f z:%+8.3f]",e->mode, e->v, e->height, e->target_height, e->tx, e->ty, e->z + e->dz, e->mx, e->my, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi);
+		printf("[v: %4.0f][xyz: %+7.3f %+7.3f %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+8.3f y:%+8.3f z:%+8.3f]", e->v, e->tx, e->ty, e->z + e->dz, e->ctlmx, e->ctlmy, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi);
 #endif
 
 		if (p->ctl_type == 0)
@@ -58,7 +57,7 @@ void run()
 		}
 		else if (p->ctl_type == 1)
 		{
-			printf("[pidh: %+5.2f %+5.2f %+5.2f]", p->kp_h, p->ki_h, p->kd_h);
+			printf("[pidz: %+5.2f %+5.2f %+5.2f]", p->kp_z, p->ki_z, p->kd_z);
 		}
 		else if (p->ctl_type == 2)
 		{
@@ -66,13 +65,13 @@ void run()
 		}
 		else if (p->ctl_type == 3)
 		{
-			printf("[ctl zero: %4d %4d %4d %4d %4d %4d]", p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero,  p->ctl_md_zero, p->ctl_ud_zero, p->ctl_di_zero);
+			printf("[ctl zero: %4d %4d %4d %4d %4d %4d]", p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero, p->ctl_md_zero, p->ctl_ud_zero, p->ctl_di_zero);
 		}
 
 #ifndef __DISPLAY_MODE_MORE__
 		else if (p->ctl_type == 4)
 		{
-			printf("[xyz: %+7.3f %+7.3f %+7.3f]", e->x + e->dx + e->mx, e->y + e->dy + e->my, e->z + e->dz);
+			printf("[xyz: %+7.3f %+7.3f %+7.3f]", e->x + e->dx + e->ctlmx, e->y + e->dy + e->ctlmy, e->z + e->dz);
 		}
 		else if (p->ctl_type == 5)
 		{

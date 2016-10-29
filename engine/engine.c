@@ -198,29 +198,10 @@ void engine_fly()
 
 	while (1)
 	{
-		//渐进式方向舵X轴
-		if (e->mx < e->ctlmx)
-		{
-			e->mx += DIRECT_VALUE;
-		}
-		else if (e->mx > e->ctlmx)
-		{
-			e->mx -= DIRECT_VALUE;
-		}
-		//渐进式方向舵Y轴
-		if (e->my < e->ctlmy)
-		{
-			e->my += DIRECT_VALUE;
-		}
-		else if (e->my > e->ctlmy)
-		{
-			e->my -= DIRECT_VALUE;
-		}
-
 		//处理X轴欧拉角平衡补偿
 		//对X轴欧拉角卡尔曼滤波
 		x_est = engine_kalman_filter(x_est, xyz_est_devi, e->x, xyz_measure_devi, &x_devi);
-		e->tx = x_est + e->dx + params.cx + e->mx;
+		e->tx = x_est + e->dx + params.cx + e->ctlmx;
 		x_et = e->tx;
 		//使用XY轴的欧拉角的PID反馈控制算法
 		e->x_devi = engine_pid(x_et, e->dgx + e->gx, &e->x_sum);
@@ -229,7 +210,7 @@ void engine_fly()
 		//处理Y轴欧拉角平衡补偿
 		//对Y轴欧拉角卡尔曼滤波
 		y_est = engine_kalman_filter(y_est, xyz_est_devi, e->y, xyz_measure_devi, &y_devi);
-		e->ty = y_est + e->dy + params.cy + e->my;
+		e->ty = y_est + e->dy + params.cy + e->ctlmy;
 		y_et = e->ty;
 		//使用XY轴的欧拉角的PID反馈控制算法
 		e->y_devi = engine_pid(y_et, e->dgy + e->gy, &e->y_sum);
@@ -242,7 +223,7 @@ void engine_fly()
 		z_angle = z_est;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pid(z_et, e->dgz + e->gz, NULL);
+		e->z_devi = engine_pidz(z_et, e->dgz + e->gz, &e->z_sum);
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -319,21 +300,40 @@ float engine_pid(float et, float dg, float *sum)
 {
 	s_engine *e = &engine;
 
-	if (sum == NULL)
-	{
-		float devi = params.kp * et + params.kd * dg;
-		devi = devi > e->v ? e->v : devi;
-		devi = devi < -e->v ? -e->v : devi;
-		return devi;
-	}
-
-	float mval = e->v / 8.0;
+	float mval = e->v / 2.0;
 	float sv = engine_abs(et);
-	*sum += sv < 0.1 ? params.ki * et : params.ki * (et / sv) * 0.1;
+	float st = 0.1;
+	if (et < 0)
+	{
+		st = -0.1;
+	}
+	*sum += sv < 0.1 ? params.ki * et : params.ki * st;
 	*sum = *sum > mval ? mval : *sum;
 	*sum = *sum < -mval ? -mval : *sum;
 
 	float devi = params.kp * et + (*sum) + params.kd * dg;
+	devi = devi > e->v ? e->v : devi;
+	devi = devi < -e->v ? -e->v : devi;
+	return devi;
+}
+
+//XY轴的欧拉角PID反馈控制
+float engine_pidz(float et, float dg, float *sum)
+{
+	s_engine *e = &engine;
+
+	float mval = e->v / 2.0;
+	float sv = engine_abs(et);
+	float st = 0.1;
+	if (et < 0)
+	{
+		st = -0.1;
+	}
+	*sum += sv < 0.1 ? params.ki_z * et : params.ki_z * st;
+	*sum = *sum > mval ? mval : *sum;
+	*sum = *sum < -mval ? -mval : *sum;
+
+	float devi = params.kp_z * et + (*sum) + params.kd_z * dg;
 	devi = devi > e->v ? e->v : devi;
 	devi = devi < -e->v ? -e->v : devi;
 	return devi;
@@ -375,9 +375,6 @@ void engine_reset(s_engine *e)
 	e->x = 0;
 	e->y = 0;
 	e->z = 0;
-	//飞行移动倾斜角
-	e->mx = 0;
-	e->my = 0;
 	//摇控器飞行移动倾斜角
 	e->ctlmx = 0;
 	e->ctlmy = 0;

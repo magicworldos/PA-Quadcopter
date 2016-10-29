@@ -66,9 +66,6 @@ typedef struct
 	float dx;
 	float dy;
 	float dz;
-	//渐进式移动倾斜角
-	float mx;
-	float my;
 	//摇控器移动倾角
 	float ctlmx;
 	float ctlmy;
@@ -117,6 +114,10 @@ typedef struct
 	float kp;
 	float ki;
 	float kd;
+	//高度PID_Z参数
+	float kp_z;
+	float ki_z;
+	float kd_z;
 	//高度PID参数
 	float kp_h;
 	float ki_h;

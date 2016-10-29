@@ -259,7 +259,7 @@ void controller_pw_pwm(int pw)
 	}
 
 	//如果是最低油门
-	if (abs(pw - p->ctl_pw_zero) < 50)
+	if (abs(pw - p->ctl_pw_zero) < PROCTED_SPEED)
 	{
 		e->lock_status |= 0x1;
 	}
@@ -283,15 +283,15 @@ void controller_md_pwm(int md)
 	e->ctl_md = md;
 	//读入读数
 	float val = (float) (md - p->ctl_md_zero);
-	if (abs(val) < 500)
-	{
-		//手动模式
-		e->mode = MODE_MANUAL;
-		return;
-	}
-
-	//自动模式
-	e->mode = MODE_AUTO;
+//	if (abs(val) < 500)
+//	{
+//		//手动模式
+//		e->mode = MODE_MANUAL;
+//		return;
+//	}
+//
+//	//自动模式
+//	e->mode = MODE_AUTO;
 }
 
 //void controller_ud_pwm(int ud)
@@ -354,10 +354,14 @@ float controller_abs(float x)
 //二次曲线函数
 float controller_parabola(float x)
 {
+	if (controller_abs(x) < 0.0001)
+	{
+		return 0;
+	}
 	float flag = x / controller_abs(x);
 	float mxy = flag * (1.0 / 36.0) * (x * x);
-	mxy = mxy > 30.0 ? 30.0 : mxy;
-	mxy = mxy < -30.0 ? -30.0 : mxy;
+	mxy = mxy > 40.0 ? 40.0 : mxy;
+	mxy = mxy < -40.0 ? -40.0 : mxy;
 	return mxy * M_PI / 180.0;
 }
 
@@ -378,7 +382,6 @@ float controller_kalman_filter(float est, float est_devi, float measure, float m
 	float val = est + kg * (measure - est);
 	//最优偏差
 	*devi = sqrt((1.0 - kg) * q * q);
-
 	return val;
 }
 

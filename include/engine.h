@@ -12,9 +12,6 @@
 #include <typedef.h>
 #include <dlmod.h>
 
-//渐进式方向增量
-#define DIRECT_VALUE				(0.005)
-
 //电调起始时长(仅在--ctl模式下用)
 #define TEST_ZERO_MS				(1000)
 //最大调试时长10秒(仅在--ctl模式下用)
@@ -28,6 +25,8 @@ void engine_fly();
 
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float dg, float *sum);
+
+float engine_pidz(float et, float dg, float *sum);
 
 //卡尔曼滤波
 float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);
