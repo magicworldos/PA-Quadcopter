@@ -99,12 +99,6 @@ typedef struct
 	//最低油门,最左，最右
 	u32 lock_status;
 	u32 mode;
-	u32 mode_auto;
-	//高度
-	float height;
-	//目标高度
-	float target_height;
-
 } s_engine;
 
 //参数
@@ -114,14 +108,6 @@ typedef struct
 	float kp;
 	float ki;
 	float kd;
-	//高度PID_Z参数
-	float kp_z;
-	float ki_z;
-	float kd_z;
-	//高度PID参数
-	float kp_h;
-	float ki_h;
-	float kd_h;
 	//中心校准补偿
 	float cx;
 	float cy;

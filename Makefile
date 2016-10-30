@@ -38,7 +38,7 @@ $(MOD_PROJECT):
 	engine/dlmod.c							\
 	util/list.c
 	
-$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_DISPLAY)	$(MOD_COMMAND)
+$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_DISPLAY)
 
 $(MOD_MOTOR):
 	cd mods/motor/			&& make

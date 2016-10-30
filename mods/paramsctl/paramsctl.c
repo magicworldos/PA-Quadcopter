@@ -105,10 +105,6 @@ void params_reset()
 	p->kp = 166;
 	p->ki = 6.6;
 	p->kd = 8.8;
-	//旋转角速度PID参数
-	p->kp_z = 166;
-	p->ki_z = 6.6;
-	p->kd_z = 8.8;
 	//XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
@@ -143,10 +139,6 @@ void params_input()
 			}
 			else if (p->ctl_type == 1)
 			{
-				p->kp_z += ctl_step;
-			}
-			else if (p->ctl_type == 2)
-			{
 				p->cx += ctl_step;
 			}
 		}
@@ -159,10 +151,6 @@ void params_input()
 			}
 			else if (p->ctl_type == 1)
 			{
-				p->ki_z += ctl_step;
-			}
-			else if (p->ctl_type == 2)
-			{
 				p->cy += ctl_step;
 			}
 		}
@@ -173,10 +161,6 @@ void params_input()
 			{
 				p->kd += ctl_step;
 			}
-			else if (p->ctl_type == 1)
-			{
-				p->kd_z += ctl_step;
-			}
 		}
 		//4
 		else if (ch == '4')
@@ -186,10 +170,6 @@ void params_input()
 				p->kp -= ctl_step;
 			}
 			else if (p->ctl_type == 1)
-			{
-				p->kp_z -= ctl_step;
-			}
-			else if (p->ctl_type == 2)
 			{
 				p->cx -= ctl_step;
 			}
@@ -203,10 +183,6 @@ void params_input()
 			}
 			else if (p->ctl_type == 1)
 			{
-				p->ki_z -= ctl_step;
-			}
-			else if (p->ctl_type == 2)
-			{
 				p->cy -= ctl_step;
 			}
 		}
@@ -216,10 +192,6 @@ void params_input()
 			if (p->ctl_type == 0)
 			{
 				p->kd -= ctl_step;
-			}
-			else if (p->ctl_type == 1)
-			{
-				p->kd_z -= ctl_step;
 			}
 		}
 		//-

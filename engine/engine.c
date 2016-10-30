@@ -223,7 +223,7 @@ void engine_fly()
 		z_angle = z_est;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pidz(z_et, e->dgz + e->gz, &e->z_sum);
+		e->z_devi = engine_pid(z_et, e->dgz + e->gz, NULL);
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -301,41 +301,22 @@ float engine_pid(float et, float dg, float *sum)
 	s_engine *e = &engine;
 
 	float mval = e->v / 2.0;
-	float sv = engine_abs(et);
-	float st = 0.1;
-	if (et < 0)
+
+	if (sum == NULL)
 	{
-		st = -0.1;
+		float devi = params.kp * et + params.kd * dg;
+		devi = devi > mval ? mval : devi;
+		devi = devi < -mval ? -mval : devi;
+		return devi;
 	}
-	*sum += sv < 0.1 ? params.ki * et : params.ki * st;
+
+	*sum += params.ki * et;
 	*sum = *sum > mval ? mval : *sum;
 	*sum = *sum < -mval ? -mval : *sum;
 
 	float devi = params.kp * et + (*sum) + params.kd * dg;
-	devi = devi > e->v ? e->v : devi;
-	devi = devi < -e->v ? -e->v : devi;
-	return devi;
-}
-
-//XY轴的欧拉角PID反馈控制
-float engine_pidz(float et, float dg, float *sum)
-{
-	s_engine *e = &engine;
-
-	float mval = e->v / 2.0;
-	float sv = engine_abs(et);
-	float st = 0.1;
-	if (et < 0)
-	{
-		st = -0.1;
-	}
-	*sum += sv < 0.1 ? params.ki_z * et : params.ki_z * st;
-	*sum = *sum > mval ? mval : *sum;
-	*sum = *sum < -mval ? -mval : *sum;
-
-	float devi = params.kp_z * et + (*sum) + params.kd_z * dg;
-	devi = devi > e->v ? e->v : devi;
-	devi = devi < -e->v ? -e->v : devi;
+	devi = devi > mval ? mval : devi;
+	devi = devi < -mval ? -mval : devi;
 	return devi;
 }
 
@@ -409,10 +390,6 @@ void engine_reset(s_engine *e)
 	//0手动模式
 	//1自动定高模式
 	e->mode = MODE_MANUAL;
-	//高度
-	e->height = 0;
-	//目标高度
-	e->target_height = 0;
 }
 
 //陀螺仪补偿

@@ -338,7 +338,7 @@ void controller_di_pwm(int di)
 	e->ctl_di = di;
 	//读入读数
 	float val = (float) (di - p->ctl_di_zero);
-	e->target_height = abs(val) / 1000.0 * 4.0;
+	//e->target_height = abs(val) / 1000.0 * 4.0;
 }
 
 //取绝对值
