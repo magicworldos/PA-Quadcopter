@@ -55,15 +55,15 @@ void automatic()
 				continue;
 			}
 
-			h_et_2 = h_et_1;
-			h_et_1 = h_et;
-			h_et = e->target_height - e->height;
-
-			float v = automatic_pid(h_et, h_et_1, h_et_2);
-			v += e->v;
-			v = v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : v;
-			v = v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : v;
-			e->v = v;
+//			h_et_2 = h_et_1;
+//			h_et_1 = h_et;
+//			//h_et = e->target_height - e->height;
+//
+//			float v = automatic_pid(h_et, h_et_1, h_et_2);
+//			v += e->v;
+//			v = v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : v;
+//			v = v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : v;
+//			e->v = v;
 		}
 		else if (e->mode == MODE_MANUAL)
 		{
@@ -77,7 +77,7 @@ void automatic()
 	st = 0;
 }
 
-float automatic_pid(float et, float et_1, float et_2)
-{
-	return p->kp_h * (et - et_1) + p->ki_h * et_1 + p->kd_h * (et - 2 * et_1 + et_2);
-}
+//float automatic_pid(float et, float et_1, float et_2)
+//{
+//	return p->kp_h * (et - et_1) + p->ki_h * et_1 + p->kd_h * (et - 2 * et_1 + et_2);
+//}
