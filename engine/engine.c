@@ -63,21 +63,27 @@ void engine_start(int argc, char *argv[])
 			s_engine *e = &engine;
 			s_params *p = &params;
 
+			//载入参数调整模块
 			s_dlmod *mod_paramsctl = dlmod_open("./lib/libparamsctl.so");
 			if (mod_paramsctl == NULL)
 			{
 				return;
 			}
 
+			//载入摇控器模块
 			s_dlmod *mod_controller = dlmod_open("./lib/libcontroller.so");
 			if (mod_controller == NULL)
 			{
 				return;
 			}
 
+			//初始化模块链表
 			list_init(&list, &dlmod_free_mod);
+			//加入参数控制模块
 			list_insert(&list, mod_paramsctl);
+			//加入摇控器模块
 			list_insert(&list, mod_controller);
+			//运行模块功能
 			list_visit(&list, (void *) &dlmod_run_pt_init);
 
 			//摇控器pwm信号噪声
@@ -89,9 +95,11 @@ void engine_start(int argc, char *argv[])
 			float lr_est = 0.0, lr_devi = 0.0, lr_est1 = 0.0, lr_devi1 = 0.0;
 			//油门卡尔曼滤波
 			float pw_est = 0.0, pw_devi = 0.0, pw_est1 = 0.0, pw_devi1 = 0.0;
-			//模式卡尔曼滤波
+			//第4通道
 			float md_est = 0.0, md_devi = 0.0, md_est1 = 0.0, md_devi1 = 0.0;
+			//第5通道
 			float ud_est = 0.0, ud_devi = 0.0, ud_est1 = 0.0, ud_devi1 = 0.0;
+			//第6通道
 			float di_est = 0.0, di_devi = 0.0, di_est1 = 0.0, di_devi1 = 0.0;
 
 			while (1)
@@ -112,17 +120,17 @@ void engine_start(int argc, char *argv[])
 				pw_est1 = engine_kalman_filter(pw_est1, ctl_est_devi, pw_est, ctl_measure_devi, &pw_devi1);
 				params.ctl_pw_zero = pw_est1;
 
-				//对模式通道做卡尔曼滤波
+				//第4通道卡尔曼滤波
 				e->ctl_md;
 				md_est = engine_kalman_filter(md_est, ctl_est_devi, e->ctl_md, ctl_measure_devi, &md_devi);
 				md_est1 = engine_kalman_filter(md_est1, ctl_est_devi, md_est, ctl_measure_devi, &md_devi1);
 				params.ctl_md_zero = md_est1;
-
+				//第5通道卡尔曼滤波
 				e->ctl_ud;
 				ud_est = engine_kalman_filter(ud_est, ctl_est_devi, e->ctl_ud, ctl_measure_devi, &ud_devi);
 				ud_est1 = engine_kalman_filter(ud_est1, ctl_est_devi, ud_est, ctl_measure_devi, &ud_devi1);
 				params.ctl_ud_zero = ud_est1;
-
+				//第6通道卡尔曼滤波
 				e->ctl_di;
 				di_est = engine_kalman_filter(di_est, ctl_est_devi, e->ctl_di, ctl_measure_devi, &di_devi);
 				di_est1 = engine_kalman_filter(di_est1, ctl_est_devi, di_est, ctl_measure_devi, &di_devi1);
@@ -141,9 +149,11 @@ void engine_start(int argc, char *argv[])
 		{
 			if (argc == 5)
 			{
-				int en_no;
+				//GPIO引脚编号
 				int en_port;
+				//速度
 				int en_speed;
+				//时长
 				int en_msecs;
 
 				//电机所在GPIO引脚编号
@@ -300,23 +310,32 @@ float engine_pid(float et, float dg, float *sum)
 {
 	s_engine *e = &engine;
 
+	//平衡补偿最值范围，保护措施，防止在油门很小时积分参数产生的累加和太大导致飞行侧翻
 	float mval = e->v / 2.0;
-
+	//如果时Z轴防自旋，则不做积分参数的控制
 	if (sum == NULL)
 	{
+		//pid计算
 		float devi = params.kp * et + params.kd * dg;
+		//校验平衡补偿最值范围
 		devi = devi > mval ? mval : devi;
 		devi = devi < -mval ? -mval : devi;
+		//返回Z轴补偿值
 		return devi;
 	}
 
+	//计算积分参数累加和，消除稳态误差
 	*sum += params.ki * et;
+	//校验积分参数累加和补偿最值范围
 	*sum = *sum > mval ? mval : *sum;
 	*sum = *sum < -mval ? -mval : *sum;
 
+	//对X、Y轴做PID反馈控制
 	float devi = params.kp * et + (*sum) + params.kd * dg;
+	//校验平衡补偿最值范围
 	devi = devi > mval ? mval : devi;
 	devi = devi < -mval ? -mval : devi;
+	//返回X、Y轴补偿值
 	return devi;
 }
 
