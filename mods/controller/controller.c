@@ -28,11 +28,11 @@ float fb_est = 0.0, fb_devi = 0.0;
 float lr_est = 0.0, lr_devi = 0.0;
 //油门卡尔曼滤波
 float pw_est = 0.0, pw_devi = 0.0;
-//模式卡尔曼滤波
-float md_est = 0.0, md_devi = 0.0;
-
-float ud_est = 0.0, ud_devi = 0.0;
-
+////第4通道卡尔曼滤波
+//float md_est = 0.0, md_devi = 0.0;
+////第5通道卡尔曼滤波
+//float ud_est = 0.0, ud_devi = 0.0;
+//第6通道卡尔曼滤波
 float di_est = 0.0, di_devi = 0.0;
 
 int __init(s_engine *engine, s_params *params)
@@ -41,14 +41,14 @@ int __init(s_engine *engine, s_params *params)
 	p = params;
 	st = 1;
 
-	//设置摇控器3个通道到GPIO为输入引脚
+	//设置摇控器6个通道到GPIO为输入引脚
 	pinMode(GPIO_FB, INPUT);
 	pinMode(GPIO_LR, INPUT);
 	pinMode(GPIO_PW, INPUT);
 	pinMode(GPIO_MD, INPUT);
 	pinMode(GPIO_UD, INPUT);
 	pinMode(GPIO_DI, INPUT);
-
+	//注册摇控器6个通道的引脚变化中断
 	wiringPiISR(GPIO_FB, INT_EDGE_BOTH, &controller_ctl_pwm_fb);
 	wiringPiISR(GPIO_LR, INT_EDGE_BOTH, &controller_ctl_pwm_lr);
 	wiringPiISR(GPIO_PW, INT_EDGE_BOTH, &controller_ctl_pwm_pw);
@@ -119,21 +119,22 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 		controller_pw_pwm(pw_est);
 		return;
 	}
-	//向引擎发送“模式”数值
+	//第4通道
 	if (gpio_port == GPIO_MD)
 	{
 		controller_md_pwm(timer);
 		return;
 	}
-
-//	if (gpio_port == GPIO_UD)
-//	{
-//		controller_ud_pwm(timer);
-//		return;
-//	}
-
+	//第5通道
+	if (gpio_port == GPIO_UD)
+	{
+		controller_ud_pwm(timer);
+		return;
+	}
+	//第6通道
 	if (gpio_port == GPIO_DI)
 	{
+		//对第6通道做卡尔曼滤波
 		di_est = controller_kalman_filter(di_est, ctl_est_devi, timer, ctl_measure_devi, &di_devi);
 		controller_di_pwm(di_est);
 		return;
@@ -158,17 +159,19 @@ void controller_ctl_pwm_pw()
 	controller_ctl_pwm(GPIO_PW, &ctl_pwm_pw);
 }
 
-//读取摇控器接收机的PWM信号“模式”
+//读取摇控器接收机的PWM信号第4通道
 void controller_ctl_pwm_md()
 {
 	controller_ctl_pwm(GPIO_MD, &ctl_pwm_md);
 }
 
+//读取摇控器接收机的PWM信号第5通道
 void controller_ctl_pwm_ud()
 {
 	controller_ctl_pwm(GPIO_UD, &ctl_pwm_ud);
 }
 
+//读取摇控器接收机的PWM信号第6通道
 void controller_ctl_pwm_di()
 {
 	controller_ctl_pwm(GPIO_DI, &ctl_pwm_di);
@@ -269,7 +272,7 @@ void controller_pw_pwm(int pw)
 	}
 }
 
-//读入摇控器“模式”的PWM信号
+//读入摇控器第4通道PWM信号
 void controller_md_pwm(int md)
 {
 	if (md < CTL_PWM_MIN || md > CTL_PWM_MAX)
@@ -281,50 +284,23 @@ void controller_md_pwm(int md)
 		p->ctl_md_zero = 2000;
 	}
 	e->ctl_md = md;
-	//读入读数
-	float val = (float) (md - p->ctl_md_zero);
-//	if (abs(val) < 500)
-//	{
-//		//手动模式
-//		e->mode = MODE_MANUAL;
-//		return;
-//	}
-//
-//	//自动模式
-//	e->mode = MODE_AUTO;
 }
 
-//void controller_ud_pwm(int ud)
-//{
-//	if (ud < CTL_PWM_MIN || ud > CTL_PWM_MAX)
-//	{
-//		return;
-//	}
-//	if (p->ctl_ud_zero < CTL_PWM_MIN || p->ctl_ud_zero > CTL_PWM_MAX)
-//	{
-//		p->ctl_ud_zero = 1060;
-//	}
-//	e->ctl_ud = ud;
-//
-//	//定高飞行
-//	e->mode_auto = MODE_AUTO_TAKEOFF;
-//	return;
-//
-//	//读入读数
-//	float val = (float) (ud - p->ctl_ud_zero);
-//	if (abs(val) < 100)
-//	{
-//		//自动起飞
-//		e->mode_auto = MODE_AUTO_TAKEOFF;
-//		return;
-//	}
-//
-//	//自动降落
-//	e->mode_auto = MODE_AUTO_FALLINGOFF;
-//	return;
-//
-//}
+//读入摇控器第5通道PWM信号
+void controller_ud_pwm(int ud)
+{
+	if (ud < CTL_PWM_MIN || ud > CTL_PWM_MAX)
+	{
+		return;
+	}
+	if (p->ctl_ud_zero < CTL_PWM_MIN || p->ctl_ud_zero > CTL_PWM_MAX)
+	{
+		p->ctl_ud_zero = 1060;
+	}
+	e->ctl_ud = ud;
+}
 
+//读入摇控器第6通道PWM信号
 void controller_di_pwm(int di)
 {
 	if (di < CTL_PWM_MIN || di > CTL_PWM_MAX)
@@ -336,9 +312,6 @@ void controller_di_pwm(int di)
 		p->ctl_di_zero = 1000;
 	}
 	e->ctl_di = di;
-	//读入读数
-	float val = (float) (di - p->ctl_di_zero);
-	//e->target_height = abs(val) / 1000.0 * 4.0;
 }
 
 //取绝对值

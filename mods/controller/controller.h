@@ -45,11 +45,13 @@ void controller_ctl_pwm_lr();
 //读取摇控器接收机的PWM信号“油门”
 void controller_ctl_pwm_pw();
 
-//读取摇控器接收机的PWM信号“模式”
+//读取摇控器接收机的PWM第4通道
 void controller_ctl_pwm_md();
 
+//读取摇控器接收机的PWM第5通道
 void controller_ctl_pwm_ud();
 
+//读取摇控器接收机的PWM第6通道
 void controller_ctl_pwm_di();
 
 //读入摇控器“前/后”的PWM信号
@@ -61,11 +63,13 @@ void controller_lr_pwm(int lr);
 //读入摇控器“油门”的PWM信号
 void controller_pw_pwm(int pw);
 
-//读入摇控器“模式”的PWM信号
+//读入摇控器第4通道的PWM信号
 void controller_md_pwm(int md);
 
-//void controller_ud_pwm(int md);
+//读入摇控器第5通道的PWM信号
+void controller_ud_pwm(int md);
 
+//读入摇控器第6通道的PWM信号
 void controller_di_pwm(int md);
 
 //取绝对值
