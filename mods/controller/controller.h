@@ -21,6 +21,11 @@
 //摇控器接收机的4个通道读数范围
 #define CTL_PWM_MIN					(980)
 #define CTL_PWM_MAX					(2020)
+//摇控器幅度通道比例范围,通过此通道来修改方向通道的数值比例
+#define CTL_DI_MIN					(1000)
+#define CTL_DI_MAX					(2000)
+//最大倾斜角
+#define MAX_ANGLE					(45)
 
 typedef struct
 {
@@ -51,7 +56,7 @@ void controller_ctl_pwm_md();
 //读取摇控器接收机的PWM第5通道
 void controller_ctl_pwm_ud();
 
-//读取摇控器接收机的PWM第6通道
+//读取摇控器接收机的PWM方向舵比例缩放通道
 void controller_ctl_pwm_di();
 
 //读入摇控器“前/后”的PWM信号
@@ -69,7 +74,7 @@ void controller_md_pwm(int md);
 //读入摇控器第5通道的PWM信号
 void controller_ud_pwm(int md);
 
-//读入摇控器第6通道的PWM信号
+//读入摇控器方向舵比例缩放通道的PWM信号
 void controller_di_pwm(int md);
 
 //取绝对值

@@ -32,7 +32,7 @@ float pw_est = 0.0, pw_devi = 0.0;
 //float md_est = 0.0, md_devi = 0.0;
 ////第5通道卡尔曼滤波
 //float ud_est = 0.0, ud_devi = 0.0;
-//第6通道卡尔曼滤波
+//方向比例通道卡尔曼滤波
 float di_est = 0.0, di_devi = 0.0;
 
 int __init(s_engine *engine, s_params *params)
@@ -131,10 +131,10 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 		controller_ud_pwm(timer);
 		return;
 	}
-	//第6通道
+	//方向舵比例缩放通道
 	if (gpio_port == GPIO_DI)
 	{
-		//对第6通道做卡尔曼滤波
+		//对方向舵比例缩放通道做卡尔曼滤波
 		di_est = controller_kalman_filter(di_est, ctl_est_devi, timer, ctl_measure_devi, &di_devi);
 		controller_di_pwm(di_est);
 		return;
@@ -171,7 +171,7 @@ void controller_ctl_pwm_ud()
 	controller_ctl_pwm(GPIO_UD, &ctl_pwm_ud);
 }
 
-//读取摇控器接收机的PWM信号第6通道
+//读取摇控器接收机的PWM信号方向舵比例缩放通道
 void controller_ctl_pwm_di()
 {
 	controller_ctl_pwm(GPIO_DI, &ctl_pwm_di);
@@ -300,16 +300,18 @@ void controller_ud_pwm(int ud)
 	e->ctl_ud = ud;
 }
 
-//读入摇控器第6通道PWM信号
+//读入摇控器方向舵比例缩放通道PWM信号
 void controller_di_pwm(int di)
 {
 	if (di < CTL_PWM_MIN || di > CTL_PWM_MAX)
 	{
 		return;
 	}
+	//如果读数超出范围
 	if (p->ctl_di_zero < CTL_PWM_MIN || p->ctl_di_zero > CTL_PWM_MAX)
 	{
-		p->ctl_di_zero = 1000;
+		//这个通道比较特殊，它是对方向舵数值做比例缩放用的，所以当它为读数超出范围时不希望它起作用所以默认读数为0
+		p->ctl_di_zero = 0;
 	}
 	e->ctl_di = di;
 }
@@ -331,11 +333,25 @@ float controller_parabola(float x)
 	{
 		return 0;
 	}
+	//取得方向读数
 	float flag = x / controller_abs(x);
+	//二次曲线函数，使小于6度时读数更小
 	float mxy = flag * (1.0 / 36.0) * (x * x);
-	mxy = mxy > 40.0 ? 40.0 : mxy;
-	mxy = mxy < -40.0 ? -40.0 : mxy;
-	return mxy * M_PI / 180.0;
+	//校验倾斜角最值范围
+	mxy = mxy > MAX_ANGLE ? MAX_ANGLE : mxy;
+	mxy = mxy < -MAX_ANGLE ? -MAX_ANGLE : mxy;
+	//转为弧度制
+	float angle = mxy * M_PI / 180.0;
+
+	//如果方向比例通道无读数则直接返回倾斜角
+	if (e->ctl_di < CTL_DI_MIN || e->ctl_di > CTL_DI_MAX)
+	{
+		return angle;
+	}
+
+	//如果方向舵比例通道有读数，倾斜角需要根据此读数做缩放
+	float sacle = controller_abs((float) e->ctl_di - 1000.0) / 1000.0;
+	return angle * sacle;
 }
 
 /***
