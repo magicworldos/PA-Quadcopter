@@ -55,6 +55,41 @@ void engine_start(int argc, char *argv[])
 			return;
 		}
 
+		//陀螺仪读数模式
+		if (strcmp(argv[1], "--gyro") == 0)
+		{
+			if (argc == 3)
+			{
+				char modname[0x200];
+				snprintf(modname, 0x200, "./lib/lib%s.so", argv[2]);
+				//重置引擎
+				engine_reset(&engine);
+				s_engine *e = &engine;
+				s_params *p = &params;
+
+				//载入MPU6050模块
+				s_dlmod *mod_gyro = dlmod_open(modname);
+				if (mod_gyro == NULL)
+				{
+					return;
+				}
+
+				//初始化模块链表
+				list_init(&list, &dlmod_free_mod);
+				//加入陀螺仪模块
+				list_insert(&list, mod_gyro);
+				//运行模块功能
+				list_visit(&list, (void *) &dlmod_run_pt_init);
+
+				while (1)
+				{
+					printf("[xyz: %+7.3f %+7.3f %+7.3f ][g: %+7.3f %+7.3f %+7.3f]\n", e->x, e->y, e->z, e->gx, e->gy, e->gz);
+					usleep(2 * 1000);
+				}
+			}
+			return;
+		}
+
 		//校准摇控器模式
 		if (strcmp(argv[1], "--ctl") == 0)
 		{
