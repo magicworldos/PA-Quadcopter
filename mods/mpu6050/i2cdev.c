@@ -139,7 +139,7 @@ s8 i2cdev_readWord(u8 devAddr, u8 regAddr, u16 *data)
 s8 i2cdev_readBytes(u8 devAddr, u8 regAddr, u8 length, u8 *data)
 {
 	s8 count = 0;
-	int fd = open("/dev/i2c-1", O_RDWR);
+	int fd = open(I2C_DEV, O_RDWR);
 
 	if (fd < 0)
 	{
@@ -332,7 +332,7 @@ int i2cdev_writeBytes(u8 devAddr, u8 regAddr, u8 length, u8* data)
 		return (0);
 	}
 
-	fd = open("/dev/i2c-1", O_RDWR);
+	fd = open(I2C_DEV, O_RDWR);
 	if (fd < 0)
 	{
 		fprintf(stderr, "Failed to open device: %s\n", strerror(errno));
@@ -386,7 +386,7 @@ int i2cdev_writeWords(u8 devAddr, u8 regAddr, u8 length, u16* data)
 		return (0);
 	}
 
-	fd = open("/dev/i2c-1", O_RDWR);
+	fd = open(I2C_DEV, O_RDWR);
 	if (fd < 0)
 	{
 		fprintf(stderr, "Failed to open device: %s\n", strerror(errno));
