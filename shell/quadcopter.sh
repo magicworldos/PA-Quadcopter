@@ -5,6 +5,9 @@
 #  Created on: May 24, 2016
 #
 # 四轴飞行控制器  Copyright (C) 2016  李德强
+# /etc/init.d/
+# sudo update-rc.d quadcopter defaults
+# sudo update-rc.d -f quadcopter remove
 
 SH_PATH=$(dirname $0)
 cd $SH_PATH/../
