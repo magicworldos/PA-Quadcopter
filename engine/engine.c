@@ -208,8 +208,9 @@ void engine_start(int argc, char *argv[])
 	printf("unknown option ...\n");
 	printf("usage: quadcopter\n");
 	printf("\t[--fly: Fly with remote control and adjust quadcopter's parameters by keybroad.]\n");
-	printf("\t[--test: Test the connection to the motor come in raspberry.]\n");
+	printf("\t[--test [GPIO] [SPEED 0-1000] [MS]: Test the connection to the motor come in raspberry.]\n");
 	printf("\t[--ctl: Display remote control values.]\n");
+	printf("\t[--gyro [MODULE]: Display gyro values.]\n");
 	printf("\tex. quadcopter --test [GPIO] [SPEED] [MSECS]\n");
 	return;
 }
