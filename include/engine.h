@@ -26,6 +26,9 @@ void engine_fly();
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float dg, float *sum);
 
+//XY轴的角速度PID反馈控制
+float engine_v_pid(float et, float dg, float *sum);
+
 //卡尔曼滤波
 float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);
 

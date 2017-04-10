@@ -83,10 +83,18 @@ typedef struct
 	float x_devi;
 	float y_devi;
 	float z_devi;
+	//XYZ角速度补偿
+	float xv_devi;
+	float yv_devi;
+	float zv_devi;
 	//欧拉角累加值
 	float x_sum;
 	float y_sum;
 	float z_sum;
+	//欧拉角累加值
+	float x_v_sum;
+	float y_v_sum;
+	float z_v_sum;
 
 	//其它参数
 	//显示摇控器读数
@@ -108,6 +116,10 @@ typedef struct
 	float kp;
 	float ki;
 	float kd;
+	//XYZ角速度PID参数
+	float v_kp;
+	float v_ki;
+	float v_kd;
 	//中心校准补偿
 	float cx;
 	float cy;

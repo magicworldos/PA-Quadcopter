@@ -104,7 +104,11 @@ void params_reset()
 	//XY轴欧拉角PID参数
 	p->kp = 166;
 	p->ki = 5.8;
-	p->kd = 9.8;
+	p->kd = 4.8;
+	//XY轴欧拉角PID参数
+	p->v_kp = 5.0;
+	p->v_ki = 3.8;
+	p->v_kd = 9.8;
 	//XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
@@ -139,6 +143,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 1)
 			{
+				p->v_kp += ctl_step;
+			}
+			else if (p->ctl_type == 2)
+			{
 				p->cx += ctl_step;
 			}
 		}
@@ -151,6 +159,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 1)
 			{
+				p->v_ki += ctl_step;
+			}
+			else if (p->ctl_type == 2)
+			{
 				p->cy += ctl_step;
 			}
 		}
@@ -161,6 +173,10 @@ void params_input()
 			{
 				p->kd += ctl_step;
 			}
+			else if (p->ctl_type == 1)
+			{
+				p->v_kd += ctl_step;
+			}
 		}
 		//4
 		else if (ch == '4')
@@ -170,6 +186,10 @@ void params_input()
 				p->kp -= ctl_step;
 			}
 			else if (p->ctl_type == 1)
+			{
+				p->v_kp -= ctl_step;
+			}
+			else if (p->ctl_type == 2)
 			{
 				p->cx -= ctl_step;
 			}
@@ -183,6 +203,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 1)
 			{
+				p->v_ki -= ctl_step;
+			}
+			else if (p->ctl_type == 2)
+			{
 				p->cy -= ctl_step;
 			}
 		}
@@ -192,6 +216,10 @@ void params_input()
 			if (p->ctl_type == 0)
 			{
 				p->kd -= ctl_step;
+			}
+			else if (p->ctl_type == 1)
+			{
+				p->v_kd -= ctl_step;
 			}
 		}
 		//-
@@ -247,35 +275,40 @@ void params_input()
 		{
 			p->ctl_type = 2;
 		}
+		//角速度PID_V参数
+		else if (ch == 'r')
+		{
+			p->ctl_type = 3;
+		}
 		//陀螺仪校准参数cx、cy、cz
 		else if (ch == 'o')
 		{
-			p->ctl_type = 3;
+			p->ctl_type = 4;
 		}
 		//摇控器起始读数
 		else if (ch == 'p')
 		{
-			p->ctl_type = 4;
+			p->ctl_type = 5;
 		}
 		//角度
 		else if (ch == 'z')
 		{
-			p->ctl_type = 5;
+			p->ctl_type = 6;
 		}
 		//角速度
 		else if (ch == 'x')
 		{
-			p->ctl_type = 6;
+			p->ctl_type = 7;
 		}
 		//电机转速
 		else if (ch == 'c')
 		{
-			p->ctl_type = 7;
+			p->ctl_type = 8;
 		}
 		//电机转速
 		else if (ch == 'v')
 		{
-			p->ctl_type = 8;
+			p->ctl_type = 9;
 		}
 		//保存所有参数到缓存
 		else if (ch == 'S')

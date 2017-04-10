@@ -224,30 +224,35 @@ void engine_fly()
 	float x_et = 0.0;
 	float y_et = 0.0;
 	float z_et = 0.0;
+	//XYZ的增量式PID处理数据
+	float x_v_et = 0.0;
+	float y_v_et = 0.0;
+	float z_v_et = 0.0;
 
-	//xyz欧拉角噪声
-	float xyz_est_devi = 0.01;
-	float xyz_measure_devi = 0.05;
-	//x轴欧拉角卡尔曼滤波
+//	//xyz欧拉角噪声
+//	float xyz_est_devi = 0.01;
+//	float xyz_measure_devi = 0.05;
+//	//x轴欧拉角卡尔曼滤波
 	float x_est = 0.0, x_devi = 0.0;
-	//y轴欧拉角卡尔曼滤波
+//	//y轴欧拉角卡尔曼滤波
 	float y_est = 0.0, y_devi = 0.0;
-	//z轴欧拉角卡尔曼滤波
+//	//z轴欧拉角卡尔曼滤波
 	float z_est = 0.0, z_devi = 0.0;
-	//xy轴角速度噪声
-	float xyz_v_est_devi = 0.01;
-	float xyz_v_measure_devi = 0.01;
-	//x轴角速度卡尔曼滤波
-	float xv_est = 0.0, xv_devi = 0.0;
-	//y轴角速度卡尔曼滤波
-	float yv_est = 0.0, yv_devi = 0.0;
+//	//xy轴角速度噪声
+//	float xyz_v_est_devi = 0.01;
+//	float xyz_v_measure_devi = 0.01;
+//	//x轴角速度卡尔曼滤波
+//	float xv_est = 0.0, xv_devi = 0.0;
+//	//y轴角速度卡尔曼滤波
+//	float yv_est = 0.0, yv_devi = 0.0;
 
 	while (1)
 	{
 		//处理X轴欧拉角平衡补偿
 		//对X轴欧拉角卡尔曼滤波
-		x_est = engine_kalman_filter(x_est, xyz_est_devi, e->x, xyz_measure_devi, &x_devi);
-		e->tx = x_est + e->dx + params.cx + e->ctlmx;
+		//x_est = engine_kalman_filter(x_est, xyz_est_devi, e->x, xyz_measure_devi, &x_devi);
+		//e->tx = x_est + e->dx + params.cx + e->ctlmx;
+		e->tx = e->x + e->dx + params.cx + e->ctlmx;
 		x_et = e->tx;
 		//使用XY轴的欧拉角的PID反馈控制算法
 		e->x_devi = engine_pid(x_et, e->dgx + e->gx, &e->x_sum);
@@ -255,8 +260,9 @@ void engine_fly()
 
 		//处理Y轴欧拉角平衡补偿
 		//对Y轴欧拉角卡尔曼滤波
-		y_est = engine_kalman_filter(y_est, xyz_est_devi, e->y, xyz_measure_devi, &y_devi);
-		e->ty = y_est + e->dy + params.cy + e->ctlmy;
+		//y_est = engine_kalman_filter(y_est, xyz_est_devi, e->y, xyz_measure_devi, &y_devi);
+		//e->ty = y_est + e->dy + params.cy + e->ctlmy;
+		e->ty = e->y + e->dy + params.cy + e->ctlmy;
 		y_et = e->ty;
 		//使用XY轴的欧拉角的PID反馈控制算法
 		e->y_devi = engine_pid(y_et, e->dgy + e->gy, &e->y_sum);
@@ -265,11 +271,20 @@ void engine_fly()
 		//计算角度：欧拉角z + 校准补偿dz
 		float z_angle = e->z + e->dz;
 		//对Z轴欧拉角卡尔曼滤波
-		z_est = engine_kalman_filter(z_est, xyz_est_devi, z_angle, xyz_measure_devi, &z_devi);
+		//z_est = engine_kalman_filter(z_est, xyz_est_devi, z_angle, xyz_measure_devi, &z_devi);
 		z_angle = z_est;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
 		e->z_devi = engine_pid(z_et, e->dgz + e->gz, NULL);
+
+		//角速度PID
+		e->xv_devi = engine_v_pid(e->gx, e->gx - x_v_et, &e->x_v_sum);
+		e->yv_devi = engine_v_pid(e->gy, e->gy - y_v_et, &e->y_v_sum);
+		e->zv_devi = engine_v_pid(e->gz, e->gz - z_v_et, NULL);
+
+		x_v_et = e->gx;
+		y_v_et = e->gy;
+		z_v_et = e->gz;
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -375,6 +390,40 @@ float engine_pid(float et, float dg, float *sum)
 	return devi;
 }
 
+//XY轴的欧拉角PID反馈控制
+float engine_v_pid(float et, float dg, float *sum)
+{
+	s_engine *e = &engine;
+
+	//平衡补偿最值范围，保护措施，防止在油门很小时积分参数产生的累加和太大导致飞行侧翻
+	float mval = e->v / 2.0;
+	//如果时Z轴防自旋，则不做积分参数的控制
+	if (sum == NULL)
+	{
+		//pid计算
+		float devi = params.v_kp * et + params.v_kd * dg;
+		//校验平衡补偿最值范围
+		devi = devi > mval ? mval : devi;
+		devi = devi < -mval ? -mval : devi;
+		//返回Z轴补偿值
+		return devi;
+	}
+
+	//计算积分参数累加和，消除稳态误差
+	*sum += params.v_ki * et;
+	//校验积分参数累加和补偿最值范围
+	*sum = *sum > mval ? mval : *sum;
+	*sum = *sum < -mval ? -mval : *sum;
+
+	//对X、Y轴做PID反馈控制
+	float devi = params.v_kp * et + (*sum) + params.v_kd * dg;
+	//校验平衡补偿最值范围
+	devi = devi > mval ? mval : devi;
+	devi = devi < -mval ? -mval : devi;
+	//返回X、Y轴补偿值
+	return devi;
+}
+
 /***
  * est预估值
  * est_devi预估偏差
@@ -428,11 +477,19 @@ void engine_reset(s_engine *e)
 	e->x_devi = 0;
 	e->y_devi = 0;
 	e->z_devi = 0;
+	//XYZ角速度补偿
+	e->xv_devi = 0;
+	e->yv_devi = 0;
+	e->zv_devi = 0;
 
 	//XYZ欧拉角累加值
 	e->x_sum = 0;
 	e->y_sum = 0;
 	e->z_sum = 0;
+	//XYZ角速度累加值
+	e->x_v_sum = 0;
+	e->y_v_sum = 0;
+	e->z_v_sum = 0;
 	//显示摇控器读数
 	e->ctl_fb = 0;
 	e->ctl_lr = 0;
@@ -463,6 +520,10 @@ void engine_set_dxy()
 	e->x_sum = 0;
 	e->y_sum = 0;
 	e->z_sum = 0;
+
+	e->x_v_sum = 0;
+	e->y_v_sum = 0;
+	e->z_v_sum = 0;
 }
 
 //绝对值

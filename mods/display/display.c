@@ -57,9 +57,13 @@ void run()
 		}
 		else if (p->ctl_type == 1)
 		{
-			printf("[cxy: %+5.2f %+5.2f]", p->cx, p->cy);
+			printf("[vpid: %+5.2f %+5.2f %+5.2f]", p->v_kp, p->v_ki, p->v_kd);
 		}
 		else if (p->ctl_type == 2)
+		{
+			printf("[cxy: %+5.2f %+5.2f]", p->cx, p->cy);
+		}
+		else if (p->ctl_type == 3)
 		{
 			printf("[ctl zero: %4d %4d %4d %4d %4d %4d]", p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero, p->ctl_md_zero, p->ctl_ud_zero, p->ctl_di_zero);
 		}
