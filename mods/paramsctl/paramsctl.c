@@ -106,9 +106,9 @@ void params_reset()
 	p->ki = 5.8;
 	p->kd = 4.8;
 	//XY轴欧拉角PID参数
-	p->v_kp = 5.0;
-	p->v_ki = 3.8;
-	p->v_kd = 9.8;
+	p->v_kp = 8.0;
+	p->v_ki = 0.1;
+	p->v_kd = -288.0;
 	//XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
