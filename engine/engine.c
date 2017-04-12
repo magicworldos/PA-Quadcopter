@@ -229,29 +229,9 @@ void engine_fly()
 	float y_v_et = 0.0;
 	float z_v_et = 0.0;
 
-//	//xyz欧拉角噪声
-//	float xyz_est_devi = 0.01;
-//	float xyz_measure_devi = 0.05;
-//	//x轴欧拉角卡尔曼滤波
-	float x_est = 0.0, x_devi = 0.0;
-//	//y轴欧拉角卡尔曼滤波
-	float y_est = 0.0, y_devi = 0.0;
-//	//z轴欧拉角卡尔曼滤波
-	float z_est = 0.0, z_devi = 0.0;
-//	//xy轴角速度噪声
-//	float xyz_v_est_devi = 0.01;
-//	float xyz_v_measure_devi = 0.01;
-//	//x轴角速度卡尔曼滤波
-//	float xv_est = 0.0, xv_devi = 0.0;
-//	//y轴角速度卡尔曼滤波
-//	float yv_est = 0.0, yv_devi = 0.0;
-
 	while (1)
 	{
 		//处理X轴欧拉角平衡补偿
-		//对X轴欧拉角卡尔曼滤波
-		//x_est = engine_kalman_filter(x_est, xyz_est_devi, e->x, xyz_measure_devi, &x_devi);
-		//e->tx = x_est + e->dx + params.cx + e->ctlmx;
 		e->tx = e->x + e->dx + params.cx + e->ctlmx;
 		x_et = e->tx;
 		//使用XY轴的欧拉角的PID反馈控制算法
@@ -259,9 +239,6 @@ void engine_fly()
 		//得出引擎的X轴平衡补偿
 
 		//处理Y轴欧拉角平衡补偿
-		//对Y轴欧拉角卡尔曼滤波
-		//y_est = engine_kalman_filter(y_est, xyz_est_devi, e->y, xyz_measure_devi, &y_devi);
-		//e->ty = y_est + e->dy + params.cy + e->ctlmy;
 		e->ty = e->y + e->dy + params.cy + e->ctlmy;
 		y_et = e->ty;
 		//使用XY轴的欧拉角的PID反馈控制算法
@@ -269,11 +246,7 @@ void engine_fly()
 
 		//处理Z轴欧拉角平衡补偿
 		//计算角度：欧拉角z + 校准补偿dz
-		float z_angle = e->z + e->dz;
-		//对Z轴欧拉角卡尔曼滤波
-		//z_est = engine_kalman_filter(z_est, xyz_est_devi, z_angle, xyz_measure_devi, &z_devi);
-		z_angle = z_est;
-		z_et = z_angle;
+		z_et = e->z + e->dz;
 		//使用欧拉角的PID反馈控制算法
 		e->z_devi = engine_pid(z_et, e->dgz + e->gz, &e->z_sum);
 
