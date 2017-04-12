@@ -275,12 +275,12 @@ void engine_fly()
 		z_angle = z_est;
 		z_et = z_angle;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pid(z_et, e->dgz + e->gz, NULL);
+		e->z_devi = engine_pid(z_et, e->dgz + e->gz, &e->z_sum);
 
 		//角速度PID
 		e->xv_devi = engine_v_pid(e->gx, e->gx - x_v_et, &e->x_v_sum);
 		e->yv_devi = engine_v_pid(e->gy, e->gy - y_v_et, &e->y_v_sum);
-		e->zv_devi = engine_v_pid(e->gz, e->gz - z_v_et, NULL);
+		e->zv_devi = engine_v_pid(e->gz, e->gz - z_v_et, &e->z_v_sum);
 
 		x_v_et = e->gx;
 		y_v_et = e->gy;
