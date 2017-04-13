@@ -220,41 +220,38 @@ void engine_fly()
 {
 	s_engine *e = &engine;
 
-	//XYZ的增量式PID处理数据
+	//欧拉角的上一次读数
 	float x_et = 0.0;
 	float y_et = 0.0;
 	float z_et = 0.0;
-	//XYZ的增量式PID处理数据
+	//角速度的上一次读数
 	float x_v_et = 0.0;
 	float y_v_et = 0.0;
 	float z_v_et = 0.0;
 
 	while (1)
 	{
-		//处理X轴欧拉角平衡补偿
+		//处理欧拉角平衡补偿
 		e->tx = e->x + e->dx + params.cx + e->ctlmx;
-		x_et = e->tx;
-		//使用XY轴的欧拉角的PID反馈控制算法
-		e->x_devi = engine_pid(x_et, e->dgx + e->gx, &e->x_sum);
-		//得出引擎的X轴平衡补偿
-
-		//处理Y轴欧拉角平衡补偿
 		e->ty = e->y + e->dy + params.cy + e->ctlmy;
-		y_et = e->ty;
-		//使用XY轴的欧拉角的PID反馈控制算法
-		e->y_devi = engine_pid(y_et, e->dgy + e->gy, &e->y_sum);
+		e->tz = e->z + e->dz;
 
-		//处理Z轴欧拉角平衡补偿
-		//计算角度：欧拉角z + 校准补偿dz
-		z_et = e->z + e->dz;
 		//使用欧拉角的PID反馈控制算法
-		e->z_devi = engine_pid(z_et, e->dgz + e->gz, &e->z_sum);
+		e->x_devi = engine_pid(e->tx, x_et, &e->x_sum);
+		e->y_devi = engine_pid(e->ty, y_et, &e->y_sum);
+		e->z_devi = engine_pid(e->tz, z_et, &e->z_sum);
 
 		//角速度PID
-		e->xv_devi = engine_v_pid(e->gx, e->gx - x_v_et, &e->x_v_sum);
-		e->yv_devi = engine_v_pid(e->gy, e->gy - y_v_et, &e->y_v_sum);
-		e->zv_devi = engine_v_pid(e->gz, e->gz - z_v_et, &e->z_v_sum);
+		e->xv_devi = engine_v_pid(e->gx, x_v_et, &e->x_v_sum);
+		e->yv_devi = engine_v_pid(e->gy, y_v_et, &e->y_v_sum);
+		e->zv_devi = engine_v_pid(e->gz, z_v_et, &e->z_v_sum);
 
+		//记录欧拉角的上一次读数
+		x_et = e->tx;
+		y_et = e->ty;
+		z_et = e->tz;
+
+		//记录角速度的上一次读数
 		x_v_et = e->gx;
 		y_v_et = e->gy;
 		z_v_et = e->gz;
@@ -330,24 +327,12 @@ void engine_lock()
 }
 
 //XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float dg, float *sum)
+float engine_pid(float et, float et2, float *sum)
 {
 	s_engine *e = &engine;
 
 	//平衡补偿最值范围，保护措施，防止在油门很小时积分参数产生的累加和太大导致飞行侧翻
 	float mval = e->v / 2.0;
-	//如果时Z轴防自旋，则不做积分参数的控制
-	if (sum == NULL)
-	{
-		//pid计算
-		float devi = params.kp * et + params.kd * dg;
-		//校验平衡补偿最值范围
-		devi = devi > mval ? mval : devi;
-		devi = devi < -mval ? -mval : devi;
-		//返回Z轴补偿值
-		return devi;
-	}
-
 	//计算积分参数累加和，消除稳态误差
 	*sum += params.ki * et;
 	//校验积分参数累加和补偿最值范围
@@ -355,7 +340,7 @@ float engine_pid(float et, float dg, float *sum)
 	*sum = *sum < -mval ? -mval : *sum;
 
 	//对X、Y轴做PID反馈控制
-	float devi = params.kp * et + (*sum) + params.kd * dg;
+	float devi = params.kp * et + (*sum) + params.kd * (et - et2);
 	//校验平衡补偿最值范围
 	devi = devi > mval ? mval : devi;
 	devi = devi < -mval ? -mval : devi;
@@ -364,24 +349,12 @@ float engine_pid(float et, float dg, float *sum)
 }
 
 //XY轴的欧拉角PID反馈控制
-float engine_v_pid(float et, float dg, float *sum)
+float engine_v_pid(float et, float et2, float *sum)
 {
 	s_engine *e = &engine;
 
 	//平衡补偿最值范围，保护措施，防止在油门很小时积分参数产生的累加和太大导致飞行侧翻
 	float mval = e->v / 2.0;
-	//如果时Z轴防自旋，则不做积分参数的控制
-	if (sum == NULL)
-	{
-		//pid计算
-		float devi = params.v_kp * et + params.v_kd * dg;
-		//校验平衡补偿最值范围
-		devi = devi > mval ? mval : devi;
-		devi = devi < -mval ? -mval : devi;
-		//返回Z轴补偿值
-		return devi;
-	}
-
 	//计算积分参数累加和，消除稳态误差
 	*sum += params.v_ki * et;
 	//校验积分参数累加和补偿最值范围
@@ -389,7 +362,7 @@ float engine_v_pid(float et, float dg, float *sum)
 	*sum = *sum < -mval ? -mval : *sum;
 
 	//对X、Y轴做PID反馈控制
-	float devi = params.v_kp * et + (*sum) + params.v_kd * dg;
+	float devi = params.v_kp * et + (*sum) + params.v_kd * (et - et2);
 	//校验平衡补偿最值范围
 	devi = devi > mval ? mval : devi;
 	devi = devi < -mval ? -mval : devi;
@@ -425,6 +398,7 @@ void engine_reset(s_engine *e)
 	//实际欧拉角
 	e->tx = 0;
 	e->ty = 0;
+	e->tz = 0;
 	//陀螺仪修正补偿XYZ轴
 	e->dx = 0;
 	e->dy = 0;
@@ -440,10 +414,6 @@ void engine_reset(s_engine *e)
 	e->gx = 0;
 	e->gy = 0;
 	e->gz = 0;
-	//XYZ轴旋转角速度修正补偿
-	e->dgx = 0;
-	e->dgy = 0;
-	e->dgz = 0;
 	//重置速度速度置为0
 	e->v = 0;
 	//XYZ欧拉角补偿
@@ -485,10 +455,6 @@ void engine_set_dxy()
 	e->dx = -e->x;
 	e->dy = -e->y;
 	e->dz = -e->z;
-	//补偿角速度读数，将3个轴的角速度都补偿为0
-	e->dgx = -e->gx;
-	e->dgy = -e->gy;
-	e->dgz = -e->gz;
 
 	e->x_sum = 0;
 	e->y_sum = 0;

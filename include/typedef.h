@@ -58,6 +58,7 @@ typedef struct
 	//实际欧拉角
 	float tx;
 	float ty;
+	float tz;
 	//XYZ欧拉角
 	float x;
 	float y;
@@ -73,10 +74,6 @@ typedef struct
 	float gx;
 	float gy;
 	float gz;
-	//补偿XYZ轴旋转角速度
-	float dgx;
-	float dgy;
-	float dgz;
 	//引擎速度
 	float v;
 	//XYZ欧拉角补偿
