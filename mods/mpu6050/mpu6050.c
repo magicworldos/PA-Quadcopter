@@ -165,14 +165,16 @@ void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetYawPitchRoll(ypr, &q, &gravity);
 
-		//卡尔曼滤波
-		x_est = kalman_filter(x_est, xyz_est_devi, ypr[0], xyz_measure_devi, &x_devi);
-		y_est = kalman_filter(y_est, xyz_est_devi, ypr[1], xyz_measure_devi, &y_devi);
-		z_est = kalman_filter(z_est, xyz_est_devi, ypr[2], xyz_measure_devi, &z_devi);
-
-		*x = x_est;
-		*y = y_est;
-		*z = z_est;
+//		//卡尔曼滤波
+//		x_est = kalman_filter(x_est, xyz_est_devi, ypr[0], xyz_measure_devi, &x_devi);
+//		y_est = kalman_filter(y_est, xyz_est_devi, ypr[1], xyz_measure_devi, &y_devi);
+//		z_est = kalman_filter(z_est, xyz_est_devi, ypr[2], xyz_measure_devi, &z_devi);
+//		*x = x_est;
+//		*y = y_est;
+//		*z = z_est;
+		*x = ypr[0];
+		*y = ypr[1];
+		*z = ypr[2];
 
 		// display real acceleration, adjusted to remove gravity
 		mpu6050_dmpGetQuaternion(&q, fifoBuffer);
@@ -192,14 +194,16 @@ void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz
 		float _gy = (float) (-ggy) / 131.0;
 		float _gz = (float) (-ggz) / 131.0;
 
-		//卡尔曼滤波
-		xv_est = kalman_filter(xv_est, xyz_v_est_devi, _gx, xyz_v_measure_devi, &xv_devi);
-		yv_est = kalman_filter(yv_est, xyz_v_est_devi, _gy, xyz_v_measure_devi, &yv_devi);
-		zv_est = kalman_filter(zv_est, xyz_v_est_devi, _gz, xyz_v_measure_devi, &zv_devi);
-
-		*gx = xv_est;
-		*gy = yv_est;
-		*gz = zv_est;
+		//		//卡尔曼滤波
+//		xv_est = kalman_filter(xv_est, xyz_v_est_devi, _gx, xyz_v_measure_devi, &xv_devi);
+//		yv_est = kalman_filter(yv_est, xyz_v_est_devi, _gy, xyz_v_measure_devi, &yv_devi);
+//		zv_est = kalman_filter(zv_est, xyz_v_est_devi, _gz, xyz_v_measure_devi, &zv_devi);
+//		*gx = xv_est;
+//		*gy = yv_est;
+//		*gz = zv_est;
+		*gx = _gx;
+		*gy = _gy;
+		*gz = _gz;
 	}
 }
 
