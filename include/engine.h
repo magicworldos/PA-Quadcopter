@@ -20,8 +20,20 @@
 //启动引擎
 void engine_start(int argc, char *argv[]);
 
+//启动飞行模式
+void engine_start_fly();
+
 //引擎核心算法平衡算法
 void engine_fly();
+
+//陀螺仪读数
+void engine_start_gyro(char* argv2);
+
+//摇控器校准
+void engine_start_control();
+
+//电机调试
+void engine_start_test(char* argv2, char* argv3, char* argv4);
 
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float dg, float *sum);

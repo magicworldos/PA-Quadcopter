@@ -33,6 +33,21 @@ s_params *p = NULL;
 int st = 0;
 int r = 0;
 
+//xyz欧拉角噪声
+float xyz_est_devi = 0.02;
+float xyz_measure_devi = 0.05;
+//欧拉角卡尔曼滤波
+float x_est = 0.0, x_devi = 0.0;
+float y_est = 0.0, y_devi = 0.0;
+float z_est = 0.0, z_devi = 0.0;
+//xy轴角速度噪声
+float xyz_v_est_devi = 0.03;
+float xyz_v_measure_devi = 0.05;
+//角速度卡尔曼滤波
+float xv_est = 0.0, xv_devi = 0.0;
+float yv_est = 0.0, yv_devi = 0.0;
+float zv_est = 0.0, zv_devi = 0.0;
+
 int __init(s_engine *engine, s_params *params)
 {
 	e = engine;
@@ -149,12 +164,15 @@ void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz
 		mpu6050_dmpGetQuaternion(&q, fifoBuffer);
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetYawPitchRoll(ypr, &q, &gravity);
-//		*x = ypr[0] * 180.0 / M_PI;
-//		*y = ypr[1] * 180.0 / M_PI;
-//		*z = ypr[2] * 180.0 / M_PI;
-		*x = ypr[0];
-		*y = ypr[1];
-		*z = ypr[2];
+
+		//卡尔曼滤波
+		x_est = kalman_filter(x_est, xyz_est_devi, ypr[0], xyz_measure_devi, &x_devi);
+		y_est = kalman_filter(y_est, xyz_est_devi, ypr[1], xyz_measure_devi, &y_devi);
+		z_est = kalman_filter(z_est, xyz_est_devi, ypr[2], xyz_measure_devi, &z_devi);
+
+		*x = x_est;
+		*y = y_est;
+		*z = z_est;
 
 		// display real acceleration, adjusted to remove gravity
 		mpu6050_dmpGetQuaternion(&q, fifoBuffer);
@@ -170,10 +188,39 @@ void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz
 //		*az = (float) aaWorld.z / 16384.0;
 
 		mpu6050_getRotation(&ggx, &ggy, &ggz);
-		*gx = (float) (ggx) / 131.0;
-		*gy = (float) (-ggy) / 131.0;
-		*gz = (float) (-ggz) / 131.0;
+		float _gx = (float) (ggx) / 131.0;
+		float _gy = (float) (-ggy) / 131.0;
+		float _gz = (float) (-ggz) / 131.0;
+
+		//卡尔曼滤波
+		xv_est = kalman_filter(xv_est, xyz_v_est_devi, _gx, xyz_v_measure_devi, &xv_devi);
+		yv_est = kalman_filter(yv_est, xyz_v_est_devi, _gy, xyz_v_measure_devi, &yv_devi);
+		zv_est = kalman_filter(zv_est, xyz_v_est_devi, _gz, xyz_v_measure_devi, &zv_devi);
+
+		*gx = xv_est;
+		*gy = yv_est;
+		*gz = zv_est;
 	}
+}
+
+/***
+ * est预估值
+ * est_devi预估偏差
+ * measure测量读数
+ * measure_devi测量噪声
+ * devi上一次最优偏差
+ */
+float kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi)
+{
+	//预估高斯噪声的偏差
+	float q = sqrt((*devi) * (*devi) + est_devi * est_devi);
+	//卡尔曼增益
+	float kg = q * q / (q * q + measure_devi * measure_devi);
+	//滤波结果
+	float val = est + kg * (measure - est);
+	//最优偏差
+	*devi = sqrt((1.0 - kg) * q * q);
+	return val;
 }
 
 //##########################################################################################################################################################

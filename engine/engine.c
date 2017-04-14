@@ -40,168 +40,29 @@ void engine_start(int argc, char *argv[])
 		//正常模式，飞行，调参
 		if (strcmp(argv[1], "--fly") == 0)
 		{
-			//重置引擎
-			engine_reset(&engine);
-			//启动摇控器锁定、解锁电机
-			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_lock, NULL);
-			//启动飞行引擎
-			pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_fly, NULL);
-			//载入并执行动态链接库
-			dlmod_init();
-
-			//主线程休眠
-			sem_wait(&sem_engine);
-
+			engine_start_fly();
 			return;
 		}
 
 		//陀螺仪读数模式
-		if (strcmp(argv[1], "--gyro") == 0)
+		if (strcmp(argv[1], "--gyro") == 0 && argc == 3)
 		{
-			if (argc == 3)
-			{
-				char modname[0x200];
-				snprintf(modname, 0x200, "./lib/lib%s.so", argv[2]);
-				//重置引擎
-				engine_reset(&engine);
-				s_engine *e = &engine;
-				s_params *p = &params;
-
-				//载入MPU6050模块
-				s_dlmod *mod_gyro = dlmod_open(modname);
-				if (mod_gyro == NULL)
-				{
-					return;
-				}
-
-				//初始化模块链表
-				list_init(&list, &dlmod_free_mod);
-				//加入陀螺仪模块
-				list_insert(&list, mod_gyro);
-				//运行模块功能
-				list_visit(&list, (void *) &dlmod_run_pt_init);
-
-				while (1)
-				{
-					printf("[xyz: %+7.3f %+7.3f %+7.3f ][g: %+7.3f %+7.3f %+7.3f]\n", e->x, e->y, e->z, e->gx, e->gy, e->gz);
-					usleep(2 * 1000);
-				}
-			}
+			engine_start_gyro(argv[2]);
 			return;
 		}
 
 		//校准摇控器模式
 		if (strcmp(argv[1], "--ctl") == 0)
 		{
-			//重置引擎
-			engine_reset(&engine);
-			s_engine *e = &engine;
-			s_params *p = &params;
-
-			//载入参数调整模块
-			s_dlmod *mod_paramsctl = dlmod_open("./lib/libparamsctl.so");
-			if (mod_paramsctl == NULL)
-			{
-				return;
-			}
-
-			//载入摇控器模块
-			s_dlmod *mod_controller = dlmod_open("./lib/libcontroller.so");
-			if (mod_controller == NULL)
-			{
-				return;
-			}
-
-			//初始化模块链表
-			list_init(&list, &dlmod_free_mod);
-			//加入参数控制模块
-			list_insert(&list, mod_paramsctl);
-			//加入摇控器模块
-			list_insert(&list, mod_controller);
-			//运行模块功能
-			list_visit(&list, (void *) &dlmod_run_pt_init);
-
-			//摇控器pwm信号噪声
-			float ctl_est_devi = 1;
-			float ctl_measure_devi = 5;
-			//前后卡尔曼滤波
-			float fb_est = 0.0, fb_devi = 0.0, fb_est1 = 0.0, fb_devi1 = 0.0;
-			//左右卡尔曼滤波
-			float lr_est = 0.0, lr_devi = 0.0, lr_est1 = 0.0, lr_devi1 = 0.0;
-			//油门卡尔曼滤波
-			float pw_est = 0.0, pw_devi = 0.0, pw_est1 = 0.0, pw_devi1 = 0.0;
-			//第4通道
-			float md_est = 0.0, md_devi = 0.0, md_est1 = 0.0, md_devi1 = 0.0;
-			//第5通道
-			float ud_est = 0.0, ud_devi = 0.0, ud_est1 = 0.0, ud_devi1 = 0.0;
-			//第6通道
-			float di_est = 0.0, di_devi = 0.0, di_est1 = 0.0, di_devi1 = 0.0;
-
-			while (1)
-			{
-				//对方向舵前后通道做卡尔曼滤波
-				e->ctl_fb;
-				fb_est = engine_kalman_filter(fb_est, ctl_est_devi, e->ctl_fb, ctl_measure_devi, &fb_devi);
-				fb_est1 = engine_kalman_filter(fb_est1, ctl_est_devi, fb_est, ctl_measure_devi, &fb_devi1);
-				params.ctl_fb_zero = fb_est1;
-				//对方向舵左右通道做卡尔曼滤波
-				e->ctl_lr;
-				lr_est = engine_kalman_filter(lr_est, ctl_est_devi, e->ctl_lr, ctl_measure_devi, &lr_devi);
-				lr_est1 = engine_kalman_filter(lr_est1, ctl_est_devi, lr_est, ctl_measure_devi, &lr_devi1);
-				params.ctl_lr_zero = lr_est1;
-				//对油门通道做卡尔曼滤波
-				e->ctl_pw;
-				pw_est = engine_kalman_filter(pw_est, ctl_est_devi, e->ctl_pw, ctl_measure_devi, &pw_devi);
-				pw_est1 = engine_kalman_filter(pw_est1, ctl_est_devi, pw_est, ctl_measure_devi, &pw_devi1);
-				params.ctl_pw_zero = pw_est1;
-
-				//第4通道卡尔曼滤波
-				e->ctl_md;
-				md_est = engine_kalman_filter(md_est, ctl_est_devi, e->ctl_md, ctl_measure_devi, &md_devi);
-				md_est1 = engine_kalman_filter(md_est1, ctl_est_devi, md_est, ctl_measure_devi, &md_devi1);
-				params.ctl_md_zero = md_est1;
-				//第5通道卡尔曼滤波
-				e->ctl_ud;
-				ud_est = engine_kalman_filter(ud_est, ctl_est_devi, e->ctl_ud, ctl_measure_devi, &ud_devi);
-				ud_est1 = engine_kalman_filter(ud_est1, ctl_est_devi, ud_est, ctl_measure_devi, &ud_devi1);
-				params.ctl_ud_zero = ud_est1;
-				//第6通道卡尔曼滤波
-				e->ctl_di;
-				di_est = engine_kalman_filter(di_est, ctl_est_devi, e->ctl_di, ctl_measure_devi, &di_devi);
-				di_est1 = engine_kalman_filter(di_est1, ctl_est_devi, di_est, ctl_measure_devi, &di_devi1);
-				params.ctl_di_zero = di_est1;
-
-				printf("[FB: %4d LR: %4d PW: %4d MD: %4d UD: %4d DI: %4d ] - [FB: %4d LR: %4d PW: %4d MD: %4d UD: %4d DI: %4d]\n", e->ctl_fb, e->ctl_lr, e->ctl_pw, e->ctl_md, e->ctl_ud, e->ctl_di, p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero, p->ctl_md_zero, p->ctl_ud_zero, p->ctl_di_zero);
-
-				usleep(2 * 1000);
-			}
-
+			engine_start_control();
 			return;
 		}
 
 		//电机调试模式
-		if (strcmp(argv[1], "--test") == 0)
+		if (strcmp(argv[1], "--test") == 0 && argc == 5)
 		{
-			if (argc == 5)
-			{
-				//GPIO引脚编号
-				int en_port;
-				//速度
-				int en_speed;
-				//时长
-				int en_msecs;
-
-				//电机所在GPIO引脚编号
-				sscanf(argv[2], "%d", &en_port);
-				//调定速度
-				sscanf(argv[3], "%d", &en_speed);
-				//调试时长，毫秒
-				sscanf(argv[4], "%d", &en_msecs);
-				//开始调试电机
-				engine_ent_run(en_port, en_speed, en_msecs);
-
-				return;
-			}
+			engine_start_test(argv[2], argv[3], argv[4]);
+			return;
 		}
 	}
 
@@ -213,6 +74,22 @@ void engine_start(int argc, char *argv[])
 	printf("\t[--gyro [MODULE]: Display gyro values.]\n");
 	printf("\tex. quadcopter --test [GPIO] [SPEED] [MSECS]\n");
 	return;
+}
+
+//启动飞行模式
+void engine_start_fly()
+{
+	//重置引擎
+	engine_reset(&engine);
+	//启动摇控器锁定、解锁电机
+	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_lock, NULL);
+	//启动飞行引擎
+	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_fly, NULL);
+	//载入并执行动态链接库
+	dlmod_init();
+
+	//主线程休眠
+	sem_wait(&sem_engine);
 }
 
 //引擎核心算法平衡算法
@@ -267,6 +144,103 @@ void engine_fly()
 		//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 		usleep(ENG_TIMER * 1000);
 	}
+}
+
+void engine_start_gyro(char* argv2)
+{
+	char modname[0x200];
+	snprintf(modname, 0x200, "./lib/lib%s.so", argv2);
+	//重置引擎
+	engine_reset(&engine);
+	s_engine *e = &engine;
+	s_params *p = &params;
+
+	//载入MPU6050模块
+	s_dlmod *mod_gyro = dlmod_open(modname);
+	if (mod_gyro == NULL)
+	{
+		return;
+	}
+
+	//初始化模块链表
+	list_init(&list, &dlmod_free_mod);
+	//加入陀螺仪模块
+	list_insert(&list, mod_gyro);
+	//运行模块功能
+	list_visit(&list, (void *) &dlmod_run_pt_init);
+
+	while (1)
+	{
+		printf("[xyz: %+7.3f %+7.3f %+7.3f ][g: %+7.3f %+7.3f %+7.3f]\n", e->x, e->y, e->z, e->gx, e->gy, e->gz);
+		usleep(2 * 1000);
+	}
+}
+
+void engine_start_control()
+{
+	//重置引擎
+	engine_reset(&engine);
+	s_engine *e = &engine;
+	s_params *p = &params;
+
+	//载入参数调整模块
+	s_dlmod *mod_paramsctl = dlmod_open("./lib/libparamsctl.so");
+	if (mod_paramsctl == NULL)
+	{
+		return;
+	}
+
+	//载入摇控器模块
+	s_dlmod *mod_controller = dlmod_open("./lib/libcontroller.so");
+	if (mod_controller == NULL)
+	{
+		return;
+	}
+
+	//初始化模块链表
+	list_init(&list, &dlmod_free_mod);
+	//加入参数控制模块
+	list_insert(&list, mod_paramsctl);
+	//加入摇控器模块
+	list_insert(&list, mod_controller);
+	//运行模块功能
+	list_visit(&list, (void *) &dlmod_run_pt_init);
+
+	while (1)
+	{
+		//方向前后
+		params.ctl_fb_zero = e->ctl_fb;
+		//方向左右
+		params.ctl_lr_zero = e->ctl_lr;
+		//油门
+		params.ctl_pw_zero = e->ctl_pw;
+		params.ctl_md_zero = e->ctl_md;
+		params.ctl_ud_zero = e->ctl_ud;
+		params.ctl_di_zero = e->ctl_di;
+
+		printf("[FB: %4d LR: %4d PW: %4d MD: %4d UD: %4d DI: %4d ] - [FB: %4d LR: %4d PW: %4d MD: %4d UD: %4d DI: %4d]\n", e->ctl_fb, e->ctl_lr, e->ctl_pw, e->ctl_md, e->ctl_ud, e->ctl_di, p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero, p->ctl_md_zero, p->ctl_ud_zero, p->ctl_di_zero);
+
+		usleep(2 * 1000);
+	}
+}
+
+void engine_start_test(char* argv2,char* argv3,char* argv4)
+{
+	//GPIO引脚编号
+	int en_port;
+	//速度
+	int en_speed;
+	//时长
+	int en_msecs;
+
+	//电机所在GPIO引脚编号
+	sscanf(argv2, "%d", &en_port);
+	//调定速度
+	sscanf(argv3, "%d", &en_speed);
+	//调试时长，毫秒
+	sscanf(argv4, "%d", &en_msecs);
+	//开始调试电机
+	engine_ent_run(en_port, en_speed, en_msecs);
 }
 
 //电机锁定解锁处理
