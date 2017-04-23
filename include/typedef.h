@@ -74,6 +74,10 @@ typedef struct
 	float gx;
 	float gy;
 	float gz;
+	//修正补偿
+	float dgx;
+	float dgy;
+	float dgz;
 	//引擎速度
 	float v;
 	//XYZ欧拉角补偿

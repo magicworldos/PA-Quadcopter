@@ -119,9 +119,9 @@ void engine_fly()
 		e->z_devi = engine_pid(e->tz, z_et, NULL);
 
 		//角速度PID
-		e->xv_devi = engine_v_pid(e->gx, x_v_et, &e->x_v_sum);
-		e->yv_devi = engine_v_pid(e->gy, y_v_et, &e->y_v_sum);
-		e->zv_devi = engine_v_pid(e->gz, z_v_et, &e->z_v_sum);
+		e->xv_devi = engine_v_pid(e->gx + e->dgx, x_v_et, &e->x_v_sum);
+		e->yv_devi = engine_v_pid(e->gy + e->dgy, y_v_et, &e->y_v_sum);
+		e->zv_devi = engine_v_pid(e->gz + e->dgz, z_v_et, &e->z_v_sum);
 
 		//记录欧拉角的上一次读数
 		x_et = e->tx;
@@ -129,9 +129,9 @@ void engine_fly()
 		z_et = e->tz;
 
 		//记录角速度的上一次读数
-		x_v_et = e->gx;
-		y_v_et = e->gy;
-		z_v_et = e->gz;
+		x_v_et = e->gx + e->dgx;
+		y_v_et = e->gy + e->dgy;
+		z_v_et = e->gz + e->dgz;
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -400,6 +400,10 @@ void engine_reset(s_engine *e)
 	e->gx = 0;
 	e->gy = 0;
 	e->gz = 0;
+	//陀螺仪修正补偿XYZ轴
+	e->dgx = 0;
+	e->dgy = 0;
+	e->dgz = 0;
 	//重置速度速度置为0
 	e->v = 0;
 	//XYZ欧拉角补偿
@@ -441,6 +445,11 @@ void engine_set_dxy()
 	e->dx = -e->x;
 	e->dy = -e->y;
 	e->dz = -e->z;
+
+	//补偿陀螺仪读数，将3个轴的角速度都补偿为0
+	e->dgx = -e->gx;
+	e->dgy = -e->gy;
+	e->dgz = -e->gz;
 
 	e->x_sum = 0;
 	e->y_sum = 0;
