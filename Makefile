@@ -36,6 +36,7 @@ $(MOD_PROJECT):
 	main/main.c								\
 	engine/engine.c							\
 	engine/dlmod.c							\
+	engine/emode.c							\
 	util/list.c
 	
 $(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_DISPLAY)

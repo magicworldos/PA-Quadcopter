@@ -26,20 +26,14 @@ void engine_start_fly();
 //引擎核心算法平衡算法
 void engine_fly();
 
-//陀螺仪读数
-void engine_start_gyro(char* argv2);
-
-//摇控器校准
-void engine_start_control();
-
-//电机调试
-void engine_start_test(char* argv2, char* argv3, char* argv4);
-
 //XY轴的欧拉角PID反馈控制
 float engine_pid(float et, float dg, float *sum);
 
 //XY轴的角速度PID反馈控制
 float engine_v_pid(float et, float dg, float *sum);
+
+//速度限幅
+void engine_limit(float *v);
 
 //卡尔曼滤波
 float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);
@@ -55,9 +49,6 @@ float engine_abs(float v);
 
 //电机锁定解锁处理
 void engine_lock();
-
-//电机调试
-void engine_ent_run(int en_port, int en_speed, int en_msecs);
 
 //系统信号处理
 void engine_handler();
