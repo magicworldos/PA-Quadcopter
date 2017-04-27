@@ -12,11 +12,6 @@
 #include <typedef.h>
 #include <dlmod.h>
 
-//电调起始时长(仅在--ctl模式下用)
-#define TEST_ZERO_MS				(1000)
-//最大调试时长10秒(仅在--ctl模式下用)
-#define TEST_MAX_MS					(10000)
-
 //启动引擎
 void engine_start(int argc, char *argv[]);
 
