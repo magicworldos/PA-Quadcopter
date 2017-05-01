@@ -33,6 +33,9 @@ s_params *p = NULL;
 int st = 0;
 int r = 0;
 
+int cycle_z = 0;
+float last_z = 0;
+
 //xyz欧拉角噪声
 float xyz_est_devi = 0.02;
 float xyz_measure_devi = 0.05;
@@ -85,8 +88,8 @@ void mpu6050_run()
 		//读取yxz轴欧拉角、旋转角速度、加速度
 		//xyz角速度，当x角变化时，y轴有旋转角速度；当月y角变化时，x轴有旋转角速度。
 		//但为了编写程序和书写方便，x轴的欧拉角和y轴的角速度统一为x；y轴的欧拉角和x轴的角速度统一为y
-		//mpu6050_value(&e->z, &e->y, &e->x, &e->gy, &e->gx, &e->gz, &e->ay, &e->ax, &e->az);
-		mpu6050_value(&e->z, &e->y, &e->x, &e->gx, &e->gy, &e->gz, &ay, &ax, &az);
+		//mpu6050_value(&e->x, &e->y, &e->z, &e->gy, &e->gx, &e->gz, &e->ay, &e->ax, &e->az);
+		mpu6050_value(&e->x, &e->y, &e->z, &e->gx, &e->gy, &e->gz, &ay, &ax, &az);
 		usleep(1);
 	}
 
@@ -166,15 +169,26 @@ void mpu6050_value(float *x, float *y, float *z, float *gx, float *gy, float *gz
 		mpu6050_dmpGetYawPitchRoll(ypr, &q, &gravity);
 
 //		//卡尔曼滤波
-//		x_est = kalman_filter(x_est, xyz_est_devi, ypr[0], xyz_measure_devi, &x_devi);
+//		x_est = kalman_filter(x_est, xyz_est_devi, ypr[2], xyz_measure_devi, &x_devi);
 //		y_est = kalman_filter(y_est, xyz_est_devi, ypr[1], xyz_measure_devi, &y_devi);
-//		z_est = kalman_filter(z_est, xyz_est_devi, ypr[2], xyz_measure_devi, &z_devi);
+//		z_est = kalman_filter(z_est, xyz_est_devi, ypr[0], xyz_measure_devi, &z_devi);
 //		*x = x_est;
 //		*y = y_est;
 //		*z = z_est;
-		*x = ypr[0];
+
+		if (ypr[0] - last_z < -M_PI)
+		{
+			cycle_z++;
+		}
+		else if (ypr[0] - last_z > M_PI)
+		{
+			cycle_z--;
+		}
+
+		*x = ypr[2];
 		*y = ypr[1];
-		*z = ypr[2];
+		*z = ypr[0] + (cycle_z * 2 * M_PI);
+		last_z = ypr[0];
 
 		// display real acceleration, adjusted to remove gravity
 		mpu6050_dmpGetQuaternion(&q, fifoBuffer);
