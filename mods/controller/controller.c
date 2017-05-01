@@ -260,6 +260,11 @@ void controller_pw_pwm(int pw)
 		//设置引擎的速度
 		e->v = v;
 	}
+	else if (e->mode == MODE_AUTO)
+	{
+		//设置引擎的速度
+		e->height_target = 5.0 * (v / 1000.0);
+	}
 
 	//如果是最低油门
 	if (abs(pw - p->ctl_pw_zero) < PROCTED_SPEED)
@@ -284,6 +289,18 @@ void controller_md_pwm(int md)
 		p->ctl_md_zero = 2000;
 	}
 	e->ctl_md = md;
+
+	//读入读数
+	float val = (float) (md - p->ctl_md_zero);
+	if (abs(val) < 500)
+	{
+		//手动模式
+		e->mode = MODE_MANUAL;
+		return;
+	}
+
+	//自动模式
+	e->mode = MODE_AUTO;
 }
 
 //读入摇控器第5通道PWM信号

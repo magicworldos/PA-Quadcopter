@@ -209,9 +209,6 @@ float engine_pid(float et, float et2, float *sum)
 {
 	s_engine *e = &engine;
 
-	//平衡补偿最值范围，保护措施，防止在油门很小时积分参数产生的累加和太大导致飞行侧翻
-	float mval = e->v / 2.0;
-
 	//计算积分参数累加和，消除稳态误差
 	if (sum == NULL)
 	{
@@ -237,8 +234,6 @@ float engine_v_pid(float et, float et2, float *sum)
 {
 	s_engine *e = &engine;
 
-	//平衡补偿最值范围，保护措施，防止在油门很小时积分参数产生的累加和太大导致飞行侧翻
-	float mval = e->v / 2.0;
 	//计算积分参数累加和，消除稳态误差
 	if (sum == NULL)
 	{
@@ -345,6 +340,9 @@ void engine_reset(s_engine *e)
 	e->ctl_md = 0;
 	e->ctl_ud = 0;
 	e->ctl_di = 0;
+	//高度
+	e->height = 0;
+	e->height_target = 0;
 	//最低油门,最左，最右
 	e->lock_status = 0;
 	//0手动模式
@@ -373,6 +371,8 @@ void engine_set_dxy()
 	e->x_v_sum = 0;
 	e->y_v_sum = 0;
 	e->z_v_sum = 0;
+
+	e->h_sum = 0;
 }
 
 //绝对值

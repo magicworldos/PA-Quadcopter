@@ -96,6 +96,8 @@ typedef struct
 	float x_v_sum;
 	float y_v_sum;
 	float z_v_sum;
+	//高度累加值
+	float h_sum;
 
 	//其它参数
 	//显示摇控器读数
@@ -105,6 +107,12 @@ typedef struct
 	int ctl_md;
 	int ctl_ud;
 	int ctl_di;
+
+	//高度
+	float height;
+	//高度
+	float height_target;
+
 	//最低油门,最左，最右
 	u32 lock_status;
 	u32 mode;
@@ -121,6 +129,10 @@ typedef struct
 	float v_kp;
 	float v_ki;
 	float v_kd;
+	//高度PID参数
+	float h_kp;
+	float h_ki;
+	float h_kd;
 	//中心校准补偿
 	float cx;
 	float cy;

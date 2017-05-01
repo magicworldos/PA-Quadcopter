@@ -14,7 +14,7 @@ MOD_PARAMSCTL		= paramsctl
 MOD_CONTROLLER		= controller
 MOD_MPU6050			= mpu6050
 MOD_HCSR04			= hcsr04
-MOD_AUTOMATIC		= automatic
+MOD_FHEIGHT			= fheight
 MOD_DISPLAY			= display
 MOD_COMMAND			= command
 
@@ -39,7 +39,7 @@ $(MOD_PROJECT):
 	engine/emode.c							\
 	util/list.c
 	
-$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_DISPLAY)
+$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_HCSR04)	$(MOD_FHEIGHT)	$(MOD_DISPLAY)
 
 $(MOD_MOTOR):
 	cd mods/motor/			&& make
@@ -56,8 +56,8 @@ $(MOD_MPU6050):
 $(MOD_HCSR04):
 	cd mods/hcsr04/			&& make
 	
-$(MOD_AUTOMATIC):
-	cd mods/automatic/		&& make
+$(MOD_FHEIGHT):
+	cd mods/fheight/		&& make
 
 $(MOD_DISPLAY):
 	cd mods/display/		&& make

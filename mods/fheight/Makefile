@@ -1,4 +1,4 @@
-MOD_NAME = automatic
+MOD_NAME = fheight
 
 all:
 	gcc -I../../include/ -I./ -std=gnu11 -fPIC -shared -o lib$(MOD_NAME).so	\

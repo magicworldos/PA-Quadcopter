@@ -109,6 +109,10 @@ void params_reset()
 	p->v_kp = 20.0;
 	p->v_ki = 0.0;
 	p->v_kd = 33.0;
+	//XY轴欧拉角PID参数
+	p->h_kp = 0.18;
+	p->h_ki = 0.02;
+	p->h_kd = 0.06;
 	//XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
@@ -147,6 +151,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
+				p->h_kp += ctl_step;
+			}
+			else if (p->ctl_type == 3)
+			{
 				p->cx += ctl_step;
 			}
 		}
@@ -163,6 +171,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
+				p->h_ki += ctl_step;
+			}
+			else if (p->ctl_type == 3)
+			{
 				p->cy += ctl_step;
 			}
 		}
@@ -177,6 +189,10 @@ void params_input()
 			{
 				p->v_kd += ctl_step;
 			}
+			else if (p->ctl_type == 2)
+			{
+				p->h_kd += ctl_step;
+			}
 		}
 		//4
 		else if (ch == '4')
@@ -190,6 +206,10 @@ void params_input()
 				p->v_kp -= ctl_step;
 			}
 			else if (p->ctl_type == 2)
+			{
+				p->h_kp -= ctl_step;
+			}
+			else if (p->ctl_type == 3)
 			{
 				p->cx -= ctl_step;
 			}
@@ -207,6 +227,10 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
+				p->h_ki -= ctl_step;
+			}
+			else if (p->ctl_type == 3)
+			{
 				p->cy -= ctl_step;
 			}
 		}
@@ -220,6 +244,10 @@ void params_input()
 			else if (p->ctl_type == 1)
 			{
 				p->v_kd -= ctl_step;
+			}
+			else if (p->ctl_type == 2)
+			{
+				p->h_kd -= ctl_step;
 			}
 		}
 		//-
