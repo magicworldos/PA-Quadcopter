@@ -10,7 +10,7 @@
 
 #include <typedef.h>
 
-#define FHEIGHT_MAX_SPEED	(10)
+#define FHEIGHT_MAX_SPEED	(1000)
 
 int __init(s_engine *engine, s_params *params);
 
