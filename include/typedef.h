@@ -108,10 +108,12 @@ typedef struct
 	int ctl_ud;
 	int ctl_di;
 
-	//高度
+	//测量高度
 	float height;
-	//高度
+	//期望高度
 	float height_target;
+	//高度补偿
+	float h_devi;
 
 	//最低油门,最左，最右
 	u32 lock_status;

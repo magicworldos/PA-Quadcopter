@@ -44,6 +44,7 @@ void fheight_automatic()
 	float h_et = 0.0, h_et_1 = 0.0, h_et_2 = 0.0;
 	float target_height = 0;
 	float t = 0;
+	float origin_v = 0;
 	while (r)
 	{
 		usleep(50 * 1000);
@@ -56,14 +57,16 @@ void fheight_automatic()
 			}
 
 			h_et = e->height_target - e->height;
-			float v = fheight_pid(h_et, h_et_1, &e->h_sum);
+			e->h_devi = fheight_pid(h_et, h_et_1, &e->h_sum);
 			h_et_1 = h_et;
-			v += e->v;
+
+			float v = origin_v + e->h_devi;
 			fheight_ev_limit(&v);
 			e->v = v;
 		}
 		else if (e->mode == MODE_MANUAL)
 		{
+			origin_v = e->v;
 			if (e->lock || e->v < PROCTED_SPEED)
 			{
 				continue;

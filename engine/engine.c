@@ -343,6 +343,7 @@ void engine_reset(s_engine *e)
 	//高度
 	e->height = 0;
 	e->height_target = 0;
+	e->h_devi = 0;
 	//最低油门,最左，最右
 	e->lock_status = 0;
 	//0手动模式

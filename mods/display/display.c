@@ -45,11 +45,11 @@ void run()
 
 	while (r)
 	{
-		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
+		printf("[%s]", e->lock == 1 ? "L" : "U");
 		printf("[%s]", e->mode == 1 ? "H" : "M");
 
 		printf("[v: %4.0f][xyz: %+7.3f %+7.3f %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+8.3f y:%+8.3f z:%+8.3f]", e->v, e->tx, e->ty, e->tz, e->ctlmx, e->ctlmy, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi);
-		printf("[h: %+7.3f %+7.3f]", e->height, e->height_target);
+		printf("[h: %+7.3f %+7.3f %+7.3f ]", e->height, e->height_target, e->h_devi);
 
 		if (p->ctl_type == 0)
 		{
