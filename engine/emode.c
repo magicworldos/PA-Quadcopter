@@ -21,11 +21,11 @@ void emode_start_gyro(char* argv2)
 	snprintf(modname, 0x200, "./lib/lib%s.so", argv2);
 	//重置引擎
 	engine_reset(&engine);
-	s_engine *e = &engine;
-	s_params *p = &params;
+	s_engine* e = &engine;
+	s_params* p = &params;
 
 	//载入MPU6050模块
-	s_dlmod *mod_gyro = dlmod_open(modname);
+	s_dlmod* mod_gyro = dlmod_open(modname);
 	if (mod_gyro == NULL)
 	{
 		return;
@@ -36,7 +36,7 @@ void emode_start_gyro(char* argv2)
 	//加入陀螺仪模块
 	list_insert(&list, mod_gyro);
 	//运行模块功能
-	list_visit(&list, (void *) &dlmod_run_pt_init);
+	list_visit(&list, (void*)&dlmod_run_pt_init);
 
 	while (1)
 	{
@@ -49,18 +49,18 @@ void emode_start_control()
 {
 	//重置引擎
 	engine_reset(&engine);
-	s_engine *e = &engine;
-	s_params *p = &params;
+	s_engine* e = &engine;
+	s_params* p = &params;
 
 	//载入参数调整模块
-	s_dlmod *mod_paramsctl = dlmod_open("./lib/libparamsctl.so");
+	s_dlmod* mod_paramsctl = dlmod_open("./lib/libparamsctl.so");
 	if (mod_paramsctl == NULL)
 	{
 		return;
 	}
 
 	//载入摇控器模块
-	s_dlmod *mod_controller = dlmod_open("./lib/libcontroller.so");
+	s_dlmod* mod_controller = dlmod_open("./lib/libcontroller.so");
 	if (mod_controller == NULL)
 	{
 		return;
@@ -73,7 +73,7 @@ void emode_start_control()
 	//加入摇控器模块
 	list_insert(&list, mod_controller);
 	//运行模块功能
-	list_visit(&list, (void *) &dlmod_run_pt_init);
+	list_visit(&list, (void*)&dlmod_run_pt_init);
 
 	while (1)
 	{
@@ -95,7 +95,7 @@ void emode_start_control()
 
 void emode_start_test(char* argv2, char* argv3, char* argv4)
 {
-	//GPIO引脚编号
+	// GPIO引脚编号
 	int en_port;
 	//速度
 	int en_speed;

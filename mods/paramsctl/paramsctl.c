@@ -10,32 +10,32 @@
 
 s_params params_cache;
 
-int st = 0;
-int r = 0;
+int st	 = 0;
+int r	  = 0;
 float ctl_step = 1;
 pthread_t pthd;
-s_engine *e = NULL;
-s_params *p = NULL;
+s_engine* e = NULL;
+s_params* p = NULL;
 
-int __init(s_engine *engine, s_params *params)
+int __init(s_engine* engine, s_params* params)
 {
-	e = engine;
-	p = params;
+	e  = engine;
+	p  = params;
 	st = 1;
-	r = 1;
+	r  = 1;
 
 	//载入参数
 	params_load();
 
 	//启动键盘接收
-	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &params_input, NULL);
+	pthread_create(&pthd, (const pthread_attr_t*)NULL, (void* (*)(void*)) & params_input, NULL);
 
 	printf("[ OK ] Paramsctl Init.\n");
 
 	return 0;
 }
 
-int __destory(s_engine *e, s_params *p)
+int __destory(s_engine* e, s_params* p)
 {
 	r = 0;
 	//保存缓存中的参数
@@ -50,15 +50,12 @@ int __destory(s_engine *e, s_params *p)
 	return 0;
 }
 
-int __status()
-{
-	return st;
-}
+int __status() { return st; }
 
 //保存参数
 void params_save()
 {
-	FILE *fp = fopen(QUAD_PMS_FILE, "wb");
+	FILE* fp = fopen(QUAD_PMS_FILE, "wb");
 	if (fp == NULL)
 	{
 		printf("save params error!\n");
@@ -71,7 +68,7 @@ void params_save()
 //载入参数
 void params_load()
 {
-	FILE *fp = fopen(QUAD_PMS_FILE, "rb");
+	FILE* fp = fopen(QUAD_PMS_FILE, "rb");
 	if (fp == NULL)
 	{
 		printf("load params error!\n");
@@ -87,33 +84,27 @@ void params_load()
 }
 
 //保存参数到缓存
-void params_to_cache()
-{
-	memcpy(&params_cache, p, sizeof(s_params));
-}
+void params_to_cache() { memcpy(&params_cache, p, sizeof(s_params)); }
 
 //从缓存载入参数
-void params_from_cache()
-{
-	memcpy(p, &params_cache, sizeof(s_params));
-}
+void params_from_cache() { memcpy(p, &params_cache, sizeof(s_params)); }
 
 //重置参数
 void params_reset()
 {
-	//XY轴欧拉角PID参数
+	// XY轴欧拉角PID参数
 	p->kp = 166.0;
 	p->ki = 12.6;
 	p->kd = 0.0;
-	//XY轴欧拉角PID参数
+	// XY轴欧拉角PID参数
 	p->v_kp = 20.0;
 	p->v_ki = 0.0;
 	p->v_kd = 33.0;
-	//XY轴欧拉角PID参数
+	// XY轴欧拉角PID参数
 	p->h_kp = 68.0;
 	p->h_ki = 1.6;
 	p->h_kd = 385.0;
-	//XY轴中心点校正补偿
+	// XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
 	//摇控器3通道起始值
@@ -138,7 +129,7 @@ void params_input()
 	{
 		//按键
 		ch = getch();
-		//7
+		// 7
 		if (ch == '7')
 		{
 			if (p->ctl_type == 0)
@@ -158,7 +149,7 @@ void params_input()
 				p->cx += ctl_step;
 			}
 		}
-		//8
+		// 8
 		else if (ch == '8')
 		{
 			if (p->ctl_type == 0)
@@ -178,7 +169,7 @@ void params_input()
 				p->cy += ctl_step;
 			}
 		}
-		//9
+		// 9
 		else if (ch == '9')
 		{
 			if (p->ctl_type == 0)
@@ -194,7 +185,7 @@ void params_input()
 				p->h_kd += ctl_step;
 			}
 		}
-		//4
+		// 4
 		else if (ch == '4')
 		{
 			if (p->ctl_type == 0)
@@ -214,7 +205,7 @@ void params_input()
 				p->cx -= ctl_step;
 			}
 		}
-		//5
+		// 5
 		else if (ch == '5')
 		{
 			if (p->ctl_type == 0)
@@ -234,7 +225,7 @@ void params_input()
 				p->cy -= ctl_step;
 			}
 		}
-		//6
+		// 6
 		else if (ch == '6')
 		{
 			if (p->ctl_type == 0)
@@ -268,27 +259,27 @@ void params_input()
 				e->v += STEP_V;
 			}
 		}
-		//0
+		// 0
 		else if (ch == '0')
 		{
 			e->v = 0;
 		}
-		//1
+		// 1
 		else if (ch == '1')
 		{
 			ctl_step = 0.1;
 		}
-		//2
+		// 2
 		else if (ch == '2')
 		{
 			ctl_step = 1;
 		}
-		//3
+		// 3
 		else if (ch == '3')
 		{
 			ctl_step = 10;
 		}
-		//x轴y轴PID参数
+		// x轴y轴PID参数
 		else if (ch == 'q')
 		{
 			p->ctl_type = 0;

@@ -9,7 +9,7 @@
 
 int st = 0;
 
-int __init(s_engine *e, s_params *p)
+int __init(s_engine* e, s_params* p)
 {
 	st = 1;
 
@@ -18,13 +18,10 @@ int __init(s_engine *e, s_params *p)
 	return 0;
 }
 
-int __destory(s_engine *e, s_params *p)
+int __destory(s_engine* e, s_params* p)
 {
 	st = 0;
 	return 0;
 }
 
-int __status()
-{
-	return st;
-}
+int __status() { return st; }

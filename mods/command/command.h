@@ -10,9 +10,9 @@
 
 #include <typedef.h>
 
-int __init(s_engine *e, s_params *p);
+int __init(s_engine* e, s_params* p);
 
-int __destory(s_engine *e, s_params *p);
+int __destory(s_engine* e, s_params* p);
 
 int __status();
 

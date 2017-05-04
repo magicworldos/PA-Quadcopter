@@ -22,5 +22,4 @@ char getch(void);
 
 char getche(void);
 
-
 #endif /* MODS_PARAMSCTL_GETCH_H_ */

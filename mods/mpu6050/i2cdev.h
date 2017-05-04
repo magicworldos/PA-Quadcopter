@@ -3,7 +3,7 @@
 
 #include <typedef.h>
 
-#define I2C_DEV	"/dev/i2c-1"
+#define I2C_DEV "/dev/i2c-1"
 
 /** Read a single bit from an 8-bit device register.
  * @param devAddr I2C slave device address
@@ -13,7 +13,7 @@
  * @param timeout Optional read timeout in milliseconds (0 to disable, leave off to use default class value in i2cdev_readTimeout)
  * @return Status of read operation (true = success)
  */
-s8 i2cdev_readBit(u8 devAddr, u8 regAddr, u8 bitNum, u8 *data);
+s8 i2cdev_readBit(u8 devAddr, u8 regAddr, u8 bitNum, u8* data);
 
 /** Read a single bit from a 16-bit device register.
  * @param devAddr I2C slave device address
@@ -23,7 +23,7 @@ s8 i2cdev_readBit(u8 devAddr, u8 regAddr, u8 bitNum, u8 *data);
  * @param timeout Optional read timeout in milliseconds (0 to disable, leave off to use default class value in i2cdev_readTimeout)
  * @return Status of read operation (true = success)
  */
-s8 i2cdev_readBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16 *data);
+s8 i2cdev_readBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16* data);
 
 /** Read multiple bits from an 8-bit device register.
  * @param devAddr I2C slave device address
@@ -34,7 +34,7 @@ s8 i2cdev_readBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16 *data);
  * @param timeout Optional read timeout in milliseconds (0 to disable, leave off to use default class value in i2cdev_readTimeout)
  * @return Status of read operation (true = success)
  */
-s8 i2cdev_readBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 *data);
+s8 i2cdev_readBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8* data);
 
 /** Read multiple bits from a 16-bit device register.
  * @param devAddr I2C slave device address
@@ -45,7 +45,7 @@ s8 i2cdev_readBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 *data);
  * @param timeout Optional read timeout in milliseconds (0 to disable, leave off to use default class value in i2cdev_readTimeout)
  * @return Status of read operation (1 = success, 0 = failure, -1 = timeout)
  */
-s8 i2cdev_readBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 *data);
+s8 i2cdev_readBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16* data);
 
 /** Read single byte from an 8-bit device register.
  * @param devAddr I2C slave device address
@@ -54,7 +54,7 @@ s8 i2cdev_readBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 *data);
  * @param timeout Optional read timeout in milliseconds (0 to disable, leave off to use default class value in i2cdev_readTimeout)
  * @return Status of read operation (true = success)
  */
-s8 i2cdev_readByte(u8 devAddr, u8 regAddr, u8 *data);
+s8 i2cdev_readByte(u8 devAddr, u8 regAddr, u8* data);
 /** Read single word from a 16-bit device register.
  * @param devAddr I2C slave device address
  * @param regAddr Register regAddr to read from
@@ -62,7 +62,7 @@ s8 i2cdev_readByte(u8 devAddr, u8 regAddr, u8 *data);
  * @param timeout Optional read timeout in milliseconds (0 to disable, leave off to use default class value in i2cdev_readTimeout)
  * @return Status of read operation (true = success)
  */
-s8 i2cdev_readWord(u8 devAddr, u8 regAddr, u16 *data);
+s8 i2cdev_readWord(u8 devAddr, u8 regAddr, u16* data);
 
 /** Read multiple bytes from an 8-bit device register.
  * @param devAddr I2C slave device address
@@ -72,7 +72,7 @@ s8 i2cdev_readWord(u8 devAddr, u8 regAddr, u16 *data);
  * @param timeout Optional read timeout in milliseconds (0 to disable, leave off to use default class value in i2cdev_readTimeout)
  * @return Number of bytes read (-1 indicates failure)
  */
-s8 i2cdev_readBytes(u8 devAddr, u8 regAddr, u8 length, u8 *data);
+s8 i2cdev_readBytes(u8 devAddr, u8 regAddr, u8 length, u8* data);
 
 /** Read multiple words from a 16-bit device register.
  * @param devAddr I2C slave device address
@@ -82,7 +82,7 @@ s8 i2cdev_readBytes(u8 devAddr, u8 regAddr, u8 length, u8 *data);
  * @param timeout Optional read timeout in milliseconds (0 to disable, leave off to use default class value in i2cdev_readTimeout)
  * @return Number of words read (0 indicates failure)
  */
-s8 i2cdev_readWords(u8 devAddr, u8 regAddr, u8 length, u16 *data);
+s8 i2cdev_readWords(u8 devAddr, u8 regAddr, u8 length, u16* data);
 
 /** write a single bit in an 8-bit device register.
  * @param devAddr I2C slave device address

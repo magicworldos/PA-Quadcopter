@@ -9,8 +9,8 @@
 
 int st = 0;
 pthread_t pthd;
-s_engine *e = NULL;
-s_params *p = NULL;
+s_engine* e = NULL;
+s_params* p = NULL;
 
 s_ctl_pwm ctl_pwm_fb;
 s_ctl_pwm ctl_pwm_lr;
@@ -20,7 +20,7 @@ s_ctl_pwm ctl_pwm_ud;
 s_ctl_pwm ctl_pwm_di;
 
 //摇控器pwm信号噪声
-float ctl_est_devi = 1;
+float ctl_est_devi     = 1;
 float ctl_measure_devi = 15;
 //前后卡尔曼滤波
 float fb_est = 0.0, fb_devi = 0.0;
@@ -29,16 +29,16 @@ float lr_est = 0.0, lr_devi = 0.0;
 //油门卡尔曼滤波
 float pw_est = 0.0, pw_devi = 0.0;
 ////第4通道卡尔曼滤波
-//float md_est = 0.0, md_devi = 0.0;
+// float md_est = 0.0, md_devi = 0.0;
 ////第5通道卡尔曼滤波
-//float ud_est = 0.0, ud_devi = 0.0;
+// float ud_est = 0.0, ud_devi = 0.0;
 //方向比例通道卡尔曼滤波
 float di_est = 0.0, di_devi = 0.0;
 
-int __init(s_engine *engine, s_params *params)
+int __init(s_engine* engine, s_params* params)
 {
-	e = engine;
-	p = params;
+	e  = engine;
+	p  = params;
 	st = 1;
 
 	//设置摇控器6个通道到GPIO为输入引脚
@@ -61,19 +61,16 @@ int __init(s_engine *engine, s_params *params)
 	return 0;
 }
 
-int __destory(s_engine *e, s_params *p)
+int __destory(s_engine* e, s_params* p)
 {
 	st = 0;
 
 	return 0;
 }
 
-int __status()
-{
-	return st;
-}
+int __status() { return st; }
 
-void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
+void controller_ctl_pwm(int gpio_port, s_ctl_pwm* ctl_pwm)
 {
 	//读取电平信号
 	int value = digitalRead(gpio_port);
@@ -142,40 +139,22 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm)
 }
 
 //读取摇控器接收机的PWM信号“前后”
-void controller_ctl_pwm_fb()
-{
-	controller_ctl_pwm(GPIO_FB, &ctl_pwm_fb);
-}
+void controller_ctl_pwm_fb() { controller_ctl_pwm(GPIO_FB, &ctl_pwm_fb); }
 
 //读取摇控器接收机的PWM信号“左右”
-void controller_ctl_pwm_lr()
-{
-	controller_ctl_pwm(GPIO_LR, &ctl_pwm_lr);
-}
+void controller_ctl_pwm_lr() { controller_ctl_pwm(GPIO_LR, &ctl_pwm_lr); }
 
 //读取摇控器接收机的PWM信号“油门”
-void controller_ctl_pwm_pw()
-{
-	controller_ctl_pwm(GPIO_PW, &ctl_pwm_pw);
-}
+void controller_ctl_pwm_pw() { controller_ctl_pwm(GPIO_PW, &ctl_pwm_pw); }
 
 //读取摇控器接收机的PWM信号第4通道
-void controller_ctl_pwm_md()
-{
-	controller_ctl_pwm(GPIO_MD, &ctl_pwm_md);
-}
+void controller_ctl_pwm_md() { controller_ctl_pwm(GPIO_MD, &ctl_pwm_md); }
 
 //读取摇控器接收机的PWM信号第5通道
-void controller_ctl_pwm_ud()
-{
-	controller_ctl_pwm(GPIO_UD, &ctl_pwm_ud);
-}
+void controller_ctl_pwm_ud() { controller_ctl_pwm(GPIO_UD, &ctl_pwm_ud); }
 
 //读取摇控器接收机的PWM信号方向舵比例缩放通道
-void controller_ctl_pwm_di()
-{
-	controller_ctl_pwm(GPIO_DI, &ctl_pwm_di);
-}
+void controller_ctl_pwm_di() { controller_ctl_pwm(GPIO_DI, &ctl_pwm_di); }
 
 //读入摇控器“前/后”的PWM信号
 void controller_fb_pwm(int fb)
@@ -191,7 +170,7 @@ void controller_fb_pwm(int fb)
 	e->ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	e->ctlmx = controller_parabola(((float) (fb - p->ctl_fb_zero)) / 10.0);
+	e->ctlmx = controller_parabola(((float)(fb - p->ctl_fb_zero)) / 10.0);
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -208,7 +187,7 @@ void controller_lr_pwm(int lr)
 	e->ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	e->ctlmy = controller_parabola(((float) (lr - p->ctl_lr_zero)) / 10.0);
+	e->ctlmy = controller_parabola(((float)(lr - p->ctl_lr_zero)) / 10.0);
 
 	//如果是最左或最右
 	if (abs(lr - p->ctl_lr_zero) > 160)
@@ -243,7 +222,7 @@ void controller_pw_pwm(int pw)
 	}
 	e->ctl_pw = pw;
 	//读入速度
-	float v = (float) (pw - p->ctl_pw_zero);
+	float v = (float)(pw - p->ctl_pw_zero);
 	//校验速度范围
 	v = v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : v;
 	v = v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : v;
@@ -291,7 +270,7 @@ void controller_md_pwm(int md)
 	e->ctl_md = md;
 
 	//读入读数
-	float val = (float) (md - p->ctl_md_zero);
+	float val = (float)(md - p->ctl_md_zero);
 	if (abs(val) < 500)
 	{
 		//手动模式
@@ -367,7 +346,7 @@ float controller_parabola(float x)
 	}
 
 	//如果方向舵比例通道有读数，倾斜角需要根据此读数做缩放
-	float sacle = controller_abs((float) e->ctl_di - 1000.0) / 1000.0;
+	float sacle = controller_abs((float)e->ctl_di - 1000.0) / 1000.0;
 	return angle * sacle;
 }
 
@@ -378,7 +357,7 @@ float controller_parabola(float x)
  * measure_devi测量噪声
  * devi上一次最优偏差
  */
-float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi)
+float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)
 {
 	//预估高斯噪声的偏差
 	float q = sqrt((*devi) * (*devi) + est_devi * est_devi);
@@ -390,4 +369,3 @@ float controller_kalman_filter(float est, float est_devi, float measure, float m
 	*devi = sqrt((1.0 - kg) * q * q);
 	return val;
 }
-

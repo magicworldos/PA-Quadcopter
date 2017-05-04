@@ -7,37 +7,34 @@
 
 #include <display.h>
 
-int r = 0;
+int r  = 0;
 int st = 0;
 pthread_t pthd;
-s_engine *e = NULL;
-s_params *p = NULL;
+s_engine* e = NULL;
+s_params* p = NULL;
 
-int __init(s_engine *engine, s_params *params)
+int __init(s_engine* engine, s_params* params)
 {
 	e = engine;
 	p = params;
 
 	st = 1;
-	r = 1;
-	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &run, NULL);
+	r  = 1;
+	pthread_create(&pthd, (const pthread_attr_t*)NULL, (void* (*)(void*)) & run, NULL);
 
 	printf("[ OK ] Display Init.\n");
 
 	return 0;
 }
 
-int __destory(s_engine *e, s_params *p)
+int __destory(s_engine* e, s_params* p)
 {
 	r = 0;
 
 	return 0;
 }
 
-int __status()
-{
-	return st;
-}
+int __status() { return st; }
 
 void run()
 {

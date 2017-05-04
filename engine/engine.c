@@ -6,8 +6,8 @@
  *  四轴飞行控制器  Copyright (C) 2016  李德强
  */
 
-#include <engine.h>
 #include <emode.h>
+#include <engine.h>
 
 //引擎
 s_engine engine;
@@ -24,10 +24,10 @@ sem_t sem_engine;
 pthread_t pthd;
 
 //启动引擎
-void engine_start(int argc, char *argv[])
+void engine_start(int argc, char* argv[])
 {
 	//处理Ctrl + C退出信号
-	signal(SIGINT, (void (*)(int)) &engine_handler);
+	signal(SIGINT, (void (*)(int)) & engine_handler);
 
 	//初始化引擎信号量
 	sem_init(&sem_engine, 0, 0);
@@ -83,9 +83,9 @@ void engine_start_fly()
 	//重置引擎
 	engine_reset(&engine);
 	//启动摇控器锁定、解锁电机
-	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_lock, NULL);
+	pthread_create(&pthd, (const pthread_attr_t*)NULL, (void* (*)(void*)) & engine_lock, NULL);
 	//启动飞行引擎
-	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_fly, NULL);
+	pthread_create(&pthd, (const pthread_attr_t*)NULL, (void* (*)(void*)) & engine_fly, NULL);
 	//载入并执行动态链接库
 	dlmod_init();
 
@@ -96,7 +96,7 @@ void engine_start_fly()
 //引擎核心算法平衡算法
 void engine_fly()
 {
-	s_engine *e = &engine;
+	s_engine* e = &engine;
 
 	//欧拉角的上一次读数
 	float x_et = 0.0;
@@ -150,7 +150,7 @@ void engine_fly()
 //电机锁定解锁处理
 void engine_lock()
 {
-	s_engine *e = &engine;
+	s_engine* e = &engine;
 
 	//动作开始时间
 	struct timeval start;
@@ -204,10 +204,10 @@ void engine_lock()
 	}
 }
 
-//XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float et2, float *sum)
+// XY轴的欧拉角PID反馈控制
+float engine_pid(float et, float et2, float* sum)
 {
-	s_engine *e = &engine;
+	s_engine* e = &engine;
 
 	//计算积分参数累加和，消除稳态误差
 	if (sum == NULL)
@@ -229,10 +229,10 @@ float engine_pid(float et, float et2, float *sum)
 	return devi;
 }
 
-//XY轴的欧拉角PID反馈控制
-float engine_v_pid(float et, float et2, float *sum)
+// XY轴的欧拉角PID反馈控制
+float engine_v_pid(float et, float et2, float* sum)
 {
-	s_engine *e = &engine;
+	s_engine* e = &engine;
 
 	//计算积分参数累加和，消除稳态误差
 	if (sum == NULL)
@@ -256,7 +256,7 @@ float engine_v_pid(float et, float et2, float *sum)
 }
 
 //速度限幅
-void engine_limit(float *v)
+void engine_limit(float* v)
 {
 	if (v == NULL)
 	{
@@ -273,7 +273,7 @@ void engine_limit(float *v)
  * measure_devi测量噪声
  * devi上一次最优偏差
  */
-float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi)
+float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)
 {
 	//预估高斯噪声的偏差
 	float q = sqrt((*devi) * (*devi) + est_devi * est_devi);
@@ -288,7 +288,7 @@ float engine_kalman_filter(float est, float est_devi, float measure, float measu
 }
 
 //引擎重置
-void engine_reset(s_engine *e)
+void engine_reset(s_engine* e)
 {
 	e->lock = 1;
 	//实际欧拉角
@@ -299,14 +299,14 @@ void engine_reset(s_engine *e)
 	e->dx = 0;
 	e->dy = 0;
 	e->dz = 0;
-	//XYZ欧拉角
+	// XYZ欧拉角
 	e->x = 0;
 	e->y = 0;
 	e->z = 0;
 	//摇控器飞行移动倾斜角
 	e->ctlmx = 0;
 	e->ctlmy = 0;
-	//XYZ轴旋转角速度
+	// XYZ轴旋转角速度
 	e->gx = 0;
 	e->gy = 0;
 	e->gz = 0;
@@ -316,20 +316,20 @@ void engine_reset(s_engine *e)
 	e->dgz = 0;
 	//重置速度速度置为0
 	e->v = 0;
-	//XYZ欧拉角补偿
+	// XYZ欧拉角补偿
 	e->x_devi = 0;
 	e->y_devi = 0;
 	e->z_devi = 0;
-	//XYZ角速度补偿
+	// XYZ角速度补偿
 	e->xv_devi = 0;
 	e->yv_devi = 0;
 	e->zv_devi = 0;
 
-	//XYZ欧拉角累加值
+	// XYZ欧拉角累加值
 	e->x_sum = 0;
 	e->y_sum = 0;
 	e->z_sum = 0;
-	//XYZ角速度累加值
+	// XYZ角速度累加值
 	e->x_v_sum = 0;
 	e->y_v_sum = 0;
 	e->z_v_sum = 0;
@@ -341,20 +341,20 @@ void engine_reset(s_engine *e)
 	e->ctl_ud = 0;
 	e->ctl_di = 0;
 	//高度
-	e->height = 0;
+	e->height	= 0;
 	e->height_target = 0;
-	e->h_devi = 0;
+	e->h_devi	= 0;
 	//最低油门,最左，最右
 	e->lock_status = 0;
-	//0手动模式
-	//1自动定高模式
+	// 0手动模式
+	// 1自动定高模式
 	e->mode = MODE_MANUAL;
 }
 
 //陀螺仪补偿
 void engine_set_dxy()
 {
-	s_engine *e = &engine;
+	s_engine* e = &engine;
 	//补偿陀螺仪读数，将3个轴的欧拉角都补偿为0
 	e->dx = -e->x;
 	e->dy = -e->y;

@@ -9,17 +9,17 @@
 #ifndef _INCLUDE_PARAMSCTL_H_
 #define _INCLUDE_PARAMSCTL_H_
 
-#include <typedef.h>
 #include <getch.h>
+#include <typedef.h>
 
 //参数文件
 #define QUAD_PMS_FILE "params/quadcopter.pms"
 //高参幅度速度
-#define STEP_V			(10)
+#define STEP_V (10)
 
-int __init(s_engine *engine, s_params *params);
+int __init(s_engine* engine, s_params* params);
 
-int __destory(s_engine *e, s_params *p);
+int __destory(s_engine* e, s_params* p);
 
 int __status();
 

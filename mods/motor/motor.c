@@ -10,8 +10,7 @@
 
 //电机实际速度
 int speed[MOTOR_COUNT];
-int ports[MOTOR_COUNT] =
-{ PORT_MOTOR0, PORT_MOTOR1, PORT_MOTOR2, PORT_MOTOR3 };
+int ports[MOTOR_COUNT] = {PORT_MOTOR0, PORT_MOTOR1, PORT_MOTOR2, PORT_MOTOR3};
 
 pthread_t pthddr;
 
@@ -19,16 +18,16 @@ int sts = 0;
 int st[MOTOR_COUNT];
 int r = 0;
 pthread_t pthd;
-s_engine *e = NULL;
-s_params *p = NULL;
+s_engine* e = NULL;
+s_params* p = NULL;
 
 //初始化时电调可能需要行程校准，通常是3秒最大油门，再3秒最小油门，但不是必要的，可以不做
-int __init(s_engine *engine, s_params *params)
+int __init(s_engine* engine, s_params* params)
 {
 	e = engine;
 	p = params;
 
-	r = 1;
+	r   = 1;
 	sts = 1;
 	for (int i = 0; i < MOTOR_COUNT; i++)
 	{
@@ -43,10 +42,10 @@ int __init(s_engine *engine, s_params *params)
 		digitalWrite(ports[i], LOW);
 
 		//启动速度平衡补偿
-		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_balance_compensation, NULL);
+		pthread_create(&pthddr, (const pthread_attr_t*)NULL, (void* (*)(void*)) & motor_balance_compensation, NULL);
 
 		//启动电机信号输出线程
-		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_run, (void *) (long) i);
+		pthread_create(&pthddr, (const pthread_attr_t*)NULL, (void* (*)(void*)) & motor_run, (void*)(long)i);
 	}
 
 	printf("[ OK ] Motor Init.\n");
@@ -54,7 +53,7 @@ int __init(s_engine *engine, s_params *params)
 	return 0;
 }
 
-int __destory(s_engine *e, s_params *p)
+int __destory(s_engine* e, s_params* p)
 {
 	r = 0;
 	usleep(10 * 1000);
@@ -90,7 +89,7 @@ int __status()
 }
 
 //将电机速度转为PWM信号
-void motor_set_pwm(int speed, motor_pwm *pwm)
+void motor_set_pwm(int speed, motor_pwm* pwm)
 {
 	//高电平时长
 	pwm->time_m = TIME_DEP + speed;
@@ -99,7 +98,7 @@ void motor_set_pwm(int speed, motor_pwm *pwm)
 }
 
 //对电机发送PWM信号
-void motor_run_pwm(int motor, motor_pwm *pwm)
+void motor_run_pwm(int motor, motor_pwm* pwm)
 {
 	//高电平
 	digitalWrite(ports[motor], HIGH);
@@ -110,9 +109,9 @@ void motor_run_pwm(int motor, motor_pwm *pwm)
 }
 
 //向电机发送PWM信号
-void motor_run(void *args)
+void motor_run(void* args)
 {
-	long motor = (long) args;
+	long motor = (long)args;
 	motor_pwm pwm;
 	while (r)
 	{
@@ -146,10 +145,10 @@ void motor_balance_compensation()
 		}
 
 		//标准四轴平衡补偿
-		speed[0] = (int) e->v - e->x_devi + e->z_devi - e->xv_devi + e->zv_devi;
-		speed[1] = (int) e->v - e->y_devi - e->z_devi - e->yv_devi - e->zv_devi;
-		speed[2] = (int) e->v + e->x_devi + e->z_devi + e->xv_devi + e->zv_devi;
-		speed[3] = (int) e->v + e->y_devi - e->z_devi + e->yv_devi - e->zv_devi;
+		speed[0] = (int)e->v - e->x_devi + e->z_devi - e->xv_devi + e->zv_devi;
+		speed[1] = (int)e->v - e->y_devi - e->z_devi - e->yv_devi - e->zv_devi;
+		speed[2] = (int)e->v + e->x_devi + e->z_devi + e->xv_devi + e->zv_devi;
+		speed[3] = (int)e->v + e->y_devi - e->z_devi + e->yv_devi - e->zv_devi;
 
 		for (int i = 0; i < MOTOR_COUNT; i++)
 		{

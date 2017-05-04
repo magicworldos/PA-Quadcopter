@@ -9,27 +9,27 @@
 #include <hcsr04.h>
 
 int st = 0;
-int r = 0;
+int r  = 0;
 
 pthread_t pthd;
-s_engine *e = NULL;
-s_params *p = NULL;
+s_engine* e = NULL;
+s_params* p = NULL;
 
 s_dis dis;
 
 //信号噪声
-float h_est_devi = 0.01;
+float h_est_devi     = 0.01;
 float h_measure_devi = 0.05;
 //卡尔曼滤波
 float h_est = 0.0, h_devi = 0.0;
 
 //初始化陀螺仪
-int __init(s_engine *engine, s_params *params)
+int __init(s_engine* engine, s_params* params)
 {
-	e = engine;
-	p = params;
+	e  = engine;
+	p  = params;
 	st = 1;
-	r = 1;
+	r  = 1;
 
 	//设置引脚为输出引脚
 	pinMode(PORT_CS_TRIG, OUTPUT);
@@ -37,22 +37,19 @@ int __init(s_engine *engine, s_params *params)
 
 	wiringPiISR(PORT_CS_ECHO, INT_EDGE_BOTH, &distance);
 
-	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &distance_trig, NULL);
+	pthread_create(&pthd, (const pthread_attr_t*)NULL, (void* (*)(void*)) & distance_trig, NULL);
 
 	return 0;
 }
 
-int __destory(s_engine *e, s_params *p)
+int __destory(s_engine* e, s_params* p)
 {
 	r = 0;
 
 	return 0;
 }
 
-int __status()
-{
-	return st;
-}
+int __status() { return st; }
 
 void distance_trig()
 {
@@ -111,7 +108,7 @@ void distance()
  * measure_devi测量噪声
  * devi上一次最优偏差
  */
-float kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi)
+float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)
 {
 	//预估高斯噪声的偏差
 	float q = sqrt((*devi) * (*devi) + est_devi * est_devi);
@@ -124,4 +121,3 @@ float kalman_filter(float est, float est_devi, float measure, float measure_devi
 
 	return val;
 }
-

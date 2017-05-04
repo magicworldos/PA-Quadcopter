@@ -8,16 +8,16 @@
 
 #include <gy953.h>
 
-int fd = 0;
+int fd   = 0;
 u32 init = 0;
-int r = 0;
-int st = 0;
+int r    = 0;
+int st   = 0;
 pthread_t pthd;
-s_engine *e = NULL;
-s_params *p = NULL;
+s_engine* e = NULL;
+s_params* p = NULL;
 
 //初始化陀螺仪
-int __init(s_engine *engine, s_params *params)
+int __init(s_engine* engine, s_params* params)
 {
 	fd = serialOpen("/dev/ttyS0", 115200);
 	if (fd <= 0)
@@ -122,19 +122,19 @@ int __init(s_engine *engine, s_params *params)
 			return 0;
 		}
 
-		unsigned char byte0 = (unsigned char) serialGetchar(fd);
+		unsigned char byte0 = (unsigned char)serialGetchar(fd);
 		if (byte0 != 0x5a)
 		{
 			continue;
 		}
 
-		unsigned char byte1 = (unsigned char) serialGetchar(fd);
+		unsigned char byte1 = (unsigned char)serialGetchar(fd);
 		if (byte1 != 0x5a)
 		{
 			continue;
 		}
 
-		unsigned char byte2 = (unsigned char) serialGetchar(fd);
+		unsigned char byte2 = (unsigned char)serialGetchar(fd);
 		if (byte2 == 0x15 || byte2 == 0x25 || byte2 == 45)
 		{
 			float x, y, z;
@@ -147,18 +147,18 @@ int __init(s_engine *engine, s_params *params)
 	}
 
 	st = 1;
-	r = 1;
-	e = engine;
-	p = params;
+	r  = 1;
+	e  = engine;
+	p  = params;
 
-	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &gy953_value, NULL);
+	pthread_create(&pthd, (const pthread_attr_t*)NULL, (void* (*)(void*)) & gy953_value, NULL);
 
 	printf("[ OK ] GY-953 Init.\n");
 
 	return 0;
 }
 
-int __destory(s_engine *e, s_params *p)
+int __destory(s_engine* e, s_params* p)
 {
 	r = 0;
 	if (fd != 0)
@@ -169,10 +169,7 @@ int __destory(s_engine *e, s_params *p)
 	return 0;
 }
 
-int __status()
-{
-	return st;
-}
+int __status() { return st; }
 
 //循环读取陀螺仪读数
 void gy953_value()
@@ -184,19 +181,19 @@ void gy953_value()
 		usleep(1);
 
 		//帧头固定数值0x5a
-		unsigned char byte0 = (unsigned char) serialGetchar(fd);
+		unsigned char byte0 = (unsigned char)serialGetchar(fd);
 		if (byte0 != 0x5a)
 		{
 			continue;
 		}
 		//帧头固定数值0x5a
-		unsigned char byte1 = (unsigned char) serialGetchar(fd);
+		unsigned char byte1 = (unsigned char)serialGetchar(fd);
 		if (byte0 != 0x5a || byte1 != 0x5a)
 		{
 			continue;
 		}
 		//读取帧类型
-		unsigned char byte2 = (unsigned char) serialGetchar(fd);
+		unsigned char byte2 = (unsigned char)serialGetchar(fd);
 		//欧拉角读数
 		if (byte2 == 0x45)
 		{
@@ -220,28 +217,28 @@ void gy953_value()
 }
 
 //读取一个类型的数值
-int gy953_read(float *x, float *y, float *z)
+int gy953_read(float* x, float* y, float* z)
 {
-	unsigned char byte3 = (unsigned char) serialGetchar(fd);
+	unsigned char byte3 = (unsigned char)serialGetchar(fd);
 	if (byte3 != 6)
 	{
 		return -1;
 	}
 
-	short xh = (short) serialGetchar(fd);
-	short xl = (short) serialGetchar(fd);
-	short yh = (short) serialGetchar(fd);
-	short yl = (short) serialGetchar(fd);
-	short zh = (short) serialGetchar(fd);
-	short zl = (short) serialGetchar(fd);
+	short xh = (short)serialGetchar(fd);
+	short xl = (short)serialGetchar(fd);
+	short yh = (short)serialGetchar(fd);
+	short yl = (short)serialGetchar(fd);
+	short zh = (short)serialGetchar(fd);
+	short zl = (short)serialGetchar(fd);
 
 	short xx = xh << 8 | xl;
 	short yy = yh << 8 | yl;
 	short zz = zh << 8 | zl;
 
-	*x = (float) xx / 100.0;
-	*y = (float) yy / 100.0;
-	*z = (float) zz / 100.0;
+	*x = (float)xx / 100.0;
+	*y = (float)yy / 100.0;
+	*z = (float)zz / 100.0;
 
 	return 0;
 }

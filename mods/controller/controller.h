@@ -11,21 +11,21 @@
 #include <typedef.h>
 
 //摇控器接收机的4个通道引脚
-#define GPIO_FB						(12)
-#define GPIO_LR						(14)
-#define GPIO_PW						(13)
-#define GPIO_MD						(1)
-#define GPIO_UD						(5)
-#define GPIO_DI						(4)
+#define GPIO_FB (12)
+#define GPIO_LR (14)
+#define GPIO_PW (13)
+#define GPIO_MD (1)
+#define GPIO_UD (5)
+#define GPIO_DI (4)
 
 //摇控器接收机的4个通道读数范围
-#define CTL_PWM_MIN					(980)
-#define CTL_PWM_MAX					(2020)
+#define CTL_PWM_MIN (980)
+#define CTL_PWM_MAX (2020)
 //摇控器幅度通道比例范围,通过此通道来修改方向通道的数值比例
-#define CTL_DI_MIN					(1000)
-#define CTL_DI_MAX					(2000)
+#define CTL_DI_MIN (1000)
+#define CTL_DI_MAX (2000)
 //最大倾斜角
-#define MAX_ANGLE					(45)
+#define MAX_ANGLE (45)
 
 typedef struct
 {
@@ -33,13 +33,13 @@ typedef struct
 	struct timeval timer_end;
 } s_ctl_pwm;
 
-int __init(s_engine *engine, s_params *params);
+int __init(s_engine* engine, s_params* params);
 
-int __destory(s_engine *e, s_params *p);
+int __destory(s_engine* e, s_params* p);
 
 int __status();
 
-void controller_ctl_pwm(int gpio_port, s_ctl_pwm *ctl_pwm);
+void controller_ctl_pwm(int gpio_port, s_ctl_pwm* ctl_pwm);
 
 //读取摇控器接收机的PWM信号“前后”
 void controller_ctl_pwm_fb();
@@ -90,6 +90,6 @@ float controller_parabola(float x);
  * measure_devi测量噪声
  * devi上一次最优偏差
  */
-float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float *devi);
+float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);
 
 #endif /* MODS_CONTROLLER_CONTROLLER_H_ */
