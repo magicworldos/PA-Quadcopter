@@ -110,13 +110,13 @@ void engine_fly()
 	while (1)
 	{
 		//处理欧拉角平衡补偿
-		e->tx = e->x + e->dx + params.cx + e->ctlmx;
-		e->ty = e->y + e->dy + params.cy + e->ctlmy;
+		e->tx = e->x + e->dx + params.cx;
+		e->ty = e->y + e->dy + params.cy;
 		e->tz = e->z + e->dz;
 
 		//使用欧拉角的PID反馈控制算法
-		e->x_devi = engine_pid(e->tx, x_et, &e->x_sum);
-		e->y_devi = engine_pid(e->ty, y_et, &e->y_sum);
+		e->x_devi = engine_pid(e->tx + e->ctlmx, x_et, &e->x_sum);
+		e->y_devi = engine_pid(e->ty + e->ctlmy, y_et, &e->y_sum);
 		e->z_devi = engine_pid(e->tz, z_et, NULL);
 
 		//角速度PID
@@ -125,8 +125,8 @@ void engine_fly()
 		e->zv_devi = engine_v_pid(e->gz + e->dgz, z_v_et, NULL);
 
 		//记录欧拉角的上一次读数
-		x_et = e->tx;
-		y_et = e->ty;
+		x_et = e->tx + e->ctlmx;
+		y_et = e->ty + e->ctlmy;
 		z_et = e->tz;
 
 		//记录角速度的上一次读数
