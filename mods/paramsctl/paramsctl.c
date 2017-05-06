@@ -94,7 +94,7 @@ void params_reset()
 {
 	// XY轴欧拉角PID参数
 	p->kp = 166.0;
-	p->ki = 12.6;
+	p->ki = 5.6;
 	p->kd = 0.0;
 	// XY轴欧拉角PID参数
 	p->v_kp = 17.0;
