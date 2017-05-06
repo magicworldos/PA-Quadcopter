@@ -110,8 +110,8 @@ void engine_fly()
 	while (1)
 	{
 		//处理欧拉角平衡补偿
-		e->tx = e->x + e->dx + params.cx;
-		e->ty = e->y + e->dy + params.cy;
+		e->tx = e->x + e->dx + (params.cx / 180.0 * M_PI);
+		e->ty = e->y + e->dy + (params.cy / 180.0 * M_PI);
 		e->tz = e->z + e->dz;
 
 		//使用欧拉角的PID反馈控制算法
@@ -262,8 +262,9 @@ void engine_limit(float* v)
 	{
 		return;
 	}
-	*v = *v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : *v;
-	*v = *v < -MAX_SPEED_RUN_MAX ? -MAX_SPEED_RUN_MAX : *v;
+	s_engine* e = &engine;
+	*v = *v > e->v ? e->v : *v;
+	*v = *v < -e->v ? -e->v : *v;
 }
 
 /***
