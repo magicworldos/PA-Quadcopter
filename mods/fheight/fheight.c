@@ -33,7 +33,10 @@ int __destory(s_engine* e, s_params* p)
 	return 0;
 }
 
-int __status() { return st; }
+int __status()
+{
+	return st;
+}
 
 void fheight_automatic()
 {
@@ -44,7 +47,7 @@ void fheight_automatic()
 	float origin_v      = 0;
 	while (r)
 	{
-		usleep(50 * 1000);
+		usleep(100 * 1000);
 
 		if (e->mode == MODE_AUTO)
 		{
@@ -77,10 +80,12 @@ void fheight_automatic()
 // PID反馈控制
 float fheight_pid(float et, float et2, float* sum)
 {
-	//计算积分参数累加和，消除稳态误差
-	*sum += p->h_ki * et;
-	fheight_limit(sum);
-
+	if (et < 0.3 && et > -0.3)
+	{
+		//计算积分参数累加和，消除稳态误差
+		*sum += p->h_ki * et;
+		fheight_limit(sum);
+	}
 	//对X、Y轴做PID反馈控制
 	float devi = p->h_kp * et + (*sum) + p->h_kd * (et - et2);
 	fheight_limit(&devi);

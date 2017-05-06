@@ -97,13 +97,13 @@ void params_reset()
 	p->ki = 12.6;
 	p->kd = 0.0;
 	// XY轴欧拉角PID参数
-	p->v_kp = 20.0;
+	p->v_kp = 17.0;
 	p->v_ki = 0.0;
-	p->v_kd = 33.0;
+	p->v_kd = 23.0;
 	// XY轴欧拉角PID参数
-	p->h_kp = 68.0;
-	p->h_ki = 1.6;
-	p->h_kd = 385.0;
+	p->h_kp = 8.0;
+	p->h_ki = 0.6;
+	p->h_kd = 585.0;
 	// XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
