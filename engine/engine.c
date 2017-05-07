@@ -110,8 +110,8 @@ void engine_fly()
 	while (1)
 	{
 		//处理欧拉角平衡补偿
-		e->tx = e->x + e->dx + (params.cx / 180.0 * M_PI);
-		e->ty = e->y + e->dy + (params.cy / 180.0 * M_PI);
+		e->tx = e->x + e->dx;
+		e->ty = e->y + e->dy;
 		e->tz = e->z + e->dz;
 
 		//使用欧拉角的PID反馈控制算法
