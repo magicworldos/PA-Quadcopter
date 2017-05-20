@@ -38,7 +38,7 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 
 //保护最低速度
-#define PROCTED_SPEED (50)
+#define PROCTED_SPEED (100)
 //电机最大速度
 #define MAX_SPEED_RUN_MAX (1000)
 //电机最小速度
@@ -49,6 +49,8 @@ typedef unsigned long long u64;
 
 #define MODE_MANUAL (0)
 #define MODE_AUTO (1)
+
+#define MAX_ACC	(27.19)
 
 //引擎结构
 typedef struct
@@ -67,6 +69,8 @@ typedef struct
 	float dx;
 	float dy;
 	float dz;
+	float dax;
+	float day;
 	//摇控器移动倾角
 	float ctlmx;
 	float ctlmy;
@@ -78,6 +82,10 @@ typedef struct
 	float dgx;
 	float dgy;
 	float dgz;
+	// XYZ加速度
+	float ax;
+	float ay;
+	float az;
 	//引擎速度
 	float v;
 	// XYZ欧拉角补偿

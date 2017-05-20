@@ -110,8 +110,8 @@ void engine_fly()
 	while (1)
 	{
 		//处理欧拉角平衡补偿
-		e->tx = e->x + e->dx;
-		e->ty = e->y + e->dy;
+		e->tx = e->x + e->dx + e->dax;
+		e->ty = e->y + e->dy + e->day;
 		e->tz = e->z + e->dz;
 
 		//使用欧拉角的PID反馈控制算法
@@ -300,10 +300,16 @@ void engine_reset(s_engine* e)
 	e->dx = 0;
 	e->dy = 0;
 	e->dz = 0;
+	e->dax = 0;
+	e->day = 0;
 	// XYZ欧拉角
 	e->x = 0;
 	e->y = 0;
 	e->z = 0;
+	// XYZ加速度
+	e->ax = 0;
+	e->ay = 0;
+	e->az = 0;
 	//摇控器飞行移动倾斜角
 	e->ctlmx = 0;
 	e->ctlmy = 0;
@@ -376,6 +382,20 @@ void engine_set_dxy()
 	e->z_v_sum = 0;
 
 	e->h_sum = 0;
+
+	if (engine_abs(e->ax) < MAX_ACC)
+	{
+		e->dax = asin(e->ax / MAX_ACC);
+	}
+	if (engine_abs(e->ay) < MAX_ACC)
+	{
+		e->day = asin(e->ay / MAX_ACC);
+	}
+
+	e->x_devi = 0;
+	e->y_devi = 0;
+	e->z_devi = 0;
+	e->h_devi = 0;
 }
 
 //绝对值
