@@ -40,7 +40,7 @@ void emode_start_gyro(char* argv2)
 
 	while (1)
 	{
-		printf("[xyz: %+7.3f %+7.3f %+7.3f ][g: %+7.3f %+7.3f %+7.3f]\n", e->x, e->y, e->z, e->gx, e->gy, e->gz);
+		printf("[xyz: %+7.3f %+7.3f %+7.3f ][g: %+7.3f %+7.3f %+7.3f][a: %+7.3f %+7.3f %+7.3f]\n", e->x, e->y, e->z, e->gx, e->gy, e->gz, e->ax, e->ay, e->az);
 		usleep(2 * 1000);
 	}
 }

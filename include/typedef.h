@@ -50,7 +50,7 @@ typedef unsigned long long u64;
 #define MODE_MANUAL (0)
 #define MODE_AUTO (1)
 
-#define MAX_ACC	(27.19)
+#define MAX_ACC	(20.0)
 
 //引擎结构
 typedef struct
