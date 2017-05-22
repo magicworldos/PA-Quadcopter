@@ -25,6 +25,7 @@ INCLUDE_EMODE_H_	include/emode.h	9;"	d
 INCLUDE_GY953_H_	mods/gy953/gy953.h	10;"	d
 INCLUDE_HCSR04_H_	mods/hcsr04/hcsr04.h	10;"	d
 INCLUDE_LIST_H_	include/list.h	9;"	d
+MAX_ACC	include/typedef.h	53;"	d
 MAX_ANGLE	mods/controller/controller.h	28;"	d
 MAX_SPEED_RUN_MAX	include/typedef.h	43;"	d
 MAX_SPEED_RUN_MIN	include/typedef.h	45;"	d
@@ -411,75 +412,80 @@ _INCLUDE_PARAMSCTL_H_	mods/paramsctl/paramsctl.h	10;"	d
 _INCLUDE_TYPEDEF_H_	include/typedef.h	10;"	d
 _MPU6050_H_	mods/mpu6050/mpu6050.h	2;"	d
 __DISPLAY_MODE_MORE__	mods/display/display.h	14;"	d
-__anon1::free_node	include/list.h	/^	int (*free_node)();$/;"	m	struct:__anon1	access:public
-__anon1::header	include/list.h	/^	s_node* header;$/;"	m	struct:__anon1	access:public
-__anon2::ctl_di	include/typedef.h	/^	int ctl_di;$/;"	m	struct:__anon2	access:public
-__anon2::ctl_fb	include/typedef.h	/^	int ctl_fb;$/;"	m	struct:__anon2	access:public
-__anon2::ctl_lr	include/typedef.h	/^	int ctl_lr;$/;"	m	struct:__anon2	access:public
-__anon2::ctl_md	include/typedef.h	/^	int ctl_md;$/;"	m	struct:__anon2	access:public
-__anon2::ctl_pw	include/typedef.h	/^	int ctl_pw;$/;"	m	struct:__anon2	access:public
-__anon2::ctl_ud	include/typedef.h	/^	int ctl_ud;$/;"	m	struct:__anon2	access:public
-__anon2::ctlmx	include/typedef.h	/^	float ctlmx;$/;"	m	struct:__anon2	access:public
-__anon2::ctlmy	include/typedef.h	/^	float ctlmy;$/;"	m	struct:__anon2	access:public
-__anon2::dgx	include/typedef.h	/^	float dgx;$/;"	m	struct:__anon2	access:public
-__anon2::dgy	include/typedef.h	/^	float dgy;$/;"	m	struct:__anon2	access:public
-__anon2::dgz	include/typedef.h	/^	float dgz;$/;"	m	struct:__anon2	access:public
-__anon2::dx	include/typedef.h	/^	float dx;$/;"	m	struct:__anon2	access:public
-__anon2::dy	include/typedef.h	/^	float dy;$/;"	m	struct:__anon2	access:public
-__anon2::dz	include/typedef.h	/^	float dz;$/;"	m	struct:__anon2	access:public
-__anon2::gx	include/typedef.h	/^	float gx;$/;"	m	struct:__anon2	access:public
-__anon2::gy	include/typedef.h	/^	float gy;$/;"	m	struct:__anon2	access:public
-__anon2::gz	include/typedef.h	/^	float gz;$/;"	m	struct:__anon2	access:public
-__anon2::h_devi	include/typedef.h	/^	float h_devi;$/;"	m	struct:__anon2	access:public
-__anon2::h_sum	include/typedef.h	/^	float h_sum;$/;"	m	struct:__anon2	access:public
-__anon2::height	include/typedef.h	/^	float height;$/;"	m	struct:__anon2	access:public
-__anon2::height_target	include/typedef.h	/^	float height_target;$/;"	m	struct:__anon2	access:public
-__anon2::lock	include/typedef.h	/^	int lock;$/;"	m	struct:__anon2	access:public
-__anon2::lock_status	include/typedef.h	/^	u32 lock_status;$/;"	m	struct:__anon2	access:public
-__anon2::mode	include/typedef.h	/^	u32 mode;$/;"	m	struct:__anon2	access:public
-__anon2::tx	include/typedef.h	/^	float tx;$/;"	m	struct:__anon2	access:public
-__anon2::ty	include/typedef.h	/^	float ty;$/;"	m	struct:__anon2	access:public
-__anon2::tz	include/typedef.h	/^	float tz;$/;"	m	struct:__anon2	access:public
-__anon2::v	include/typedef.h	/^	float v;$/;"	m	struct:__anon2	access:public
-__anon2::x	include/typedef.h	/^	float x;$/;"	m	struct:__anon2	access:public
-__anon2::x_devi	include/typedef.h	/^	float x_devi;$/;"	m	struct:__anon2	access:public
-__anon2::x_sum	include/typedef.h	/^	float x_sum;$/;"	m	struct:__anon2	access:public
-__anon2::x_v_sum	include/typedef.h	/^	float x_v_sum;$/;"	m	struct:__anon2	access:public
-__anon2::xv_devi	include/typedef.h	/^	float xv_devi;$/;"	m	struct:__anon2	access:public
-__anon2::y	include/typedef.h	/^	float y;$/;"	m	struct:__anon2	access:public
-__anon2::y_devi	include/typedef.h	/^	float y_devi;$/;"	m	struct:__anon2	access:public
-__anon2::y_sum	include/typedef.h	/^	float y_sum;$/;"	m	struct:__anon2	access:public
-__anon2::y_v_sum	include/typedef.h	/^	float y_v_sum;$/;"	m	struct:__anon2	access:public
-__anon2::yv_devi	include/typedef.h	/^	float yv_devi;$/;"	m	struct:__anon2	access:public
-__anon2::z	include/typedef.h	/^	float z;$/;"	m	struct:__anon2	access:public
-__anon2::z_devi	include/typedef.h	/^	float z_devi;$/;"	m	struct:__anon2	access:public
-__anon2::z_sum	include/typedef.h	/^	float z_sum;$/;"	m	struct:__anon2	access:public
-__anon2::z_v_sum	include/typedef.h	/^	float z_v_sum;$/;"	m	struct:__anon2	access:public
-__anon2::zv_devi	include/typedef.h	/^	float zv_devi;$/;"	m	struct:__anon2	access:public
-__anon3::ctl_di_zero	include/typedef.h	/^	int ctl_di_zero;$/;"	m	struct:__anon3	access:public
-__anon3::ctl_fb_zero	include/typedef.h	/^	int ctl_fb_zero;$/;"	m	struct:__anon3	access:public
-__anon3::ctl_lr_zero	include/typedef.h	/^	int ctl_lr_zero;$/;"	m	struct:__anon3	access:public
-__anon3::ctl_md_zero	include/typedef.h	/^	int ctl_md_zero;$/;"	m	struct:__anon3	access:public
-__anon3::ctl_pw_zero	include/typedef.h	/^	int ctl_pw_zero;$/;"	m	struct:__anon3	access:public
-__anon3::ctl_type	include/typedef.h	/^	int ctl_type;$/;"	m	struct:__anon3	access:public
-__anon3::ctl_ud_zero	include/typedef.h	/^	int ctl_ud_zero;$/;"	m	struct:__anon3	access:public
-__anon3::cx	include/typedef.h	/^	float cx;$/;"	m	struct:__anon3	access:public
-__anon3::cy	include/typedef.h	/^	float cy;$/;"	m	struct:__anon3	access:public
-__anon3::h_kd	include/typedef.h	/^	float h_kd;$/;"	m	struct:__anon3	access:public
-__anon3::h_ki	include/typedef.h	/^	float h_ki;$/;"	m	struct:__anon3	access:public
-__anon3::h_kp	include/typedef.h	/^	float h_kp;$/;"	m	struct:__anon3	access:public
-__anon3::kd	include/typedef.h	/^	float kd;$/;"	m	struct:__anon3	access:public
-__anon3::ki	include/typedef.h	/^	float ki;$/;"	m	struct:__anon3	access:public
-__anon3::kp	include/typedef.h	/^	float kp;$/;"	m	struct:__anon3	access:public
-__anon3::v_kd	include/typedef.h	/^	float v_kd;$/;"	m	struct:__anon3	access:public
-__anon3::v_ki	include/typedef.h	/^	float v_ki;$/;"	m	struct:__anon3	access:public
-__anon3::v_kp	include/typedef.h	/^	float v_kp;$/;"	m	struct:__anon3	access:public
-__anon4::timer_end	mods/controller/controller.h	/^	struct timeval timer_end;$/;"	m	struct:__anon4	typeref:struct:__anon4::timeval	access:public
-__anon4::timer_start	mods/controller/controller.h	/^	struct timeval timer_start;$/;"	m	struct:__anon4	typeref:struct:__anon4::timeval	access:public
-__anon5::time_m	mods/motor/motor.h	/^	int time_m;$/;"	m	struct:__anon5	access:public
-__anon5::time_w	mods/motor/motor.h	/^	int time_w;$/;"	m	struct:__anon5	access:public
-__anon6::timer_end	mods/hcsr04/hcsr04.h	/^	struct timeval timer_end;$/;"	m	struct:__anon6	typeref:struct:__anon6::timeval	access:public
-__anon6::timer_start	mods/hcsr04/hcsr04.h	/^	struct timeval timer_start;$/;"	m	struct:__anon6	typeref:struct:__anon6::timeval	access:public
+__anon1::timer_end	mods/hcsr04/hcsr04.h	/^	struct timeval timer_end;$/;"	m	struct:__anon1	typeref:struct:__anon1::timeval	access:public
+__anon1::timer_start	mods/hcsr04/hcsr04.h	/^	struct timeval timer_start;$/;"	m	struct:__anon1	typeref:struct:__anon1::timeval	access:public
+__anon2::timer_end	mods/controller/controller.h	/^	struct timeval timer_end;$/;"	m	struct:__anon2	typeref:struct:__anon2::timeval	access:public
+__anon2::timer_start	mods/controller/controller.h	/^	struct timeval timer_start;$/;"	m	struct:__anon2	typeref:struct:__anon2::timeval	access:public
+__anon3::time_m	mods/motor/motor.h	/^	int time_m;$/;"	m	struct:__anon3	access:public
+__anon3::time_w	mods/motor/motor.h	/^	int time_w;$/;"	m	struct:__anon3	access:public
+__anon4::free_node	include/list.h	/^	int (*free_node)();$/;"	m	struct:__anon4	access:public
+__anon4::header	include/list.h	/^	s_node* header;$/;"	m	struct:__anon4	access:public
+__anon5::ax	include/typedef.h	/^	float ax;$/;"	m	struct:__anon5	access:public
+__anon5::ay	include/typedef.h	/^	float ay;$/;"	m	struct:__anon5	access:public
+__anon5::az	include/typedef.h	/^	float az;$/;"	m	struct:__anon5	access:public
+__anon5::ctl_di	include/typedef.h	/^	int ctl_di;$/;"	m	struct:__anon5	access:public
+__anon5::ctl_fb	include/typedef.h	/^	int ctl_fb;$/;"	m	struct:__anon5	access:public
+__anon5::ctl_lr	include/typedef.h	/^	int ctl_lr;$/;"	m	struct:__anon5	access:public
+__anon5::ctl_md	include/typedef.h	/^	int ctl_md;$/;"	m	struct:__anon5	access:public
+__anon5::ctl_pw	include/typedef.h	/^	int ctl_pw;$/;"	m	struct:__anon5	access:public
+__anon5::ctl_ud	include/typedef.h	/^	int ctl_ud;$/;"	m	struct:__anon5	access:public
+__anon5::ctlmx	include/typedef.h	/^	float ctlmx;$/;"	m	struct:__anon5	access:public
+__anon5::ctlmy	include/typedef.h	/^	float ctlmy;$/;"	m	struct:__anon5	access:public
+__anon5::dax	include/typedef.h	/^	float dax;$/;"	m	struct:__anon5	access:public
+__anon5::day	include/typedef.h	/^	float day;$/;"	m	struct:__anon5	access:public
+__anon5::dgx	include/typedef.h	/^	float dgx;$/;"	m	struct:__anon5	access:public
+__anon5::dgy	include/typedef.h	/^	float dgy;$/;"	m	struct:__anon5	access:public
+__anon5::dgz	include/typedef.h	/^	float dgz;$/;"	m	struct:__anon5	access:public
+__anon5::dx	include/typedef.h	/^	float dx;$/;"	m	struct:__anon5	access:public
+__anon5::dy	include/typedef.h	/^	float dy;$/;"	m	struct:__anon5	access:public
+__anon5::dz	include/typedef.h	/^	float dz;$/;"	m	struct:__anon5	access:public
+__anon5::gx	include/typedef.h	/^	float gx;$/;"	m	struct:__anon5	access:public
+__anon5::gy	include/typedef.h	/^	float gy;$/;"	m	struct:__anon5	access:public
+__anon5::gz	include/typedef.h	/^	float gz;$/;"	m	struct:__anon5	access:public
+__anon5::h_devi	include/typedef.h	/^	float h_devi;$/;"	m	struct:__anon5	access:public
+__anon5::h_sum	include/typedef.h	/^	float h_sum;$/;"	m	struct:__anon5	access:public
+__anon5::height	include/typedef.h	/^	float height;$/;"	m	struct:__anon5	access:public
+__anon5::height_target	include/typedef.h	/^	float height_target;$/;"	m	struct:__anon5	access:public
+__anon5::lock	include/typedef.h	/^	int lock;$/;"	m	struct:__anon5	access:public
+__anon5::lock_status	include/typedef.h	/^	u32 lock_status;$/;"	m	struct:__anon5	access:public
+__anon5::mode	include/typedef.h	/^	u32 mode;$/;"	m	struct:__anon5	access:public
+__anon5::tx	include/typedef.h	/^	float tx;$/;"	m	struct:__anon5	access:public
+__anon5::ty	include/typedef.h	/^	float ty;$/;"	m	struct:__anon5	access:public
+__anon5::tz	include/typedef.h	/^	float tz;$/;"	m	struct:__anon5	access:public
+__anon5::v	include/typedef.h	/^	float v;$/;"	m	struct:__anon5	access:public
+__anon5::x	include/typedef.h	/^	float x;$/;"	m	struct:__anon5	access:public
+__anon5::x_devi	include/typedef.h	/^	float x_devi;$/;"	m	struct:__anon5	access:public
+__anon5::x_sum	include/typedef.h	/^	float x_sum;$/;"	m	struct:__anon5	access:public
+__anon5::x_v_sum	include/typedef.h	/^	float x_v_sum;$/;"	m	struct:__anon5	access:public
+__anon5::xv_devi	include/typedef.h	/^	float xv_devi;$/;"	m	struct:__anon5	access:public
+__anon5::y	include/typedef.h	/^	float y;$/;"	m	struct:__anon5	access:public
+__anon5::y_devi	include/typedef.h	/^	float y_devi;$/;"	m	struct:__anon5	access:public
+__anon5::y_sum	include/typedef.h	/^	float y_sum;$/;"	m	struct:__anon5	access:public
+__anon5::y_v_sum	include/typedef.h	/^	float y_v_sum;$/;"	m	struct:__anon5	access:public
+__anon5::yv_devi	include/typedef.h	/^	float yv_devi;$/;"	m	struct:__anon5	access:public
+__anon5::z	include/typedef.h	/^	float z;$/;"	m	struct:__anon5	access:public
+__anon5::z_devi	include/typedef.h	/^	float z_devi;$/;"	m	struct:__anon5	access:public
+__anon5::z_sum	include/typedef.h	/^	float z_sum;$/;"	m	struct:__anon5	access:public
+__anon5::z_v_sum	include/typedef.h	/^	float z_v_sum;$/;"	m	struct:__anon5	access:public
+__anon5::zv_devi	include/typedef.h	/^	float zv_devi;$/;"	m	struct:__anon5	access:public
+__anon6::ctl_di_zero	include/typedef.h	/^	int ctl_di_zero;$/;"	m	struct:__anon6	access:public
+__anon6::ctl_fb_zero	include/typedef.h	/^	int ctl_fb_zero;$/;"	m	struct:__anon6	access:public
+__anon6::ctl_lr_zero	include/typedef.h	/^	int ctl_lr_zero;$/;"	m	struct:__anon6	access:public
+__anon6::ctl_md_zero	include/typedef.h	/^	int ctl_md_zero;$/;"	m	struct:__anon6	access:public
+__anon6::ctl_pw_zero	include/typedef.h	/^	int ctl_pw_zero;$/;"	m	struct:__anon6	access:public
+__anon6::ctl_type	include/typedef.h	/^	int ctl_type;$/;"	m	struct:__anon6	access:public
+__anon6::ctl_ud_zero	include/typedef.h	/^	int ctl_ud_zero;$/;"	m	struct:__anon6	access:public
+__anon6::cx	include/typedef.h	/^	float cx;$/;"	m	struct:__anon6	access:public
+__anon6::cy	include/typedef.h	/^	float cy;$/;"	m	struct:__anon6	access:public
+__anon6::h_kd	include/typedef.h	/^	float h_kd;$/;"	m	struct:__anon6	access:public
+__anon6::h_ki	include/typedef.h	/^	float h_ki;$/;"	m	struct:__anon6	access:public
+__anon6::h_kp	include/typedef.h	/^	float h_kp;$/;"	m	struct:__anon6	access:public
+__anon6::kd	include/typedef.h	/^	float kd;$/;"	m	struct:__anon6	access:public
+__anon6::ki	include/typedef.h	/^	float ki;$/;"	m	struct:__anon6	access:public
+__anon6::kp	include/typedef.h	/^	float kp;$/;"	m	struct:__anon6	access:public
+__anon6::v_kd	include/typedef.h	/^	float v_kd;$/;"	m	struct:__anon6	access:public
+__anon6::v_ki	include/typedef.h	/^	float v_ki;$/;"	m	struct:__anon6	access:public
+__anon6::v_kp	include/typedef.h	/^	float v_kp;$/;"	m	struct:__anon6	access:public
 __destory	mods/command/command.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
 __destory	mods/command/command.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
 __destory	mods/controller/controller.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
@@ -522,7 +528,7 @@ __status	mods/controller/controller.c	/^int __status() { return st; }$/;"	f
 __status	mods/controller/controller.h	/^int __status();$/;"	p	signature:()
 __status	mods/display/display.c	/^int __status() { return st; }$/;"	f
 __status	mods/display/display.h	/^int __status();$/;"	p	signature:()
-__status	mods/fheight/fheight.c	/^int __status() { return st; }$/;"	f
+__status	mods/fheight/fheight.c	/^int __status()$/;"	f
 __status	mods/fheight/fheight.h	/^int __status();$/;"	p	signature:()
 __status	mods/gy953/gy953.c	/^int __status() { return st; }$/;"	f
 __status	mods/gy953/gy953.h	/^int __status();$/;"	p	signature:()
@@ -538,6 +544,9 @@ aa	mods/mpu6050/mpu6050.c	/^VectorInt16 aa;      \/\/ [x, y, z]            accel
 aaReal	mods/mpu6050/mpu6050.c	/^VectorInt16 aaReal;  \/\/ [x, y, z]            gravity-free accel sensor measurements$/;"	v
 aaWorld	mods/mpu6050/mpu6050.c	/^VectorInt16 aaWorld; \/\/ [x, y, z]            world-frame accel sensor measurements$/;"	v
 args	include/dlmod.h	/^	void** args;$/;"	m	struct:s_dlmod	access:public
+ax	include/typedef.h	/^	float ax;$/;"	m	struct:__anon5	access:public
+ay	include/typedef.h	/^	float ay;$/;"	m	struct:__anon5	access:public
+az	include/typedef.h	/^	float az;$/;"	m	struct:__anon5	access:public
 buffer	mods/mpu6050/mpu6050.c	/^u8 buffer[14];$/;"	v
 controller_abs	mods/controller/controller.c	/^float controller_abs(float x)$/;"	f	signature:(float x)
 controller_abs	mods/controller/controller.h	/^float controller_abs(float x);$/;"	p	signature:(float x)
@@ -571,18 +580,18 @@ controller_pw_pwm	mods/controller/controller.c	/^void controller_pw_pwm(int pw)$
 controller_pw_pwm	mods/controller/controller.h	/^void controller_pw_pwm(int pw);$/;"	p	signature:(int pw)
 controller_ud_pwm	mods/controller/controller.c	/^void controller_ud_pwm(int ud)$/;"	f	signature:(int ud)
 controller_ud_pwm	mods/controller/controller.h	/^void controller_ud_pwm(int md);$/;"	p	signature:(int md)
-ctl_di	include/typedef.h	/^	int ctl_di;$/;"	m	struct:__anon2	access:public
-ctl_di_zero	include/typedef.h	/^	int ctl_di_zero;$/;"	m	struct:__anon3	access:public
+ctl_di	include/typedef.h	/^	int ctl_di;$/;"	m	struct:__anon5	access:public
+ctl_di_zero	include/typedef.h	/^	int ctl_di_zero;$/;"	m	struct:__anon6	access:public
 ctl_est_devi	mods/controller/controller.c	/^float ctl_est_devi     = 1;$/;"	v
-ctl_fb	include/typedef.h	/^	int ctl_fb;$/;"	m	struct:__anon2	access:public
-ctl_fb_zero	include/typedef.h	/^	int ctl_fb_zero;$/;"	m	struct:__anon3	access:public
-ctl_lr	include/typedef.h	/^	int ctl_lr;$/;"	m	struct:__anon2	access:public
-ctl_lr_zero	include/typedef.h	/^	int ctl_lr_zero;$/;"	m	struct:__anon3	access:public
-ctl_md	include/typedef.h	/^	int ctl_md;$/;"	m	struct:__anon2	access:public
-ctl_md_zero	include/typedef.h	/^	int ctl_md_zero;$/;"	m	struct:__anon3	access:public
+ctl_fb	include/typedef.h	/^	int ctl_fb;$/;"	m	struct:__anon5	access:public
+ctl_fb_zero	include/typedef.h	/^	int ctl_fb_zero;$/;"	m	struct:__anon6	access:public
+ctl_lr	include/typedef.h	/^	int ctl_lr;$/;"	m	struct:__anon5	access:public
+ctl_lr_zero	include/typedef.h	/^	int ctl_lr_zero;$/;"	m	struct:__anon6	access:public
+ctl_md	include/typedef.h	/^	int ctl_md;$/;"	m	struct:__anon5	access:public
+ctl_md_zero	include/typedef.h	/^	int ctl_md_zero;$/;"	m	struct:__anon6	access:public
 ctl_measure_devi	mods/controller/controller.c	/^float ctl_measure_devi = 15;$/;"	v
-ctl_pw	include/typedef.h	/^	int ctl_pw;$/;"	m	struct:__anon2	access:public
-ctl_pw_zero	include/typedef.h	/^	int ctl_pw_zero;$/;"	m	struct:__anon3	access:public
+ctl_pw	include/typedef.h	/^	int ctl_pw;$/;"	m	struct:__anon5	access:public
+ctl_pw_zero	include/typedef.h	/^	int ctl_pw_zero;$/;"	m	struct:__anon6	access:public
 ctl_pwm_di	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_di;$/;"	v
 ctl_pwm_fb	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_fb;$/;"	v
 ctl_pwm_lr	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_lr;$/;"	v
@@ -590,21 +599,23 @@ ctl_pwm_md	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_md;$/;"	v
 ctl_pwm_pw	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_pw;$/;"	v
 ctl_pwm_ud	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_ud;$/;"	v
 ctl_step	mods/paramsctl/paramsctl.c	/^float ctl_step = 1;$/;"	v
-ctl_type	include/typedef.h	/^	int ctl_type;$/;"	m	struct:__anon3	access:public
-ctl_ud	include/typedef.h	/^	int ctl_ud;$/;"	m	struct:__anon2	access:public
-ctl_ud_zero	include/typedef.h	/^	int ctl_ud_zero;$/;"	m	struct:__anon3	access:public
-ctlmx	include/typedef.h	/^	float ctlmx;$/;"	m	struct:__anon2	access:public
-ctlmy	include/typedef.h	/^	float ctlmy;$/;"	m	struct:__anon2	access:public
-cx	include/typedef.h	/^	float cx;$/;"	m	struct:__anon3	access:public
-cy	include/typedef.h	/^	float cy;$/;"	m	struct:__anon3	access:public
+ctl_type	include/typedef.h	/^	int ctl_type;$/;"	m	struct:__anon6	access:public
+ctl_ud	include/typedef.h	/^	int ctl_ud;$/;"	m	struct:__anon5	access:public
+ctl_ud_zero	include/typedef.h	/^	int ctl_ud_zero;$/;"	m	struct:__anon6	access:public
+ctlmx	include/typedef.h	/^	float ctlmx;$/;"	m	struct:__anon5	access:public
+ctlmy	include/typedef.h	/^	float ctlmy;$/;"	m	struct:__anon5	access:public
+cx	include/typedef.h	/^	float cx;$/;"	m	struct:__anon6	access:public
+cy	include/typedef.h	/^	float cy;$/;"	m	struct:__anon6	access:public
 cycle_z	mods/mpu6050/mpu6050.c	/^int cycle_z  = 0;$/;"	v
 data	include/list.h	/^	void* data;$/;"	m	struct:s_node	access:public
+dax	include/typedef.h	/^	float dax;$/;"	m	struct:__anon5	access:public
+day	include/typedef.h	/^	float day;$/;"	m	struct:__anon5	access:public
 destory	include/dlmod.h	/^	int (*destory)();$/;"	m	struct:s_dlmod	access:public
 devAddr	mods/mpu6050/mpu6050.c	/^u8 devAddr	= MPU6050_DEFAULT_ADDRESS;$/;"	v
 devStatus	mods/mpu6050/mpu6050.c	/^uint8_t devStatus;      \/\/ return status after each device operation (0 = success, !0 = error)$/;"	v
-dgx	include/typedef.h	/^	float dgx;$/;"	m	struct:__anon2	access:public
-dgy	include/typedef.h	/^	float dgy;$/;"	m	struct:__anon2	access:public
-dgz	include/typedef.h	/^	float dgz;$/;"	m	struct:__anon2	access:public
+dgx	include/typedef.h	/^	float dgx;$/;"	m	struct:__anon5	access:public
+dgy	include/typedef.h	/^	float dgy;$/;"	m	struct:__anon5	access:public
+dgz	include/typedef.h	/^	float dgz;$/;"	m	struct:__anon5	access:public
 di_devi	mods/controller/controller.c	/^float di_est = 0.0, di_devi = 0.0;$/;"	v
 di_est	mods/controller/controller.c	/^float di_est = 0.0, di_devi = 0.0;$/;"	v
 dis	mods/hcsr04/hcsr04.c	/^s_dis dis;$/;"	v
@@ -634,9 +645,9 @@ dlmod_run_pt_init	engine/dlmod.c	/^int dlmod_run_pt_init(s_dlmod* mod)$/;"	f	sig
 dlmod_run_pt_init	include/dlmod.h	/^int dlmod_run_pt_init(s_dlmod* mod);$/;"	p	signature:(s_dlmod* mod)
 dmpPacketSize	mods/mpu6050/mpu6050.c	/^u16 dmpPacketSize = 0;$/;"	v
 dmpReady	mods/mpu6050/mpu6050.c	/^u8 dmpReady = 0;	\/\/ set true if DMP init was successful$/;"	v
-dx	include/typedef.h	/^	float dx;$/;"	m	struct:__anon2	access:public
-dy	include/typedef.h	/^	float dy;$/;"	m	struct:__anon2	access:public
-dz	include/typedef.h	/^	float dz;$/;"	m	struct:__anon2	access:public
+dx	include/typedef.h	/^	float dx;$/;"	m	struct:__anon5	access:public
+dy	include/typedef.h	/^	float dy;$/;"	m	struct:__anon5	access:public
+dz	include/typedef.h	/^	float dz;$/;"	m	struct:__anon5	access:public
 e	mods/controller/controller.c	/^s_engine* e = NULL;$/;"	v
 e	mods/display/display.c	/^s_engine* e = NULL;$/;"	v
 e	mods/fheight/fheight.c	/^s_engine* e = NULL;$/;"	v
@@ -692,7 +703,7 @@ fheight_pid	mods/fheight/fheight.c	/^float fheight_pid(float et, float et2, floa
 fheight_pid	mods/fheight/fheight.h	/^float fheight_pid(float et, float et_1, float* sum);$/;"	p	signature:(float et, float et_1, float* sum)
 fifoBuffer	mods/mpu6050/mpu6050.c	/^uint8_t fifoBuffer[64]; \/\/ FIFO storage buffer$/;"	v
 fifoCount	mods/mpu6050/mpu6050.c	/^uint16_t fifoCount;     \/\/ count of all bytes currently in FIFO$/;"	v
-free_node	include/list.h	/^	int (*free_node)();$/;"	m	struct:__anon1	access:public
+free_node	include/list.h	/^	int (*free_node)();$/;"	m	struct:__anon4	access:public
 getch	mods/paramsctl/getch.c	/^char getch(void) { return getch_(0); }$/;"	f	signature:(void)
 getch	mods/paramsctl/getch.h	/^char getch(void);$/;"	p	signature:(void)
 getch_	mods/paramsctl/getch.c	/^char getch_(int echo)$/;"	f	signature:(int echo)
@@ -700,28 +711,28 @@ getch_	mods/paramsctl/getch.h	/^char getch_(int echo);$/;"	p	signature:(int echo
 getche	mods/paramsctl/getch.c	/^char getche(void) { return getch_(1); }$/;"	f	signature:(void)
 getche	mods/paramsctl/getch.h	/^char getche(void);$/;"	p	signature:(void)
 gravity	mods/mpu6050/mpu6050.c	/^VectorFloat gravity; \/\/ [x, y, z]            gravity vector$/;"	v
-gx	include/typedef.h	/^	float gx;$/;"	m	struct:__anon2	access:public
-gy	include/typedef.h	/^	float gy;$/;"	m	struct:__anon2	access:public
+gx	include/typedef.h	/^	float gx;$/;"	m	struct:__anon5	access:public
+gy	include/typedef.h	/^	float gy;$/;"	m	struct:__anon5	access:public
 gy953_close	mods/gy953/gy953.h	/^void gy953_close();$/;"	p	signature:()
 gy953_init	mods/gy953/gy953.h	/^int gy953_init(u32 init);$/;"	p	signature:(u32 init)
 gy953_read	mods/gy953/gy953.c	/^int gy953_read(float* x, float* y, float* z)$/;"	f	signature:(float* x, float* y, float* z)
 gy953_read	mods/gy953/gy953.h	/^int gy953_read(float* x, float* y, float* z);$/;"	p	signature:(float* x, float* y, float* z)
 gy953_value	mods/gy953/gy953.c	/^void gy953_value()$/;"	f
 gy953_value	mods/gy953/gy953.h	/^void gy953_value();$/;"	p	signature:()
-gz	include/typedef.h	/^	float gz;$/;"	m	struct:__anon2	access:public
-h_devi	include/typedef.h	/^	float h_devi;$/;"	m	struct:__anon2	access:public
+gz	include/typedef.h	/^	float gz;$/;"	m	struct:__anon5	access:public
+h_devi	include/typedef.h	/^	float h_devi;$/;"	m	struct:__anon5	access:public
 h_devi	mods/hcsr04/hcsr04.c	/^float h_est = 0.0, h_devi = 0.0;$/;"	v
 h_est	mods/hcsr04/hcsr04.c	/^float h_est = 0.0, h_devi = 0.0;$/;"	v
 h_est_devi	mods/hcsr04/hcsr04.c	/^float h_est_devi     = 0.01;$/;"	v
-h_kd	include/typedef.h	/^	float h_kd;$/;"	m	struct:__anon3	access:public
-h_ki	include/typedef.h	/^	float h_ki;$/;"	m	struct:__anon3	access:public
-h_kp	include/typedef.h	/^	float h_kp;$/;"	m	struct:__anon3	access:public
+h_kd	include/typedef.h	/^	float h_kd;$/;"	m	struct:__anon6	access:public
+h_ki	include/typedef.h	/^	float h_ki;$/;"	m	struct:__anon6	access:public
+h_kp	include/typedef.h	/^	float h_kp;$/;"	m	struct:__anon6	access:public
 h_measure_devi	mods/hcsr04/hcsr04.c	/^float h_measure_devi = 0.05;$/;"	v
-h_sum	include/typedef.h	/^	float h_sum;$/;"	m	struct:__anon2	access:public
+h_sum	include/typedef.h	/^	float h_sum;$/;"	m	struct:__anon5	access:public
 handler	include/dlmod.h	/^	void* handler;$/;"	m	struct:s_dlmod	access:public
-header	include/list.h	/^	s_node* header;$/;"	m	struct:__anon1	access:public
-height	include/typedef.h	/^	float height;$/;"	m	struct:__anon2	access:public
-height_target	include/typedef.h	/^	float height_target;$/;"	m	struct:__anon2	access:public
+header	include/list.h	/^	s_node* header;$/;"	m	struct:__anon4	access:public
+height	include/typedef.h	/^	float height;$/;"	m	struct:__anon5	access:public
+height_target	include/typedef.h	/^	float height_target;$/;"	m	struct:__anon5	access:public
 i2cdev_readBit	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readBit(u8 devAddr, u8 regAddr, u8 bitNum, u8* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u8* data)
 i2cdev_readBit	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readBit(u8 devAddr, u8 regAddr, u8 bitNum, u8* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u8* data)
 i2cdev_readBitW	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u16* data)
@@ -762,9 +773,9 @@ kalman_filter	mods/hcsr04/hcsr04.c	/^float kalman_filter(float est, float est_de
 kalman_filter	mods/hcsr04/hcsr04.h	/^float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);$/;"	p	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
 kalman_filter	mods/mpu6050/mpu6050.c	/^float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)$/;"	f	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
 kalman_filter	mods/mpu6050/mpu6050.h	/^float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);$/;"	p	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
-kd	include/typedef.h	/^	float kd;$/;"	m	struct:__anon3	access:public
-ki	include/typedef.h	/^	float ki;$/;"	m	struct:__anon3	access:public
-kp	include/typedef.h	/^	float kp;$/;"	m	struct:__anon3	access:public
+kd	include/typedef.h	/^	float kd;$/;"	m	struct:__anon6	access:public
+ki	include/typedef.h	/^	float ki;$/;"	m	struct:__anon6	access:public
+kp	include/typedef.h	/^	float kp;$/;"	m	struct:__anon6	access:public
 last_z	mods/mpu6050/mpu6050.c	/^float last_z = 0;$/;"	v
 list	engine/engine.c	/^s_list list;$/;"	v
 list_clear	include/list.h	/^int list_clear(s_list* list);$/;"	p	signature:(s_list* list)
@@ -777,16 +788,16 @@ list_insert	include/list.h	/^int list_insert(s_list* list, void* data);$/;"	p	si
 list_insert	util/list.c	/^int list_insert(s_list* list, void* data)$/;"	f	signature:(s_list* list, void* data)
 list_visit	include/list.h	/^int list_visit(s_list* list, void (*callback)());$/;"	p	signature:(s_list* list, void (*callback)())
 list_visit	util/list.c	/^int list_visit(s_list* list, void (*callback)())$/;"	f	signature:(s_list* list, void (*callback)())
-lock	include/typedef.h	/^	int lock;$/;"	m	struct:__anon2	access:public
-lock_status	include/typedef.h	/^	u32 lock_status;$/;"	m	struct:__anon2	access:public
+lock	include/typedef.h	/^	int lock;$/;"	m	struct:__anon5	access:public
+lock_status	include/typedef.h	/^	u32 lock_status;$/;"	m	struct:__anon5	access:public
 lr_devi	mods/controller/controller.c	/^float lr_est = 0.0, lr_devi = 0.0;$/;"	v
 lr_est	mods/controller/controller.c	/^float lr_est = 0.0, lr_devi = 0.0;$/;"	v
 main	main/main.c	/^int main(int argc, char* argv[])$/;"	f	signature:(int argc, char* argv[])
-mode	include/typedef.h	/^	u32 mode;$/;"	m	struct:__anon2	access:public
+mode	include/typedef.h	/^	u32 mode;$/;"	m	struct:__anon5	access:public
 motor_balance_compensation	mods/motor/motor.c	/^void motor_balance_compensation()$/;"	f
 motor_balance_compensation	mods/motor/motor.h	/^void motor_balance_compensation();$/;"	p	signature:()
 motor_clear	mods/motor/motor.h	/^void motor_clear();$/;"	p	signature:()
-motor_pwm	mods/motor/motor.h	/^} motor_pwm;$/;"	t	typeref:struct:__anon5
+motor_pwm	mods/motor/motor.h	/^} motor_pwm;$/;"	t	typeref:struct:__anon3
 motor_run	mods/motor/motor.c	/^void motor_run(void* args)$/;"	f	signature:(void* args)
 motor_run	mods/motor/motor.h	/^void motor_run(void* args);$/;"	p	signature:(void* args)
 motor_run_pwm	mods/motor/motor.c	/^void motor_run_pwm(int motor, motor_pwm* pwm)$/;"	f	signature:(int motor, motor_pwm* pwm)
@@ -1400,8 +1411,8 @@ s16	include/typedef.h	/^typedef signed short s16;$/;"	t
 s32	include/typedef.h	/^typedef signed int s32;$/;"	t
 s64	include/typedef.h	/^typedef signed long long s64;$/;"	t
 s8	include/typedef.h	/^typedef char s8;$/;"	t
-s_ctl_pwm	mods/controller/controller.h	/^} s_ctl_pwm;$/;"	t	typeref:struct:__anon4
-s_dis	mods/hcsr04/hcsr04.h	/^} s_dis;$/;"	t	typeref:struct:__anon6
+s_ctl_pwm	mods/controller/controller.h	/^} s_ctl_pwm;$/;"	t	typeref:struct:__anon2
+s_dis	mods/hcsr04/hcsr04.h	/^} s_dis;$/;"	t	typeref:struct:__anon1
 s_dlmod	include/dlmod.h	/^typedef struct s_dlmod$/;"	s
 s_dlmod	include/dlmod.h	/^} s_dlmod;$/;"	t	typeref:struct:s_dlmod
 s_dlmod::args	include/dlmod.h	/^	void** args;$/;"	m	struct:s_dlmod	access:public
@@ -1409,13 +1420,13 @@ s_dlmod::destory	include/dlmod.h	/^	int (*destory)();$/;"	m	struct:s_dlmod	acces
 s_dlmod::handler	include/dlmod.h	/^	void* handler;$/;"	m	struct:s_dlmod	access:public
 s_dlmod::init	include/dlmod.h	/^	int (*init)();$/;"	m	struct:s_dlmod	access:public
 s_dlmod::status	include/dlmod.h	/^	int (*status)();$/;"	m	struct:s_dlmod	access:public
-s_engine	include/typedef.h	/^} s_engine;$/;"	t	typeref:struct:__anon2
-s_list	include/list.h	/^} s_list;$/;"	t	typeref:struct:__anon1
+s_engine	include/typedef.h	/^} s_engine;$/;"	t	typeref:struct:__anon5
+s_list	include/list.h	/^} s_list;$/;"	t	typeref:struct:__anon4
 s_node	include/list.h	/^typedef struct s_node$/;"	s
 s_node	include/list.h	/^} s_node;$/;"	t	typeref:struct:s_node
 s_node::data	include/list.h	/^	void* data;$/;"	m	struct:s_node	access:public
 s_node::next	include/list.h	/^	struct s_node* next;$/;"	m	struct:s_node	typeref:struct:s_node::s_node	access:public
-s_params	include/typedef.h	/^} s_params;$/;"	t	typeref:struct:__anon3
+s_params	include/typedef.h	/^} s_params;$/;"	t	typeref:struct:__anon6
 sem_engine	engine/engine.c	/^sem_t sem_engine;$/;"	v
 speed	mods/motor/motor.c	/^int speed[MOTOR_COUNT];$/;"	v
 st	mods/command/command.c	/^int st = 0;$/;"	v
@@ -1430,65 +1441,65 @@ st	mods/paramsctl/paramsctl.c	/^int st	 = 0;$/;"	v
 status	include/dlmod.h	/^	int (*status)();$/;"	m	struct:s_dlmod	access:public
 sts	mods/motor/motor.c	/^int sts = 0;$/;"	v
 teapotPacket	mods/mpu6050/mpu6050.c	/^uint8_t teapotPacket[14] = {'$', 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0x00, 0x00, '\\r', '\\n'};$/;"	v
-time_m	mods/motor/motor.h	/^	int time_m;$/;"	m	struct:__anon5	access:public
-time_w	mods/motor/motor.h	/^	int time_w;$/;"	m	struct:__anon5	access:public
+time_m	mods/motor/motor.h	/^	int time_m;$/;"	m	struct:__anon3	access:public
+time_w	mods/motor/motor.h	/^	int time_w;$/;"	m	struct:__anon3	access:public
 timeout	mods/mpu6050/i2cdev.c	/^u16 timeout = 0;$/;"	v
-timer_end	mods/controller/controller.h	/^	struct timeval timer_end;$/;"	m	struct:__anon4	typeref:struct:__anon4::timeval	access:public
-timer_end	mods/hcsr04/hcsr04.h	/^	struct timeval timer_end;$/;"	m	struct:__anon6	typeref:struct:__anon6::timeval	access:public
-timer_start	mods/controller/controller.h	/^	struct timeval timer_start;$/;"	m	struct:__anon4	typeref:struct:__anon4::timeval	access:public
-timer_start	mods/hcsr04/hcsr04.h	/^	struct timeval timer_start;$/;"	m	struct:__anon6	typeref:struct:__anon6::timeval	access:public
+timer_end	mods/controller/controller.h	/^	struct timeval timer_end;$/;"	m	struct:__anon2	typeref:struct:__anon2::timeval	access:public
+timer_end	mods/hcsr04/hcsr04.h	/^	struct timeval timer_end;$/;"	m	struct:__anon1	typeref:struct:__anon1::timeval	access:public
+timer_start	mods/controller/controller.h	/^	struct timeval timer_start;$/;"	m	struct:__anon2	typeref:struct:__anon2::timeval	access:public
+timer_start	mods/hcsr04/hcsr04.h	/^	struct timeval timer_start;$/;"	m	struct:__anon1	typeref:struct:__anon1::timeval	access:public
 tm	mods/paramsctl/getch.c	/^struct termios tm, tm_old;$/;"	v	typeref:struct:termios
 tm_old	mods/paramsctl/getch.c	/^struct termios tm, tm_old;$/;"	v	typeref:struct:
-tx	include/typedef.h	/^	float tx;$/;"	m	struct:__anon2	access:public
-ty	include/typedef.h	/^	float ty;$/;"	m	struct:__anon2	access:public
-tz	include/typedef.h	/^	float tz;$/;"	m	struct:__anon2	access:public
+tx	include/typedef.h	/^	float tx;$/;"	m	struct:__anon5	access:public
+ty	include/typedef.h	/^	float ty;$/;"	m	struct:__anon5	access:public
+tz	include/typedef.h	/^	float tz;$/;"	m	struct:__anon5	access:public
 u16	include/typedef.h	/^typedef unsigned short u16;$/;"	t
 u32	include/typedef.h	/^typedef unsigned int u32;$/;"	t
 u64	include/typedef.h	/^typedef unsigned long long u64;$/;"	t
 u8	include/typedef.h	/^typedef unsigned char u8;$/;"	t
-v	include/typedef.h	/^	float v;$/;"	m	struct:__anon2	access:public
-v_kd	include/typedef.h	/^	float v_kd;$/;"	m	struct:__anon3	access:public
-v_ki	include/typedef.h	/^	float v_ki;$/;"	m	struct:__anon3	access:public
-v_kp	include/typedef.h	/^	float v_kp;$/;"	m	struct:__anon3	access:public
+v	include/typedef.h	/^	float v;$/;"	m	struct:__anon5	access:public
+v_kd	include/typedef.h	/^	float v_kd;$/;"	m	struct:__anon6	access:public
+v_ki	include/typedef.h	/^	float v_ki;$/;"	m	struct:__anon6	access:public
+v_kp	include/typedef.h	/^	float v_kp;$/;"	m	struct:__anon6	access:public
 w	mods/mpu6050/mpu6050.h	/^	float w;$/;"	m	struct:Quaternion	access:public
-x	include/typedef.h	/^	float x;$/;"	m	struct:__anon2	access:public
+x	include/typedef.h	/^	float x;$/;"	m	struct:__anon5	access:public
 x	mods/mpu6050/mpu6050.h	/^	float x;$/;"	m	struct:Quaternion	access:public
 x	mods/mpu6050/mpu6050.h	/^	float x;$/;"	m	struct:VectorFloat	access:public
 x	mods/mpu6050/mpu6050.h	/^	int16_t x;$/;"	m	struct:VectorInt16	access:public
-x_devi	include/typedef.h	/^	float x_devi;$/;"	m	struct:__anon2	access:public
+x_devi	include/typedef.h	/^	float x_devi;$/;"	m	struct:__anon5	access:public
 x_devi	mods/mpu6050/mpu6050.c	/^float x_est = 0.0, x_devi = 0.0;$/;"	v
 x_est	mods/mpu6050/mpu6050.c	/^float x_est = 0.0, x_devi = 0.0;$/;"	v
-x_sum	include/typedef.h	/^	float x_sum;$/;"	m	struct:__anon2	access:public
-x_v_sum	include/typedef.h	/^	float x_v_sum;$/;"	m	struct:__anon2	access:public
-xv_devi	include/typedef.h	/^	float xv_devi;$/;"	m	struct:__anon2	access:public
+x_sum	include/typedef.h	/^	float x_sum;$/;"	m	struct:__anon5	access:public
+x_v_sum	include/typedef.h	/^	float x_v_sum;$/;"	m	struct:__anon5	access:public
+xv_devi	include/typedef.h	/^	float xv_devi;$/;"	m	struct:__anon5	access:public
 xv_devi	mods/mpu6050/mpu6050.c	/^float xv_est = 0.0, xv_devi = 0.0;$/;"	v
 xv_est	mods/mpu6050/mpu6050.c	/^float xv_est = 0.0, xv_devi = 0.0;$/;"	v
 xyz_est_devi	mods/mpu6050/mpu6050.c	/^float xyz_est_devi     = 0.02;$/;"	v
 xyz_measure_devi	mods/mpu6050/mpu6050.c	/^float xyz_measure_devi = 0.05;$/;"	v
 xyz_v_est_devi	mods/mpu6050/mpu6050.c	/^float xyz_v_est_devi     = 0.03;$/;"	v
 xyz_v_measure_devi	mods/mpu6050/mpu6050.c	/^float xyz_v_measure_devi = 0.05;$/;"	v
-y	include/typedef.h	/^	float y;$/;"	m	struct:__anon2	access:public
+y	include/typedef.h	/^	float y;$/;"	m	struct:__anon5	access:public
 y	mods/mpu6050/mpu6050.h	/^	float y;$/;"	m	struct:Quaternion	access:public
 y	mods/mpu6050/mpu6050.h	/^	float y;$/;"	m	struct:VectorFloat	access:public
 y	mods/mpu6050/mpu6050.h	/^	int16_t y;$/;"	m	struct:VectorInt16	access:public
-y_devi	include/typedef.h	/^	float y_devi;$/;"	m	struct:__anon2	access:public
+y_devi	include/typedef.h	/^	float y_devi;$/;"	m	struct:__anon5	access:public
 y_devi	mods/mpu6050/mpu6050.c	/^float y_est = 0.0, y_devi = 0.0;$/;"	v
 y_est	mods/mpu6050/mpu6050.c	/^float y_est = 0.0, y_devi = 0.0;$/;"	v
-y_sum	include/typedef.h	/^	float y_sum;$/;"	m	struct:__anon2	access:public
-y_v_sum	include/typedef.h	/^	float y_v_sum;$/;"	m	struct:__anon2	access:public
+y_sum	include/typedef.h	/^	float y_sum;$/;"	m	struct:__anon5	access:public
+y_v_sum	include/typedef.h	/^	float y_v_sum;$/;"	m	struct:__anon5	access:public
 ypr	mods/mpu6050/mpu6050.c	/^float ypr[3];	\/\/ [yaw, pitch, roll]   yaw\/pitch\/roll container and gravity vector$/;"	v
-yv_devi	include/typedef.h	/^	float yv_devi;$/;"	m	struct:__anon2	access:public
+yv_devi	include/typedef.h	/^	float yv_devi;$/;"	m	struct:__anon5	access:public
 yv_devi	mods/mpu6050/mpu6050.c	/^float yv_est = 0.0, yv_devi = 0.0;$/;"	v
 yv_est	mods/mpu6050/mpu6050.c	/^float yv_est = 0.0, yv_devi = 0.0;$/;"	v
-z	include/typedef.h	/^	float z;$/;"	m	struct:__anon2	access:public
+z	include/typedef.h	/^	float z;$/;"	m	struct:__anon5	access:public
 z	mods/mpu6050/mpu6050.h	/^	float z;$/;"	m	struct:Quaternion	access:public
 z	mods/mpu6050/mpu6050.h	/^	float z;$/;"	m	struct:VectorFloat	access:public
 z	mods/mpu6050/mpu6050.h	/^	int16_t z;$/;"	m	struct:VectorInt16	access:public
-z_devi	include/typedef.h	/^	float z_devi;$/;"	m	struct:__anon2	access:public
+z_devi	include/typedef.h	/^	float z_devi;$/;"	m	struct:__anon5	access:public
 z_devi	mods/mpu6050/mpu6050.c	/^float z_est = 0.0, z_devi = 0.0;$/;"	v
 z_est	mods/mpu6050/mpu6050.c	/^float z_est = 0.0, z_devi = 0.0;$/;"	v
-z_sum	include/typedef.h	/^	float z_sum;$/;"	m	struct:__anon2	access:public
-z_v_sum	include/typedef.h	/^	float z_v_sum;$/;"	m	struct:__anon2	access:public
-zv_devi	include/typedef.h	/^	float zv_devi;$/;"	m	struct:__anon2	access:public
+z_sum	include/typedef.h	/^	float z_sum;$/;"	m	struct:__anon5	access:public
+z_v_sum	include/typedef.h	/^	float z_v_sum;$/;"	m	struct:__anon5	access:public
+zv_devi	include/typedef.h	/^	float zv_devi;$/;"	m	struct:__anon5	access:public
 zv_devi	mods/mpu6050/mpu6050.c	/^float zv_est = 0.0, zv_devi = 0.0;$/;"	v
 zv_est	mods/mpu6050/mpu6050.c	/^float zv_est = 0.0, zv_devi = 0.0;$/;"	v
