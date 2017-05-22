@@ -71,3 +71,9 @@ $(MOD_MKDIR):
 clean:
 	rm -rvf $(RELEASE_PATH)
 	rm -rvf lib/*
+
+
+
+#ctags
+#ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+#
