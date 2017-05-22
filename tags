@@ -1,0 +1,1494 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CTL_DI_MAX	mods/controller/controller.h	26;"	d
+CTL_DI_MIN	mods/controller/controller.h	25;"	d
+CTL_PWM_MAX	mods/controller/controller.h	23;"	d
+CTL_PWM_MIN	mods/controller/controller.h	22;"	d
+C_FLAGS	Makefile	/^C_FLAGS				= -pthread -lm -ldl -lwiringPi -std=gnu11$/;"	m
+DISPLAY_SPEED	mods/display/display.h	16;"	d
+DMP_FIFO_RATE	mods/mpu6050/mpu6050.c	264;"	d	file:
+ENG_TIMER	include/typedef.h	48;"	d
+FHEIGHT_MAX_SPEED	mods/fheight/fheight.h	13;"	d
+GPIO_DI	mods/controller/controller.h	19;"	d
+GPIO_FB	mods/controller/controller.h	14;"	d
+GPIO_LR	mods/controller/controller.h	15;"	d
+GPIO_MD	mods/controller/controller.h	17;"	d
+GPIO_PW	mods/controller/controller.h	16;"	d
+GPIO_UD	mods/controller/controller.h	18;"	d
+I2C_DEV	mods/mpu6050/i2cdev.h	6;"	d
+INCLUDE_DLMOD_H_	include/dlmod.h	9;"	d
+INCLUDE_EMODE_H_	include/emode.h	9;"	d
+INCLUDE_GY953_H_	mods/gy953/gy953.h	10;"	d
+INCLUDE_HCSR04_H_	mods/hcsr04/hcsr04.h	10;"	d
+INCLUDE_LIST_H_	include/list.h	9;"	d
+MAX_ANGLE	mods/controller/controller.h	28;"	d
+MAX_SPEED_RUN_MAX	include/typedef.h	43;"	d
+MAX_SPEED_RUN_MIN	include/typedef.h	45;"	d
+MODE_AUTO	include/typedef.h	51;"	d
+MODE_MANUAL	include/typedef.h	50;"	d
+MODS_COMMAND_COMMAND_H_	mods/command/command.h	9;"	d
+MODS_CONTROLLER_CONTROLLER_H_	mods/controller/controller.h	9;"	d
+MODS_DISPLAY_DISPLAY_H_	mods/display/display.h	9;"	d
+MODS_FHEIGHT_FHEIGHT_H_	mods/fheight/fheight.h	9;"	d
+MODS_PARAMSCTL_GETCH_H_	mods/paramsctl/getch.h	10;"	d
+MOD_COMMAND	Makefile	/^MOD_COMMAND			= command$/;"	m
+MOD_CONTROLLER	Makefile	/^MOD_CONTROLLER		= controller$/;"	m
+MOD_DISPLAY	Makefile	/^MOD_DISPLAY			= display$/;"	m
+MOD_FHEIGHT	Makefile	/^MOD_FHEIGHT			= fheight$/;"	m
+MOD_HCSR04	Makefile	/^MOD_HCSR04			= hcsr04$/;"	m
+MOD_INCLUDE	Makefile	/^MOD_INCLUDE			= -Iinclude$/;"	m
+MOD_MKDIR	Makefile	/^MOD_MKDIR			= mkdir$/;"	m
+MOD_MODULES	Makefile	/^MOD_MODULES			= modlibs$/;"	m
+MOD_MOTOR	Makefile	/^MOD_MOTOR			= motor$/;"	m
+MOD_MPU6050	Makefile	/^MOD_MPU6050			= mpu6050$/;"	m
+MOD_NAME	mods/command/Makefile	/^MOD_NAME = command$/;"	m
+MOD_NAME	mods/controller/Makefile	/^MOD_NAME = controller$/;"	m
+MOD_NAME	mods/display/Makefile	/^MOD_NAME = display$/;"	m
+MOD_NAME	mods/fheight/Makefile	/^MOD_NAME = fheight$/;"	m
+MOD_NAME	mods/gy953/Makefile	/^MOD_NAME = gy953$/;"	m
+MOD_NAME	mods/hcsr04/Makefile	/^MOD_NAME = hcsr04$/;"	m
+MOD_NAME	mods/motor/Makefile	/^MOD_NAME = motor$/;"	m
+MOD_NAME	mods/mpu6050/Makefile	/^MOD_NAME = mpu6050$/;"	m
+MOD_NAME	mods/paramsctl/Makefile	/^MOD_NAME = paramsctl$/;"	m
+MOD_PARAMSCTL	Makefile	/^MOD_PARAMSCTL		= paramsctl$/;"	m
+MOD_PROJECT	Makefile	/^MOD_PROJECT			= quadcopter$/;"	m
+MOTOR_COUNT	mods/motor/motor.h	15;"	d
+MPU6050_ACCEL_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	233;"	d
+MPU6050_ACCEL_FS_16	mods/mpu6050/mpu6050.h	220;"	d
+MPU6050_ACCEL_FS_2	mods/mpu6050/mpu6050.h	217;"	d
+MPU6050_ACCEL_FS_4	mods/mpu6050/mpu6050.h	218;"	d
+MPU6050_ACCEL_FS_8	mods/mpu6050/mpu6050.h	219;"	d
+MPU6050_ACONFIG_ACCEL_HPF_BIT	mods/mpu6050/mpu6050.h	214;"	d
+MPU6050_ACONFIG_ACCEL_HPF_LENGTH	mods/mpu6050/mpu6050.h	215;"	d
+MPU6050_ACONFIG_AFS_SEL_BIT	mods/mpu6050/mpu6050.h	212;"	d
+MPU6050_ACONFIG_AFS_SEL_LENGTH	mods/mpu6050/mpu6050.h	213;"	d
+MPU6050_ACONFIG_XA_ST_BIT	mods/mpu6050/mpu6050.h	209;"	d
+MPU6050_ACONFIG_YA_ST_BIT	mods/mpu6050/mpu6050.h	210;"	d
+MPU6050_ACONFIG_ZA_ST_BIT	mods/mpu6050/mpu6050.h	211;"	d
+MPU6050_ADDRESS_AD0_HIGH	mods/mpu6050/mpu6050.h	57;"	d
+MPU6050_ADDRESS_AD0_LOW	mods/mpu6050/mpu6050.h	56;"	d
+MPU6050_BANKSEL_CFG_USER_BANK_BIT	mods/mpu6050/mpu6050.h	398;"	d
+MPU6050_BANKSEL_MEM_SEL_BIT	mods/mpu6050/mpu6050.h	399;"	d
+MPU6050_BANKSEL_MEM_SEL_LENGTH	mods/mpu6050/mpu6050.h	400;"	d
+MPU6050_BANKSEL_PRFTCH_EN_BIT	mods/mpu6050/mpu6050.h	397;"	d
+MPU6050_CFG_DLPF_CFG_BIT	mods/mpu6050/mpu6050.h	181;"	d
+MPU6050_CFG_DLPF_CFG_LENGTH	mods/mpu6050/mpu6050.h	182;"	d
+MPU6050_CFG_EXT_SYNC_SET_BIT	mods/mpu6050/mpu6050.h	179;"	d
+MPU6050_CFG_EXT_SYNC_SET_LENGTH	mods/mpu6050/mpu6050.h	180;"	d
+MPU6050_CLOCK_DIV_258	mods/mpu6050/mpu6050.h	253;"	d
+MPU6050_CLOCK_DIV_267	mods/mpu6050/mpu6050.h	252;"	d
+MPU6050_CLOCK_DIV_276	mods/mpu6050/mpu6050.h	251;"	d
+MPU6050_CLOCK_DIV_286	mods/mpu6050/mpu6050.h	250;"	d
+MPU6050_CLOCK_DIV_296	mods/mpu6050/mpu6050.h	249;"	d
+MPU6050_CLOCK_DIV_308	mods/mpu6050/mpu6050.h	248;"	d
+MPU6050_CLOCK_DIV_320	mods/mpu6050/mpu6050.h	247;"	d
+MPU6050_CLOCK_DIV_333	mods/mpu6050/mpu6050.h	246;"	d
+MPU6050_CLOCK_DIV_348	mods/mpu6050/mpu6050.h	245;"	d
+MPU6050_CLOCK_DIV_364	mods/mpu6050/mpu6050.h	260;"	d
+MPU6050_CLOCK_DIV_381	mods/mpu6050/mpu6050.h	259;"	d
+MPU6050_CLOCK_DIV_400	mods/mpu6050/mpu6050.h	258;"	d
+MPU6050_CLOCK_DIV_421	mods/mpu6050/mpu6050.h	257;"	d
+MPU6050_CLOCK_DIV_444	mods/mpu6050/mpu6050.h	256;"	d
+MPU6050_CLOCK_DIV_471	mods/mpu6050/mpu6050.h	255;"	d
+MPU6050_CLOCK_DIV_500	mods/mpu6050/mpu6050.h	254;"	d
+MPU6050_CLOCK_INTERNAL	mods/mpu6050/mpu6050.h	375;"	d
+MPU6050_CLOCK_KEEP_RESET	mods/mpu6050/mpu6050.h	381;"	d
+MPU6050_CLOCK_PLL_EXT19M	mods/mpu6050/mpu6050.h	380;"	d
+MPU6050_CLOCK_PLL_EXT32K	mods/mpu6050/mpu6050.h	379;"	d
+MPU6050_CLOCK_PLL_XGYRO	mods/mpu6050/mpu6050.h	376;"	d
+MPU6050_CLOCK_PLL_YGYRO	mods/mpu6050/mpu6050.h	377;"	d
+MPU6050_CLOCK_PLL_ZGYRO	mods/mpu6050/mpu6050.h	378;"	d
+MPU6050_DEFAULT_ADDRESS	mods/mpu6050/mpu6050.h	58;"	d
+MPU6050_DELAYCTRL_DELAY_ES_SHADOW_BIT	mods/mpu6050/mpu6050.h	336;"	d
+MPU6050_DELAYCTRL_I2C_SLV0_DLY_EN_BIT	mods/mpu6050/mpu6050.h	341;"	d
+MPU6050_DELAYCTRL_I2C_SLV1_DLY_EN_BIT	mods/mpu6050/mpu6050.h	340;"	d
+MPU6050_DELAYCTRL_I2C_SLV2_DLY_EN_BIT	mods/mpu6050/mpu6050.h	339;"	d
+MPU6050_DELAYCTRL_I2C_SLV3_DLY_EN_BIT	mods/mpu6050/mpu6050.h	338;"	d
+MPU6050_DELAYCTRL_I2C_SLV4_DLY_EN_BIT	mods/mpu6050/mpu6050.h	337;"	d
+MPU6050_DETECT_ACCEL_ON_DELAY_BIT	mods/mpu6050/mpu6050.h	347;"	d
+MPU6050_DETECT_ACCEL_ON_DELAY_LENGTH	mods/mpu6050/mpu6050.h	348;"	d
+MPU6050_DETECT_DECREMENT_1	mods/mpu6050/mpu6050.h	355;"	d
+MPU6050_DETECT_DECREMENT_2	mods/mpu6050/mpu6050.h	356;"	d
+MPU6050_DETECT_DECREMENT_4	mods/mpu6050/mpu6050.h	357;"	d
+MPU6050_DETECT_DECREMENT_RESET	mods/mpu6050/mpu6050.h	354;"	d
+MPU6050_DETECT_FF_COUNT_BIT	mods/mpu6050/mpu6050.h	349;"	d
+MPU6050_DETECT_FF_COUNT_LENGTH	mods/mpu6050/mpu6050.h	350;"	d
+MPU6050_DETECT_MOT_COUNT_BIT	mods/mpu6050/mpu6050.h	351;"	d
+MPU6050_DETECT_MOT_COUNT_LENGTH	mods/mpu6050/mpu6050.h	352;"	d
+MPU6050_DHPF_0P63	mods/mpu6050/mpu6050.h	226;"	d
+MPU6050_DHPF_1P25	mods/mpu6050/mpu6050.h	225;"	d
+MPU6050_DHPF_2P5	mods/mpu6050/mpu6050.h	224;"	d
+MPU6050_DHPF_5	mods/mpu6050/mpu6050.h	223;"	d
+MPU6050_DHPF_HOLD	mods/mpu6050/mpu6050.h	227;"	d
+MPU6050_DHPF_RESET	mods/mpu6050/mpu6050.h	222;"	d
+MPU6050_DLPF_BW_10	mods/mpu6050/mpu6050.h	198;"	d
+MPU6050_DLPF_BW_188	mods/mpu6050/mpu6050.h	194;"	d
+MPU6050_DLPF_BW_20	mods/mpu6050/mpu6050.h	197;"	d
+MPU6050_DLPF_BW_256	mods/mpu6050/mpu6050.h	193;"	d
+MPU6050_DLPF_BW_42	mods/mpu6050/mpu6050.h	196;"	d
+MPU6050_DLPF_BW_5	mods/mpu6050/mpu6050.h	199;"	d
+MPU6050_DLPF_BW_98	mods/mpu6050/mpu6050.h	195;"	d
+MPU6050_DMPINT_0_BIT	mods/mpu6050/mpu6050.h	326;"	d
+MPU6050_DMPINT_1_BIT	mods/mpu6050/mpu6050.h	325;"	d
+MPU6050_DMPINT_2_BIT	mods/mpu6050/mpu6050.h	324;"	d
+MPU6050_DMPINT_3_BIT	mods/mpu6050/mpu6050.h	323;"	d
+MPU6050_DMPINT_4_BIT	mods/mpu6050/mpu6050.h	322;"	d
+MPU6050_DMPINT_5_BIT	mods/mpu6050/mpu6050.h	321;"	d
+MPU6050_DMP_CODE_SIZE	mods/mpu6050/mpu6050.h	409;"	d
+MPU6050_DMP_CONFIG_SIZE	mods/mpu6050/mpu6050.h	410;"	d
+MPU6050_DMP_MEMORY_BANKS	mods/mpu6050/mpu6050.h	405;"	d
+MPU6050_DMP_MEMORY_BANK_SIZE	mods/mpu6050/mpu6050.h	406;"	d
+MPU6050_DMP_MEMORY_CHUNK_SIZE	mods/mpu6050/mpu6050.h	407;"	d
+MPU6050_DMP_UPDATES_SIZE	mods/mpu6050/mpu6050.h	411;"	d
+MPU6050_EXT_SYNC_ACCEL_XOUT_L	mods/mpu6050/mpu6050.h	189;"	d
+MPU6050_EXT_SYNC_ACCEL_YOUT_L	mods/mpu6050/mpu6050.h	190;"	d
+MPU6050_EXT_SYNC_ACCEL_ZOUT_L	mods/mpu6050/mpu6050.h	191;"	d
+MPU6050_EXT_SYNC_DISABLED	mods/mpu6050/mpu6050.h	184;"	d
+MPU6050_EXT_SYNC_GYRO_XOUT_L	mods/mpu6050/mpu6050.h	186;"	d
+MPU6050_EXT_SYNC_GYRO_YOUT_L	mods/mpu6050/mpu6050.h	187;"	d
+MPU6050_EXT_SYNC_GYRO_ZOUT_L	mods/mpu6050/mpu6050.h	188;"	d
+MPU6050_EXT_SYNC_TEMP_OUT_L	mods/mpu6050/mpu6050.h	185;"	d
+MPU6050_GCONFIG_FS_SEL_BIT	mods/mpu6050/mpu6050.h	201;"	d
+MPU6050_GCONFIG_FS_SEL_LENGTH	mods/mpu6050/mpu6050.h	202;"	d
+MPU6050_GYRO_FS_1000	mods/mpu6050/mpu6050.h	206;"	d
+MPU6050_GYRO_FS_2000	mods/mpu6050/mpu6050.h	207;"	d
+MPU6050_GYRO_FS_250	mods/mpu6050/mpu6050.h	204;"	d
+MPU6050_GYRO_FS_500	mods/mpu6050/mpu6050.h	205;"	d
+MPU6050_I2C_MST_CLK_BIT	mods/mpu6050/mpu6050.h	242;"	d
+MPU6050_I2C_MST_CLK_LENGTH	mods/mpu6050/mpu6050.h	243;"	d
+MPU6050_I2C_MST_P_NSR_BIT	mods/mpu6050/mpu6050.h	241;"	d
+MPU6050_I2C_SLV4_ADDR_BIT	mods/mpu6050/mpu6050.h	273;"	d
+MPU6050_I2C_SLV4_ADDR_LENGTH	mods/mpu6050/mpu6050.h	274;"	d
+MPU6050_I2C_SLV4_EN_BIT	mods/mpu6050/mpu6050.h	275;"	d
+MPU6050_I2C_SLV4_INT_EN_BIT	mods/mpu6050/mpu6050.h	276;"	d
+MPU6050_I2C_SLV4_MST_DLY_BIT	mods/mpu6050/mpu6050.h	278;"	d
+MPU6050_I2C_SLV4_MST_DLY_LENGTH	mods/mpu6050/mpu6050.h	279;"	d
+MPU6050_I2C_SLV4_REG_DIS_BIT	mods/mpu6050/mpu6050.h	277;"	d
+MPU6050_I2C_SLV4_RW_BIT	mods/mpu6050/mpu6050.h	272;"	d
+MPU6050_I2C_SLV_ADDR_BIT	mods/mpu6050/mpu6050.h	263;"	d
+MPU6050_I2C_SLV_ADDR_LENGTH	mods/mpu6050/mpu6050.h	264;"	d
+MPU6050_I2C_SLV_BYTE_SW_BIT	mods/mpu6050/mpu6050.h	266;"	d
+MPU6050_I2C_SLV_EN_BIT	mods/mpu6050/mpu6050.h	265;"	d
+MPU6050_I2C_SLV_GRP_BIT	mods/mpu6050/mpu6050.h	268;"	d
+MPU6050_I2C_SLV_LEN_BIT	mods/mpu6050/mpu6050.h	269;"	d
+MPU6050_I2C_SLV_LEN_LENGTH	mods/mpu6050/mpu6050.h	270;"	d
+MPU6050_I2C_SLV_REG_DIS_BIT	mods/mpu6050/mpu6050.h	267;"	d
+MPU6050_I2C_SLV_RW_BIT	mods/mpu6050/mpu6050.h	262;"	d
+MPU6050_INTCFG_CLKOUT_EN_BIT	mods/mpu6050/mpu6050.h	297;"	d
+MPU6050_INTCFG_FSYNC_INT_EN_BIT	mods/mpu6050/mpu6050.h	295;"	d
+MPU6050_INTCFG_FSYNC_INT_LEVEL_BIT	mods/mpu6050/mpu6050.h	294;"	d
+MPU6050_INTCFG_I2C_BYPASS_EN_BIT	mods/mpu6050/mpu6050.h	296;"	d
+MPU6050_INTCFG_INT_LEVEL_BIT	mods/mpu6050/mpu6050.h	290;"	d
+MPU6050_INTCFG_INT_OPEN_BIT	mods/mpu6050/mpu6050.h	291;"	d
+MPU6050_INTCFG_INT_RD_CLEAR_BIT	mods/mpu6050/mpu6050.h	293;"	d
+MPU6050_INTCFG_LATCH_INT_EN_BIT	mods/mpu6050/mpu6050.h	292;"	d
+MPU6050_INTCLEAR_ANYREAD	mods/mpu6050/mpu6050.h	309;"	d
+MPU6050_INTCLEAR_STATUSREAD	mods/mpu6050/mpu6050.h	308;"	d
+MPU6050_INTDRV_OPENDRAIN	mods/mpu6050/mpu6050.h	303;"	d
+MPU6050_INTDRV_PUSHPULL	mods/mpu6050/mpu6050.h	302;"	d
+MPU6050_INTERRUPT_DATA_RDY_BIT	mods/mpu6050/mpu6050.h	318;"	d
+MPU6050_INTERRUPT_DMP_INT_BIT	mods/mpu6050/mpu6050.h	317;"	d
+MPU6050_INTERRUPT_FF_BIT	mods/mpu6050/mpu6050.h	311;"	d
+MPU6050_INTERRUPT_FIFO_OFLOW_BIT	mods/mpu6050/mpu6050.h	314;"	d
+MPU6050_INTERRUPT_I2C_MST_INT_BIT	mods/mpu6050/mpu6050.h	315;"	d
+MPU6050_INTERRUPT_MOT_BIT	mods/mpu6050/mpu6050.h	312;"	d
+MPU6050_INTERRUPT_PLL_RDY_INT_BIT	mods/mpu6050/mpu6050.h	316;"	d
+MPU6050_INTERRUPT_ZMOT_BIT	mods/mpu6050/mpu6050.h	313;"	d
+MPU6050_INTLATCH_50USPULSE	mods/mpu6050/mpu6050.h	305;"	d
+MPU6050_INTLATCH_WAITCLEAR	mods/mpu6050/mpu6050.h	306;"	d
+MPU6050_INTMODE_ACTIVEHIGH	mods/mpu6050/mpu6050.h	299;"	d
+MPU6050_INTMODE_ACTIVELOW	mods/mpu6050/mpu6050.h	300;"	d
+MPU6050_MOTION_MOT_XNEG_BIT	mods/mpu6050/mpu6050.h	328;"	d
+MPU6050_MOTION_MOT_XPOS_BIT	mods/mpu6050/mpu6050.h	329;"	d
+MPU6050_MOTION_MOT_YNEG_BIT	mods/mpu6050/mpu6050.h	330;"	d
+MPU6050_MOTION_MOT_YPOS_BIT	mods/mpu6050/mpu6050.h	331;"	d
+MPU6050_MOTION_MOT_ZNEG_BIT	mods/mpu6050/mpu6050.h	332;"	d
+MPU6050_MOTION_MOT_ZPOS_BIT	mods/mpu6050/mpu6050.h	333;"	d
+MPU6050_MOTION_MOT_ZRMOT_BIT	mods/mpu6050/mpu6050.h	334;"	d
+MPU6050_MST_I2C_LOST_ARB_BIT	mods/mpu6050/mpu6050.h	283;"	d
+MPU6050_MST_I2C_SLV0_NACK_BIT	mods/mpu6050/mpu6050.h	288;"	d
+MPU6050_MST_I2C_SLV1_NACK_BIT	mods/mpu6050/mpu6050.h	287;"	d
+MPU6050_MST_I2C_SLV2_NACK_BIT	mods/mpu6050/mpu6050.h	286;"	d
+MPU6050_MST_I2C_SLV3_NACK_BIT	mods/mpu6050/mpu6050.h	285;"	d
+MPU6050_MST_I2C_SLV4_DONE_BIT	mods/mpu6050/mpu6050.h	282;"	d
+MPU6050_MST_I2C_SLV4_NACK_BIT	mods/mpu6050/mpu6050.h	284;"	d
+MPU6050_MST_PASS_THROUGH_BIT	mods/mpu6050/mpu6050.h	281;"	d
+MPU6050_MULT_MST_EN_BIT	mods/mpu6050/mpu6050.h	238;"	d
+MPU6050_PATHRESET_ACCEL_RESET_BIT	mods/mpu6050/mpu6050.h	344;"	d
+MPU6050_PATHRESET_GYRO_RESET_BIT	mods/mpu6050/mpu6050.h	343;"	d
+MPU6050_PATHRESET_TEMP_RESET_BIT	mods/mpu6050/mpu6050.h	345;"	d
+MPU6050_PWR1_CLKSEL_BIT	mods/mpu6050/mpu6050.h	372;"	d
+MPU6050_PWR1_CLKSEL_LENGTH	mods/mpu6050/mpu6050.h	373;"	d
+MPU6050_PWR1_CYCLE_BIT	mods/mpu6050/mpu6050.h	370;"	d
+MPU6050_PWR1_DEVICE_RESET_BIT	mods/mpu6050/mpu6050.h	368;"	d
+MPU6050_PWR1_SLEEP_BIT	mods/mpu6050/mpu6050.h	369;"	d
+MPU6050_PWR1_TEMP_DIS_BIT	mods/mpu6050/mpu6050.h	371;"	d
+MPU6050_PWR2_LP_WAKE_CTRL_BIT	mods/mpu6050/mpu6050.h	383;"	d
+MPU6050_PWR2_LP_WAKE_CTRL_LENGTH	mods/mpu6050/mpu6050.h	384;"	d
+MPU6050_PWR2_STBY_XA_BIT	mods/mpu6050/mpu6050.h	385;"	d
+MPU6050_PWR2_STBY_XG_BIT	mods/mpu6050/mpu6050.h	388;"	d
+MPU6050_PWR2_STBY_YA_BIT	mods/mpu6050/mpu6050.h	386;"	d
+MPU6050_PWR2_STBY_YG_BIT	mods/mpu6050/mpu6050.h	389;"	d
+MPU6050_PWR2_STBY_ZA_BIT	mods/mpu6050/mpu6050.h	387;"	d
+MPU6050_PWR2_STBY_ZG_BIT	mods/mpu6050/mpu6050.h	390;"	d
+MPU6050_RA_ACCEL_CONFIG	mods/mpu6050/mpu6050.h	81;"	d
+MPU6050_RA_ACCEL_XOUT_H	mods/mpu6050/mpu6050.h	112;"	d
+MPU6050_RA_ACCEL_XOUT_L	mods/mpu6050/mpu6050.h	113;"	d
+MPU6050_RA_ACCEL_YOUT_H	mods/mpu6050/mpu6050.h	114;"	d
+MPU6050_RA_ACCEL_YOUT_L	mods/mpu6050/mpu6050.h	115;"	d
+MPU6050_RA_ACCEL_ZOUT_H	mods/mpu6050/mpu6050.h	116;"	d
+MPU6050_RA_ACCEL_ZOUT_L	mods/mpu6050/mpu6050.h	117;"	d
+MPU6050_RA_BANK_SEL	mods/mpu6050/mpu6050.h	161;"	d
+MPU6050_RA_CONFIG	mods/mpu6050/mpu6050.h	79;"	d
+MPU6050_RA_DMP_CFG_1	mods/mpu6050/mpu6050.h	164;"	d
+MPU6050_RA_DMP_CFG_2	mods/mpu6050/mpu6050.h	165;"	d
+MPU6050_RA_DMP_INT_STATUS	mods/mpu6050/mpu6050.h	110;"	d
+MPU6050_RA_EXT_SENS_DATA_00	mods/mpu6050/mpu6050.h	126;"	d
+MPU6050_RA_EXT_SENS_DATA_01	mods/mpu6050/mpu6050.h	127;"	d
+MPU6050_RA_EXT_SENS_DATA_02	mods/mpu6050/mpu6050.h	128;"	d
+MPU6050_RA_EXT_SENS_DATA_03	mods/mpu6050/mpu6050.h	129;"	d
+MPU6050_RA_EXT_SENS_DATA_04	mods/mpu6050/mpu6050.h	130;"	d
+MPU6050_RA_EXT_SENS_DATA_05	mods/mpu6050/mpu6050.h	131;"	d
+MPU6050_RA_EXT_SENS_DATA_06	mods/mpu6050/mpu6050.h	132;"	d
+MPU6050_RA_EXT_SENS_DATA_07	mods/mpu6050/mpu6050.h	133;"	d
+MPU6050_RA_EXT_SENS_DATA_08	mods/mpu6050/mpu6050.h	134;"	d
+MPU6050_RA_EXT_SENS_DATA_09	mods/mpu6050/mpu6050.h	135;"	d
+MPU6050_RA_EXT_SENS_DATA_10	mods/mpu6050/mpu6050.h	136;"	d
+MPU6050_RA_EXT_SENS_DATA_11	mods/mpu6050/mpu6050.h	137;"	d
+MPU6050_RA_EXT_SENS_DATA_12	mods/mpu6050/mpu6050.h	138;"	d
+MPU6050_RA_EXT_SENS_DATA_13	mods/mpu6050/mpu6050.h	139;"	d
+MPU6050_RA_EXT_SENS_DATA_14	mods/mpu6050/mpu6050.h	140;"	d
+MPU6050_RA_EXT_SENS_DATA_15	mods/mpu6050/mpu6050.h	141;"	d
+MPU6050_RA_EXT_SENS_DATA_16	mods/mpu6050/mpu6050.h	142;"	d
+MPU6050_RA_EXT_SENS_DATA_17	mods/mpu6050/mpu6050.h	143;"	d
+MPU6050_RA_EXT_SENS_DATA_18	mods/mpu6050/mpu6050.h	144;"	d
+MPU6050_RA_EXT_SENS_DATA_19	mods/mpu6050/mpu6050.h	145;"	d
+MPU6050_RA_EXT_SENS_DATA_20	mods/mpu6050/mpu6050.h	146;"	d
+MPU6050_RA_EXT_SENS_DATA_21	mods/mpu6050/mpu6050.h	147;"	d
+MPU6050_RA_EXT_SENS_DATA_22	mods/mpu6050/mpu6050.h	148;"	d
+MPU6050_RA_EXT_SENS_DATA_23	mods/mpu6050/mpu6050.h	149;"	d
+MPU6050_RA_FF_DUR	mods/mpu6050/mpu6050.h	83;"	d
+MPU6050_RA_FF_THR	mods/mpu6050/mpu6050.h	82;"	d
+MPU6050_RA_FIFO_COUNTH	mods/mpu6050/mpu6050.h	166;"	d
+MPU6050_RA_FIFO_COUNTL	mods/mpu6050/mpu6050.h	167;"	d
+MPU6050_RA_FIFO_EN	mods/mpu6050/mpu6050.h	88;"	d
+MPU6050_RA_FIFO_R_W	mods/mpu6050/mpu6050.h	168;"	d
+MPU6050_RA_GYRO_CONFIG	mods/mpu6050/mpu6050.h	80;"	d
+MPU6050_RA_GYRO_XOUT_H	mods/mpu6050/mpu6050.h	120;"	d
+MPU6050_RA_GYRO_XOUT_L	mods/mpu6050/mpu6050.h	121;"	d
+MPU6050_RA_GYRO_YOUT_H	mods/mpu6050/mpu6050.h	122;"	d
+MPU6050_RA_GYRO_YOUT_L	mods/mpu6050/mpu6050.h	123;"	d
+MPU6050_RA_GYRO_ZOUT_H	mods/mpu6050/mpu6050.h	124;"	d
+MPU6050_RA_GYRO_ZOUT_L	mods/mpu6050/mpu6050.h	125;"	d
+MPU6050_RA_I2C_MST_CTRL	mods/mpu6050/mpu6050.h	89;"	d
+MPU6050_RA_I2C_MST_DELAY_CTRL	mods/mpu6050/mpu6050.h	155;"	d
+MPU6050_RA_I2C_MST_STATUS	mods/mpu6050/mpu6050.h	107;"	d
+MPU6050_RA_I2C_SLV0_ADDR	mods/mpu6050/mpu6050.h	90;"	d
+MPU6050_RA_I2C_SLV0_CTRL	mods/mpu6050/mpu6050.h	92;"	d
+MPU6050_RA_I2C_SLV0_DO	mods/mpu6050/mpu6050.h	151;"	d
+MPU6050_RA_I2C_SLV0_REG	mods/mpu6050/mpu6050.h	91;"	d
+MPU6050_RA_I2C_SLV1_ADDR	mods/mpu6050/mpu6050.h	93;"	d
+MPU6050_RA_I2C_SLV1_CTRL	mods/mpu6050/mpu6050.h	95;"	d
+MPU6050_RA_I2C_SLV1_DO	mods/mpu6050/mpu6050.h	152;"	d
+MPU6050_RA_I2C_SLV1_REG	mods/mpu6050/mpu6050.h	94;"	d
+MPU6050_RA_I2C_SLV2_ADDR	mods/mpu6050/mpu6050.h	96;"	d
+MPU6050_RA_I2C_SLV2_CTRL	mods/mpu6050/mpu6050.h	98;"	d
+MPU6050_RA_I2C_SLV2_DO	mods/mpu6050/mpu6050.h	153;"	d
+MPU6050_RA_I2C_SLV2_REG	mods/mpu6050/mpu6050.h	97;"	d
+MPU6050_RA_I2C_SLV3_ADDR	mods/mpu6050/mpu6050.h	99;"	d
+MPU6050_RA_I2C_SLV3_CTRL	mods/mpu6050/mpu6050.h	101;"	d
+MPU6050_RA_I2C_SLV3_DO	mods/mpu6050/mpu6050.h	154;"	d
+MPU6050_RA_I2C_SLV3_REG	mods/mpu6050/mpu6050.h	100;"	d
+MPU6050_RA_I2C_SLV4_ADDR	mods/mpu6050/mpu6050.h	102;"	d
+MPU6050_RA_I2C_SLV4_CTRL	mods/mpu6050/mpu6050.h	105;"	d
+MPU6050_RA_I2C_SLV4_DI	mods/mpu6050/mpu6050.h	106;"	d
+MPU6050_RA_I2C_SLV4_DO	mods/mpu6050/mpu6050.h	104;"	d
+MPU6050_RA_I2C_SLV4_REG	mods/mpu6050/mpu6050.h	103;"	d
+MPU6050_RA_INT_ENABLE	mods/mpu6050/mpu6050.h	109;"	d
+MPU6050_RA_INT_PIN_CFG	mods/mpu6050/mpu6050.h	108;"	d
+MPU6050_RA_INT_STATUS	mods/mpu6050/mpu6050.h	111;"	d
+MPU6050_RA_MEM_R_W	mods/mpu6050/mpu6050.h	163;"	d
+MPU6050_RA_MEM_START_ADDR	mods/mpu6050/mpu6050.h	162;"	d
+MPU6050_RA_MOT_DETECT_CTRL	mods/mpu6050/mpu6050.h	157;"	d
+MPU6050_RA_MOT_DETECT_STATUS	mods/mpu6050/mpu6050.h	150;"	d
+MPU6050_RA_MOT_DUR	mods/mpu6050/mpu6050.h	85;"	d
+MPU6050_RA_MOT_THR	mods/mpu6050/mpu6050.h	84;"	d
+MPU6050_RA_PWR_MGMT_1	mods/mpu6050/mpu6050.h	159;"	d
+MPU6050_RA_PWR_MGMT_2	mods/mpu6050/mpu6050.h	160;"	d
+MPU6050_RA_SIGNAL_PATH_RESET	mods/mpu6050/mpu6050.h	156;"	d
+MPU6050_RA_SMPLRT_DIV	mods/mpu6050/mpu6050.h	78;"	d
+MPU6050_RA_TEMP_OUT_H	mods/mpu6050/mpu6050.h	118;"	d
+MPU6050_RA_TEMP_OUT_L	mods/mpu6050/mpu6050.h	119;"	d
+MPU6050_RA_USER_CTRL	mods/mpu6050/mpu6050.h	158;"	d
+MPU6050_RA_WHO_AM_I	mods/mpu6050/mpu6050.h	169;"	d
+MPU6050_RA_XA_OFFS_H	mods/mpu6050/mpu6050.h	66;"	d
+MPU6050_RA_XA_OFFS_L_TC	mods/mpu6050/mpu6050.h	67;"	d
+MPU6050_RA_XG_OFFS_TC	mods/mpu6050/mpu6050.h	60;"	d
+MPU6050_RA_XG_OFFS_USRH	mods/mpu6050/mpu6050.h	72;"	d
+MPU6050_RA_XG_OFFS_USRL	mods/mpu6050/mpu6050.h	73;"	d
+MPU6050_RA_X_FINE_GAIN	mods/mpu6050/mpu6050.h	63;"	d
+MPU6050_RA_YA_OFFS_H	mods/mpu6050/mpu6050.h	68;"	d
+MPU6050_RA_YA_OFFS_L_TC	mods/mpu6050/mpu6050.h	69;"	d
+MPU6050_RA_YG_OFFS_TC	mods/mpu6050/mpu6050.h	61;"	d
+MPU6050_RA_YG_OFFS_USRH	mods/mpu6050/mpu6050.h	74;"	d
+MPU6050_RA_YG_OFFS_USRL	mods/mpu6050/mpu6050.h	75;"	d
+MPU6050_RA_Y_FINE_GAIN	mods/mpu6050/mpu6050.h	64;"	d
+MPU6050_RA_ZA_OFFS_H	mods/mpu6050/mpu6050.h	70;"	d
+MPU6050_RA_ZA_OFFS_L_TC	mods/mpu6050/mpu6050.h	71;"	d
+MPU6050_RA_ZG_OFFS_TC	mods/mpu6050/mpu6050.h	62;"	d
+MPU6050_RA_ZG_OFFS_USRH	mods/mpu6050/mpu6050.h	76;"	d
+MPU6050_RA_ZG_OFFS_USRL	mods/mpu6050/mpu6050.h	77;"	d
+MPU6050_RA_ZRMOT_DUR	mods/mpu6050/mpu6050.h	87;"	d
+MPU6050_RA_ZRMOT_THR	mods/mpu6050/mpu6050.h	86;"	d
+MPU6050_RA_Z_FINE_GAIN	mods/mpu6050/mpu6050.h	65;"	d
+MPU6050_SLV0_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	236;"	d
+MPU6050_SLV1_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	235;"	d
+MPU6050_SLV2_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	234;"	d
+MPU6050_SLV_3_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	240;"	d
+MPU6050_TC_OFFSET_BIT	mods/mpu6050/mpu6050.h	172;"	d
+MPU6050_TC_OFFSET_LENGTH	mods/mpu6050/mpu6050.h	173;"	d
+MPU6050_TC_OTP_BNK_VLD_BIT	mods/mpu6050/mpu6050.h	174;"	d
+MPU6050_TC_PWR_MODE_BIT	mods/mpu6050/mpu6050.h	171;"	d
+MPU6050_TEMP_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	229;"	d
+MPU6050_USERCTRL_DMP_EN_BIT	mods/mpu6050/mpu6050.h	359;"	d
+MPU6050_USERCTRL_DMP_RESET_BIT	mods/mpu6050/mpu6050.h	363;"	d
+MPU6050_USERCTRL_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	360;"	d
+MPU6050_USERCTRL_FIFO_RESET_BIT	mods/mpu6050/mpu6050.h	364;"	d
+MPU6050_USERCTRL_I2C_IF_DIS_BIT	mods/mpu6050/mpu6050.h	362;"	d
+MPU6050_USERCTRL_I2C_MST_EN_BIT	mods/mpu6050/mpu6050.h	361;"	d
+MPU6050_USERCTRL_I2C_MST_RESET_BIT	mods/mpu6050/mpu6050.h	365;"	d
+MPU6050_USERCTRL_SIG_COND_RESET_BIT	mods/mpu6050/mpu6050.h	366;"	d
+MPU6050_VDDIO_LEVEL_VDD	mods/mpu6050/mpu6050.h	177;"	d
+MPU6050_VDDIO_LEVEL_VLOGIC	mods/mpu6050/mpu6050.h	176;"	d
+MPU6050_WAIT_FOR_ES_BIT	mods/mpu6050/mpu6050.h	239;"	d
+MPU6050_WAKE_FREQ_10	mods/mpu6050/mpu6050.h	395;"	d
+MPU6050_WAKE_FREQ_1P25	mods/mpu6050/mpu6050.h	392;"	d
+MPU6050_WAKE_FREQ_2P5	mods/mpu6050/mpu6050.h	393;"	d
+MPU6050_WAKE_FREQ_5	mods/mpu6050/mpu6050.h	394;"	d
+MPU6050_WHO_AM_I_BIT	mods/mpu6050/mpu6050.h	402;"	d
+MPU6050_WHO_AM_I_LENGTH	mods/mpu6050/mpu6050.h	403;"	d
+MPU6050_XG_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	230;"	d
+MPU6050_YG_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	231;"	d
+MPU6050_ZG_FIFO_EN_BIT	mods/mpu6050/mpu6050.h	232;"	d
+PORT_CS_ECHO	mods/hcsr04/hcsr04.h	16;"	d
+PORT_CS_TRIG	mods/hcsr04/hcsr04.h	15;"	d
+PORT_MOTOR0	mods/motor/motor.h	18;"	d
+PORT_MOTOR1	mods/motor/motor.h	19;"	d
+PORT_MOTOR2	mods/motor/motor.h	20;"	d
+PORT_MOTOR3	mods/motor/motor.h	21;"	d
+PROCTED_SPEED	include/typedef.h	41;"	d
+QUAD_PMS_FILE	mods/paramsctl/paramsctl.h	16;"	d
+Quaternion	mods/mpu6050/mpu6050.h	/^typedef struct Quaternion$/;"	s
+Quaternion	mods/mpu6050/mpu6050.h	/^} Quaternion;$/;"	t	typeref:struct:Quaternion
+Quaternion::w	mods/mpu6050/mpu6050.h	/^	float w;$/;"	m	struct:Quaternion	access:public
+Quaternion::x	mods/mpu6050/mpu6050.h	/^	float x;$/;"	m	struct:Quaternion	access:public
+Quaternion::y	mods/mpu6050/mpu6050.h	/^	float y;$/;"	m	struct:Quaternion	access:public
+Quaternion::z	mods/mpu6050/mpu6050.h	/^	float z;$/;"	m	struct:Quaternion	access:public
+RELEASE_PATH	Makefile	/^RELEASE_PATH		= release$/;"	m
+SRC_ENGINE_H_	include/engine.h	10;"	d
+STEP_V	mods/paramsctl/paramsctl.h	18;"	d
+TEST_MAX_MS	include/emode.h	16;"	d
+TEST_ZERO_MS	include/emode.h	14;"	d
+TIME_DEP	mods/motor/motor.h	26;"	d
+TIME_PWM_WIDTH	mods/motor/motor.h	24;"	d
+VectorFloat	mods/mpu6050/mpu6050.h	/^typedef struct VectorFloat$/;"	s
+VectorFloat	mods/mpu6050/mpu6050.h	/^} VectorFloat;$/;"	t	typeref:struct:VectorFloat
+VectorFloat::x	mods/mpu6050/mpu6050.h	/^	float x;$/;"	m	struct:VectorFloat	access:public
+VectorFloat::y	mods/mpu6050/mpu6050.h	/^	float y;$/;"	m	struct:VectorFloat	access:public
+VectorFloat::z	mods/mpu6050/mpu6050.h	/^	float z;$/;"	m	struct:VectorFloat	access:public
+VectorInt16	mods/mpu6050/mpu6050.h	/^typedef struct VectorInt16$/;"	s
+VectorInt16	mods/mpu6050/mpu6050.h	/^} VectorInt16;$/;"	t	typeref:struct:VectorInt16
+VectorInt16::x	mods/mpu6050/mpu6050.h	/^	int16_t x;$/;"	m	struct:VectorInt16	access:public
+VectorInt16::y	mods/mpu6050/mpu6050.h	/^	int16_t y;$/;"	m	struct:VectorInt16	access:public
+VectorInt16::z	mods/mpu6050/mpu6050.h	/^	int16_t z;$/;"	m	struct:VectorInt16	access:public
+_I2CDEV_H_	mods/mpu6050/i2cdev.h	2;"	d
+_INCLUDE_MOTOR_H_	mods/motor/motor.h	10;"	d
+_INCLUDE_PARAMSCTL_H_	mods/paramsctl/paramsctl.h	10;"	d
+_INCLUDE_TYPEDEF_H_	include/typedef.h	10;"	d
+_MPU6050_H_	mods/mpu6050/mpu6050.h	2;"	d
+__DISPLAY_MODE_MORE__	mods/display/display.h	14;"	d
+__anon1::free_node	include/list.h	/^	int (*free_node)();$/;"	m	struct:__anon1	access:public
+__anon1::header	include/list.h	/^	s_node* header;$/;"	m	struct:__anon1	access:public
+__anon2::ctl_di	include/typedef.h	/^	int ctl_di;$/;"	m	struct:__anon2	access:public
+__anon2::ctl_fb	include/typedef.h	/^	int ctl_fb;$/;"	m	struct:__anon2	access:public
+__anon2::ctl_lr	include/typedef.h	/^	int ctl_lr;$/;"	m	struct:__anon2	access:public
+__anon2::ctl_md	include/typedef.h	/^	int ctl_md;$/;"	m	struct:__anon2	access:public
+__anon2::ctl_pw	include/typedef.h	/^	int ctl_pw;$/;"	m	struct:__anon2	access:public
+__anon2::ctl_ud	include/typedef.h	/^	int ctl_ud;$/;"	m	struct:__anon2	access:public
+__anon2::ctlmx	include/typedef.h	/^	float ctlmx;$/;"	m	struct:__anon2	access:public
+__anon2::ctlmy	include/typedef.h	/^	float ctlmy;$/;"	m	struct:__anon2	access:public
+__anon2::dgx	include/typedef.h	/^	float dgx;$/;"	m	struct:__anon2	access:public
+__anon2::dgy	include/typedef.h	/^	float dgy;$/;"	m	struct:__anon2	access:public
+__anon2::dgz	include/typedef.h	/^	float dgz;$/;"	m	struct:__anon2	access:public
+__anon2::dx	include/typedef.h	/^	float dx;$/;"	m	struct:__anon2	access:public
+__anon2::dy	include/typedef.h	/^	float dy;$/;"	m	struct:__anon2	access:public
+__anon2::dz	include/typedef.h	/^	float dz;$/;"	m	struct:__anon2	access:public
+__anon2::gx	include/typedef.h	/^	float gx;$/;"	m	struct:__anon2	access:public
+__anon2::gy	include/typedef.h	/^	float gy;$/;"	m	struct:__anon2	access:public
+__anon2::gz	include/typedef.h	/^	float gz;$/;"	m	struct:__anon2	access:public
+__anon2::h_devi	include/typedef.h	/^	float h_devi;$/;"	m	struct:__anon2	access:public
+__anon2::h_sum	include/typedef.h	/^	float h_sum;$/;"	m	struct:__anon2	access:public
+__anon2::height	include/typedef.h	/^	float height;$/;"	m	struct:__anon2	access:public
+__anon2::height_target	include/typedef.h	/^	float height_target;$/;"	m	struct:__anon2	access:public
+__anon2::lock	include/typedef.h	/^	int lock;$/;"	m	struct:__anon2	access:public
+__anon2::lock_status	include/typedef.h	/^	u32 lock_status;$/;"	m	struct:__anon2	access:public
+__anon2::mode	include/typedef.h	/^	u32 mode;$/;"	m	struct:__anon2	access:public
+__anon2::tx	include/typedef.h	/^	float tx;$/;"	m	struct:__anon2	access:public
+__anon2::ty	include/typedef.h	/^	float ty;$/;"	m	struct:__anon2	access:public
+__anon2::tz	include/typedef.h	/^	float tz;$/;"	m	struct:__anon2	access:public
+__anon2::v	include/typedef.h	/^	float v;$/;"	m	struct:__anon2	access:public
+__anon2::x	include/typedef.h	/^	float x;$/;"	m	struct:__anon2	access:public
+__anon2::x_devi	include/typedef.h	/^	float x_devi;$/;"	m	struct:__anon2	access:public
+__anon2::x_sum	include/typedef.h	/^	float x_sum;$/;"	m	struct:__anon2	access:public
+__anon2::x_v_sum	include/typedef.h	/^	float x_v_sum;$/;"	m	struct:__anon2	access:public
+__anon2::xv_devi	include/typedef.h	/^	float xv_devi;$/;"	m	struct:__anon2	access:public
+__anon2::y	include/typedef.h	/^	float y;$/;"	m	struct:__anon2	access:public
+__anon2::y_devi	include/typedef.h	/^	float y_devi;$/;"	m	struct:__anon2	access:public
+__anon2::y_sum	include/typedef.h	/^	float y_sum;$/;"	m	struct:__anon2	access:public
+__anon2::y_v_sum	include/typedef.h	/^	float y_v_sum;$/;"	m	struct:__anon2	access:public
+__anon2::yv_devi	include/typedef.h	/^	float yv_devi;$/;"	m	struct:__anon2	access:public
+__anon2::z	include/typedef.h	/^	float z;$/;"	m	struct:__anon2	access:public
+__anon2::z_devi	include/typedef.h	/^	float z_devi;$/;"	m	struct:__anon2	access:public
+__anon2::z_sum	include/typedef.h	/^	float z_sum;$/;"	m	struct:__anon2	access:public
+__anon2::z_v_sum	include/typedef.h	/^	float z_v_sum;$/;"	m	struct:__anon2	access:public
+__anon2::zv_devi	include/typedef.h	/^	float zv_devi;$/;"	m	struct:__anon2	access:public
+__anon3::ctl_di_zero	include/typedef.h	/^	int ctl_di_zero;$/;"	m	struct:__anon3	access:public
+__anon3::ctl_fb_zero	include/typedef.h	/^	int ctl_fb_zero;$/;"	m	struct:__anon3	access:public
+__anon3::ctl_lr_zero	include/typedef.h	/^	int ctl_lr_zero;$/;"	m	struct:__anon3	access:public
+__anon3::ctl_md_zero	include/typedef.h	/^	int ctl_md_zero;$/;"	m	struct:__anon3	access:public
+__anon3::ctl_pw_zero	include/typedef.h	/^	int ctl_pw_zero;$/;"	m	struct:__anon3	access:public
+__anon3::ctl_type	include/typedef.h	/^	int ctl_type;$/;"	m	struct:__anon3	access:public
+__anon3::ctl_ud_zero	include/typedef.h	/^	int ctl_ud_zero;$/;"	m	struct:__anon3	access:public
+__anon3::cx	include/typedef.h	/^	float cx;$/;"	m	struct:__anon3	access:public
+__anon3::cy	include/typedef.h	/^	float cy;$/;"	m	struct:__anon3	access:public
+__anon3::h_kd	include/typedef.h	/^	float h_kd;$/;"	m	struct:__anon3	access:public
+__anon3::h_ki	include/typedef.h	/^	float h_ki;$/;"	m	struct:__anon3	access:public
+__anon3::h_kp	include/typedef.h	/^	float h_kp;$/;"	m	struct:__anon3	access:public
+__anon3::kd	include/typedef.h	/^	float kd;$/;"	m	struct:__anon3	access:public
+__anon3::ki	include/typedef.h	/^	float ki;$/;"	m	struct:__anon3	access:public
+__anon3::kp	include/typedef.h	/^	float kp;$/;"	m	struct:__anon3	access:public
+__anon3::v_kd	include/typedef.h	/^	float v_kd;$/;"	m	struct:__anon3	access:public
+__anon3::v_ki	include/typedef.h	/^	float v_ki;$/;"	m	struct:__anon3	access:public
+__anon3::v_kp	include/typedef.h	/^	float v_kp;$/;"	m	struct:__anon3	access:public
+__anon4::timer_end	mods/controller/controller.h	/^	struct timeval timer_end;$/;"	m	struct:__anon4	typeref:struct:__anon4::timeval	access:public
+__anon4::timer_start	mods/controller/controller.h	/^	struct timeval timer_start;$/;"	m	struct:__anon4	typeref:struct:__anon4::timeval	access:public
+__anon5::time_m	mods/motor/motor.h	/^	int time_m;$/;"	m	struct:__anon5	access:public
+__anon5::time_w	mods/motor/motor.h	/^	int time_w;$/;"	m	struct:__anon5	access:public
+__anon6::timer_end	mods/hcsr04/hcsr04.h	/^	struct timeval timer_end;$/;"	m	struct:__anon6	typeref:struct:__anon6::timeval	access:public
+__anon6::timer_start	mods/hcsr04/hcsr04.h	/^	struct timeval timer_start;$/;"	m	struct:__anon6	typeref:struct:__anon6::timeval	access:public
+__destory	mods/command/command.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/command/command.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__destory	mods/controller/controller.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/controller/controller.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__destory	mods/display/display.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/display/display.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__destory	mods/fheight/fheight.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/fheight/fheight.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__destory	mods/gy953/gy953.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/gy953/gy953.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__destory	mods/hcsr04/hcsr04.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/hcsr04/hcsr04.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__destory	mods/motor/motor.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/motor/motor.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__destory	mods/mpu6050/mpu6050.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/mpu6050/mpu6050.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__destory	mods/paramsctl/paramsctl.c	/^int __destory(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__destory	mods/paramsctl/paramsctl.h	/^int __destory(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__init	mods/command/command.c	/^int __init(s_engine* e, s_params* p)$/;"	f	signature:(s_engine* e, s_params* p)
+__init	mods/command/command.h	/^int __init(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__init	mods/controller/controller.c	/^int __init(s_engine* engine, s_params* params)$/;"	f	signature:(s_engine* engine, s_params* params)
+__init	mods/controller/controller.h	/^int __init(s_engine* engine, s_params* params);$/;"	p	signature:(s_engine* engine, s_params* params)
+__init	mods/display/display.c	/^int __init(s_engine* engine, s_params* params)$/;"	f	signature:(s_engine* engine, s_params* params)
+__init	mods/display/display.h	/^int __init(s_engine* engine, s_params* params);$/;"	p	signature:(s_engine* engine, s_params* params)
+__init	mods/fheight/fheight.c	/^int __init(s_engine* engine, s_params* params)$/;"	f	signature:(s_engine* engine, s_params* params)
+__init	mods/fheight/fheight.h	/^int __init(s_engine* engine, s_params* params);$/;"	p	signature:(s_engine* engine, s_params* params)
+__init	mods/gy953/gy953.c	/^int __init(s_engine* engine, s_params* params)$/;"	f	signature:(s_engine* engine, s_params* params)
+__init	mods/gy953/gy953.h	/^int __init(s_engine* engine, s_params* params);$/;"	p	signature:(s_engine* engine, s_params* params)
+__init	mods/hcsr04/hcsr04.c	/^int __init(s_engine* engine, s_params* params)$/;"	f	signature:(s_engine* engine, s_params* params)
+__init	mods/hcsr04/hcsr04.h	/^int __init(s_engine* engine, s_params* params);$/;"	p	signature:(s_engine* engine, s_params* params)
+__init	mods/motor/motor.c	/^int __init(s_engine* engine, s_params* params)$/;"	f	signature:(s_engine* engine, s_params* params)
+__init	mods/motor/motor.h	/^int __init(s_engine* e, s_params* p);$/;"	p	signature:(s_engine* e, s_params* p)
+__init	mods/mpu6050/mpu6050.c	/^int __init(s_engine* engine, s_params* params)$/;"	f	signature:(s_engine* engine, s_params* params)
+__init	mods/mpu6050/mpu6050.h	/^int __init(s_engine* engine, s_params* params);$/;"	p	signature:(s_engine* engine, s_params* params)
+__init	mods/paramsctl/paramsctl.c	/^int __init(s_engine* engine, s_params* params)$/;"	f	signature:(s_engine* engine, s_params* params)
+__init	mods/paramsctl/paramsctl.h	/^int __init(s_engine* engine, s_params* params);$/;"	p	signature:(s_engine* engine, s_params* params)
+__status	mods/command/command.c	/^int __status() { return st; }$/;"	f
+__status	mods/command/command.h	/^int __status();$/;"	p	signature:()
+__status	mods/controller/controller.c	/^int __status() { return st; }$/;"	f
+__status	mods/controller/controller.h	/^int __status();$/;"	p	signature:()
+__status	mods/display/display.c	/^int __status() { return st; }$/;"	f
+__status	mods/display/display.h	/^int __status();$/;"	p	signature:()
+__status	mods/fheight/fheight.c	/^int __status() { return st; }$/;"	f
+__status	mods/fheight/fheight.h	/^int __status();$/;"	p	signature:()
+__status	mods/gy953/gy953.c	/^int __status() { return st; }$/;"	f
+__status	mods/gy953/gy953.h	/^int __status();$/;"	p	signature:()
+__status	mods/hcsr04/hcsr04.c	/^int __status() { return st; }$/;"	f
+__status	mods/hcsr04/hcsr04.h	/^int __status();$/;"	p	signature:()
+__status	mods/motor/motor.c	/^int __status()$/;"	f
+__status	mods/motor/motor.h	/^int __status();$/;"	p	signature:()
+__status	mods/mpu6050/mpu6050.c	/^int __status() { return st; }$/;"	f
+__status	mods/mpu6050/mpu6050.h	/^int __status();$/;"	p	signature:()
+__status	mods/paramsctl/paramsctl.c	/^int __status() { return st; }$/;"	f
+__status	mods/paramsctl/paramsctl.h	/^int __status();$/;"	p	signature:()
+aa	mods/mpu6050/mpu6050.c	/^VectorInt16 aa;      \/\/ [x, y, z]            accel sensor measurements$/;"	v
+aaReal	mods/mpu6050/mpu6050.c	/^VectorInt16 aaReal;  \/\/ [x, y, z]            gravity-free accel sensor measurements$/;"	v
+aaWorld	mods/mpu6050/mpu6050.c	/^VectorInt16 aaWorld; \/\/ [x, y, z]            world-frame accel sensor measurements$/;"	v
+args	include/dlmod.h	/^	void** args;$/;"	m	struct:s_dlmod	access:public
+buffer	mods/mpu6050/mpu6050.c	/^u8 buffer[14];$/;"	v
+controller_abs	mods/controller/controller.c	/^float controller_abs(float x)$/;"	f	signature:(float x)
+controller_abs	mods/controller/controller.h	/^float controller_abs(float x);$/;"	p	signature:(float x)
+controller_ctl_pwm	mods/controller/controller.c	/^void controller_ctl_pwm(int gpio_port, s_ctl_pwm* ctl_pwm)$/;"	f	signature:(int gpio_port, s_ctl_pwm* ctl_pwm)
+controller_ctl_pwm	mods/controller/controller.h	/^void controller_ctl_pwm(int gpio_port, s_ctl_pwm* ctl_pwm);$/;"	p	signature:(int gpio_port, s_ctl_pwm* ctl_pwm)
+controller_ctl_pwm_di	mods/controller/controller.c	/^void controller_ctl_pwm_di() { controller_ctl_pwm(GPIO_DI, &ctl_pwm_di); }$/;"	f
+controller_ctl_pwm_di	mods/controller/controller.h	/^void controller_ctl_pwm_di();$/;"	p	signature:()
+controller_ctl_pwm_fb	mods/controller/controller.c	/^void controller_ctl_pwm_fb() { controller_ctl_pwm(GPIO_FB, &ctl_pwm_fb); }$/;"	f
+controller_ctl_pwm_fb	mods/controller/controller.h	/^void controller_ctl_pwm_fb();$/;"	p	signature:()
+controller_ctl_pwm_lr	mods/controller/controller.c	/^void controller_ctl_pwm_lr() { controller_ctl_pwm(GPIO_LR, &ctl_pwm_lr); }$/;"	f
+controller_ctl_pwm_lr	mods/controller/controller.h	/^void controller_ctl_pwm_lr();$/;"	p	signature:()
+controller_ctl_pwm_md	mods/controller/controller.c	/^void controller_ctl_pwm_md() { controller_ctl_pwm(GPIO_MD, &ctl_pwm_md); }$/;"	f
+controller_ctl_pwm_md	mods/controller/controller.h	/^void controller_ctl_pwm_md();$/;"	p	signature:()
+controller_ctl_pwm_pw	mods/controller/controller.c	/^void controller_ctl_pwm_pw() { controller_ctl_pwm(GPIO_PW, &ctl_pwm_pw); }$/;"	f
+controller_ctl_pwm_pw	mods/controller/controller.h	/^void controller_ctl_pwm_pw();$/;"	p	signature:()
+controller_ctl_pwm_ud	mods/controller/controller.c	/^void controller_ctl_pwm_ud() { controller_ctl_pwm(GPIO_UD, &ctl_pwm_ud); }$/;"	f
+controller_ctl_pwm_ud	mods/controller/controller.h	/^void controller_ctl_pwm_ud();$/;"	p	signature:()
+controller_di_pwm	mods/controller/controller.c	/^void controller_di_pwm(int di)$/;"	f	signature:(int di)
+controller_di_pwm	mods/controller/controller.h	/^void controller_di_pwm(int md);$/;"	p	signature:(int md)
+controller_fb_pwm	mods/controller/controller.c	/^void controller_fb_pwm(int fb)$/;"	f	signature:(int fb)
+controller_fb_pwm	mods/controller/controller.h	/^void controller_fb_pwm(int fb);$/;"	p	signature:(int fb)
+controller_kalman_filter	mods/controller/controller.c	/^float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)$/;"	f	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
+controller_kalman_filter	mods/controller/controller.h	/^float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);$/;"	p	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
+controller_lr_pwm	mods/controller/controller.c	/^void controller_lr_pwm(int lr)$/;"	f	signature:(int lr)
+controller_lr_pwm	mods/controller/controller.h	/^void controller_lr_pwm(int lr);$/;"	p	signature:(int lr)
+controller_md_pwm	mods/controller/controller.c	/^void controller_md_pwm(int md)$/;"	f	signature:(int md)
+controller_md_pwm	mods/controller/controller.h	/^void controller_md_pwm(int md);$/;"	p	signature:(int md)
+controller_parabola	mods/controller/controller.c	/^float controller_parabola(float x)$/;"	f	signature:(float x)
+controller_parabola	mods/controller/controller.h	/^float controller_parabola(float x);$/;"	p	signature:(float x)
+controller_pw_pwm	mods/controller/controller.c	/^void controller_pw_pwm(int pw)$/;"	f	signature:(int pw)
+controller_pw_pwm	mods/controller/controller.h	/^void controller_pw_pwm(int pw);$/;"	p	signature:(int pw)
+controller_ud_pwm	mods/controller/controller.c	/^void controller_ud_pwm(int ud)$/;"	f	signature:(int ud)
+controller_ud_pwm	mods/controller/controller.h	/^void controller_ud_pwm(int md);$/;"	p	signature:(int md)
+ctl_di	include/typedef.h	/^	int ctl_di;$/;"	m	struct:__anon2	access:public
+ctl_di_zero	include/typedef.h	/^	int ctl_di_zero;$/;"	m	struct:__anon3	access:public
+ctl_est_devi	mods/controller/controller.c	/^float ctl_est_devi     = 1;$/;"	v
+ctl_fb	include/typedef.h	/^	int ctl_fb;$/;"	m	struct:__anon2	access:public
+ctl_fb_zero	include/typedef.h	/^	int ctl_fb_zero;$/;"	m	struct:__anon3	access:public
+ctl_lr	include/typedef.h	/^	int ctl_lr;$/;"	m	struct:__anon2	access:public
+ctl_lr_zero	include/typedef.h	/^	int ctl_lr_zero;$/;"	m	struct:__anon3	access:public
+ctl_md	include/typedef.h	/^	int ctl_md;$/;"	m	struct:__anon2	access:public
+ctl_md_zero	include/typedef.h	/^	int ctl_md_zero;$/;"	m	struct:__anon3	access:public
+ctl_measure_devi	mods/controller/controller.c	/^float ctl_measure_devi = 15;$/;"	v
+ctl_pw	include/typedef.h	/^	int ctl_pw;$/;"	m	struct:__anon2	access:public
+ctl_pw_zero	include/typedef.h	/^	int ctl_pw_zero;$/;"	m	struct:__anon3	access:public
+ctl_pwm_di	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_di;$/;"	v
+ctl_pwm_fb	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_fb;$/;"	v
+ctl_pwm_lr	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_lr;$/;"	v
+ctl_pwm_md	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_md;$/;"	v
+ctl_pwm_pw	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_pw;$/;"	v
+ctl_pwm_ud	mods/controller/controller.c	/^s_ctl_pwm ctl_pwm_ud;$/;"	v
+ctl_step	mods/paramsctl/paramsctl.c	/^float ctl_step = 1;$/;"	v
+ctl_type	include/typedef.h	/^	int ctl_type;$/;"	m	struct:__anon3	access:public
+ctl_ud	include/typedef.h	/^	int ctl_ud;$/;"	m	struct:__anon2	access:public
+ctl_ud_zero	include/typedef.h	/^	int ctl_ud_zero;$/;"	m	struct:__anon3	access:public
+ctlmx	include/typedef.h	/^	float ctlmx;$/;"	m	struct:__anon2	access:public
+ctlmy	include/typedef.h	/^	float ctlmy;$/;"	m	struct:__anon2	access:public
+cx	include/typedef.h	/^	float cx;$/;"	m	struct:__anon3	access:public
+cy	include/typedef.h	/^	float cy;$/;"	m	struct:__anon3	access:public
+cycle_z	mods/mpu6050/mpu6050.c	/^int cycle_z  = 0;$/;"	v
+data	include/list.h	/^	void* data;$/;"	m	struct:s_node	access:public
+destory	include/dlmod.h	/^	int (*destory)();$/;"	m	struct:s_dlmod	access:public
+devAddr	mods/mpu6050/mpu6050.c	/^u8 devAddr	= MPU6050_DEFAULT_ADDRESS;$/;"	v
+devStatus	mods/mpu6050/mpu6050.c	/^uint8_t devStatus;      \/\/ return status after each device operation (0 = success, !0 = error)$/;"	v
+dgx	include/typedef.h	/^	float dgx;$/;"	m	struct:__anon2	access:public
+dgy	include/typedef.h	/^	float dgy;$/;"	m	struct:__anon2	access:public
+dgz	include/typedef.h	/^	float dgz;$/;"	m	struct:__anon2	access:public
+di_devi	mods/controller/controller.c	/^float di_est = 0.0, di_devi = 0.0;$/;"	v
+di_est	mods/controller/controller.c	/^float di_est = 0.0, di_devi = 0.0;$/;"	v
+dis	mods/hcsr04/hcsr04.c	/^s_dis dis;$/;"	v
+distance	mods/hcsr04/hcsr04.c	/^void distance()$/;"	f
+distance	mods/hcsr04/hcsr04.h	/^void distance();$/;"	p	signature:()
+distance_trig	mods/hcsr04/hcsr04.c	/^void distance_trig()$/;"	f
+distance_trig	mods/hcsr04/hcsr04.h	/^void distance_trig();$/;"	p	signature:()
+dlmod_destory	engine/dlmod.c	/^int dlmod_destory()$/;"	f
+dlmod_destory	include/dlmod.h	/^int dlmod_destory();$/;"	p	signature:()
+dlmod_dlclose	engine/dlmod.c	/^int dlmod_dlclose(s_dlmod* mod)$/;"	f	signature:(s_dlmod* mod)
+dlmod_dlclose	include/dlmod.h	/^int dlmod_dlclose(s_dlmod* mod);$/;"	p	signature:(s_dlmod* mod)
+dlmod_free_mod	engine/dlmod.c	/^int dlmod_free_mod(s_dlmod* mod)$/;"	f	signature:(s_dlmod* mod)
+dlmod_free_mod	include/dlmod.h	/^int dlmod_free_mod(s_dlmod* mod);$/;"	p	signature:(s_dlmod* mod)
+dlmod_init	engine/dlmod.c	/^int dlmod_init()$/;"	f
+dlmod_init	include/dlmod.h	/^int dlmod_init();$/;"	p	signature:()
+dlmod_mods_status	engine/dlmod.c	/^int dlmod_mods_status()$/;"	f
+dlmod_mods_status	include/dlmod.h	/^int dlmod_mods_status();$/;"	p	signature:()
+dlmod_open	engine/dlmod.c	/^s_dlmod* dlmod_open(char* filename)$/;"	f	signature:(char* filename)
+dlmod_open	include/dlmod.h	/^s_dlmod* dlmod_open(char* filename);$/;"	p	signature:(char* filename)
+dlmod_run_destory	engine/dlmod.c	/^void dlmod_run_destory(void* args)$/;"	f	signature:(void* args)
+dlmod_run_destory	include/dlmod.h	/^void dlmod_run_destory(void* args);$/;"	p	signature:(void* args)
+dlmod_run_init	engine/dlmod.c	/^void dlmod_run_init(void* args)$/;"	f	signature:(void* args)
+dlmod_run_init	include/dlmod.h	/^void dlmod_run_init(void* args);$/;"	p	signature:(void* args)
+dlmod_run_pt_destory	engine/dlmod.c	/^int dlmod_run_pt_destory(s_dlmod* mod)$/;"	f	signature:(s_dlmod* mod)
+dlmod_run_pt_destory	include/dlmod.h	/^int dlmod_run_pt_destory(s_dlmod* mod);$/;"	p	signature:(s_dlmod* mod)
+dlmod_run_pt_init	engine/dlmod.c	/^int dlmod_run_pt_init(s_dlmod* mod)$/;"	f	signature:(s_dlmod* mod)
+dlmod_run_pt_init	include/dlmod.h	/^int dlmod_run_pt_init(s_dlmod* mod);$/;"	p	signature:(s_dlmod* mod)
+dmpPacketSize	mods/mpu6050/mpu6050.c	/^u16 dmpPacketSize = 0;$/;"	v
+dmpReady	mods/mpu6050/mpu6050.c	/^u8 dmpReady = 0;	\/\/ set true if DMP init was successful$/;"	v
+dx	include/typedef.h	/^	float dx;$/;"	m	struct:__anon2	access:public
+dy	include/typedef.h	/^	float dy;$/;"	m	struct:__anon2	access:public
+dz	include/typedef.h	/^	float dz;$/;"	m	struct:__anon2	access:public
+e	mods/controller/controller.c	/^s_engine* e = NULL;$/;"	v
+e	mods/display/display.c	/^s_engine* e = NULL;$/;"	v
+e	mods/fheight/fheight.c	/^s_engine* e = NULL;$/;"	v
+e	mods/gy953/gy953.c	/^s_engine* e = NULL;$/;"	v
+e	mods/hcsr04/hcsr04.c	/^s_engine* e = NULL;$/;"	v
+e	mods/motor/motor.c	/^s_engine* e = NULL;$/;"	v
+e	mods/mpu6050/mpu6050.c	/^s_engine* e = NULL;$/;"	v
+e	mods/paramsctl/paramsctl.c	/^s_engine* e = NULL;$/;"	v
+emode_ent_run	engine/emode.c	/^void emode_ent_run(int en_port, int en_speed, int en_msecs)$/;"	f	signature:(int en_port, int en_speed, int en_msecs)
+emode_ent_run	include/emode.h	/^void emode_ent_run(int en_port, int en_speed, int en_msecs);$/;"	p	signature:(int en_port, int en_speed, int en_msecs)
+emode_start_control	engine/emode.c	/^void emode_start_control()$/;"	f
+emode_start_control	include/emode.h	/^void emode_start_control();$/;"	p	signature:()
+emode_start_gyro	engine/emode.c	/^void emode_start_gyro(char* argv2)$/;"	f	signature:(char* argv2)
+emode_start_gyro	include/emode.h	/^void emode_start_gyro(char* argv2);$/;"	p	signature:(char* argv2)
+emode_start_test	engine/emode.c	/^void emode_start_test(char* argv2, char* argv3, char* argv4)$/;"	f	signature:(char* argv2, char* argv3, char* argv4)
+emode_start_test	include/emode.h	/^void emode_start_test(char* argv2, char* argv3, char* argv4);$/;"	p	signature:(char* argv2, char* argv3, char* argv4)
+engine	engine/engine.c	/^s_engine engine;$/;"	v
+engine_abs	engine/engine.c	/^float engine_abs(float v)$/;"	f	signature:(float v)
+engine_abs	include/engine.h	/^float engine_abs(float v);$/;"	p	signature:(float v)
+engine_fly	engine/engine.c	/^void engine_fly()$/;"	f
+engine_fly	include/engine.h	/^void engine_fly();$/;"	p	signature:()
+engine_handler	engine/engine.c	/^void engine_handler()$/;"	f
+engine_handler	include/engine.h	/^void engine_handler();$/;"	p	signature:()
+engine_kalman_filter	engine/engine.c	/^float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)$/;"	f	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
+engine_kalman_filter	include/engine.h	/^float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);$/;"	p	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
+engine_limit	engine/engine.c	/^void engine_limit(float* v)$/;"	f	signature:(float* v)
+engine_limit	include/engine.h	/^void engine_limit(float* v);$/;"	p	signature:(float* v)
+engine_lock	engine/engine.c	/^void engine_lock()$/;"	f
+engine_lock	include/engine.h	/^void engine_lock();$/;"	p	signature:()
+engine_pid	engine/engine.c	/^float engine_pid(float et, float et2, float* sum)$/;"	f	signature:(float et, float et2, float* sum)
+engine_pid	include/engine.h	/^float engine_pid(float et, float dg, float* sum);$/;"	p	signature:(float et, float dg, float* sum)
+engine_reset	engine/engine.c	/^void engine_reset(s_engine* e)$/;"	f	signature:(s_engine* e)
+engine_reset	include/engine.h	/^void engine_reset(s_engine* e);$/;"	p	signature:(s_engine* e)
+engine_set_dxy	engine/engine.c	/^void engine_set_dxy()$/;"	f
+engine_set_dxy	include/engine.h	/^void engine_set_dxy();$/;"	p	signature:()
+engine_start	engine/engine.c	/^void engine_start(int argc, char* argv[])$/;"	f	signature:(int argc, char* argv[])
+engine_start	include/engine.h	/^void engine_start(int argc, char* argv[]);$/;"	p	signature:(int argc, char* argv[])
+engine_start_fly	engine/engine.c	/^void engine_start_fly()$/;"	f
+engine_start_fly	include/engine.h	/^void engine_start_fly();$/;"	p	signature:()
+engine_v_pid	engine/engine.c	/^float engine_v_pid(float et, float et2, float* sum)$/;"	f	signature:(float et, float et2, float* sum)
+engine_v_pid	include/engine.h	/^float engine_v_pid(float et, float dg, float* sum);$/;"	p	signature:(float et, float dg, float* sum)
+euler	mods/mpu6050/mpu6050.c	/^float euler[3];      \/\/ [psi, theta, phi]    Euler angle container$/;"	v
+fb_devi	mods/controller/controller.c	/^float fb_est = 0.0, fb_devi = 0.0;$/;"	v
+fb_est	mods/controller/controller.c	/^float fb_est = 0.0, fb_devi = 0.0;$/;"	v
+fd	mods/gy953/gy953.c	/^int fd   = 0;$/;"	v
+fheight_automatic	mods/fheight/fheight.c	/^void fheight_automatic()$/;"	f
+fheight_automatic	mods/fheight/fheight.h	/^void fheight_automatic();$/;"	p	signature:()
+fheight_ev_limit	mods/fheight/fheight.c	/^void fheight_ev_limit(float* v)$/;"	f	signature:(float* v)
+fheight_ev_limit	mods/fheight/fheight.h	/^void fheight_ev_limit(float* v);$/;"	p	signature:(float* v)
+fheight_limit	mods/fheight/fheight.c	/^void fheight_limit(float* v)$/;"	f	signature:(float* v)
+fheight_limit	mods/fheight/fheight.h	/^void fheight_limit(float* v);$/;"	p	signature:(float* v)
+fheight_pid	mods/fheight/fheight.c	/^float fheight_pid(float et, float et2, float* sum)$/;"	f	signature:(float et, float et2, float* sum)
+fheight_pid	mods/fheight/fheight.h	/^float fheight_pid(float et, float et_1, float* sum);$/;"	p	signature:(float et, float et_1, float* sum)
+fifoBuffer	mods/mpu6050/mpu6050.c	/^uint8_t fifoBuffer[64]; \/\/ FIFO storage buffer$/;"	v
+fifoCount	mods/mpu6050/mpu6050.c	/^uint16_t fifoCount;     \/\/ count of all bytes currently in FIFO$/;"	v
+free_node	include/list.h	/^	int (*free_node)();$/;"	m	struct:__anon1	access:public
+getch	mods/paramsctl/getch.c	/^char getch(void) { return getch_(0); }$/;"	f	signature:(void)
+getch	mods/paramsctl/getch.h	/^char getch(void);$/;"	p	signature:(void)
+getch_	mods/paramsctl/getch.c	/^char getch_(int echo)$/;"	f	signature:(int echo)
+getch_	mods/paramsctl/getch.h	/^char getch_(int echo);$/;"	p	signature:(int echo)
+getche	mods/paramsctl/getch.c	/^char getche(void) { return getch_(1); }$/;"	f	signature:(void)
+getche	mods/paramsctl/getch.h	/^char getche(void);$/;"	p	signature:(void)
+gravity	mods/mpu6050/mpu6050.c	/^VectorFloat gravity; \/\/ [x, y, z]            gravity vector$/;"	v
+gx	include/typedef.h	/^	float gx;$/;"	m	struct:__anon2	access:public
+gy	include/typedef.h	/^	float gy;$/;"	m	struct:__anon2	access:public
+gy953_close	mods/gy953/gy953.h	/^void gy953_close();$/;"	p	signature:()
+gy953_init	mods/gy953/gy953.h	/^int gy953_init(u32 init);$/;"	p	signature:(u32 init)
+gy953_read	mods/gy953/gy953.c	/^int gy953_read(float* x, float* y, float* z)$/;"	f	signature:(float* x, float* y, float* z)
+gy953_read	mods/gy953/gy953.h	/^int gy953_read(float* x, float* y, float* z);$/;"	p	signature:(float* x, float* y, float* z)
+gy953_value	mods/gy953/gy953.c	/^void gy953_value()$/;"	f
+gy953_value	mods/gy953/gy953.h	/^void gy953_value();$/;"	p	signature:()
+gz	include/typedef.h	/^	float gz;$/;"	m	struct:__anon2	access:public
+h_devi	include/typedef.h	/^	float h_devi;$/;"	m	struct:__anon2	access:public
+h_devi	mods/hcsr04/hcsr04.c	/^float h_est = 0.0, h_devi = 0.0;$/;"	v
+h_est	mods/hcsr04/hcsr04.c	/^float h_est = 0.0, h_devi = 0.0;$/;"	v
+h_est_devi	mods/hcsr04/hcsr04.c	/^float h_est_devi     = 0.01;$/;"	v
+h_kd	include/typedef.h	/^	float h_kd;$/;"	m	struct:__anon3	access:public
+h_ki	include/typedef.h	/^	float h_ki;$/;"	m	struct:__anon3	access:public
+h_kp	include/typedef.h	/^	float h_kp;$/;"	m	struct:__anon3	access:public
+h_measure_devi	mods/hcsr04/hcsr04.c	/^float h_measure_devi = 0.05;$/;"	v
+h_sum	include/typedef.h	/^	float h_sum;$/;"	m	struct:__anon2	access:public
+handler	include/dlmod.h	/^	void* handler;$/;"	m	struct:s_dlmod	access:public
+header	include/list.h	/^	s_node* header;$/;"	m	struct:__anon1	access:public
+height	include/typedef.h	/^	float height;$/;"	m	struct:__anon2	access:public
+height_target	include/typedef.h	/^	float height_target;$/;"	m	struct:__anon2	access:public
+i2cdev_readBit	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readBit(u8 devAddr, u8 regAddr, u8 bitNum, u8* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u8* data)
+i2cdev_readBit	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readBit(u8 devAddr, u8 regAddr, u8 bitNum, u8* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u8* data)
+i2cdev_readBitW	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u16* data)
+i2cdev_readBitW	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u16* data)
+i2cdev_readBits	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8* data)
+i2cdev_readBits	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8* data)
+i2cdev_readBitsW	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16* data)
+i2cdev_readBitsW	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16* data)
+i2cdev_readByte	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readByte(u8 devAddr, u8 regAddr, u8* data) { return i2cdev_readBytes(devAddr, regAddr, 1, data); }$/;"	f	signature:(u8 devAddr, u8 regAddr, u8* data)
+i2cdev_readByte	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readByte(u8 devAddr, u8 regAddr, u8* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8* data)
+i2cdev_readBytes	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readBytes(u8 devAddr, u8 regAddr, u8 length, u8* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 length, u8* data)
+i2cdev_readBytes	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readBytes(u8 devAddr, u8 regAddr, u8 length, u8* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 length, u8* data)
+i2cdev_readWord	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readWord(u8 devAddr, u8 regAddr, u16* data) { return i2cdev_readWords(devAddr, regAddr, 1, data); }$/;"	f	signature:(u8 devAddr, u8 regAddr, u16* data)
+i2cdev_readWord	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readWord(u8 devAddr, u8 regAddr, u16* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u16* data)
+i2cdev_readWords	mods/mpu6050/i2cdev.c	/^s8 i2cdev_readWords(u8 devAddr, u8 regAddr, u8 length, u16* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 length, u16* data)
+i2cdev_readWords	mods/mpu6050/i2cdev.h	/^s8 i2cdev_readWords(u8 devAddr, u8 regAddr, u8 length, u16* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 length, u16* data)
+i2cdev_writeBit	mods/mpu6050/i2cdev.c	/^int i2cdev_writeBit(u8 devAddr, u8 regAddr, u8 bitNum, u8 data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u8 data)
+i2cdev_writeBit	mods/mpu6050/i2cdev.h	/^int i2cdev_writeBit(u8 devAddr, u8 regAddr, u8 bitNum, u8 data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u8 data)
+i2cdev_writeBitW	mods/mpu6050/i2cdev.c	/^int i2cdev_writeBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16 data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u16 data)
+i2cdev_writeBitW	mods/mpu6050/i2cdev.h	/^int i2cdev_writeBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16 data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitNum, u16 data)
+i2cdev_writeBits	mods/mpu6050/i2cdev.c	/^int i2cdev_writeBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 data)
+i2cdev_writeBits	mods/mpu6050/i2cdev.h	/^int i2cdev_writeBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 data)
+i2cdev_writeBitsW	mods/mpu6050/i2cdev.c	/^int i2cdev_writeBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 data)
+i2cdev_writeBitsW	mods/mpu6050/i2cdev.h	/^int i2cdev_writeBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 data)
+i2cdev_writeByte	mods/mpu6050/i2cdev.c	/^int i2cdev_writeByte(u8 devAddr, u8 regAddr, u8 data) { return i2cdev_writeBytes(devAddr, regAddr, 1, &data); }$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 data)
+i2cdev_writeByte	mods/mpu6050/i2cdev.h	/^int i2cdev_writeByte(u8 devAddr, u8 regAddr, u8 data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 data)
+i2cdev_writeBytes	mods/mpu6050/i2cdev.c	/^int i2cdev_writeBytes(u8 devAddr, u8 regAddr, u8 length, u8* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 length, u8* data)
+i2cdev_writeBytes	mods/mpu6050/i2cdev.h	/^int i2cdev_writeBytes(u8 devAddr, u8 regAddr, u8 length, u8* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 length, u8* data)
+i2cdev_writeWord	mods/mpu6050/i2cdev.c	/^int i2cdev_writeWord(u8 devAddr, u8 regAddr, u16 data) { return i2cdev_writeWords(devAddr, regAddr, 1, &data); }$/;"	f	signature:(u8 devAddr, u8 regAddr, u16 data)
+i2cdev_writeWord	mods/mpu6050/i2cdev.h	/^int i2cdev_writeWord(u8 devAddr, u8 regAddr, u16 data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u16 data)
+i2cdev_writeWords	mods/mpu6050/i2cdev.c	/^int i2cdev_writeWords(u8 devAddr, u8 regAddr, u8 length, u16* data)$/;"	f	signature:(u8 devAddr, u8 regAddr, u8 length, u16* data)
+i2cdev_writeWords	mods/mpu6050/i2cdev.h	/^int i2cdev_writeWords(u8 devAddr, u8 regAddr, u8 length, u16* data);$/;"	p	signature:(u8 devAddr, u8 regAddr, u8 length, u16* data)
+init	include/dlmod.h	/^	int (*init)();$/;"	m	struct:s_dlmod	access:public
+init	mods/gy953/gy953.c	/^u32 init = 0;$/;"	v
+initTermios	mods/paramsctl/getch.c	/^void initTermios(int echo)$/;"	f	signature:(int echo)
+initTermios	mods/paramsctl/getch.h	/^void initTermios(int echo);$/;"	p	signature:(int echo)
+kalman_filter	mods/hcsr04/hcsr04.c	/^float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)$/;"	f	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
+kalman_filter	mods/hcsr04/hcsr04.h	/^float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);$/;"	p	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
+kalman_filter	mods/mpu6050/mpu6050.c	/^float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)$/;"	f	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
+kalman_filter	mods/mpu6050/mpu6050.h	/^float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);$/;"	p	signature:(float est, float est_devi, float measure, float measure_devi, float* devi)
+kd	include/typedef.h	/^	float kd;$/;"	m	struct:__anon3	access:public
+ki	include/typedef.h	/^	float ki;$/;"	m	struct:__anon3	access:public
+kp	include/typedef.h	/^	float kp;$/;"	m	struct:__anon3	access:public
+last_z	mods/mpu6050/mpu6050.c	/^float last_z = 0;$/;"	v
+list	engine/engine.c	/^s_list list;$/;"	v
+list_clear	include/list.h	/^int list_clear(s_list* list);$/;"	p	signature:(s_list* list)
+list_clear	util/list.c	/^int list_clear(s_list* list)$/;"	f	signature:(s_list* list)
+list_destroy	include/list.h	/^int list_destroy(s_list* list);$/;"	p	signature:(s_list* list)
+list_destroy	util/list.c	/^int list_destroy(s_list* list)$/;"	f	signature:(s_list* list)
+list_init	include/list.h	/^int list_init(s_list* list, int (*free_node)());$/;"	p	signature:(s_list* list, int (*free_node)())
+list_init	util/list.c	/^int list_init(s_list* list, int (*free_node)())$/;"	f	signature:(s_list* list, int (*free_node)())
+list_insert	include/list.h	/^int list_insert(s_list* list, void* data);$/;"	p	signature:(s_list* list, void* data)
+list_insert	util/list.c	/^int list_insert(s_list* list, void* data)$/;"	f	signature:(s_list* list, void* data)
+list_visit	include/list.h	/^int list_visit(s_list* list, void (*callback)());$/;"	p	signature:(s_list* list, void (*callback)())
+list_visit	util/list.c	/^int list_visit(s_list* list, void (*callback)())$/;"	f	signature:(s_list* list, void (*callback)())
+lock	include/typedef.h	/^	int lock;$/;"	m	struct:__anon2	access:public
+lock_status	include/typedef.h	/^	u32 lock_status;$/;"	m	struct:__anon2	access:public
+lr_devi	mods/controller/controller.c	/^float lr_est = 0.0, lr_devi = 0.0;$/;"	v
+lr_est	mods/controller/controller.c	/^float lr_est = 0.0, lr_devi = 0.0;$/;"	v
+main	main/main.c	/^int main(int argc, char* argv[])$/;"	f	signature:(int argc, char* argv[])
+mode	include/typedef.h	/^	u32 mode;$/;"	m	struct:__anon2	access:public
+motor_balance_compensation	mods/motor/motor.c	/^void motor_balance_compensation()$/;"	f
+motor_balance_compensation	mods/motor/motor.h	/^void motor_balance_compensation();$/;"	p	signature:()
+motor_clear	mods/motor/motor.h	/^void motor_clear();$/;"	p	signature:()
+motor_pwm	mods/motor/motor.h	/^} motor_pwm;$/;"	t	typeref:struct:__anon5
+motor_run	mods/motor/motor.c	/^void motor_run(void* args)$/;"	f	signature:(void* args)
+motor_run	mods/motor/motor.h	/^void motor_run(void* args);$/;"	p	signature:(void* args)
+motor_run_pwm	mods/motor/motor.c	/^void motor_run_pwm(int motor, motor_pwm* pwm)$/;"	f	signature:(int motor, motor_pwm* pwm)
+motor_run_pwm	mods/motor/motor.h	/^void motor_run_pwm(int motor, motor_pwm* pwm);$/;"	p	signature:(int motor, motor_pwm* pwm)
+motor_set_pwm	mods/motor/motor.c	/^void motor_set_pwm(int speed, motor_pwm* pwm)$/;"	f	signature:(int speed, motor_pwm* pwm)
+motor_set_pwm	mods/motor/motor.h	/^void motor_set_pwm(int speed, motor_pwm* pwm);$/;"	p	signature:(int speed, motor_pwm* pwm)
+motor_setup	mods/motor/motor.h	/^void motor_setup();$/;"	p	signature:()
+mpu6050_dmpConfig	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpConfig[MPU6050_DMP_CONFIG_SIZE] = {$/;"	v
+mpu6050_dmpGetAccel	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpGetAccel(VectorInt16* v, u8* packet)$/;"	f	signature:(VectorInt16* v, u8* packet)
+mpu6050_dmpGetAccel	mods/mpu6050/mpu6050.h	/^u8 mpu6050_dmpGetAccel(VectorInt16* v, u8* packet);$/;"	p	signature:(VectorInt16* v, u8* packet)
+mpu6050_dmpGetFIFOPacketSize	mods/mpu6050/mpu6050.c	/^u16 mpu6050_dmpGetFIFOPacketSize() { return dmpPacketSize; }$/;"	f
+mpu6050_dmpGetFIFOPacketSize	mods/mpu6050/mpu6050.h	/^u16 mpu6050_dmpGetFIFOPacketSize();$/;"	p	signature:()
+mpu6050_dmpGetGravity	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpGetGravity(VectorFloat* v, Quaternion* q)$/;"	f	signature:(VectorFloat* v, Quaternion* q)
+mpu6050_dmpGetGravity	mods/mpu6050/mpu6050.h	/^u8 mpu6050_dmpGetGravity(VectorFloat* v, Quaternion* q);$/;"	p	signature:(VectorFloat* v, Quaternion* q)
+mpu6050_dmpGetLinearAccel	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpGetLinearAccel(VectorInt16* v, VectorInt16* vRaw, VectorFloat* gravity)$/;"	f	signature:(VectorInt16* v, VectorInt16* vRaw, VectorFloat* gravity)
+mpu6050_dmpGetLinearAccel	mods/mpu6050/mpu6050.h	/^u8 mpu6050_dmpGetLinearAccel(VectorInt16* v, VectorInt16* vRaw, VectorFloat* gravity);$/;"	p	signature:(VectorInt16* v, VectorInt16* vRaw, VectorFloat* gravity)
+mpu6050_dmpGetLinearAccelInWorld	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpGetLinearAccelInWorld(VectorInt16* v, VectorInt16* vReal, Quaternion* q)$/;"	f	signature:(VectorInt16* v, VectorInt16* vReal, Quaternion* q)
+mpu6050_dmpGetLinearAccelInWorld	mods/mpu6050/mpu6050.h	/^u8 mpu6050_dmpGetLinearAccelInWorld(VectorInt16* v, VectorInt16* vReal, Quaternion* q);$/;"	p	signature:(VectorInt16* v, VectorInt16* vReal, Quaternion* q)
+mpu6050_dmpGetQuaternion	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpGetQuaternion(Quaternion* q, u8* packet)$/;"	f	signature:(Quaternion* q, u8* packet)
+mpu6050_dmpGetQuaternion	mods/mpu6050/mpu6050.h	/^u8 mpu6050_dmpGetQuaternion(Quaternion* q, u8* packet);$/;"	p	signature:(Quaternion* q, u8* packet)
+mpu6050_dmpGetQuaternionInt16	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpGetQuaternionInt16(s16* data, u8* packet)$/;"	f	signature:(s16* data, u8* packet)
+mpu6050_dmpGetQuaternionInt16	mods/mpu6050/mpu6050.h	/^u8 mpu6050_dmpGetQuaternionInt16(s16* data, u8* packet);$/;"	p	signature:(s16* data, u8* packet)
+mpu6050_dmpGetYawPitchRoll	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpGetYawPitchRoll(float* data, Quaternion* q, VectorFloat* gravity)$/;"	f	signature:(float* data, Quaternion* q, VectorFloat* gravity)
+mpu6050_dmpGetYawPitchRoll	mods/mpu6050/mpu6050.h	/^u8 mpu6050_dmpGetYawPitchRoll(float* data, Quaternion* q, VectorFloat* gravity);$/;"	p	signature:(float* data, Quaternion* q, VectorFloat* gravity)
+mpu6050_dmpInitialize	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpInitialize()$/;"	f
+mpu6050_dmpInitialize	mods/mpu6050/mpu6050.h	/^u8 mpu6050_dmpInitialize();$/;"	p	signature:()
+mpu6050_dmpMemory	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpMemory[MPU6050_DMP_CODE_SIZE] = {$/;"	v
+mpu6050_dmpUpdates	mods/mpu6050/mpu6050.c	/^u8 mpu6050_dmpUpdates[MPU6050_DMP_UPDATES_SIZE] = {0x01, 0xB2, 0x02, 0xFF, 0xFF, 0x01, 0x90, 0x04, 0x09, 0x23, 0xA1, 0x35, 0x01, 0x6A, 0x02, 0x06, 0x00, 0x01, 0x60, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x04, 0x40, 0x00, 0x00, 0x00, 0x01, 0x62, 0x02, 0x00, 0x00, 0x00, 0x60, 0x04, 0x00, 0x40, 0x00, 0x00};$/;"	v
+mpu6050_getAccelFIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getAccelFIFOEnabled()$/;"	f
+mpu6050_getAccelFIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getAccelFIFOEnabled();$/;"	p	signature:()
+mpu6050_getAccelXSelfTest	mods/mpu6050/mpu6050.c	/^int mpu6050_getAccelXSelfTest()$/;"	f
+mpu6050_getAccelXSelfTest	mods/mpu6050/mpu6050.h	/^int mpu6050_getAccelXSelfTest();$/;"	p	signature:()
+mpu6050_getAccelYSelfTest	mods/mpu6050/mpu6050.c	/^int mpu6050_getAccelYSelfTest()$/;"	f
+mpu6050_getAccelYSelfTest	mods/mpu6050/mpu6050.h	/^int mpu6050_getAccelYSelfTest();$/;"	p	signature:()
+mpu6050_getAccelZSelfTest	mods/mpu6050/mpu6050.c	/^int mpu6050_getAccelZSelfTest()$/;"	f
+mpu6050_getAccelZSelfTest	mods/mpu6050/mpu6050.h	/^int mpu6050_getAccelZSelfTest();$/;"	p	signature:()
+mpu6050_getAcceleration	mods/mpu6050/mpu6050.c	/^void mpu6050_getAcceleration(int16_t* x, int16_t* y, int16_t* z)$/;"	f	signature:(int16_t* x, int16_t* y, int16_t* z)
+mpu6050_getAcceleration	mods/mpu6050/mpu6050.h	/^void mpu6050_getAcceleration(int16_t* x, int16_t* y, int16_t* z);$/;"	p	signature:(int16_t* x, int16_t* y, int16_t* z)
+mpu6050_getAccelerationX	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getAccelerationX()$/;"	f
+mpu6050_getAccelerationX	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getAccelerationX();$/;"	p	signature:()
+mpu6050_getAccelerationY	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getAccelerationY()$/;"	f
+mpu6050_getAccelerationY	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getAccelerationY();$/;"	p	signature:()
+mpu6050_getAccelerationZ	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getAccelerationZ()$/;"	f
+mpu6050_getAccelerationZ	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getAccelerationZ();$/;"	p	signature:()
+mpu6050_getAccelerometerPowerOnDelay	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getAccelerometerPowerOnDelay()$/;"	f
+mpu6050_getAccelerometerPowerOnDelay	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getAccelerometerPowerOnDelay();$/;"	p	signature:()
+mpu6050_getAuxVDDIOLevel	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getAuxVDDIOLevel()$/;"	f
+mpu6050_getAuxVDDIOLevel	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getAuxVDDIOLevel();$/;"	p	signature:()
+mpu6050_getClockOutputEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getClockOutputEnabled()$/;"	f
+mpu6050_getClockOutputEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getClockOutputEnabled();$/;"	p	signature:()
+mpu6050_getClockSource	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getClockSource()$/;"	f
+mpu6050_getClockSource	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getClockSource();$/;"	p	signature:()
+mpu6050_getConjugate	mods/mpu6050/mpu6050.c	/^Quaternion mpu6050_getConjugate(Quaternion* q)$/;"	f	signature:(Quaternion* q)
+mpu6050_getConjugate	mods/mpu6050/mpu6050.h	/^Quaternion mpu6050_getConjugate(Quaternion* q);$/;"	p	signature:(Quaternion* q)
+mpu6050_getDHPFMode	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getDHPFMode()$/;"	f
+mpu6050_getDHPFMode	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getDHPFMode();$/;"	p	signature:()
+mpu6050_getDLPFMode	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getDLPFMode()$/;"	f
+mpu6050_getDLPFMode	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getDLPFMode();$/;"	p	signature:()
+mpu6050_getDMPConfig1	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getDMPConfig1()$/;"	f
+mpu6050_getDMPConfig1	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getDMPConfig1();$/;"	p	signature:()
+mpu6050_getDMPConfig2	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getDMPConfig2()$/;"	f
+mpu6050_getDMPConfig2	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getDMPConfig2();$/;"	p	signature:()
+mpu6050_getDMPEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getDMPEnabled()$/;"	f
+mpu6050_getDMPEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getDMPEnabled();$/;"	p	signature:()
+mpu6050_getDMPInt0Status	mods/mpu6050/mpu6050.c	/^int mpu6050_getDMPInt0Status()$/;"	f
+mpu6050_getDMPInt0Status	mods/mpu6050/mpu6050.h	/^int mpu6050_getDMPInt0Status();$/;"	p	signature:()
+mpu6050_getDMPInt1Status	mods/mpu6050/mpu6050.c	/^int mpu6050_getDMPInt1Status()$/;"	f
+mpu6050_getDMPInt1Status	mods/mpu6050/mpu6050.h	/^int mpu6050_getDMPInt1Status();$/;"	p	signature:()
+mpu6050_getDMPInt2Status	mods/mpu6050/mpu6050.c	/^int mpu6050_getDMPInt2Status()$/;"	f
+mpu6050_getDMPInt2Status	mods/mpu6050/mpu6050.h	/^int mpu6050_getDMPInt2Status();$/;"	p	signature:()
+mpu6050_getDMPInt3Status	mods/mpu6050/mpu6050.c	/^int mpu6050_getDMPInt3Status()$/;"	f
+mpu6050_getDMPInt3Status	mods/mpu6050/mpu6050.h	/^int mpu6050_getDMPInt3Status();$/;"	p	signature:()
+mpu6050_getDMPInt4Status	mods/mpu6050/mpu6050.c	/^int mpu6050_getDMPInt4Status()$/;"	f
+mpu6050_getDMPInt4Status	mods/mpu6050/mpu6050.h	/^int mpu6050_getDMPInt4Status();$/;"	p	signature:()
+mpu6050_getDMPInt5Status	mods/mpu6050/mpu6050.c	/^int mpu6050_getDMPInt5Status()$/;"	f
+mpu6050_getDMPInt5Status	mods/mpu6050/mpu6050.h	/^int mpu6050_getDMPInt5Status();$/;"	p	signature:()
+mpu6050_getDeviceID	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getDeviceID()$/;"	f
+mpu6050_getDeviceID	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getDeviceID();$/;"	p	signature:()
+mpu6050_getExternalFrameSync	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getExternalFrameSync()$/;"	f
+mpu6050_getExternalFrameSync	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getExternalFrameSync();$/;"	p	signature:()
+mpu6050_getExternalSensorByte	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getExternalSensorByte(int position)$/;"	f	signature:(int position)
+mpu6050_getExternalSensorByte	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getExternalSensorByte(int position);$/;"	p	signature:(int position)
+mpu6050_getExternalSensorDWord	mods/mpu6050/mpu6050.c	/^uint32_t mpu6050_getExternalSensorDWord(int position)$/;"	f	signature:(int position)
+mpu6050_getExternalSensorDWord	mods/mpu6050/mpu6050.h	/^u32 mpu6050_getExternalSensorDWord(int position);$/;"	p	signature:(int position)
+mpu6050_getExternalSensorWord	mods/mpu6050/mpu6050.c	/^uint16_t mpu6050_getExternalSensorWord(int position)$/;"	f	signature:(int position)
+mpu6050_getExternalSensorWord	mods/mpu6050/mpu6050.h	/^u16 mpu6050_getExternalSensorWord(int position);$/;"	p	signature:(int position)
+mpu6050_getExternalShadowDelayEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getExternalShadowDelayEnabled()$/;"	f
+mpu6050_getExternalShadowDelayEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getExternalShadowDelayEnabled();$/;"	p	signature:()
+mpu6050_getFIFOByte	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getFIFOByte()$/;"	f
+mpu6050_getFIFOByte	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getFIFOByte();$/;"	p	signature:()
+mpu6050_getFIFOBytes	mods/mpu6050/mpu6050.c	/^void mpu6050_getFIFOBytes(uint8_t* data, uint8_t length) { i2cdev_readBytes(devAddr, MPU6050_RA_FIFO_R_W, length, data); }$/;"	f	signature:(uint8_t* data, uint8_t length)
+mpu6050_getFIFOBytes	mods/mpu6050/mpu6050.h	/^void mpu6050_getFIFOBytes(u8* data, u8 length);$/;"	p	signature:(u8* data, u8 length)
+mpu6050_getFIFOCount	mods/mpu6050/mpu6050.c	/^uint16_t mpu6050_getFIFOCount()$/;"	f
+mpu6050_getFIFOCount	mods/mpu6050/mpu6050.h	/^u16 mpu6050_getFIFOCount();$/;"	p	signature:()
+mpu6050_getFIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getFIFOEnabled()$/;"	f
+mpu6050_getFIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getFIFOEnabled();$/;"	p	signature:()
+mpu6050_getFSyncInterruptEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getFSyncInterruptEnabled()$/;"	f
+mpu6050_getFSyncInterruptEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getFSyncInterruptEnabled();$/;"	p	signature:()
+mpu6050_getFSyncInterruptLevel	mods/mpu6050/mpu6050.c	/^int mpu6050_getFSyncInterruptLevel()$/;"	f
+mpu6050_getFSyncInterruptLevel	mods/mpu6050/mpu6050.h	/^int mpu6050_getFSyncInterruptLevel();$/;"	p	signature:()
+mpu6050_getFreefallDetectionCounterDecrement	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getFreefallDetectionCounterDecrement()$/;"	f
+mpu6050_getFreefallDetectionCounterDecrement	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getFreefallDetectionCounterDecrement();$/;"	p	signature:()
+mpu6050_getFreefallDetectionDuration	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getFreefallDetectionDuration()$/;"	f
+mpu6050_getFreefallDetectionDuration	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getFreefallDetectionDuration();$/;"	p	signature:()
+mpu6050_getFreefallDetectionThreshold	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getFreefallDetectionThreshold()$/;"	f
+mpu6050_getFreefallDetectionThreshold	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getFreefallDetectionThreshold();$/;"	p	signature:()
+mpu6050_getFullScaleAccelRange	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getFullScaleAccelRange()$/;"	f
+mpu6050_getFullScaleAccelRange	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getFullScaleAccelRange();$/;"	p	signature:()
+mpu6050_getFullScaleGyroRange	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getFullScaleGyroRange()$/;"	f
+mpu6050_getFullScaleGyroRange	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getFullScaleGyroRange();$/;"	p	signature:()
+mpu6050_getI2CBypassEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getI2CBypassEnabled()$/;"	f
+mpu6050_getI2CBypassEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getI2CBypassEnabled();$/;"	p	signature:()
+mpu6050_getI2CMasterModeEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getI2CMasterModeEnabled()$/;"	f
+mpu6050_getI2CMasterModeEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getI2CMasterModeEnabled();$/;"	p	signature:()
+mpu6050_getIntDMPEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntDMPEnabled()$/;"	f
+mpu6050_getIntDMPEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntDMPEnabled();$/;"	p	signature:()
+mpu6050_getIntDMPStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntDMPStatus()$/;"	f
+mpu6050_getIntDMPStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntDMPStatus();$/;"	p	signature:()
+mpu6050_getIntDataReadyEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntDataReadyEnabled()$/;"	f
+mpu6050_getIntDataReadyEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntDataReadyEnabled();$/;"	p	signature:()
+mpu6050_getIntDataReadyStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntDataReadyStatus()$/;"	f
+mpu6050_getIntDataReadyStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntDataReadyStatus();$/;"	p	signature:()
+mpu6050_getIntEnabled	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getIntEnabled()$/;"	f
+mpu6050_getIntEnabled	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getIntEnabled();$/;"	p	signature:()
+mpu6050_getIntFIFOBufferOverflowEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntFIFOBufferOverflowEnabled()$/;"	f
+mpu6050_getIntFIFOBufferOverflowEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntFIFOBufferOverflowEnabled();$/;"	p	signature:()
+mpu6050_getIntFIFOBufferOverflowStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntFIFOBufferOverflowStatus()$/;"	f
+mpu6050_getIntFIFOBufferOverflowStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntFIFOBufferOverflowStatus();$/;"	p	signature:()
+mpu6050_getIntFreefallEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntFreefallEnabled()$/;"	f
+mpu6050_getIntFreefallEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntFreefallEnabled();$/;"	p	signature:()
+mpu6050_getIntFreefallStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntFreefallStatus()$/;"	f
+mpu6050_getIntFreefallStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntFreefallStatus();$/;"	p	signature:()
+mpu6050_getIntI2CMasterEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntI2CMasterEnabled()$/;"	f
+mpu6050_getIntI2CMasterEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntI2CMasterEnabled();$/;"	p	signature:()
+mpu6050_getIntI2CMasterStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntI2CMasterStatus()$/;"	f
+mpu6050_getIntI2CMasterStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntI2CMasterStatus();$/;"	p	signature:()
+mpu6050_getIntMotionEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntMotionEnabled()$/;"	f
+mpu6050_getIntMotionEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntMotionEnabled();$/;"	p	signature:()
+mpu6050_getIntMotionStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntMotionStatus()$/;"	f
+mpu6050_getIntMotionStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntMotionStatus();$/;"	p	signature:()
+mpu6050_getIntPLLReadyEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntPLLReadyEnabled()$/;"	f
+mpu6050_getIntPLLReadyEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntPLLReadyEnabled();$/;"	p	signature:()
+mpu6050_getIntPLLReadyStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntPLLReadyStatus()$/;"	f
+mpu6050_getIntPLLReadyStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntPLLReadyStatus();$/;"	p	signature:()
+mpu6050_getIntStatus	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getIntStatus()$/;"	f
+mpu6050_getIntStatus	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getIntStatus();$/;"	p	signature:()
+mpu6050_getIntZeroMotionEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntZeroMotionEnabled()$/;"	f
+mpu6050_getIntZeroMotionEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntZeroMotionEnabled();$/;"	p	signature:()
+mpu6050_getIntZeroMotionStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getIntZeroMotionStatus()$/;"	f
+mpu6050_getIntZeroMotionStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getIntZeroMotionStatus();$/;"	p	signature:()
+mpu6050_getInterruptDrive	mods/mpu6050/mpu6050.c	/^int mpu6050_getInterruptDrive()$/;"	f
+mpu6050_getInterruptDrive	mods/mpu6050/mpu6050.h	/^int mpu6050_getInterruptDrive();$/;"	p	signature:()
+mpu6050_getInterruptLatch	mods/mpu6050/mpu6050.c	/^int mpu6050_getInterruptLatch()$/;"	f
+mpu6050_getInterruptLatch	mods/mpu6050/mpu6050.h	/^int mpu6050_getInterruptLatch();$/;"	p	signature:()
+mpu6050_getInterruptLatchClear	mods/mpu6050/mpu6050.c	/^int mpu6050_getInterruptLatchClear()$/;"	f
+mpu6050_getInterruptLatchClear	mods/mpu6050/mpu6050.h	/^int mpu6050_getInterruptLatchClear();$/;"	p	signature:()
+mpu6050_getInterruptMode	mods/mpu6050/mpu6050.c	/^int mpu6050_getInterruptMode()$/;"	f
+mpu6050_getInterruptMode	mods/mpu6050/mpu6050.h	/^int mpu6050_getInterruptMode();$/;"	p	signature:()
+mpu6050_getLostArbitration	mods/mpu6050/mpu6050.c	/^int mpu6050_getLostArbitration()$/;"	f
+mpu6050_getLostArbitration	mods/mpu6050/mpu6050.h	/^int mpu6050_getLostArbitration();$/;"	p	signature:()
+mpu6050_getMasterClockSpeed	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getMasterClockSpeed()$/;"	f
+mpu6050_getMasterClockSpeed	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getMasterClockSpeed();$/;"	p	signature:()
+mpu6050_getMotion6	mods/mpu6050/mpu6050.c	/^void mpu6050_getMotion6(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz)$/;"	f	signature:(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz)
+mpu6050_getMotion6	mods/mpu6050/mpu6050.h	/^void mpu6050_getMotion6(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz);$/;"	p	signature:(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz)
+mpu6050_getMotion9	mods/mpu6050/mpu6050.c	/^void mpu6050_getMotion9(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz, int16_t* mx, int16_t* my, int16_t* mz) { mpu6050_getMotion6(ax, ay, az, gx, gy, gz); }$/;"	f	signature:(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz, int16_t* mx, int16_t* my, int16_t* mz)
+mpu6050_getMotion9	mods/mpu6050/mpu6050.h	/^void mpu6050_getMotion9(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz, int16_t* mx, int16_t* my, int16_t* mz);$/;"	p	signature:(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz, int16_t* mx, int16_t* my, int16_t* mz)
+mpu6050_getMotionDetectionCounterDecrement	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getMotionDetectionCounterDecrement()$/;"	f
+mpu6050_getMotionDetectionCounterDecrement	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getMotionDetectionCounterDecrement();$/;"	p	signature:()
+mpu6050_getMotionDetectionDuration	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getMotionDetectionDuration()$/;"	f
+mpu6050_getMotionDetectionDuration	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getMotionDetectionDuration();$/;"	p	signature:()
+mpu6050_getMotionDetectionThreshold	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getMotionDetectionThreshold()$/;"	f
+mpu6050_getMotionDetectionThreshold	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getMotionDetectionThreshold();$/;"	p	signature:()
+mpu6050_getMultiMasterEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getMultiMasterEnabled()$/;"	f
+mpu6050_getMultiMasterEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getMultiMasterEnabled();$/;"	p	signature:()
+mpu6050_getOTPBankValid	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getOTPBankValid()$/;"	f
+mpu6050_getOTPBankValid	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getOTPBankValid();$/;"	p	signature:()
+mpu6050_getPassthroughStatus	mods/mpu6050/mpu6050.c	/^int mpu6050_getPassthroughStatus()$/;"	f
+mpu6050_getPassthroughStatus	mods/mpu6050/mpu6050.h	/^int mpu6050_getPassthroughStatus();$/;"	p	signature:()
+mpu6050_getProduct	mods/mpu6050/mpu6050.c	/^Quaternion mpu6050_getProduct(Quaternion* sq, Quaternion q)$/;"	f	signature:(Quaternion* sq, Quaternion q)
+mpu6050_getProduct	mods/mpu6050/mpu6050.h	/^Quaternion mpu6050_getProduct(Quaternion* sq, Quaternion q);$/;"	p	signature:(Quaternion* sq, Quaternion q)
+mpu6050_getRate	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getRate()$/;"	f
+mpu6050_getRate	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getRate();$/;"	p	signature:()
+mpu6050_getRotation	mods/mpu6050/mpu6050.c	/^void mpu6050_getRotation(int16_t* x, int16_t* y, int16_t* z)$/;"	f	signature:(int16_t* x, int16_t* y, int16_t* z)
+mpu6050_getRotation	mods/mpu6050/mpu6050.h	/^void mpu6050_getRotation(int16_t* x, int16_t* y, int16_t* z);$/;"	p	signature:(int16_t* x, int16_t* y, int16_t* z)
+mpu6050_getRotationX	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getRotationX()$/;"	f
+mpu6050_getRotationX	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getRotationX();$/;"	p	signature:()
+mpu6050_getRotationY	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getRotationY()$/;"	f
+mpu6050_getRotationY	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getRotationY();$/;"	p	signature:()
+mpu6050_getRotationZ	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getRotationZ()$/;"	f
+mpu6050_getRotationZ	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getRotationZ();$/;"	p	signature:()
+mpu6050_getSlate4InputByte	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getSlate4InputByte()$/;"	f
+mpu6050_getSlate4InputByte	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getSlate4InputByte();$/;"	p	signature:()
+mpu6050_getSlave0FIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave0FIFOEnabled()$/;"	f
+mpu6050_getSlave0FIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave0FIFOEnabled();$/;"	p	signature:()
+mpu6050_getSlave0Nack	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave0Nack()$/;"	f
+mpu6050_getSlave0Nack	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave0Nack();$/;"	p	signature:()
+mpu6050_getSlave1FIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave1FIFOEnabled()$/;"	f
+mpu6050_getSlave1FIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave1FIFOEnabled();$/;"	p	signature:()
+mpu6050_getSlave1Nack	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave1Nack()$/;"	f
+mpu6050_getSlave1Nack	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave1Nack();$/;"	p	signature:()
+mpu6050_getSlave2FIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave2FIFOEnabled()$/;"	f
+mpu6050_getSlave2FIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave2FIFOEnabled();$/;"	p	signature:()
+mpu6050_getSlave2Nack	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave2Nack()$/;"	f
+mpu6050_getSlave2Nack	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave2Nack();$/;"	p	signature:()
+mpu6050_getSlave3FIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave3FIFOEnabled()$/;"	f
+mpu6050_getSlave3FIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave3FIFOEnabled();$/;"	p	signature:()
+mpu6050_getSlave3Nack	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave3Nack()$/;"	f
+mpu6050_getSlave3Nack	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave3Nack();$/;"	p	signature:()
+mpu6050_getSlave4Address	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getSlave4Address()$/;"	f
+mpu6050_getSlave4Address	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getSlave4Address();$/;"	p	signature:()
+mpu6050_getSlave4Enabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave4Enabled()$/;"	f
+mpu6050_getSlave4Enabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave4Enabled();$/;"	p	signature:()
+mpu6050_getSlave4InterruptEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave4InterruptEnabled()$/;"	f
+mpu6050_getSlave4InterruptEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave4InterruptEnabled();$/;"	p	signature:()
+mpu6050_getSlave4IsDone	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave4IsDone()$/;"	f
+mpu6050_getSlave4IsDone	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave4IsDone();$/;"	p	signature:()
+mpu6050_getSlave4MasterDelay	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getSlave4MasterDelay()$/;"	f
+mpu6050_getSlave4MasterDelay	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getSlave4MasterDelay();$/;"	p	signature:()
+mpu6050_getSlave4Nack	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave4Nack()$/;"	f
+mpu6050_getSlave4Nack	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave4Nack();$/;"	p	signature:()
+mpu6050_getSlave4Register	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getSlave4Register()$/;"	f
+mpu6050_getSlave4Register	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getSlave4Register();$/;"	p	signature:()
+mpu6050_getSlave4WriteMode	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlave4WriteMode()$/;"	f
+mpu6050_getSlave4WriteMode	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlave4WriteMode();$/;"	p	signature:()
+mpu6050_getSlaveAddress	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getSlaveAddress(uint8_t num)$/;"	f	signature:(uint8_t num)
+mpu6050_getSlaveAddress	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getSlaveAddress(u8 num);$/;"	p	signature:(u8 num)
+mpu6050_getSlaveDataLength	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getSlaveDataLength(uint8_t num)$/;"	f	signature:(uint8_t num)
+mpu6050_getSlaveDataLength	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getSlaveDataLength(u8 num);$/;"	p	signature:(u8 num)
+mpu6050_getSlaveDelayEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlaveDelayEnabled(uint8_t num)$/;"	f	signature:(uint8_t num)
+mpu6050_getSlaveDelayEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlaveDelayEnabled(u8 num);$/;"	p	signature:(u8 num)
+mpu6050_getSlaveEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlaveEnabled(uint8_t num)$/;"	f	signature:(uint8_t num)
+mpu6050_getSlaveEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlaveEnabled(u8 num);$/;"	p	signature:(u8 num)
+mpu6050_getSlaveReadWriteTransitionEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlaveReadWriteTransitionEnabled()$/;"	f
+mpu6050_getSlaveReadWriteTransitionEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlaveReadWriteTransitionEnabled();$/;"	p	signature:()
+mpu6050_getSlaveRegister	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getSlaveRegister(uint8_t num)$/;"	f	signature:(uint8_t num)
+mpu6050_getSlaveRegister	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getSlaveRegister(u8 num);$/;"	p	signature:(u8 num)
+mpu6050_getSlaveWordByteSwap	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlaveWordByteSwap(uint8_t num)$/;"	f	signature:(uint8_t num)
+mpu6050_getSlaveWordByteSwap	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlaveWordByteSwap(u8 num);$/;"	p	signature:(u8 num)
+mpu6050_getSlaveWordGroupOffset	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlaveWordGroupOffset(uint8_t num)$/;"	f	signature:(uint8_t num)
+mpu6050_getSlaveWordGroupOffset	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlaveWordGroupOffset(u8 num);$/;"	p	signature:(u8 num)
+mpu6050_getSlaveWriteMode	mods/mpu6050/mpu6050.c	/^int mpu6050_getSlaveWriteMode(uint8_t num)$/;"	f	signature:(uint8_t num)
+mpu6050_getSlaveWriteMode	mods/mpu6050/mpu6050.h	/^int mpu6050_getSlaveWriteMode(u8 num);$/;"	p	signature:(u8 num)
+mpu6050_getSleepEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getSleepEnabled()$/;"	f
+mpu6050_getSleepEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getSleepEnabled();$/;"	p	signature:()
+mpu6050_getStandbyXAccelEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getStandbyXAccelEnabled()$/;"	f
+mpu6050_getStandbyXAccelEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getStandbyXAccelEnabled();$/;"	p	signature:()
+mpu6050_getStandbyXGyroEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getStandbyXGyroEnabled()$/;"	f
+mpu6050_getStandbyXGyroEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getStandbyXGyroEnabled();$/;"	p	signature:()
+mpu6050_getStandbyYAccelEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getStandbyYAccelEnabled()$/;"	f
+mpu6050_getStandbyYAccelEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getStandbyYAccelEnabled();$/;"	p	signature:()
+mpu6050_getStandbyYGyroEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getStandbyYGyroEnabled()$/;"	f
+mpu6050_getStandbyYGyroEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getStandbyYGyroEnabled();$/;"	p	signature:()
+mpu6050_getStandbyZAccelEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getStandbyZAccelEnabled()$/;"	f
+mpu6050_getStandbyZAccelEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getStandbyZAccelEnabled();$/;"	p	signature:()
+mpu6050_getStandbyZGyroEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getStandbyZGyroEnabled()$/;"	f
+mpu6050_getStandbyZGyroEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getStandbyZGyroEnabled();$/;"	p	signature:()
+mpu6050_getTempFIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getTempFIFOEnabled()$/;"	f
+mpu6050_getTempFIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getTempFIFOEnabled();$/;"	p	signature:()
+mpu6050_getTempSensorEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getTempSensorEnabled()$/;"	f
+mpu6050_getTempSensorEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getTempSensorEnabled();$/;"	p	signature:()
+mpu6050_getTemperature	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getTemperature()$/;"	f
+mpu6050_getTemperature	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getTemperature();$/;"	p	signature:()
+mpu6050_getWaitForExternalSensorEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getWaitForExternalSensorEnabled()$/;"	f
+mpu6050_getWaitForExternalSensorEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getWaitForExternalSensorEnabled();$/;"	p	signature:()
+mpu6050_getWakeCycleEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getWakeCycleEnabled()$/;"	f
+mpu6050_getWakeCycleEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getWakeCycleEnabled();$/;"	p	signature:()
+mpu6050_getWakeFrequency	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getWakeFrequency()$/;"	f
+mpu6050_getWakeFrequency	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getWakeFrequency();$/;"	p	signature:()
+mpu6050_getXAccelOffset	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getXAccelOffset()$/;"	f
+mpu6050_getXAccelOffset	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getXAccelOffset();$/;"	p	signature:()
+mpu6050_getXFineGain	mods/mpu6050/mpu6050.c	/^int8_t mpu6050_getXFineGain()$/;"	f
+mpu6050_getXFineGain	mods/mpu6050/mpu6050.h	/^int8_t mpu6050_getXFineGain();$/;"	p	signature:()
+mpu6050_getXGyroFIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getXGyroFIFOEnabled()$/;"	f
+mpu6050_getXGyroFIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getXGyroFIFOEnabled();$/;"	p	signature:()
+mpu6050_getXGyroOffset	mods/mpu6050/mpu6050.c	/^int8_t mpu6050_getXGyroOffset()$/;"	f
+mpu6050_getXGyroOffset	mods/mpu6050/mpu6050.h	/^int8_t mpu6050_getXGyroOffset();$/;"	p	signature:()
+mpu6050_getXGyroOffsetUser	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getXGyroOffsetUser()$/;"	f
+mpu6050_getXGyroOffsetUser	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getXGyroOffsetUser();$/;"	p	signature:()
+mpu6050_getXNegMotionDetected	mods/mpu6050/mpu6050.c	/^int mpu6050_getXNegMotionDetected()$/;"	f
+mpu6050_getXNegMotionDetected	mods/mpu6050/mpu6050.h	/^int mpu6050_getXNegMotionDetected();$/;"	p	signature:()
+mpu6050_getXPosMotionDetected	mods/mpu6050/mpu6050.c	/^int mpu6050_getXPosMotionDetected()$/;"	f
+mpu6050_getXPosMotionDetected	mods/mpu6050/mpu6050.h	/^int mpu6050_getXPosMotionDetected();$/;"	p	signature:()
+mpu6050_getYAccelOffset	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getYAccelOffset()$/;"	f
+mpu6050_getYAccelOffset	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getYAccelOffset();$/;"	p	signature:()
+mpu6050_getYFineGain	mods/mpu6050/mpu6050.c	/^int8_t mpu6050_getYFineGain()$/;"	f
+mpu6050_getYFineGain	mods/mpu6050/mpu6050.h	/^int8_t mpu6050_getYFineGain();$/;"	p	signature:()
+mpu6050_getYGyroFIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getYGyroFIFOEnabled()$/;"	f
+mpu6050_getYGyroFIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getYGyroFIFOEnabled();$/;"	p	signature:()
+mpu6050_getYGyroOffset	mods/mpu6050/mpu6050.c	/^int8_t mpu6050_getYGyroOffset()$/;"	f
+mpu6050_getYGyroOffset	mods/mpu6050/mpu6050.h	/^int8_t mpu6050_getYGyroOffset();$/;"	p	signature:()
+mpu6050_getYGyroOffsetUser	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getYGyroOffsetUser()$/;"	f
+mpu6050_getYGyroOffsetUser	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getYGyroOffsetUser();$/;"	p	signature:()
+mpu6050_getYNegMotionDetected	mods/mpu6050/mpu6050.c	/^int mpu6050_getYNegMotionDetected()$/;"	f
+mpu6050_getYNegMotionDetected	mods/mpu6050/mpu6050.h	/^int mpu6050_getYNegMotionDetected();$/;"	p	signature:()
+mpu6050_getYPosMotionDetected	mods/mpu6050/mpu6050.c	/^int mpu6050_getYPosMotionDetected()$/;"	f
+mpu6050_getYPosMotionDetected	mods/mpu6050/mpu6050.h	/^int mpu6050_getYPosMotionDetected();$/;"	p	signature:()
+mpu6050_getZAccelOffset	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getZAccelOffset()$/;"	f
+mpu6050_getZAccelOffset	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getZAccelOffset();$/;"	p	signature:()
+mpu6050_getZFineGain	mods/mpu6050/mpu6050.c	/^int8_t mpu6050_getZFineGain()$/;"	f
+mpu6050_getZFineGain	mods/mpu6050/mpu6050.h	/^int8_t mpu6050_getZFineGain();$/;"	p	signature:()
+mpu6050_getZGyroFIFOEnabled	mods/mpu6050/mpu6050.c	/^int mpu6050_getZGyroFIFOEnabled()$/;"	f
+mpu6050_getZGyroFIFOEnabled	mods/mpu6050/mpu6050.h	/^int mpu6050_getZGyroFIFOEnabled();$/;"	p	signature:()
+mpu6050_getZGyroOffset	mods/mpu6050/mpu6050.c	/^int8_t mpu6050_getZGyroOffset()$/;"	f
+mpu6050_getZGyroOffset	mods/mpu6050/mpu6050.h	/^int8_t mpu6050_getZGyroOffset();$/;"	p	signature:()
+mpu6050_getZGyroOffsetUser	mods/mpu6050/mpu6050.c	/^int16_t mpu6050_getZGyroOffsetUser()$/;"	f
+mpu6050_getZGyroOffsetUser	mods/mpu6050/mpu6050.h	/^int16_t mpu6050_getZGyroOffsetUser();$/;"	p	signature:()
+mpu6050_getZNegMotionDetected	mods/mpu6050/mpu6050.c	/^int mpu6050_getZNegMotionDetected()$/;"	f
+mpu6050_getZNegMotionDetected	mods/mpu6050/mpu6050.h	/^int mpu6050_getZNegMotionDetected();$/;"	p	signature:()
+mpu6050_getZPosMotionDetected	mods/mpu6050/mpu6050.c	/^int mpu6050_getZPosMotionDetected()$/;"	f
+mpu6050_getZPosMotionDetected	mods/mpu6050/mpu6050.h	/^int mpu6050_getZPosMotionDetected();$/;"	p	signature:()
+mpu6050_getZeroMotionDetected	mods/mpu6050/mpu6050.c	/^int mpu6050_getZeroMotionDetected()$/;"	f
+mpu6050_getZeroMotionDetected	mods/mpu6050/mpu6050.h	/^int mpu6050_getZeroMotionDetected();$/;"	p	signature:()
+mpu6050_getZeroMotionDetectionDuration	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getZeroMotionDetectionDuration()$/;"	f
+mpu6050_getZeroMotionDetectionDuration	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getZeroMotionDetectionDuration();$/;"	p	signature:()
+mpu6050_getZeroMotionDetectionThreshold	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_getZeroMotionDetectionThreshold()$/;"	f
+mpu6050_getZeroMotionDetectionThreshold	mods/mpu6050/mpu6050.h	/^u8 mpu6050_getZeroMotionDetectionThreshold();$/;"	p	signature:()
+mpu6050_initialize	mods/mpu6050/mpu6050.c	/^void mpu6050_initialize()$/;"	f
+mpu6050_initialize	mods/mpu6050/mpu6050.h	/^void mpu6050_initialize();$/;"	p	signature:()
+mpu6050_readMemoryBlock	mods/mpu6050/mpu6050.c	/^void mpu6050_readMemoryBlock(uint8_t* data, uint16_t dataSize, uint8_t bank, uint8_t address)$/;"	f	signature:(uint8_t* data, uint16_t dataSize, uint8_t bank, uint8_t address)
+mpu6050_readMemoryBlock	mods/mpu6050/mpu6050.h	/^void mpu6050_readMemoryBlock(u8* data, u16 dataSize, u8 bank, u8 address);$/;"	p	signature:(u8* data, u16 dataSize, u8 bank, u8 address)
+mpu6050_readMemoryByte	mods/mpu6050/mpu6050.c	/^uint8_t mpu6050_readMemoryByte()$/;"	f
+mpu6050_readMemoryByte	mods/mpu6050/mpu6050.h	/^u8 mpu6050_readMemoryByte();$/;"	p	signature:()
+mpu6050_reset	mods/mpu6050/mpu6050.c	/^void mpu6050_reset() { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_1, MPU6050_PWR1_DEVICE_RESET_BIT, 1); }$/;"	f
+mpu6050_reset	mods/mpu6050/mpu6050.h	/^void mpu6050_reset();$/;"	p	signature:()
+mpu6050_resetAccelerometerPath	mods/mpu6050/mpu6050.c	/^void mpu6050_resetAccelerometerPath() { i2cdev_writeBit(devAddr, MPU6050_RA_SIGNAL_PATH_RESET, MPU6050_PATHRESET_ACCEL_RESET_BIT, 1); }$/;"	f
+mpu6050_resetAccelerometerPath	mods/mpu6050/mpu6050.h	/^void mpu6050_resetAccelerometerPath();$/;"	p	signature:()
+mpu6050_resetDMP	mods/mpu6050/mpu6050.c	/^void mpu6050_resetDMP() { i2cdev_writeBit(devAddr, MPU6050_RA_USER_CTRL, MPU6050_USERCTRL_DMP_RESET_BIT, 1); }$/;"	f
+mpu6050_resetDMP	mods/mpu6050/mpu6050.h	/^void mpu6050_resetDMP();$/;"	p	signature:()
+mpu6050_resetFIFO	mods/mpu6050/mpu6050.c	/^void mpu6050_resetFIFO() { i2cdev_writeBit(devAddr, MPU6050_RA_USER_CTRL, MPU6050_USERCTRL_FIFO_RESET_BIT, 1); }$/;"	f
+mpu6050_resetFIFO	mods/mpu6050/mpu6050.h	/^void mpu6050_resetFIFO();$/;"	p	signature:()
+mpu6050_resetGyroscopePath	mods/mpu6050/mpu6050.c	/^void mpu6050_resetGyroscopePath() { i2cdev_writeBit(devAddr, MPU6050_RA_SIGNAL_PATH_RESET, MPU6050_PATHRESET_GYRO_RESET_BIT, 1); }$/;"	f
+mpu6050_resetGyroscopePath	mods/mpu6050/mpu6050.h	/^void mpu6050_resetGyroscopePath();$/;"	p	signature:()
+mpu6050_resetI2CMaster	mods/mpu6050/mpu6050.c	/^void mpu6050_resetI2CMaster() { i2cdev_writeBit(devAddr, MPU6050_RA_USER_CTRL, MPU6050_USERCTRL_I2C_MST_RESET_BIT, 1); }$/;"	f
+mpu6050_resetI2CMaster	mods/mpu6050/mpu6050.h	/^void mpu6050_resetI2CMaster();$/;"	p	signature:()
+mpu6050_resetSensors	mods/mpu6050/mpu6050.c	/^void mpu6050_resetSensors() { i2cdev_writeBit(devAddr, MPU6050_RA_USER_CTRL, MPU6050_USERCTRL_SIG_COND_RESET_BIT, 1); }$/;"	f
+mpu6050_resetSensors	mods/mpu6050/mpu6050.h	/^void mpu6050_resetSensors();$/;"	p	signature:()
+mpu6050_resetTemperaturePath	mods/mpu6050/mpu6050.c	/^void mpu6050_resetTemperaturePath() { i2cdev_writeBit(devAddr, MPU6050_RA_SIGNAL_PATH_RESET, MPU6050_PATHRESET_TEMP_RESET_BIT, 1); }$/;"	f
+mpu6050_resetTemperaturePath	mods/mpu6050/mpu6050.h	/^void mpu6050_resetTemperaturePath();$/;"	p	signature:()
+mpu6050_rotate	mods/mpu6050/mpu6050.c	/^void mpu6050_rotate(VectorInt16* v, Quaternion* q)$/;"	f	signature:(VectorInt16* v, Quaternion* q)
+mpu6050_rotate	mods/mpu6050/mpu6050.h	/^void mpu6050_rotate(VectorInt16* v, Quaternion* q);$/;"	p	signature:(VectorInt16* v, Quaternion* q)
+mpu6050_run	mods/mpu6050/mpu6050.c	/^void mpu6050_run()$/;"	f
+mpu6050_run	mods/mpu6050/mpu6050.h	/^void mpu6050_run();$/;"	p	signature:()
+mpu6050_setAccelFIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setAccelFIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_FIFO_EN, MPU6050_ACCEL_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setAccelFIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setAccelFIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setAccelXSelfTest	mods/mpu6050/mpu6050.c	/^void mpu6050_setAccelXSelfTest(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_ACCEL_CONFIG, MPU6050_ACONFIG_XA_ST_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setAccelXSelfTest	mods/mpu6050/mpu6050.h	/^void mpu6050_setAccelXSelfTest(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setAccelYSelfTest	mods/mpu6050/mpu6050.c	/^void mpu6050_setAccelYSelfTest(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_ACCEL_CONFIG, MPU6050_ACONFIG_YA_ST_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setAccelYSelfTest	mods/mpu6050/mpu6050.h	/^void mpu6050_setAccelYSelfTest(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setAccelZSelfTest	mods/mpu6050/mpu6050.c	/^void mpu6050_setAccelZSelfTest(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_ACCEL_CONFIG, MPU6050_ACONFIG_ZA_ST_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setAccelZSelfTest	mods/mpu6050/mpu6050.h	/^void mpu6050_setAccelZSelfTest(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setAccelerometerPowerOnDelay	mods/mpu6050/mpu6050.c	/^void mpu6050_setAccelerometerPowerOnDelay(uint8_t delay) { i2cdev_writeBits(devAddr, MPU6050_RA_MOT_DETECT_CTRL, MPU6050_DETECT_ACCEL_ON_DELAY_BIT, MPU6050_DETECT_ACCEL_ON_DELAY_LENGTH, delay); }$/;"	f	signature:(uint8_t delay)
+mpu6050_setAccelerometerPowerOnDelay	mods/mpu6050/mpu6050.h	/^void mpu6050_setAccelerometerPowerOnDelay(u8 delay);$/;"	p	signature:(u8 delay)
+mpu6050_setAuxVDDIOLevel	mods/mpu6050/mpu6050.c	/^void mpu6050_setAuxVDDIOLevel(uint8_t level) { i2cdev_writeBit(devAddr, MPU6050_RA_YG_OFFS_TC, MPU6050_TC_PWR_MODE_BIT, level); }$/;"	f	signature:(uint8_t level)
+mpu6050_setAuxVDDIOLevel	mods/mpu6050/mpu6050.h	/^void mpu6050_setAuxVDDIOLevel(u8 level);$/;"	p	signature:(u8 level)
+mpu6050_setClockOutputEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setClockOutputEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_PIN_CFG, MPU6050_INTCFG_CLKOUT_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setClockOutputEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setClockOutputEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setClockSource	mods/mpu6050/mpu6050.c	/^void mpu6050_setClockSource(uint8_t source) { i2cdev_writeBits(devAddr, MPU6050_RA_PWR_MGMT_1, MPU6050_PWR1_CLKSEL_BIT, MPU6050_PWR1_CLKSEL_LENGTH, source); }$/;"	f	signature:(uint8_t source)
+mpu6050_setClockSource	mods/mpu6050/mpu6050.h	/^void mpu6050_setClockSource(u8 source);$/;"	p	signature:(u8 source)
+mpu6050_setDHPFMode	mods/mpu6050/mpu6050.c	/^void mpu6050_setDHPFMode(uint8_t bandwidth) { i2cdev_writeBits(devAddr, MPU6050_RA_ACCEL_CONFIG, MPU6050_ACONFIG_ACCEL_HPF_BIT, MPU6050_ACONFIG_ACCEL_HPF_LENGTH, bandwidth); }$/;"	f	signature:(uint8_t bandwidth)
+mpu6050_setDHPFMode	mods/mpu6050/mpu6050.h	/^void mpu6050_setDHPFMode(u8 bandwidth);$/;"	p	signature:(u8 bandwidth)
+mpu6050_setDLPFMode	mods/mpu6050/mpu6050.c	/^void mpu6050_setDLPFMode(uint8_t mode) { i2cdev_writeBits(devAddr, MPU6050_RA_CONFIG, MPU6050_CFG_DLPF_CFG_BIT, MPU6050_CFG_DLPF_CFG_LENGTH, mode); }$/;"	f	signature:(uint8_t mode)
+mpu6050_setDLPFMode	mods/mpu6050/mpu6050.h	/^void mpu6050_setDLPFMode(u8 mode);$/;"	p	signature:(u8 mode)
+mpu6050_setDMPConfig1	mods/mpu6050/mpu6050.c	/^void mpu6050_setDMPConfig1(uint8_t config) { i2cdev_writeByte(devAddr, MPU6050_RA_DMP_CFG_1, config); }$/;"	f	signature:(uint8_t config)
+mpu6050_setDMPConfig1	mods/mpu6050/mpu6050.h	/^void mpu6050_setDMPConfig1(u8 config);$/;"	p	signature:(u8 config)
+mpu6050_setDMPConfig2	mods/mpu6050/mpu6050.c	/^void mpu6050_setDMPConfig2(uint8_t config) { i2cdev_writeByte(devAddr, MPU6050_RA_DMP_CFG_2, config); }$/;"	f	signature:(uint8_t config)
+mpu6050_setDMPConfig2	mods/mpu6050/mpu6050.h	/^void mpu6050_setDMPConfig2(u8 config);$/;"	p	signature:(u8 config)
+mpu6050_setDMPEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setDMPEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_USER_CTRL, MPU6050_USERCTRL_DMP_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setDMPEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setDMPEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setDeviceID	mods/mpu6050/mpu6050.c	/^void mpu6050_setDeviceID(uint8_t id) { i2cdev_writeBits(devAddr, MPU6050_RA_WHO_AM_I, MPU6050_WHO_AM_I_BIT, MPU6050_WHO_AM_I_LENGTH, id); }$/;"	f	signature:(uint8_t id)
+mpu6050_setDeviceID	mods/mpu6050/mpu6050.h	/^void mpu6050_setDeviceID(u8 id);$/;"	p	signature:(u8 id)
+mpu6050_setExternalFrameSync	mods/mpu6050/mpu6050.c	/^void mpu6050_setExternalFrameSync(uint8_t sync) { i2cdev_writeBits(devAddr, MPU6050_RA_CONFIG, MPU6050_CFG_EXT_SYNC_SET_BIT, MPU6050_CFG_EXT_SYNC_SET_LENGTH, sync); }$/;"	f	signature:(uint8_t sync)
+mpu6050_setExternalFrameSync	mods/mpu6050/mpu6050.h	/^void mpu6050_setExternalFrameSync(u8 sync);$/;"	p	signature:(u8 sync)
+mpu6050_setExternalShadowDelayEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setExternalShadowDelayEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_MST_DELAY_CTRL, MPU6050_DELAYCTRL_DELAY_ES_SHADOW_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setExternalShadowDelayEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setExternalShadowDelayEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setFIFOByte	mods/mpu6050/mpu6050.c	/^void mpu6050_setFIFOByte(uint8_t data) { i2cdev_writeByte(devAddr, MPU6050_RA_FIFO_R_W, data); }$/;"	f	signature:(uint8_t data)
+mpu6050_setFIFOByte	mods/mpu6050/mpu6050.h	/^void mpu6050_setFIFOByte(u8 data);$/;"	p	signature:(u8 data)
+mpu6050_setFIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setFIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_USER_CTRL, MPU6050_USERCTRL_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setFIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setFIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setFSyncInterruptEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setFSyncInterruptEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_PIN_CFG, MPU6050_INTCFG_FSYNC_INT_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setFSyncInterruptEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setFSyncInterruptEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setFSyncInterruptLevel	mods/mpu6050/mpu6050.c	/^void mpu6050_setFSyncInterruptLevel(int level) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_PIN_CFG, MPU6050_INTCFG_FSYNC_INT_LEVEL_BIT, level); }$/;"	f	signature:(int level)
+mpu6050_setFSyncInterruptLevel	mods/mpu6050/mpu6050.h	/^void mpu6050_setFSyncInterruptLevel(int level);$/;"	p	signature:(int level)
+mpu6050_setFreefallDetectionCounterDecrement	mods/mpu6050/mpu6050.c	/^void mpu6050_setFreefallDetectionCounterDecrement(uint8_t decrement) { i2cdev_writeBits(devAddr, MPU6050_RA_MOT_DETECT_CTRL, MPU6050_DETECT_FF_COUNT_BIT, MPU6050_DETECT_FF_COUNT_LENGTH, decrement); }$/;"	f	signature:(uint8_t decrement)
+mpu6050_setFreefallDetectionCounterDecrement	mods/mpu6050/mpu6050.h	/^void mpu6050_setFreefallDetectionCounterDecrement(u8 decrement);$/;"	p	signature:(u8 decrement)
+mpu6050_setFreefallDetectionDuration	mods/mpu6050/mpu6050.c	/^void mpu6050_setFreefallDetectionDuration(uint8_t duration) { i2cdev_writeByte(devAddr, MPU6050_RA_FF_DUR, duration); }$/;"	f	signature:(uint8_t duration)
+mpu6050_setFreefallDetectionDuration	mods/mpu6050/mpu6050.h	/^void mpu6050_setFreefallDetectionDuration(u8 duration);$/;"	p	signature:(u8 duration)
+mpu6050_setFreefallDetectionThreshold	mods/mpu6050/mpu6050.c	/^void mpu6050_setFreefallDetectionThreshold(uint8_t threshold) { i2cdev_writeByte(devAddr, MPU6050_RA_FF_THR, threshold); }$/;"	f	signature:(uint8_t threshold)
+mpu6050_setFreefallDetectionThreshold	mods/mpu6050/mpu6050.h	/^void mpu6050_setFreefallDetectionThreshold(u8 threshold);$/;"	p	signature:(u8 threshold)
+mpu6050_setFullScaleAccelRange	mods/mpu6050/mpu6050.c	/^void mpu6050_setFullScaleAccelRange(uint8_t range) { i2cdev_writeBits(devAddr, MPU6050_RA_ACCEL_CONFIG, MPU6050_ACONFIG_AFS_SEL_BIT, MPU6050_ACONFIG_AFS_SEL_LENGTH, range); }$/;"	f	signature:(uint8_t range)
+mpu6050_setFullScaleAccelRange	mods/mpu6050/mpu6050.h	/^void mpu6050_setFullScaleAccelRange(u8 range);$/;"	p	signature:(u8 range)
+mpu6050_setFullScaleGyroRange	mods/mpu6050/mpu6050.c	/^void mpu6050_setFullScaleGyroRange(uint8_t range) { i2cdev_writeBits(devAddr, MPU6050_RA_GYRO_CONFIG, MPU6050_GCONFIG_FS_SEL_BIT, MPU6050_GCONFIG_FS_SEL_LENGTH, range); }$/;"	f	signature:(uint8_t range)
+mpu6050_setFullScaleGyroRange	mods/mpu6050/mpu6050.h	/^void mpu6050_setFullScaleGyroRange(u8 range);$/;"	p	signature:(u8 range)
+mpu6050_setI2CBypassEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setI2CBypassEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_PIN_CFG, MPU6050_INTCFG_I2C_BYPASS_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setI2CBypassEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setI2CBypassEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setI2CMasterModeEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setI2CMasterModeEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_USER_CTRL, MPU6050_USERCTRL_I2C_MST_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setI2CMasterModeEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setI2CMasterModeEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setIntDMPEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntDMPEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_ENABLE, MPU6050_INTERRUPT_DMP_INT_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setIntDMPEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntDMPEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setIntDataReadyEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntDataReadyEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_ENABLE, MPU6050_INTERRUPT_DATA_RDY_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setIntDataReadyEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntDataReadyEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setIntEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntEnabled(uint8_t enabled) { i2cdev_writeByte(devAddr, MPU6050_RA_INT_ENABLE, enabled); }$/;"	f	signature:(uint8_t enabled)
+mpu6050_setIntEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntEnabled(u8 enabled);$/;"	p	signature:(u8 enabled)
+mpu6050_setIntFIFOBufferOverflowEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntFIFOBufferOverflowEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_ENABLE, MPU6050_INTERRUPT_FIFO_OFLOW_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setIntFIFOBufferOverflowEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntFIFOBufferOverflowEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setIntFreefallEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntFreefallEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_ENABLE, MPU6050_INTERRUPT_FF_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setIntFreefallEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntFreefallEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setIntI2CMasterEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntI2CMasterEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_ENABLE, MPU6050_INTERRUPT_I2C_MST_INT_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setIntI2CMasterEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntI2CMasterEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setIntMotionEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntMotionEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_ENABLE, MPU6050_INTERRUPT_MOT_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setIntMotionEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntMotionEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setIntPLLReadyEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntPLLReadyEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_ENABLE, MPU6050_INTERRUPT_PLL_RDY_INT_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setIntPLLReadyEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntPLLReadyEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setIntZeroMotionEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setIntZeroMotionEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_ENABLE, MPU6050_INTERRUPT_ZMOT_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setIntZeroMotionEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setIntZeroMotionEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setInterruptDrive	mods/mpu6050/mpu6050.c	/^void mpu6050_setInterruptDrive(int drive) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_PIN_CFG, MPU6050_INTCFG_INT_OPEN_BIT, drive); }$/;"	f	signature:(int drive)
+mpu6050_setInterruptDrive	mods/mpu6050/mpu6050.h	/^void mpu6050_setInterruptDrive(int drive);$/;"	p	signature:(int drive)
+mpu6050_setInterruptLatch	mods/mpu6050/mpu6050.c	/^void mpu6050_setInterruptLatch(int latch) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_PIN_CFG, MPU6050_INTCFG_LATCH_INT_EN_BIT, latch); }$/;"	f	signature:(int latch)
+mpu6050_setInterruptLatch	mods/mpu6050/mpu6050.h	/^void mpu6050_setInterruptLatch(int latch);$/;"	p	signature:(int latch)
+mpu6050_setInterruptLatchClear	mods/mpu6050/mpu6050.c	/^void mpu6050_setInterruptLatchClear(int clear) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_PIN_CFG, MPU6050_INTCFG_INT_RD_CLEAR_BIT, clear); }$/;"	f	signature:(int clear)
+mpu6050_setInterruptLatchClear	mods/mpu6050/mpu6050.h	/^void mpu6050_setInterruptLatchClear(int clear);$/;"	p	signature:(int clear)
+mpu6050_setInterruptMode	mods/mpu6050/mpu6050.c	/^void mpu6050_setInterruptMode(int mode) { i2cdev_writeBit(devAddr, MPU6050_RA_INT_PIN_CFG, MPU6050_INTCFG_INT_LEVEL_BIT, mode); }$/;"	f	signature:(int mode)
+mpu6050_setInterruptMode	mods/mpu6050/mpu6050.h	/^void mpu6050_setInterruptMode(int mode);$/;"	p	signature:(int mode)
+mpu6050_setMasterClockSpeed	mods/mpu6050/mpu6050.c	/^void mpu6050_setMasterClockSpeed(uint8_t speed) { i2cdev_writeBits(devAddr, MPU6050_RA_I2C_MST_CTRL, MPU6050_I2C_MST_CLK_BIT, MPU6050_I2C_MST_CLK_LENGTH, speed); }$/;"	f	signature:(uint8_t speed)
+mpu6050_setMasterClockSpeed	mods/mpu6050/mpu6050.h	/^void mpu6050_setMasterClockSpeed(u8 speed);$/;"	p	signature:(u8 speed)
+mpu6050_setMemoryBank	mods/mpu6050/mpu6050.c	/^void mpu6050_setMemoryBank(uint8_t bank, int prefetchEnabled, int userBank)$/;"	f	signature:(uint8_t bank, int prefetchEnabled, int userBank)
+mpu6050_setMemoryBank	mods/mpu6050/mpu6050.h	/^void mpu6050_setMemoryBank(u8 bank, int prefetchEnabled, int userBank);$/;"	p	signature:(u8 bank, int prefetchEnabled, int userBank)
+mpu6050_setMemoryStartAddress	mods/mpu6050/mpu6050.c	/^void mpu6050_setMemoryStartAddress(uint8_t address) { i2cdev_writeByte(devAddr, MPU6050_RA_MEM_START_ADDR, address); }$/;"	f	signature:(uint8_t address)
+mpu6050_setMemoryStartAddress	mods/mpu6050/mpu6050.h	/^void mpu6050_setMemoryStartAddress(u8 address);$/;"	p	signature:(u8 address)
+mpu6050_setMotionDetectionCounterDecrement	mods/mpu6050/mpu6050.c	/^void mpu6050_setMotionDetectionCounterDecrement(uint8_t decrement) { i2cdev_writeBits(devAddr, MPU6050_RA_MOT_DETECT_CTRL, MPU6050_DETECT_MOT_COUNT_BIT, MPU6050_DETECT_MOT_COUNT_LENGTH, decrement); }$/;"	f	signature:(uint8_t decrement)
+mpu6050_setMotionDetectionCounterDecrement	mods/mpu6050/mpu6050.h	/^void mpu6050_setMotionDetectionCounterDecrement(u8 decrement);$/;"	p	signature:(u8 decrement)
+mpu6050_setMotionDetectionDuration	mods/mpu6050/mpu6050.c	/^void mpu6050_setMotionDetectionDuration(uint8_t duration) { i2cdev_writeByte(devAddr, MPU6050_RA_MOT_DUR, duration); }$/;"	f	signature:(uint8_t duration)
+mpu6050_setMotionDetectionDuration	mods/mpu6050/mpu6050.h	/^void mpu6050_setMotionDetectionDuration(u8 duration);$/;"	p	signature:(u8 duration)
+mpu6050_setMotionDetectionThreshold	mods/mpu6050/mpu6050.c	/^void mpu6050_setMotionDetectionThreshold(uint8_t threshold) { i2cdev_writeByte(devAddr, MPU6050_RA_MOT_THR, threshold); }$/;"	f	signature:(uint8_t threshold)
+mpu6050_setMotionDetectionThreshold	mods/mpu6050/mpu6050.h	/^void mpu6050_setMotionDetectionThreshold(u8 threshold);$/;"	p	signature:(u8 threshold)
+mpu6050_setMultiMasterEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setMultiMasterEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_MST_CTRL, MPU6050_MULT_MST_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setMultiMasterEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setMultiMasterEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setOTPBankValid	mods/mpu6050/mpu6050.c	/^void mpu6050_setOTPBankValid(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_XG_OFFS_TC, MPU6050_TC_OTP_BNK_VLD_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setOTPBankValid	mods/mpu6050/mpu6050.h	/^void mpu6050_setOTPBankValid(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setRate	mods/mpu6050/mpu6050.c	/^void mpu6050_setRate(uint8_t rate) { i2cdev_writeByte(devAddr, MPU6050_RA_SMPLRT_DIV, rate); }$/;"	f	signature:(uint8_t rate)
+mpu6050_setRate	mods/mpu6050/mpu6050.h	/^void mpu6050_setRate(u8 rate);$/;"	p	signature:(u8 rate)
+mpu6050_setSlave0FIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave0FIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_FIFO_EN, MPU6050_SLV0_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setSlave0FIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave0FIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setSlave1FIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave1FIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_FIFO_EN, MPU6050_SLV1_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setSlave1FIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave1FIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setSlave2FIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave2FIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_FIFO_EN, MPU6050_SLV2_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setSlave2FIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave2FIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setSlave3FIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave3FIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_MST_CTRL, MPU6050_SLV_3_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setSlave3FIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave3FIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setSlave4Address	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave4Address(uint8_t address) { i2cdev_writeByte(devAddr, MPU6050_RA_I2C_SLV4_ADDR, address); }$/;"	f	signature:(uint8_t address)
+mpu6050_setSlave4Address	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave4Address(u8 address);$/;"	p	signature:(u8 address)
+mpu6050_setSlave4Enabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave4Enabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_SLV4_CTRL, MPU6050_I2C_SLV4_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setSlave4Enabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave4Enabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setSlave4InterruptEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave4InterruptEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_SLV4_CTRL, MPU6050_I2C_SLV4_INT_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setSlave4InterruptEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave4InterruptEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setSlave4MasterDelay	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave4MasterDelay(uint8_t delay) { i2cdev_writeBits(devAddr, MPU6050_RA_I2C_SLV4_CTRL, MPU6050_I2C_SLV4_MST_DLY_BIT, MPU6050_I2C_SLV4_MST_DLY_LENGTH, delay); }$/;"	f	signature:(uint8_t delay)
+mpu6050_setSlave4MasterDelay	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave4MasterDelay(u8 delay);$/;"	p	signature:(u8 delay)
+mpu6050_setSlave4OutputByte	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave4OutputByte(uint8_t data) { i2cdev_writeByte(devAddr, MPU6050_RA_I2C_SLV4_DO, data); }$/;"	f	signature:(uint8_t data)
+mpu6050_setSlave4OutputByte	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave4OutputByte(u8 data);$/;"	p	signature:(u8 data)
+mpu6050_setSlave4Register	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave4Register(uint8_t reg) { i2cdev_writeByte(devAddr, MPU6050_RA_I2C_SLV4_REG, reg); }$/;"	f	signature:(uint8_t reg)
+mpu6050_setSlave4Register	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave4Register(u8 reg);$/;"	p	signature:(u8 reg)
+mpu6050_setSlave4WriteMode	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlave4WriteMode(int mode) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_SLV4_CTRL, MPU6050_I2C_SLV4_REG_DIS_BIT, mode); }$/;"	f	signature:(int mode)
+mpu6050_setSlave4WriteMode	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlave4WriteMode(int mode);$/;"	p	signature:(int mode)
+mpu6050_setSlaveAddress	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveAddress(uint8_t num, uint8_t address)$/;"	f	signature:(uint8_t num, uint8_t address)
+mpu6050_setSlaveAddress	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveAddress(u8 num, u8 address);$/;"	p	signature:(u8 num, u8 address)
+mpu6050_setSlaveDataLength	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveDataLength(uint8_t num, uint8_t length)$/;"	f	signature:(uint8_t num, uint8_t length)
+mpu6050_setSlaveDataLength	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveDataLength(u8 num, u8 length);$/;"	p	signature:(u8 num, u8 length)
+mpu6050_setSlaveDelayEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveDelayEnabled(uint8_t num, int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_MST_DELAY_CTRL, num, enabled); }$/;"	f	signature:(uint8_t num, int enabled)
+mpu6050_setSlaveDelayEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveDelayEnabled(u8 num, int enabled);$/;"	p	signature:(u8 num, int enabled)
+mpu6050_setSlaveEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveEnabled(uint8_t num, int enabled)$/;"	f	signature:(uint8_t num, int enabled)
+mpu6050_setSlaveEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveEnabled(u8 num, int enabled);$/;"	p	signature:(u8 num, int enabled)
+mpu6050_setSlaveOutputByte	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveOutputByte(uint8_t num, uint8_t data)$/;"	f	signature:(uint8_t num, uint8_t data)
+mpu6050_setSlaveOutputByte	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveOutputByte(u8 num, u8 data);$/;"	p	signature:(u8 num, u8 data)
+mpu6050_setSlaveReadWriteTransitionEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveReadWriteTransitionEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_MST_CTRL, MPU6050_I2C_MST_P_NSR_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setSlaveReadWriteTransitionEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveReadWriteTransitionEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setSlaveRegister	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveRegister(uint8_t num, uint8_t reg)$/;"	f	signature:(uint8_t num, uint8_t reg)
+mpu6050_setSlaveRegister	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveRegister(u8 num, u8 reg);$/;"	p	signature:(u8 num, u8 reg)
+mpu6050_setSlaveWordByteSwap	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveWordByteSwap(uint8_t num, int enabled)$/;"	f	signature:(uint8_t num, int enabled)
+mpu6050_setSlaveWordByteSwap	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveWordByteSwap(u8 num, int enabled);$/;"	p	signature:(u8 num, int enabled)
+mpu6050_setSlaveWordGroupOffset	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveWordGroupOffset(uint8_t num, int enabled)$/;"	f	signature:(uint8_t num, int enabled)
+mpu6050_setSlaveWordGroupOffset	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveWordGroupOffset(u8 num, int enabled);$/;"	p	signature:(u8 num, int enabled)
+mpu6050_setSlaveWriteMode	mods/mpu6050/mpu6050.c	/^void mpu6050_setSlaveWriteMode(uint8_t num, int mode)$/;"	f	signature:(uint8_t num, int mode)
+mpu6050_setSlaveWriteMode	mods/mpu6050/mpu6050.h	/^void mpu6050_setSlaveWriteMode(u8 num, int mode);$/;"	p	signature:(u8 num, int mode)
+mpu6050_setSleepEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setSleepEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_1, MPU6050_PWR1_SLEEP_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setSleepEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setSleepEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setStandbyXAccelEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setStandbyXAccelEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_2, MPU6050_PWR2_STBY_XA_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setStandbyXAccelEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setStandbyXAccelEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setStandbyXGyroEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setStandbyXGyroEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_2, MPU6050_PWR2_STBY_XG_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setStandbyXGyroEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setStandbyXGyroEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setStandbyYAccelEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setStandbyYAccelEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_2, MPU6050_PWR2_STBY_YA_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setStandbyYAccelEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setStandbyYAccelEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setStandbyYGyroEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setStandbyYGyroEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_2, MPU6050_PWR2_STBY_YG_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setStandbyYGyroEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setStandbyYGyroEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setStandbyZAccelEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setStandbyZAccelEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_2, MPU6050_PWR2_STBY_ZA_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setStandbyZAccelEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setStandbyZAccelEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setStandbyZGyroEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setStandbyZGyroEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_2, MPU6050_PWR2_STBY_ZG_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setStandbyZGyroEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setStandbyZGyroEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setTempFIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setTempFIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_FIFO_EN, MPU6050_TEMP_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setTempFIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setTempFIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setTempSensorEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setTempSensorEnabled(int enabled)$/;"	f	signature:(int enabled)
+mpu6050_setTempSensorEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setTempSensorEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setWaitForExternalSensorEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setWaitForExternalSensorEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_I2C_MST_CTRL, MPU6050_WAIT_FOR_ES_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setWaitForExternalSensorEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setWaitForExternalSensorEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setWakeCycleEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setWakeCycleEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_PWR_MGMT_1, MPU6050_PWR1_CYCLE_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setWakeCycleEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setWakeCycleEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setWakeFrequency	mods/mpu6050/mpu6050.c	/^void mpu6050_setWakeFrequency(uint8_t frequency) { i2cdev_writeBits(devAddr, MPU6050_RA_PWR_MGMT_2, MPU6050_PWR2_LP_WAKE_CTRL_BIT, MPU6050_PWR2_LP_WAKE_CTRL_LENGTH, frequency); }$/;"	f	signature:(uint8_t frequency)
+mpu6050_setWakeFrequency	mods/mpu6050/mpu6050.h	/^void mpu6050_setWakeFrequency(u8 frequency);$/;"	p	signature:(u8 frequency)
+mpu6050_setXAccelOffset	mods/mpu6050/mpu6050.c	/^void mpu6050_setXAccelOffset(int16_t offset) { i2cdev_writeWord(devAddr, MPU6050_RA_XA_OFFS_H, offset); }$/;"	f	signature:(int16_t offset)
+mpu6050_setXAccelOffset	mods/mpu6050/mpu6050.h	/^void mpu6050_setXAccelOffset(int16_t offset);$/;"	p	signature:(int16_t offset)
+mpu6050_setXFineGain	mods/mpu6050/mpu6050.c	/^void mpu6050_setXFineGain(int8_t gain) { i2cdev_writeByte(devAddr, MPU6050_RA_X_FINE_GAIN, gain); }$/;"	f	signature:(int8_t gain)
+mpu6050_setXFineGain	mods/mpu6050/mpu6050.h	/^void mpu6050_setXFineGain(int8_t gain);$/;"	p	signature:(int8_t gain)
+mpu6050_setXGyroFIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setXGyroFIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_FIFO_EN, MPU6050_XG_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setXGyroFIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setXGyroFIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setXGyroOffset	mods/mpu6050/mpu6050.c	/^void mpu6050_setXGyroOffset(int8_t offset) { i2cdev_writeBits(devAddr, MPU6050_RA_XG_OFFS_TC, MPU6050_TC_OFFSET_BIT, MPU6050_TC_OFFSET_LENGTH, offset); }$/;"	f	signature:(int8_t offset)
+mpu6050_setXGyroOffset	mods/mpu6050/mpu6050.h	/^void mpu6050_setXGyroOffset(int8_t offset);$/;"	p	signature:(int8_t offset)
+mpu6050_setXGyroOffsetUser	mods/mpu6050/mpu6050.c	/^void mpu6050_setXGyroOffsetUser(int16_t offset) { i2cdev_writeWord(devAddr, MPU6050_RA_XG_OFFS_USRH, offset); }$/;"	f	signature:(int16_t offset)
+mpu6050_setXGyroOffsetUser	mods/mpu6050/mpu6050.h	/^void mpu6050_setXGyroOffsetUser(int16_t offset);$/;"	p	signature:(int16_t offset)
+mpu6050_setYAccelOffset	mods/mpu6050/mpu6050.c	/^void mpu6050_setYAccelOffset(int16_t offset) { i2cdev_writeWord(devAddr, MPU6050_RA_YA_OFFS_H, offset); }$/;"	f	signature:(int16_t offset)
+mpu6050_setYAccelOffset	mods/mpu6050/mpu6050.h	/^void mpu6050_setYAccelOffset(int16_t offset);$/;"	p	signature:(int16_t offset)
+mpu6050_setYFineGain	mods/mpu6050/mpu6050.c	/^void mpu6050_setYFineGain(int8_t gain) { i2cdev_writeByte(devAddr, MPU6050_RA_Y_FINE_GAIN, gain); }$/;"	f	signature:(int8_t gain)
+mpu6050_setYFineGain	mods/mpu6050/mpu6050.h	/^void mpu6050_setYFineGain(int8_t gain);$/;"	p	signature:(int8_t gain)
+mpu6050_setYGyroFIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setYGyroFIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_FIFO_EN, MPU6050_YG_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setYGyroFIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setYGyroFIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setYGyroOffset	mods/mpu6050/mpu6050.c	/^void mpu6050_setYGyroOffset(int8_t offset) { i2cdev_writeBits(devAddr, MPU6050_RA_YG_OFFS_TC, MPU6050_TC_OFFSET_BIT, MPU6050_TC_OFFSET_LENGTH, offset); }$/;"	f	signature:(int8_t offset)
+mpu6050_setYGyroOffset	mods/mpu6050/mpu6050.h	/^void mpu6050_setYGyroOffset(int8_t offset);$/;"	p	signature:(int8_t offset)
+mpu6050_setYGyroOffsetUser	mods/mpu6050/mpu6050.c	/^void mpu6050_setYGyroOffsetUser(int16_t offset) { i2cdev_writeWord(devAddr, MPU6050_RA_YG_OFFS_USRH, offset); }$/;"	f	signature:(int16_t offset)
+mpu6050_setYGyroOffsetUser	mods/mpu6050/mpu6050.h	/^void mpu6050_setYGyroOffsetUser(int16_t offset);$/;"	p	signature:(int16_t offset)
+mpu6050_setZAccelOffset	mods/mpu6050/mpu6050.c	/^void mpu6050_setZAccelOffset(int16_t offset) { i2cdev_writeWord(devAddr, MPU6050_RA_ZA_OFFS_H, offset); }$/;"	f	signature:(int16_t offset)
+mpu6050_setZAccelOffset	mods/mpu6050/mpu6050.h	/^void mpu6050_setZAccelOffset(int16_t offset);$/;"	p	signature:(int16_t offset)
+mpu6050_setZFineGain	mods/mpu6050/mpu6050.c	/^void mpu6050_setZFineGain(int8_t gain) { i2cdev_writeByte(devAddr, MPU6050_RA_Z_FINE_GAIN, gain); }$/;"	f	signature:(int8_t gain)
+mpu6050_setZFineGain	mods/mpu6050/mpu6050.h	/^void mpu6050_setZFineGain(int8_t gain);$/;"	p	signature:(int8_t gain)
+mpu6050_setZGyroFIFOEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_setZGyroFIFOEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_FIFO_EN, MPU6050_ZG_FIFO_EN_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_setZGyroFIFOEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_setZGyroFIFOEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_setZGyroOffset	mods/mpu6050/mpu6050.c	/^void mpu6050_setZGyroOffset(int8_t offset) { i2cdev_writeBits(devAddr, MPU6050_RA_ZG_OFFS_TC, MPU6050_TC_OFFSET_BIT, MPU6050_TC_OFFSET_LENGTH, offset); }$/;"	f	signature:(int8_t offset)
+mpu6050_setZGyroOffset	mods/mpu6050/mpu6050.h	/^void mpu6050_setZGyroOffset(int8_t offset);$/;"	p	signature:(int8_t offset)
+mpu6050_setZGyroOffsetUser	mods/mpu6050/mpu6050.c	/^void mpu6050_setZGyroOffsetUser(int16_t offset) { i2cdev_writeWord(devAddr, MPU6050_RA_ZG_OFFS_USRH, offset); }$/;"	f	signature:(int16_t offset)
+mpu6050_setZGyroOffsetUser	mods/mpu6050/mpu6050.h	/^void mpu6050_setZGyroOffsetUser(int16_t offset);$/;"	p	signature:(int16_t offset)
+mpu6050_setZeroMotionDetectionDuration	mods/mpu6050/mpu6050.c	/^void mpu6050_setZeroMotionDetectionDuration(uint8_t duration) { i2cdev_writeByte(devAddr, MPU6050_RA_ZRMOT_DUR, duration); }$/;"	f	signature:(uint8_t duration)
+mpu6050_setZeroMotionDetectionDuration	mods/mpu6050/mpu6050.h	/^void mpu6050_setZeroMotionDetectionDuration(u8 duration);$/;"	p	signature:(u8 duration)
+mpu6050_setZeroMotionDetectionThreshold	mods/mpu6050/mpu6050.c	/^void mpu6050_setZeroMotionDetectionThreshold(uint8_t threshold) { i2cdev_writeByte(devAddr, MPU6050_RA_ZRMOT_THR, threshold); }$/;"	f	signature:(uint8_t threshold)
+mpu6050_setZeroMotionDetectionThreshold	mods/mpu6050/mpu6050.h	/^void mpu6050_setZeroMotionDetectionThreshold(u8 threshold);$/;"	p	signature:(u8 threshold)
+mpu6050_setup	mods/mpu6050/mpu6050.c	/^void mpu6050_setup()$/;"	f
+mpu6050_setup	mods/mpu6050/mpu6050.h	/^void mpu6050_setup();$/;"	p	signature:()
+mpu6050_switchSPIEnabled	mods/mpu6050/mpu6050.c	/^void mpu6050_switchSPIEnabled(int enabled) { i2cdev_writeBit(devAddr, MPU6050_RA_USER_CTRL, MPU6050_USERCTRL_I2C_IF_DIS_BIT, enabled); }$/;"	f	signature:(int enabled)
+mpu6050_switchSPIEnabled	mods/mpu6050/mpu6050.h	/^void mpu6050_switchSPIEnabled(int enabled);$/;"	p	signature:(int enabled)
+mpu6050_testConnection	mods/mpu6050/mpu6050.c	/^int mpu6050_testConnection() { return mpu6050_getDeviceID() == 0x34; }$/;"	f
+mpu6050_testConnection	mods/mpu6050/mpu6050.h	/^int mpu6050_testConnection();$/;"	p	signature:()
+mpu6050_value	mods/mpu6050/mpu6050.c	/^void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz, float* ax, float* ay, float* az)$/;"	f	signature:(float* x, float* y, float* z, float* gx, float* gy, float* gz, float* ax, float* ay, float* az)
+mpu6050_value	mods/mpu6050/mpu6050.h	/^void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz, float* ax, float* ay, float* az);$/;"	p	signature:(float* x, float* y, float* z, float* gx, float* gy, float* gz, float* ax, float* ay, float* az)
+mpu6050_writeDMPConfigurationSet	mods/mpu6050/mpu6050.c	/^int mpu6050_writeDMPConfigurationSet(const uint8_t* data, uint16_t dataSize, int useProgMem)$/;"	f	signature:(const uint8_t* data, uint16_t dataSize, int useProgMem)
+mpu6050_writeDMPConfigurationSet	mods/mpu6050/mpu6050.h	/^int mpu6050_writeDMPConfigurationSet(const u8* data, u16 dataSize, int useProgMem);$/;"	p	signature:(const u8* data, u16 dataSize, int useProgMem)
+mpu6050_writeMemoryBlock	mods/mpu6050/mpu6050.c	/^int mpu6050_writeMemoryBlock(const uint8_t* data, uint16_t dataSize, uint8_t bank, uint8_t address, int verify, int useProgMem)$/;"	f	signature:(const uint8_t* data, uint16_t dataSize, uint8_t bank, uint8_t address, int verify, int useProgMem)
+mpu6050_writeMemoryBlock	mods/mpu6050/mpu6050.h	/^int mpu6050_writeMemoryBlock(const u8* data, u16 dataSize, u8 bank, u8 address, int verify, int useProgMem);$/;"	p	signature:(const u8* data, u16 dataSize, u8 bank, u8 address, int verify, int useProgMem)
+mpu6050_writeMemoryByte	mods/mpu6050/mpu6050.c	/^void mpu6050_writeMemoryByte(uint8_t data) { i2cdev_writeByte(devAddr, MPU6050_RA_MEM_R_W, data); }$/;"	f	signature:(uint8_t data)
+mpu6050_writeMemoryByte	mods/mpu6050/mpu6050.h	/^void mpu6050_writeMemoryByte(u8 data);$/;"	p	signature:(u8 data)
+mpu6050_writeProgDMPConfigurationSet	mods/mpu6050/mpu6050.c	/^int mpu6050_writeProgDMPConfigurationSet(const uint8_t* data, uint16_t dataSize) { return mpu6050_writeDMPConfigurationSet(data, dataSize, 1); }$/;"	f	signature:(const uint8_t* data, uint16_t dataSize)
+mpu6050_writeProgDMPConfigurationSet	mods/mpu6050/mpu6050.h	/^int mpu6050_writeProgDMPConfigurationSet(const u8* data, u16 dataSize);$/;"	p	signature:(const u8* data, u16 dataSize)
+mpu6050_writeProgMemoryBlock	mods/mpu6050/mpu6050.c	/^int mpu6050_writeProgMemoryBlock(const uint8_t* data, uint16_t dataSize, uint8_t bank, uint8_t address, int verify) { return mpu6050_writeMemoryBlock(data, dataSize, bank, address, verify, 1); }$/;"	f	signature:(const uint8_t* data, uint16_t dataSize, uint8_t bank, uint8_t address, int verify)
+mpu6050_writeProgMemoryBlock	mods/mpu6050/mpu6050.h	/^int mpu6050_writeProgMemoryBlock(const u8* data, u16 dataSize, u8 bank, u8 address, int verify);$/;"	p	signature:(const u8* data, u16 dataSize, u8 bank, u8 address, int verify)
+mpuIntStatus	mods/mpu6050/mpu6050.c	/^uint8_t mpuIntStatus;   \/\/ holds actual interrupt status byte from MPU$/;"	v
+next	include/list.h	/^	struct s_node* next;$/;"	m	struct:s_node	typeref:struct:s_node::s_node	access:public
+p	mods/controller/controller.c	/^s_params* p = NULL;$/;"	v
+p	mods/display/display.c	/^s_params* p = NULL;$/;"	v
+p	mods/fheight/fheight.c	/^s_params* p = NULL;$/;"	v
+p	mods/gy953/gy953.c	/^s_params* p = NULL;$/;"	v
+p	mods/hcsr04/hcsr04.c	/^s_params* p = NULL;$/;"	v
+p	mods/motor/motor.c	/^s_params* p = NULL;$/;"	v
+p	mods/mpu6050/mpu6050.c	/^s_params* p = NULL;$/;"	v
+p	mods/paramsctl/paramsctl.c	/^s_params* p = NULL;$/;"	v
+packetSize	mods/mpu6050/mpu6050.c	/^uint16_t packetSize;    \/\/ expected DMP packet size (default is 42 bytes)$/;"	v
+params	engine/engine.c	/^s_params params;$/;"	v
+params_cache	engine/engine.c	/^s_params params_cache;$/;"	v
+params_cache	mods/paramsctl/paramsctl.c	/^s_params params_cache;$/;"	v
+params_from_cache	mods/paramsctl/paramsctl.c	/^void params_from_cache() { memcpy(p, &params_cache, sizeof(s_params)); }$/;"	f
+params_input	mods/paramsctl/paramsctl.c	/^void params_input()$/;"	f
+params_input	mods/paramsctl/paramsctl.h	/^void params_input();$/;"	p	signature:()
+params_load	mods/paramsctl/paramsctl.c	/^void params_load()$/;"	f
+params_load	mods/paramsctl/paramsctl.h	/^void params_load();$/;"	p	signature:()
+params_reset	mods/paramsctl/paramsctl.c	/^void params_reset()$/;"	f
+params_reset	mods/paramsctl/paramsctl.h	/^void params_reset();$/;"	p	signature:()
+params_save	mods/paramsctl/paramsctl.c	/^void params_save()$/;"	f
+params_save	mods/paramsctl/paramsctl.h	/^void params_save();$/;"	p	signature:()
+params_to_cache	mods/paramsctl/paramsctl.c	/^void params_to_cache() { memcpy(&params_cache, p, sizeof(s_params)); }$/;"	f
+pgm_read_byte	mods/mpu6050/mpu6050.h	54;"	d
+ports	mods/motor/motor.c	/^int ports[MOTOR_COUNT] = {PORT_MOTOR0, PORT_MOTOR1, PORT_MOTOR2, PORT_MOTOR3};$/;"	v
+pthd	engine/engine.c	/^pthread_t pthd;$/;"	v
+pthd	mods/controller/controller.c	/^pthread_t pthd;$/;"	v
+pthd	mods/display/display.c	/^pthread_t pthd;$/;"	v
+pthd	mods/fheight/fheight.c	/^pthread_t pthd;$/;"	v
+pthd	mods/gy953/gy953.c	/^pthread_t pthd;$/;"	v
+pthd	mods/hcsr04/hcsr04.c	/^pthread_t pthd;$/;"	v
+pthd	mods/motor/motor.c	/^pthread_t pthd;$/;"	v
+pthd	mods/mpu6050/mpu6050.c	/^pthread_t pthd;$/;"	v
+pthd	mods/paramsctl/paramsctl.c	/^pthread_t pthd;$/;"	v
+pthddr	mods/motor/motor.c	/^pthread_t pthddr;$/;"	v
+pthdmod	engine/dlmod.c	/^pthread_t pthdmod;$/;"	v
+pw_devi	mods/controller/controller.c	/^float pw_est = 0.0, pw_devi = 0.0;$/;"	v
+pw_est	mods/controller/controller.c	/^float pw_est = 0.0, pw_devi = 0.0;$/;"	v
+q	mods/mpu6050/mpu6050.c	/^Quaternion q;	\/\/ [w, x, y, z]         quaternion container$/;"	v
+r	mods/display/display.c	/^int r  = 0;$/;"	v
+r	mods/fheight/fheight.c	/^int r  = 0;$/;"	v
+r	mods/gy953/gy953.c	/^int r    = 0;$/;"	v
+r	mods/hcsr04/hcsr04.c	/^int r  = 0;$/;"	v
+r	mods/motor/motor.c	/^int r = 0;$/;"	v
+r	mods/mpu6050/mpu6050.c	/^int r       = 0;$/;"	v
+r	mods/paramsctl/paramsctl.c	/^int r	  = 0;$/;"	v
+resetTermios	mods/paramsctl/getch.c	/^void resetTermios() { tcsetattr(0, TCSANOW, &tm_old); }$/;"	f
+resetTermios	mods/paramsctl/getch.h	/^void resetTermios();$/;"	p	signature:()
+run	mods/display/display.c	/^void run()$/;"	f
+run	mods/display/display.h	/^void run();$/;"	p	signature:()
+s16	include/typedef.h	/^typedef signed short s16;$/;"	t
+s32	include/typedef.h	/^typedef signed int s32;$/;"	t
+s64	include/typedef.h	/^typedef signed long long s64;$/;"	t
+s8	include/typedef.h	/^typedef char s8;$/;"	t
+s_ctl_pwm	mods/controller/controller.h	/^} s_ctl_pwm;$/;"	t	typeref:struct:__anon4
+s_dis	mods/hcsr04/hcsr04.h	/^} s_dis;$/;"	t	typeref:struct:__anon6
+s_dlmod	include/dlmod.h	/^typedef struct s_dlmod$/;"	s
+s_dlmod	include/dlmod.h	/^} s_dlmod;$/;"	t	typeref:struct:s_dlmod
+s_dlmod::args	include/dlmod.h	/^	void** args;$/;"	m	struct:s_dlmod	access:public
+s_dlmod::destory	include/dlmod.h	/^	int (*destory)();$/;"	m	struct:s_dlmod	access:public
+s_dlmod::handler	include/dlmod.h	/^	void* handler;$/;"	m	struct:s_dlmod	access:public
+s_dlmod::init	include/dlmod.h	/^	int (*init)();$/;"	m	struct:s_dlmod	access:public
+s_dlmod::status	include/dlmod.h	/^	int (*status)();$/;"	m	struct:s_dlmod	access:public
+s_engine	include/typedef.h	/^} s_engine;$/;"	t	typeref:struct:__anon2
+s_list	include/list.h	/^} s_list;$/;"	t	typeref:struct:__anon1
+s_node	include/list.h	/^typedef struct s_node$/;"	s
+s_node	include/list.h	/^} s_node;$/;"	t	typeref:struct:s_node
+s_node::data	include/list.h	/^	void* data;$/;"	m	struct:s_node	access:public
+s_node::next	include/list.h	/^	struct s_node* next;$/;"	m	struct:s_node	typeref:struct:s_node::s_node	access:public
+s_params	include/typedef.h	/^} s_params;$/;"	t	typeref:struct:__anon3
+sem_engine	engine/engine.c	/^sem_t sem_engine;$/;"	v
+speed	mods/motor/motor.c	/^int speed[MOTOR_COUNT];$/;"	v
+st	mods/command/command.c	/^int st = 0;$/;"	v
+st	mods/controller/controller.c	/^int st = 0;$/;"	v
+st	mods/display/display.c	/^int st = 0;$/;"	v
+st	mods/fheight/fheight.c	/^int st = 0;$/;"	v
+st	mods/gy953/gy953.c	/^int st   = 0;$/;"	v
+st	mods/hcsr04/hcsr04.c	/^int st = 0;$/;"	v
+st	mods/motor/motor.c	/^int st[MOTOR_COUNT];$/;"	v
+st	mods/mpu6050/mpu6050.c	/^int st      = 0;$/;"	v
+st	mods/paramsctl/paramsctl.c	/^int st	 = 0;$/;"	v
+status	include/dlmod.h	/^	int (*status)();$/;"	m	struct:s_dlmod	access:public
+sts	mods/motor/motor.c	/^int sts = 0;$/;"	v
+teapotPacket	mods/mpu6050/mpu6050.c	/^uint8_t teapotPacket[14] = {'$', 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0x00, 0x00, '\\r', '\\n'};$/;"	v
+time_m	mods/motor/motor.h	/^	int time_m;$/;"	m	struct:__anon5	access:public
+time_w	mods/motor/motor.h	/^	int time_w;$/;"	m	struct:__anon5	access:public
+timeout	mods/mpu6050/i2cdev.c	/^u16 timeout = 0;$/;"	v
+timer_end	mods/controller/controller.h	/^	struct timeval timer_end;$/;"	m	struct:__anon4	typeref:struct:__anon4::timeval	access:public
+timer_end	mods/hcsr04/hcsr04.h	/^	struct timeval timer_end;$/;"	m	struct:__anon6	typeref:struct:__anon6::timeval	access:public
+timer_start	mods/controller/controller.h	/^	struct timeval timer_start;$/;"	m	struct:__anon4	typeref:struct:__anon4::timeval	access:public
+timer_start	mods/hcsr04/hcsr04.h	/^	struct timeval timer_start;$/;"	m	struct:__anon6	typeref:struct:__anon6::timeval	access:public
+tm	mods/paramsctl/getch.c	/^struct termios tm, tm_old;$/;"	v	typeref:struct:termios
+tm_old	mods/paramsctl/getch.c	/^struct termios tm, tm_old;$/;"	v	typeref:struct:
+tx	include/typedef.h	/^	float tx;$/;"	m	struct:__anon2	access:public
+ty	include/typedef.h	/^	float ty;$/;"	m	struct:__anon2	access:public
+tz	include/typedef.h	/^	float tz;$/;"	m	struct:__anon2	access:public
+u16	include/typedef.h	/^typedef unsigned short u16;$/;"	t
+u32	include/typedef.h	/^typedef unsigned int u32;$/;"	t
+u64	include/typedef.h	/^typedef unsigned long long u64;$/;"	t
+u8	include/typedef.h	/^typedef unsigned char u8;$/;"	t
+v	include/typedef.h	/^	float v;$/;"	m	struct:__anon2	access:public
+v_kd	include/typedef.h	/^	float v_kd;$/;"	m	struct:__anon3	access:public
+v_ki	include/typedef.h	/^	float v_ki;$/;"	m	struct:__anon3	access:public
+v_kp	include/typedef.h	/^	float v_kp;$/;"	m	struct:__anon3	access:public
+w	mods/mpu6050/mpu6050.h	/^	float w;$/;"	m	struct:Quaternion	access:public
+x	include/typedef.h	/^	float x;$/;"	m	struct:__anon2	access:public
+x	mods/mpu6050/mpu6050.h	/^	float x;$/;"	m	struct:Quaternion	access:public
+x	mods/mpu6050/mpu6050.h	/^	float x;$/;"	m	struct:VectorFloat	access:public
+x	mods/mpu6050/mpu6050.h	/^	int16_t x;$/;"	m	struct:VectorInt16	access:public
+x_devi	include/typedef.h	/^	float x_devi;$/;"	m	struct:__anon2	access:public
+x_devi	mods/mpu6050/mpu6050.c	/^float x_est = 0.0, x_devi = 0.0;$/;"	v
+x_est	mods/mpu6050/mpu6050.c	/^float x_est = 0.0, x_devi = 0.0;$/;"	v
+x_sum	include/typedef.h	/^	float x_sum;$/;"	m	struct:__anon2	access:public
+x_v_sum	include/typedef.h	/^	float x_v_sum;$/;"	m	struct:__anon2	access:public
+xv_devi	include/typedef.h	/^	float xv_devi;$/;"	m	struct:__anon2	access:public
+xv_devi	mods/mpu6050/mpu6050.c	/^float xv_est = 0.0, xv_devi = 0.0;$/;"	v
+xv_est	mods/mpu6050/mpu6050.c	/^float xv_est = 0.0, xv_devi = 0.0;$/;"	v
+xyz_est_devi	mods/mpu6050/mpu6050.c	/^float xyz_est_devi     = 0.02;$/;"	v
+xyz_measure_devi	mods/mpu6050/mpu6050.c	/^float xyz_measure_devi = 0.05;$/;"	v
+xyz_v_est_devi	mods/mpu6050/mpu6050.c	/^float xyz_v_est_devi     = 0.03;$/;"	v
+xyz_v_measure_devi	mods/mpu6050/mpu6050.c	/^float xyz_v_measure_devi = 0.05;$/;"	v
+y	include/typedef.h	/^	float y;$/;"	m	struct:__anon2	access:public
+y	mods/mpu6050/mpu6050.h	/^	float y;$/;"	m	struct:Quaternion	access:public
+y	mods/mpu6050/mpu6050.h	/^	float y;$/;"	m	struct:VectorFloat	access:public
+y	mods/mpu6050/mpu6050.h	/^	int16_t y;$/;"	m	struct:VectorInt16	access:public
+y_devi	include/typedef.h	/^	float y_devi;$/;"	m	struct:__anon2	access:public
+y_devi	mods/mpu6050/mpu6050.c	/^float y_est = 0.0, y_devi = 0.0;$/;"	v
+y_est	mods/mpu6050/mpu6050.c	/^float y_est = 0.0, y_devi = 0.0;$/;"	v
+y_sum	include/typedef.h	/^	float y_sum;$/;"	m	struct:__anon2	access:public
+y_v_sum	include/typedef.h	/^	float y_v_sum;$/;"	m	struct:__anon2	access:public
+ypr	mods/mpu6050/mpu6050.c	/^float ypr[3];	\/\/ [yaw, pitch, roll]   yaw\/pitch\/roll container and gravity vector$/;"	v
+yv_devi	include/typedef.h	/^	float yv_devi;$/;"	m	struct:__anon2	access:public
+yv_devi	mods/mpu6050/mpu6050.c	/^float yv_est = 0.0, yv_devi = 0.0;$/;"	v
+yv_est	mods/mpu6050/mpu6050.c	/^float yv_est = 0.0, yv_devi = 0.0;$/;"	v
+z	include/typedef.h	/^	float z;$/;"	m	struct:__anon2	access:public
+z	mods/mpu6050/mpu6050.h	/^	float z;$/;"	m	struct:Quaternion	access:public
+z	mods/mpu6050/mpu6050.h	/^	float z;$/;"	m	struct:VectorFloat	access:public
+z	mods/mpu6050/mpu6050.h	/^	int16_t z;$/;"	m	struct:VectorInt16	access:public
+z_devi	include/typedef.h	/^	float z_devi;$/;"	m	struct:__anon2	access:public
+z_devi	mods/mpu6050/mpu6050.c	/^float z_est = 0.0, z_devi = 0.0;$/;"	v
+z_est	mods/mpu6050/mpu6050.c	/^float z_est = 0.0, z_devi = 0.0;$/;"	v
+z_sum	include/typedef.h	/^	float z_sum;$/;"	m	struct:__anon2	access:public
+z_v_sum	include/typedef.h	/^	float z_v_sum;$/;"	m	struct:__anon2	access:public
+zv_devi	include/typedef.h	/^	float zv_devi;$/;"	m	struct:__anon2	access:public
+zv_devi	mods/mpu6050/mpu6050.c	/^float zv_est = 0.0, zv_devi = 0.0;$/;"	v
+zv_est	mods/mpu6050/mpu6050.c	/^float zv_est = 0.0, zv_devi = 0.0;$/;"	v
