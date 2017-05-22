@@ -46,7 +46,6 @@ void run()
 		printf("[%s]", e->mode == 1 ? "H" : "M");
 
 		printf("[v: %4.0f][xyz: %+7.3f %+7.3f %+7.3f %+7.3f %+7.3f][g: %+7.3f %+7.3f %+7.3f][x:%+8.3f y:%+8.3f z:%+8.3f]", e->v, e->tx, e->ty, e->tz, e->ctlmx, e->ctlmy, e->gx + e->dgx, e->gy + e->dgy, e->gz + e->dgz, e->x_devi, e->y_devi, e->z_devi);
-		printf("[h: %+7.3f %+7.3f %+7.3f ]", e->height, e->height_target, e->h_devi);
 
 		if (p->ctl_type == 0)
 		{
@@ -58,11 +57,12 @@ void run()
 		}
 		else if (p->ctl_type == 2)
 		{
+			printf("[h: %+7.3f %+7.3f %+7.3f ]", e->height, e->height_target, e->h_devi);
 			printf("[hpid: %+5.2f %+5.2f %+5.2f]", p->h_kp, p->h_ki, p->h_kd);
 		}
 		else if (p->ctl_type == 3)
 		{
-			printf("[cxy: %+5.2f %+5.2f]", p->cx, p->cy);
+			//printf("[cxy: %+5.2f %+5.2f]", p->cx, p->cy);
 		}
 		else if (p->ctl_type == 4)
 		{

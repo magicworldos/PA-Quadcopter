@@ -101,9 +101,9 @@ void params_reset()
 	p->v_ki = 0.0;
 	p->v_kd = 33.0;
 	// XY轴欧拉角PID参数
-	p->h_kp = 68.0;
-	p->h_ki = 1.6;
-	p->h_kd = 385.0;
+	p->h_kp = 8.0;
+	p->h_ki = 0.1;
+	p->h_kd = 635.0;
 	// XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
@@ -146,7 +146,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 3)
 			{
-				p->cx += ctl_step;
+				//p->cx += ctl_step;
 			}
 		}
 		// 8
@@ -166,7 +166,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 3)
 			{
-				p->cy += ctl_step;
+				//p->cy += ctl_step;
 			}
 		}
 		// 9
@@ -202,7 +202,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 3)
 			{
-				p->cx -= ctl_step;
+				//p->cx -= ctl_step;
 			}
 		}
 		// 5
@@ -222,7 +222,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 3)
 			{
-				p->cy -= ctl_step;
+				//p->cy -= ctl_step;
 			}
 		}
 		// 6
