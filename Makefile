@@ -39,7 +39,7 @@ $(MOD_PROJECT):
 	engine/emode.c							\
 	util/list.c
 	
-$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)	$(MOD_HCSR04)	$(MOD_FHEIGHT)	$(MOD_DISPLAY)
+$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)		$(MOD_DISPLAY)
 
 $(MOD_MOTOR):
 	cd mods/motor/			&& make

@@ -145,10 +145,15 @@ void motor_balance_compensation()
 		}
 
 		//标准四轴平衡补偿
-		speed[0] = (int)e->v - e->x_devi + e->z_devi - e->xv_devi + e->zv_devi;
-		speed[1] = (int)e->v - e->y_devi - e->z_devi - e->yv_devi - e->zv_devi;
-		speed[2] = (int)e->v + e->x_devi + e->z_devi + e->xv_devi + e->zv_devi;
-		speed[3] = (int)e->v + e->y_devi - e->z_devi + e->yv_devi - e->zv_devi;
+		// speed[0] = (int)e->v - e->x_devi + e->z_devi - e->xv_devi + e->zv_devi;
+		// speed[1] = (int)e->v - e->y_devi - e->z_devi - e->yv_devi - e->zv_devi;
+		// speed[2] = (int)e->v + e->x_devi + e->z_devi + e->xv_devi + e->zv_devi;
+		// speed[3] = (int)e->v + e->y_devi - e->z_devi + e->yv_devi - e->zv_devi;
+
+		speed[0] = (int)e->v - (e->x_devi / 2) + (e->y_devi / 2) + e->z_devi - (e->xv_devi / 2) + (e->yv_devi / 2) + e->zv_devi;
+		speed[1] = (int)e->v - (e->x_devi / 2) - (e->y_devi / 2) - e->z_devi - (e->xv_devi / 2) - (e->yv_devi / 2) - e->zv_devi;
+		speed[2] = (int)e->v + (e->x_devi / 2) - (e->y_devi / 2) + e->z_devi + (e->xv_devi / 2) - (e->yv_devi / 2) + e->zv_devi;
+		speed[3] = (int)e->v + (e->x_devi / 2) + (e->y_devi / 2) - e->z_devi + (e->xv_devi / 2) + (e->yv_devi / 2) - e->zv_devi;
 
 		for (int i = 0; i < MOTOR_COUNT; i++)
 		{
