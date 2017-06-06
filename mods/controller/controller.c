@@ -113,6 +113,7 @@ void controller_ctl_pwm(int gpio_port, s_ctl_pwm* ctl_pwm)
 	{
 		//对油门通道做卡尔曼滤波
 		pw_est = controller_kalman_filter(pw_est, ctl_est_devi, timer, ctl_measure_devi, &pw_devi);
+		pw_est = controller_kalman_filter(pw_est, ctl_est_devi, timer, ctl_measure_devi, &pw_devi);
 		controller_pw_pwm(pw_est);
 		return;
 	}
