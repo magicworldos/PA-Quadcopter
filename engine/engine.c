@@ -119,9 +119,18 @@ void engine_fly()
 		e->tz = e->z + e->dz;
 
 		//期望角速度
-		xv_et = (e->tx - x_et) * PV;
-		yv_et = (e->ty - y_et) * PV;
-		zv_et = (e->tz - z_et) * PV;
+		xv_et = e->tx * PV;
+		yv_et = e->ty * PV;
+		zv_et = e->tz * PV;
+
+		xv_et = xv_et > 30.0 ? 30 : xv_et;
+		xv_et = xv_et < -30.0 ? -30 : xv_et;
+
+		yv_et = yv_et > 30.0 ? 30 : yv_et;
+		yv_et = yv_et < -30.0 ? -30 : yv_et;
+
+		zv_et = zv_et > 30.0 ? 30 : zv_et;
+		zv_et = zv_et < -30.0 ? -30 : zv_et;
 
 		//使用欧拉角的PID反馈控制算法
 		e->x_devi = engine_pid(e->tx, x_et, &e->x_sum);
@@ -129,9 +138,9 @@ void engine_fly()
 		e->z_devi = engine_pid(e->tz, z_et, NULL);
 
 		//角速度PID
-		e->xv_devi = engine_v_pid(e->gx + e->dgx - xv_et, x_v_et - xv_et, &e->x_v_sum);
-		e->yv_devi = engine_v_pid(e->gy + e->dgy - yv_et, y_v_et - yv_et, &e->y_v_sum);
-		e->zv_devi = engine_v_pid(e->gz + e->dgz - zv_et, z_v_et - zv_et, NULL);
+		e->xv_devi = engine_v_pid(xv_et + (e->gx + e->dgx),x_v_et + xv_et, &e->x_v_sum);
+		e->yv_devi = engine_v_pid(yv_et + (e->gy + e->dgy),y_v_et + yv_et, &e->y_v_sum);
+		e->zv_devi = engine_v_pid(zv_et + (e->gz + e->dgz),z_v_et + zv_et, NULL);
 
 		//记录欧拉角的上一次读数
 		x_et = e->tx;
