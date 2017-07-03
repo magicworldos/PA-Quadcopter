@@ -27,7 +27,7 @@ pthread_t pthd;
 void engine_start(int argc, char* argv[])
 {
 	//处理Ctrl + C退出信号
-	signal(SIGINT, (void (*)(int)) & engine_handler);
+	signal(SIGINT, (void (*)(int)) &engine_handler);
 
 	//初始化引擎信号量
 	sem_init(&sem_engine, 0, 0);
@@ -83,9 +83,9 @@ void engine_start_fly()
 	//重置引擎
 	engine_reset(&engine);
 	//启动摇控器锁定、解锁电机
-	pthread_create(&pthd, (const pthread_attr_t*)NULL, (void* (*)(void*)) & engine_lock, NULL);
+	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_lock, NULL);
 	//启动飞行引擎
-	pthread_create(&pthd, (const pthread_attr_t*)NULL, (void* (*)(void*)) & engine_fly, NULL);
+	pthread_create(&pthd, (const pthread_attr_t*) NULL, (void* (*)(void*)) &engine_fly, NULL);
 	//载入并执行动态链接库
 	dlmod_init();
 
@@ -102,6 +102,10 @@ void engine_fly()
 	float x_et = 0.0;
 	float y_et = 0.0;
 	float z_et = 0.0;
+	//角速度期望值
+	float xv_et = 0.0;
+	float yv_et = 0.0;
+	float zv_et = 0.0;
 	//角速度的上一次读数
 	float x_v_et = 0.0;
 	float y_v_et = 0.0;
@@ -110,23 +114,28 @@ void engine_fly()
 	while (1)
 	{
 		//处理欧拉角平衡补偿
-		e->tx = e->x + e->dx + e->dax;
-		e->ty = e->y + e->dy + e->day;
+		e->tx = e->x + e->dx + e->dax + e->ctlmx;
+		e->ty = e->y + e->dy + e->day + e->ctlmy;
 		e->tz = e->z + e->dz;
 
+		//期望角速度
+		xv_et = (e->tx - x_et) * PV;
+		yv_et = (e->ty - y_et) * PV;
+		zv_et = (e->tz - z_et) * PV;
+
 		//使用欧拉角的PID反馈控制算法
-		e->x_devi = engine_pid(e->tx + e->ctlmx, x_et, &e->x_sum);
-		e->y_devi = engine_pid(e->ty + e->ctlmy, y_et, &e->y_sum);
+		e->x_devi = engine_pid(e->tx, x_et, &e->x_sum);
+		e->y_devi = engine_pid(e->ty, y_et, &e->y_sum);
 		e->z_devi = engine_pid(e->tz, z_et, NULL);
 
 		//角速度PID
-		e->xv_devi = engine_v_pid(e->gx + e->dgx, x_v_et, &e->x_v_sum);
-		e->yv_devi = engine_v_pid(e->gy + e->dgy, y_v_et, &e->y_v_sum);
-		e->zv_devi = engine_v_pid(e->gz + e->dgz, z_v_et, NULL);
+		e->xv_devi = engine_v_pid(e->gx + e->dgx - xv_et, x_v_et - xv_et, &e->x_v_sum);
+		e->yv_devi = engine_v_pid(e->gy + e->dgy - yv_et, y_v_et - yv_et, &e->y_v_sum);
+		e->zv_devi = engine_v_pid(e->gz + e->dgz - zv_et, z_v_et - zv_et, NULL);
 
 		//记录欧拉角的上一次读数
-		x_et = e->tx + e->ctlmx;
-		y_et = e->ty + e->ctlmy;
+		x_et = e->tx;
+		y_et = e->ty;
 		z_et = e->tz;
 
 		//记录角速度的上一次读数
@@ -348,10 +357,10 @@ void engine_reset(s_engine* e)
 	e->ctl_ud = 0;
 	e->ctl_di = 0;
 	//高度
-	e->height	= 0;
+	e->height = 0;
 	e->height_target = 0;
-	e->h_devi	= 0;
-	e->h_sum	=0;
+	e->h_devi = 0;
+	e->h_sum = 0;
 	//最低油门,最左，最右
 	e->lock_status = 0;
 	// 0手动模式
