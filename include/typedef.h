@@ -52,7 +52,8 @@ typedef unsigned long long u64;
 
 #define MAX_ACC	(20.0)
 
-#define PV	(23.5)
+#define PV	(35.0)
+#define MAXRA	(25.0)
 
 //引擎结构
 typedef struct
