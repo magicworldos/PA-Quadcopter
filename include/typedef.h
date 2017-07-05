@@ -45,15 +45,15 @@ typedef unsigned long long u64;
 #define MAX_SPEED_RUN_MIN (0)
 //原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 // 10ms 100Hz
-#define ENG_TIMER (10)
+#define ENG_TIMER 			(10)
 
-#define MODE_MANUAL (0)
-#define MODE_AUTO (1)
+#define MODE_MANUAL 		(0)
+#define MODE_AUTO 			(1)
 
-#define MAX_ACC	(20.0)
+#define MAX_ACC				(20.0)
 
-#define PV	(35.0)
-#define MAXRA	(25.0)
+#define PV					(6.4)
+#define MAXRA				(5.0)
 
 //引擎结构
 typedef struct

@@ -93,17 +93,17 @@ void params_from_cache() { memcpy(p, &params_cache, sizeof(s_params)); }
 void params_reset()
 {
 	// XY轴欧拉角PID参数
-	p->kp = 166.0;
-	p->ki = 12.6;
+	p->kp = 122.0;
+	p->ki = 8.0;
 	p->kd = 0.0;
 	// XY轴欧拉角PID参数
-	p->v_kp = 20.0;
+	p->v_kp = 10.0;
 	p->v_ki = 0.0;
-	p->v_kd = 33.0;
+	p->v_kd = 6.0;
 	// XY轴欧拉角PID参数
-	p->h_kp = 8.0;
-	p->h_ki = 0.1;
-	p->h_kd = 635.0;
+	p->h_kp = 0.0;
+	p->h_ki = 0.0;
+	p->h_kd = 0.0;
 	// XY轴中心点校正补偿
 	p->cx = 0;
 	p->cy = 0;
