@@ -57,8 +57,8 @@ void run()
 		}
 		else if (p->ctl_type == 2)
 		{
-			printf("[h: %+7.3f %+7.3f %+7.3f ]", e->height, e->height_target, e->h_devi);
-			printf("[hpid: %+5.2f %+5.2f %+5.2f]", p->h_kp, p->h_ki, p->h_kd);
+//			printf("[h: %+7.3f %+7.3f %+7.3f ]", e->height, e->height_target, e->h_devi);
+//			printf("[hpid: %+5.2f %+5.2f %+5.2f]", p->h_kp, p->h_ki, p->h_kd);
 		}
 		else if (p->ctl_type == 3)
 		{
