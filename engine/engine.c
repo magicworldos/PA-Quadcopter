@@ -123,15 +123,6 @@ void engine_fly()
 		yv_et = e->ty * PV;
 		zv_et = e->tz * PV;
 
-		xv_et = xv_et > MAXRA ? MAXRA : xv_et;
-		xv_et = xv_et < -MAXRA ? -MAXRA : xv_et;
-
-		yv_et = yv_et > MAXRA ? MAXRA : yv_et;
-		yv_et = yv_et < -MAXRA ? -MAXRA : yv_et;
-
-		zv_et = zv_et > MAXRA ? MAXRA : zv_et;
-		zv_et = zv_et < -MAXRA ? -MAXRA : zv_et;
-
 		//使用欧拉角的PID反馈控制算法
 		e->x_devi = engine_pid(e->tx, x_et, &e->x_sum);
 		e->y_devi = engine_pid(e->ty, y_et, &e->y_sum);
