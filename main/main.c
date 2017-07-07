@@ -8,7 +8,7 @@
 
 #include <engine.h>
 
-s32 main(s32 argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	engine_start(argc, argv);
 
