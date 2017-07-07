@@ -778,7 +778,7 @@ lock	include/typedef.h	/^	s32 lock;$/;"	m	struct:__anon2	access:public
 lock_status	include/typedef.h	/^	u32 lock_status;$/;"	m	struct:__anon2	access:public
 lr_devi	mods/controller/controller.c	/^f32 lr_est = 0.0, lr_devi = 0.0;$/;"	v
 lr_est	mods/controller/controller.c	/^f32 lr_est = 0.0, lr_devi = 0.0;$/;"	v
-main	main/main.c	/^s32 main(s32 argc, char* argv[])$/;"	f	signature:(s32 argc, char* argv[])
+main	main/main.c	/^int main(int argc, char* argv[])$/;"	f	signature:(int argc, char* argv[])
 mode	include/typedef.h	/^	u32 mode;$/;"	m	struct:__anon2	access:public
 motor_balance_compensation	mods/motor/motor.c	/^void motor_balance_compensation()$/;"	f
 motor_balance_compensation	mods/motor/motor.h	/^void motor_balance_compensation();$/;"	p	signature:()
