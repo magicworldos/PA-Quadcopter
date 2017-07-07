@@ -46,7 +46,10 @@ void display_run()
 	while (r)
 	{
 		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
-
+		if (display_get_onoff(7))
+		{
+			printf("[%s]", p->ctl_type == 0 ? " PID" : "VPID");
+		}
 		if (display_get_onoff(0))
 		{
 			printf("[v: %4.0f]", e->v);
@@ -74,9 +77,6 @@ void display_run()
 		if (display_get_onoff(6))
 		{
 			printf("[ctl zero: %4d %4d %4d %4d %4d %4d]", p->ctl_fb_zero, p->ctl_lr_zero, p->ctl_pw_zero, p->ctl_md_zero, p->ctl_ud_zero, p->ctl_di_zero);
-		}
-		if (display_get_onoff(7))
-		{
 		}
 		if (display_get_onoff(8))
 		{

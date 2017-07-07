@@ -12,7 +12,7 @@ s_params params_cache;
 
 s32 st = 0;
 s32 r = 0;
-f32 ctl_step = 1;
+f32 ctl_step = 0.1;
 pthread_t pthd;
 s_engine* e = NULL;
 s_params* p = NULL;
@@ -102,13 +102,13 @@ void params_from_cache()
 void params_reset()
 {
 	// XY轴欧拉角PID参数
-	p->kp = 10.0;
-	p->ki = 0.2;
-	p->kd = 6.0;
+	p->kp = 0.0;
+	p->ki = 0.0;
+	p->kd = 0.0;
 	// XY轴欧拉角PID参数
-	p->v_kp = 12.0;
-	p->v_ki = 0.1;
-	p->v_kd = 7.0;
+	p->v_kp = 0.0;
+	p->v_ki = 0.0;
+	p->v_kd = 0.0;
 	//摇控器3通道起始值
 	p->ctl_fb_zero = 1500;
 	p->ctl_lr_zero = 1500;
@@ -139,7 +139,7 @@ void params_input()
 			p->ctl_type = (++p->ctl_type % 2);
 		}
 		// 7
-		if (ch == '7')
+		else if (ch == '7')
 		{
 			if (p->ctl_type == 0)
 			{
@@ -226,6 +226,7 @@ void params_input()
 			else
 			{
 				e->v += STEP_V;
+				e->v = e->v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : e->v;
 			}
 		}
 		// 0
@@ -270,7 +271,7 @@ void params_input()
 		}
 		else if (ch == 'y')
 		{
-			params_set_onoff(4);
+			params_set_onoff(5);
 		}
 		else if (ch == 'u')
 		{
