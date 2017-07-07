@@ -146,17 +146,23 @@ void motor_balance_compensation()
 			continue;
 		}
 
-		//标准四轴平衡补偿
-		// speed[0] = (int)e->v + e->xv_devi - e->zv_devi;
-		// speed[1] = (int)e->v + e->yv_devi + e->zv_devi;
-		// speed[2] = (int)e->v - e->xv_devi - e->zv_devi;
-		// speed[3] = (int)e->v - e->yv_devi + e->zv_devi;
+#ifdef _FLY_MODE_I_
+		//四轴平衡补偿I型
+		speed[0] = (int)e->v + e->xv_devi - e->zv_devi;
+		speed[1] = (int)e->v + e->yv_devi + e->zv_devi;
+		speed[2] = (int)e->v - e->xv_devi - e->zv_devi;
+		speed[3] = (int)e->v - e->yv_devi + e->zv_devi;
+#endif
 
+#ifdef _FLY_MODE_X_
+		//四轴平衡补偿X型
 		speed[0] = (int) e->v + (e->xv_devi / 2) - (e->yv_devi / 2) - e->zv_devi;
 		speed[1] = (int) e->v + (e->xv_devi / 2) + (e->yv_devi / 2) + e->zv_devi;
 		speed[2] = (int) e->v - (e->xv_devi / 2) + (e->yv_devi / 2) - e->zv_devi;
 		speed[3] = (int) e->v - (e->xv_devi / 2) - (e->yv_devi / 2) + e->zv_devi;
+#endif
 
+		//对电机限幅
 		for (s32 i = 0; i < MOTOR_COUNT; i++)
 		{
 			speed[i] = speed[i] > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : speed[i];

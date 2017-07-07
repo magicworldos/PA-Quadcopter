@@ -40,6 +40,10 @@ typedef double f64;
 typedef signed long long s64;
 typedef unsigned long long u64;
 
+//飞行模式为X型
+//如需要I型，需要将其修改为 _FLY_MODE_I_
+#define _FLY_MODE_X_
+
 //保护最低速度
 #define PROCTED_SPEED		(100)
 //电机最大速度
