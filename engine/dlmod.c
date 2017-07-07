@@ -17,7 +17,7 @@ extern s_list list;
 pthread_t pthdmod;
 
 //读取lib文件夹，并载入*.so动态链接库
-int dlmod_init()
+s32 dlmod_init()
 {
 	list_init(&list, &dlmod_free_mod);
 
@@ -57,10 +57,10 @@ int dlmod_init()
 }
 
 //销毁模块链表
-int dlmod_destory()
+s32 dlmod_destory()
 {
 	list_visit(&list, (void*)&dlmod_run_pt_destory);
-	for (int i = 0; i < 3000; i++)
+	for (s32 i = 0; i < 3000; i++)
 	{
 		if (dlmod_mods_status() == 0)
 		{
@@ -92,21 +92,21 @@ s_dlmod* dlmod_open(char* filename)
 		goto _label_mod;
 	}
 
-	int (*init)() = dlsym(handler, "__init");
+	s32 (*init)() = dlsym(handler, "__init");
 	if (init == NULL)
 	{
 		printf("Can not find __init function in %s\n", filename);
 		goto _label_mod;
 	}
 
-	int (*destory)() = dlsym(handler, "__destory");
+	s32 (*destory)() = dlsym(handler, "__destory");
 	if (destory == NULL)
 	{
 		printf("Can not find __destory function in %s\n", filename);
 		goto _label_mod;
 	}
 
-	int (*status)() = dlsym(handler, "__status");
+	s32 (*status)() = dlsym(handler, "__status");
 	if (status == NULL)
 	{
 		printf("Can not find __status function in %s\n", filename);
@@ -143,7 +143,7 @@ _label_ret:;
 }
 
 //关闭一个动态链接库
-int dlmod_dlclose(s_dlmod* mod)
+s32 dlmod_dlclose(s_dlmod* mod)
 {
 	if (mod == NULL)
 	{
@@ -161,7 +161,7 @@ int dlmod_dlclose(s_dlmod* mod)
 }
 
 //释放内存资源
-int dlmod_free_mod(s_dlmod* mod)
+s32 dlmod_free_mod(s_dlmod* mod)
 {
 	if (mod == NULL)
 	{
@@ -178,7 +178,7 @@ int dlmod_free_mod(s_dlmod* mod)
 }
 
 //取得当前模块状态
-int dlmod_mods_status()
+s32 dlmod_mods_status()
 {
 	s_node* p = list.header;
 	while (p != NULL)
@@ -210,7 +210,7 @@ void dlmod_run_init(void* args)
 }
 
 //采用多线程方式调用__init函数
-int dlmod_run_pt_init(s_dlmod* mod)
+s32 dlmod_run_pt_init(s_dlmod* mod)
 {
 	if (mod == NULL)
 	{
@@ -244,7 +244,7 @@ void dlmod_run_destory(void* args)
 }
 
 //采用多线程方式调用__destory函数
-int dlmod_run_pt_destory(s_dlmod* mod)
+s32 dlmod_run_pt_destory(s_dlmod* mod)
 {
 	if (mod == NULL)
 	{

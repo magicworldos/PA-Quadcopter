@@ -133,7 +133,7 @@ s8 i2cdev_readWord(u8 devAddr, u8 regAddr, u16* data) { return i2cdev_readWords(
 s8 i2cdev_readBytes(u8 devAddr, u8 regAddr, u8 length, u8* data)
 {
 	s8 count = 0;
-	int fd   = open(I2C_DEV, O_RDWR);
+	s32 fd   = open(I2C_DEV, O_RDWR);
 
 	if (fd < 0)
 	{
@@ -196,7 +196,7 @@ s8 i2cdev_readWords(u8 devAddr, u8 regAddr, u8 length, u16* data)
  * @param value New bit value to write
  * @return Status of operation (1 = success)
  */
-int i2cdev_writeBit(u8 devAddr, u8 regAddr, u8 bitNum, u8 data)
+s32 i2cdev_writeBit(u8 devAddr, u8 regAddr, u8 bitNum, u8 data)
 {
 	u8 b;
 	i2cdev_readByte(devAddr, regAddr, &b);
@@ -211,7 +211,7 @@ int i2cdev_writeBit(u8 devAddr, u8 regAddr, u8 bitNum, u8 data)
  * @param value New bit value to write
  * @return Status of operation (1 = success)
  */
-int i2cdev_writeBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16 data)
+s32 i2cdev_writeBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16 data)
 {
 	u16 w;
 	i2cdev_readWord(devAddr, regAddr, &w);
@@ -227,7 +227,7 @@ int i2cdev_writeBitW(u8 devAddr, u8 regAddr, u8 bitNum, u16 data)
  * @param data Right-aligned value to write
  * @return Status of operation (1 = success)
  */
-int i2cdev_writeBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 data)
+s32 i2cdev_writeBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 data)
 {
 	//      010 value to write
 	// 76543210 bit numbers
@@ -260,7 +260,7 @@ int i2cdev_writeBits(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u8 data)
  * @param data Right-aligned value to write
  * @return Status of operation (1 = success)
  */
-int i2cdev_writeBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 data)
+s32 i2cdev_writeBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 data)
 {
 	//              010 value to write
 	// fedcba9876543210 bit numbers
@@ -291,7 +291,7 @@ int i2cdev_writeBitsW(u8 devAddr, u8 regAddr, u8 bitStart, u8 length, u16 data)
  * @param data New byte value to write
  * @return Status of operation (1 = success)
  */
-int i2cdev_writeByte(u8 devAddr, u8 regAddr, u8 data) { return i2cdev_writeBytes(devAddr, regAddr, 1, &data); }
+s32 i2cdev_writeByte(u8 devAddr, u8 regAddr, u8 data) { return i2cdev_writeBytes(devAddr, regAddr, 1, &data); }
 
 /** Write single word to a 16-bit device register.
  * @param devAddr I2C slave device address
@@ -299,7 +299,7 @@ int i2cdev_writeByte(u8 devAddr, u8 regAddr, u8 data) { return i2cdev_writeBytes
  * @param data New word value to write
  * @return Status of operation (1 = success)
  */
-int i2cdev_writeWord(u8 devAddr, u8 regAddr, u16 data) { return i2cdev_writeWords(devAddr, regAddr, 1, &data); }
+s32 i2cdev_writeWord(u8 devAddr, u8 regAddr, u16 data) { return i2cdev_writeWords(devAddr, regAddr, 1, &data); }
 
 /** Write multiple bytes to an 8-bit device register.
  * @param devAddr I2C slave device address
@@ -308,11 +308,11 @@ int i2cdev_writeWord(u8 devAddr, u8 regAddr, u16 data) { return i2cdev_writeWord
  * @param data Buffer to copy new data from
  * @return Status of operation (1 = success)
  */
-int i2cdev_writeBytes(u8 devAddr, u8 regAddr, u8 length, u8* data)
+s32 i2cdev_writeBytes(u8 devAddr, u8 regAddr, u8 length, u8* data)
 {
 	s8 count = 0;
 	u8 buf[128];
-	int fd;
+	s32 fd;
 
 	if (length > 127)
 	{
@@ -359,11 +359,11 @@ int i2cdev_writeBytes(u8 devAddr, u8 regAddr, u8 length, u8* data)
  * @param data Buffer to copy new data from
  * @return Status of operation (1 = success)
  */
-int i2cdev_writeWords(u8 devAddr, u8 regAddr, u8 length, u16* data)
+s32 i2cdev_writeWords(u8 devAddr, u8 regAddr, u8 length, u16* data)
 {
 	s8 count = 0;
 	u8 buf[128];
-	int i, fd;
+	s32 i, fd;
 
 	// Should do potential byteswap and call writeBytes() really, but that
 	// messes with the callers buffer

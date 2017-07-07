@@ -25,6 +25,6 @@ void emode_start_control();
 void emode_start_test(char* argv2, char* argv3, char* argv4);
 
 //电机调试
-void emode_ent_run(int en_port, int en_speed, int en_msecs);
+void emode_ent_run(s32 en_port, s32 en_speed, s32 en_msecs);
 
 #endif /* INCLUDE_EMODE_H_ */

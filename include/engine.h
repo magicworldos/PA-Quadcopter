@@ -13,7 +13,7 @@
 #include <typedef.h>
 
 //启动引擎
-void engine_start(int argc, char* argv[]);
+void engine_start(s32 argc, char* argv[]);
 
 //启动飞行模式
 void engine_start_fly();
@@ -21,17 +21,20 @@ void engine_start_fly();
 //引擎核心算法平衡算法
 void engine_fly();
 
-// XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float dg, float* sum);
+//内环PID输入角度输出角速度
+f32 engine_outside_pid(f32 et, f32 et2, float* sum);
 
-// XY轴的角速度PID反馈控制
-float engine_v_pid(float et, float dg, float* sum);
+//内环PID输入角速度输出PWM比例（千分比）
+f32 engine_inside_pid(f32 et, f32 et2, float* sum);
 
-//速度限幅
-void engine_limit(float* v);
+//外环角速度限幅
+void engine_limit_palstance(float* palstance);
+
+//内环PWM限幅
+void engine_limit_pwm(float* v);
 
 //卡尔曼滤波
-float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);
+f32 engine_kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi);
 
 //引擎重置
 void engine_reset(s_engine* e);
@@ -40,7 +43,7 @@ void engine_reset(s_engine* e);
 void engine_set_dxy();
 
 //绝对值
-float engine_abs(float v);
+f32 engine_abs(f32 v);
 
 //电机锁定解锁处理
 void engine_lock();

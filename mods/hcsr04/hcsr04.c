@@ -8,8 +8,8 @@
 
 #include <hcsr04.h>
 
-int st = 0;
-int r  = 0;
+s32 st = 0;
+s32 r  = 0;
 
 pthread_t pthd;
 s_engine* e = NULL;
@@ -18,13 +18,13 @@ s_params* p = NULL;
 s_dis dis;
 
 //信号噪声
-float h_est_devi     = 0.01;
-float h_measure_devi = 0.05;
+f32 h_est_devi     = 0.01;
+f32 h_measure_devi = 0.05;
 //卡尔曼滤波
-float h_est = 0.0, h_devi = 0.0;
+f32 h_est = 0.0, h_devi = 0.0;
 
 //初始化陀螺仪
-int __init(s_engine* engine, s_params* params)
+s32 __init(s_engine* engine, s_params* params)
 {
 	e  = engine;
 	p  = params;
@@ -42,14 +42,14 @@ int __init(s_engine* engine, s_params* params)
 	return 0;
 }
 
-int __destory(s_engine* e, s_params* p)
+s32 __destory(s_engine* e, s_params* p)
 {
 	r = 0;
 
 	return 0;
 }
 
-int __status() { return st; }
+s32 __status() { return st; }
 
 void distance_trig()
 {
@@ -68,7 +68,7 @@ void distance_trig()
 void distance()
 {
 	//读取电平信号
-	int value = digitalRead(PORT_CS_ECHO);
+	s32 value = digitalRead(PORT_CS_ECHO);
 	//如果是高电平
 	if (value)
 	{
@@ -82,7 +82,7 @@ void distance()
 	//计算高电平时长
 	long timer = (dis.timer_end.tv_sec - dis.timer_start.tv_sec) * 1000000 + (dis.timer_end.tv_usec - dis.timer_start.tv_usec);
 
-	float height = 0;
+	f32 height = 0;
 	//如果超过30ms超出测距范围，有效范围4.0米
 	if (timer > 30 * 1000)
 	{
@@ -108,14 +108,14 @@ void distance()
  * measure_devi测量噪声
  * devi上一次最优偏差
  */
-float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)
+f32 kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi)
 {
 	//预估高斯噪声的偏差
-	float q = sqrt((*devi) * (*devi) + est_devi * est_devi);
+	f32 q = sqrt((*devi) * (*devi) + est_devi * est_devi);
 	//卡尔曼增益
-	float kg = q * q / (q * q + measure_devi * measure_devi);
+	f32 kg = q * q / (q * q + measure_devi * measure_devi);
 	//滤波结果
-	float val = est + kg * (measure - est);
+	f32 val = est + kg * (measure - est);
 	//最优偏差
 	*devi = sqrt((1.0 - kg) * q * q);
 

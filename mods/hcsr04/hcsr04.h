@@ -21,16 +21,16 @@ typedef struct
 	struct timeval timer_end;
 } s_dis;
 
-int __init(s_engine* engine, s_params* params);
+s32 __init(s_engine* engine, s_params* params);
 
-int __destory(s_engine* e, s_params* p);
+s32 __destory(s_engine* e, s_params* p);
 
-int __status();
+s32 __status();
 
 void distance_trig();
 
 void distance();
 
-float kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);
+f32 kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi);
 
 #endif /* INCLUDE_GY953_H_ */

@@ -8,16 +8,16 @@
 
 #include <gy953.h>
 
-int fd   = 0;
+s32 fd   = 0;
 u32 init = 0;
-int r    = 0;
-int st   = 0;
+s32 r    = 0;
+s32 st   = 0;
 pthread_t pthd;
 s_engine* e = NULL;
 s_params* p = NULL;
 
 //初始化陀螺仪
-int __init(s_engine* engine, s_params* params)
+s32 __init(s_engine* engine, s_params* params)
 {
 	fd = serialOpen("/dev/ttyS0", 115200);
 	if (fd <= 0)
@@ -137,8 +137,8 @@ int __init(s_engine* engine, s_params* params)
 		unsigned char byte2 = (unsigned char)serialGetchar(fd);
 		if (byte2 == 0x15 || byte2 == 0x25 || byte2 == 45)
 		{
-			float x, y, z;
-			int err = gy953_read(&x, &y, &z);
+			f32 x, y, z;
+			s32 err = gy953_read(&x, &y, &z);
 			if (err == 0)
 			{
 				return 0;
@@ -158,7 +158,7 @@ int __init(s_engine* engine, s_params* params)
 	return 0;
 }
 
-int __destory(s_engine* e, s_params* p)
+s32 __destory(s_engine* e, s_params* p)
 {
 	r = 0;
 	if (fd != 0)
@@ -169,7 +169,7 @@ int __destory(s_engine* e, s_params* p)
 	return 0;
 }
 
-int __status() { return st; }
+s32 __status() { return st; }
 
 //循环读取陀螺仪读数
 void gy953_value()
@@ -217,7 +217,7 @@ void gy953_value()
 }
 
 //读取一个类型的数值
-int gy953_read(float* x, float* y, float* z)
+s32 gy953_read(float* x, float* y, float* z)
 {
 	unsigned char byte3 = (unsigned char)serialGetchar(fd);
 	if (byte3 != 6)

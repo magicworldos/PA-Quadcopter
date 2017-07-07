@@ -11,12 +11,13 @@
 
 #include <stdio.h>
 #include <termios.h>
+#include <typedef.h>
 
-void initTermios(int echo);
+void initTermios(s32 echo);
 
 void resetTermios();
 
-char getch_(int echo);
+char getch_(s32 echo);
 
 char getch(void);
 

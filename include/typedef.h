@@ -34,97 +34,89 @@ typedef unsigned short u16;
 typedef signed int s32;
 typedef unsigned int u32;
 
+typedef float f32;
+typedef double f64;
+
 typedef signed long long s64;
 typedef unsigned long long u64;
 
 //保护最低速度
-#define PROCTED_SPEED (100)
+#define PROCTED_SPEED		(100)
 //电机最大速度
-#define MAX_SPEED_RUN_MAX (1000)
+#define MAX_SPEED_RUN_MAX	(1000)
 //电机最小速度
-#define MAX_SPEED_RUN_MIN (0)
+#define MAX_SPEED_RUN_MIN	(0)
 //原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
 // 10ms 100Hz
 #define ENG_TIMER 			(10)
-
-#define MODE_MANUAL 		(0)
-#define MODE_AUTO 			(1)
+//角速度限幅
+#define MAX_PALSTANCE_MAX	(30.0)
 
 #define MAX_ACC				(20.0)
-
-//弧度制角度转目标角速度比例
-#define PV					(10.0)
 
 //引擎结构
 typedef struct
 {
 	//电机锁定状态，默认为锁定
-	int lock;
+	s32 lock;
+
 	//实际欧拉角
-	float tx;
-	float ty;
-	float tz;
+	f32 tx;
+	f32 ty;
+	f32 tz;
+
 	// XYZ欧拉角
-	float x;
-	float y;
-	float z;
+	f32 x;
+	f32 y;
+	f32 z;
+
 	//修正补偿
-	float dx;
-	float dy;
-	float dz;
-	float dax;
-	float day;
+	f32 dx;
+	f32 dy;
+	f32 dz;
+	f32 dax;
+	f32 day;
+
 	//摇控器移动倾角
-	float ctlmx;
-	float ctlmy;
+	f32 ctlmx;
+	f32 ctlmy;
+
 	// XYZ轴旋转角速度
-	float gx;
-	float gy;
-	float gz;
+	f32 gx;
+	f32 gy;
+	f32 gz;
+
 	//修正补偿
-	float dgx;
-	float dgy;
-	float dgz;
+	f32 dgx;
+	f32 dgy;
+	f32 dgz;
+
+	//实际角速度
+	f32 tgx;
+	f32 tgy;
+	f32 tgz;
+
 	// XYZ加速度
-	float ax;
-	float ay;
-	float az;
+	f32 ax;
+	f32 ay;
+	f32 az;
+
 	//引擎速度
-	float v;
-	// XYZ欧拉角补偿
-	float x_devi;
-	float y_devi;
-	float z_devi;
+	f32 v;
+
 	// XYZ角速度补偿
-	float xv_devi;
-	float yv_devi;
-	float zv_devi;
-	//欧拉角累加值
-	float x_sum;
-	float y_sum;
-	float z_sum;
-	//欧拉角累加值
-	float x_v_sum;
-	float y_v_sum;
-	float z_v_sum;
-	//高度累加值
-	float h_sum;
+	f32 xv_devi;
+	f32 yv_devi;
+	f32 zv_devi;
 
 	//其它参数
 	//显示摇控器读数
-	int ctl_fb;
-	int ctl_lr;
-	int ctl_pw;
-	int ctl_md;
-	int ctl_ud;
-	int ctl_di;
-
-	//测量高度
-	float height;
-	//期望高度
-	float height_target;
-	//高度补偿
-	float h_devi;
+	s32 ctl_fb;
+	s32 ctl_lr;
+	s32 ctl_pw;
+	s32 ctl_md;
+	s32 ctl_ud;
+	s32 ctl_di;
 
 	//最低油门,最左，最右
 	u32 lock_status;
@@ -135,29 +127,24 @@ typedef struct
 typedef struct
 {
 	// XY轴欧拉角PID参数
-	float kp;
-	float ki;
-	float kd;
+	f32 kp;
+	f32 ki;
+	f32 kd;
 	// XYZ角速度PID参数
-	float v_kp;
-	float v_ki;
-	float v_kd;
-	//高度PID参数
-	float h_kp;
-	float h_ki;
-	float h_kd;
-	//中心校准补偿
-	float cx;
-	float cy;
+	f32 v_kp;
+	f32 v_ki;
+	f32 v_kd;
 	//摇控器4通道起始读数
-	int ctl_fb_zero;
-	int ctl_lr_zero;
-	int ctl_pw_zero;
-	int ctl_md_zero;
-	int ctl_ud_zero;
-	int ctl_di_zero;
-
-	int ctl_type;
+	s32 ctl_fb_zero;
+	s32 ctl_lr_zero;
+	s32 ctl_pw_zero;
+	s32 ctl_md_zero;
+	s32 ctl_ud_zero;
+	s32 ctl_di_zero;
+	//PID调参类型
+	u32 ctl_type;
+	//显示内容
+	u32 ctl_display;
 } s_params;
 
 #endif /* INCLUDE_TYPEDEF_H_ */

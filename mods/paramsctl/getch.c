@@ -9,7 +9,7 @@
 #include <getch.h>
 
 struct termios tm, tm_old;
-void initTermios(int echo)
+void initTermios(s32 echo)
 {
 	tcgetattr(0, &tm_old);
 	tm = tm_old;
@@ -20,7 +20,7 @@ void initTermios(int echo)
 
 void resetTermios() { tcsetattr(0, TCSANOW, &tm_old); }
 
-char getch_(int echo)
+char getch_(s32 echo)
 {
 	char ch;
 	initTermios(echo);

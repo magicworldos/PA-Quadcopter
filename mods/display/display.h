@@ -15,12 +15,15 @@
 //显示频度
 #define DISPLAY_SPEED (10)
 
-int __init(s_engine* engine, s_params* params);
+s32 __init(s_engine* engine, s_params* params);
 
-int __destory(s_engine* e, s_params* p);
+s32 __destory(s_engine* e, s_params* p);
 
-int __status();
+s32 __status();
 
-void run();
+void display_run();
+
+//取得显示开关
+s32 display_get_onoff(s32 bit);
 
 #endif /* MODS_DISPLAY_DISPLAY_H_ */

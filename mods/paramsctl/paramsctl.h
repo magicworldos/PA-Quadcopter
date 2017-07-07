@@ -17,11 +17,11 @@
 //高参幅度速度
 #define STEP_V (10)
 
-int __init(s_engine* engine, s_params* params);
+s32 __init(s_engine* engine, s_params* params);
 
-int __destory(s_engine* e, s_params* p);
+s32 __destory(s_engine* e, s_params* p);
 
-int __status();
+s32 __status();
 
 //保存参数
 void params_save();
@@ -34,5 +34,8 @@ void params_reset();
 
 //键盘接收按键
 void params_input();
+
+//设置显示开关
+void params_set_onoff(s32 bit);
 
 #endif /* _INCLUDE_PARAMSCTL_H_ */

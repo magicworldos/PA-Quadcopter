@@ -96,11 +96,11 @@ void emode_start_control()
 void emode_start_test(char* argv2, char* argv3, char* argv4)
 {
 	// GPIO引脚编号
-	int en_port;
+	s32 en_port;
 	//速度
-	int en_speed;
+	s32 en_speed;
 	//时长
-	int en_msecs;
+	s32 en_msecs;
 
 	//电机所在GPIO引脚编号
 	sscanf(argv2, "%d", &en_port);
@@ -113,7 +113,7 @@ void emode_start_test(char* argv2, char* argv3, char* argv4)
 }
 
 //电机调试
-void emode_ent_run(int en_port, int en_speed, int en_msecs)
+void emode_ent_run(s32 en_port, s32 en_speed, s32 en_msecs)
 {
 	//设置指定的GPIO引脚为输出引脚
 	pinMode(en_port, OUTPUT);
@@ -121,7 +121,7 @@ void emode_ent_run(int en_port, int en_speed, int en_msecs)
 	//开始调试运行en_msecs毫秒，最多运行10000毫秒（10秒）
 	en_msecs = en_msecs > TEST_MAX_MS ? TEST_MAX_MS : en_msecs;
 	//由于一个PWM信号周期为2毫秒，所以调试时长要要除以2
-	for (int i = 0; i < en_msecs / 2; i++)
+	for (s32 i = 0; i < en_msecs / 2; i++)
 	{
 		//高电平
 		digitalWrite(en_port, HIGH);
@@ -132,7 +132,7 @@ void emode_ent_run(int en_port, int en_speed, int en_msecs)
 	}
 
 	//停止
-	for (int i = 0; i < 3000; i++)
+	for (s32 i = 0; i < 3000; i++)
 	{
 		//高电平
 		digitalWrite(en_port, HIGH);

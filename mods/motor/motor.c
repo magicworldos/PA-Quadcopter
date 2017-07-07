@@ -9,27 +9,27 @@
 #include <motor.h>
 
 //电机实际速度
-int speed[MOTOR_COUNT];
-int ports[MOTOR_COUNT] = { PORT_MOTOR0, PORT_MOTOR1, PORT_MOTOR2, PORT_MOTOR3 };
+s32 speed[MOTOR_COUNT];
+s32 ports[MOTOR_COUNT] = { PORT_MOTOR0, PORT_MOTOR1, PORT_MOTOR2, PORT_MOTOR3 };
 
 pthread_t pthddr;
 
-int sts = 0;
-int st[MOTOR_COUNT];
-int r = 0;
+s32 sts = 0;
+s32 st[MOTOR_COUNT];
+s32 r = 0;
 pthread_t pthd;
 s_engine* e = NULL;
 s_params* p = NULL;
 
 //初始化时电调可能需要行程校准，通常是3秒最大油门，再3秒最小油门，但不是必要的，可以不做
-int __init(s_engine* engine, s_params* params)
+s32 __init(s_engine* engine, s_params* params)
 {
 	e = engine;
 	p = params;
 
 	r = 1;
 	sts = 1;
-	for (int i = 0; i < MOTOR_COUNT; i++)
+	for (s32 i = 0; i < MOTOR_COUNT; i++)
 	{
 		//状态
 		st[i] = 1;
@@ -53,20 +53,20 @@ int __init(s_engine* engine, s_params* params)
 	return 0;
 }
 
-int __destory(s_engine* e, s_params* p)
+s32 __destory(s_engine* e, s_params* p)
 {
 	r = 0;
 	usleep(10 * 1000);
 
 	//电机停止
-	for (int i = 0; i < MOTOR_COUNT; i++)
+	for (s32 i = 0; i < MOTOR_COUNT; i++)
 	{
 		speed[i] = 0;
 	}
 
 	usleep(10 * 1000);
 
-	for (int i = 0; i < MOTOR_COUNT; i++)
+	for (s32 i = 0; i < MOTOR_COUNT; i++)
 	{
 		//状态
 		st[i] = 0;
@@ -75,9 +75,9 @@ int __destory(s_engine* e, s_params* p)
 	return 0;
 }
 
-int __status()
+s32 __status()
 {
-	for (int i = 0; i < MOTOR_COUNT; i++)
+	for (s32 i = 0; i < MOTOR_COUNT; i++)
 	{
 		if (st[i])
 		{
@@ -89,7 +89,7 @@ int __status()
 }
 
 //将电机速度转为PWM信号
-void motor_set_pwm(int speed, motor_pwm* pwm)
+void motor_set_pwm(s32 speed, motor_pwm* pwm)
 {
 	//高电平时长
 	pwm->time_m = TIME_DEP + speed;
@@ -98,7 +98,7 @@ void motor_set_pwm(int speed, motor_pwm* pwm)
 }
 
 //对电机发送PWM信号
-void motor_run_pwm(int motor, motor_pwm* pwm)
+void motor_run_pwm(s32 motor, motor_pwm* pwm)
 {
 	//高电平
 	digitalWrite(ports[motor], HIGH);
@@ -115,13 +115,13 @@ void motor_run(void* args)
 	motor_pwm pwm;
 	while (r)
 	{
-//		//将电机速度转为PWM信号
-//		motor_set_pwm(speed[motor], &pwm);
-//		//对电机发送PWM信号
-//		motor_run_pwm(motor, &pwm);
+		//将电机速度转为PWM信号
+		motor_set_pwm(speed[motor], &pwm);
+		//对电机发送PWM信号
+		motor_run_pwm(motor, &pwm);
 
 		//pwm范围是0~1024
-		pwmWrite(ports[motor], 512 + (speed[motor] / 2));
+		//pwmWrite(ports[motor], 512 + (speed[motor] / 2));
 	}
 
 	st[motor] = 0;
@@ -138,7 +138,7 @@ void motor_balance_compensation()
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
 		{
-			for (int i = 0; i < MOTOR_COUNT; i++)
+			for (s32 i = 0; i < MOTOR_COUNT; i++)
 			{
 				speed[i] = 0;
 			}
@@ -147,17 +147,17 @@ void motor_balance_compensation()
 		}
 
 		//标准四轴平衡补偿
-		// speed[0] = (int)e->v - e->x_devi + e->z_devi - e->xv_devi + e->zv_devi;
-		// speed[1] = (int)e->v - e->y_devi - e->z_devi - e->yv_devi - e->zv_devi;
-		// speed[2] = (int)e->v + e->x_devi + e->z_devi + e->xv_devi + e->zv_devi;
-		// speed[3] = (int)e->v + e->y_devi - e->z_devi + e->yv_devi - e->zv_devi;
+		// speed[0] = (int)e->v + e->xv_devi - e->zv_devi;
+		// speed[1] = (int)e->v + e->yv_devi + e->zv_devi;
+		// speed[2] = (int)e->v - e->xv_devi - e->zv_devi;
+		// speed[3] = (int)e->v - e->yv_devi + e->zv_devi;
 
-		speed[0] = (int) e->v - (e->x_devi / 2) + (e->y_devi / 2) + e->z_devi - (e->xv_devi / 2) + (e->yv_devi / 2) + e->zv_devi;
-		speed[1] = (int) e->v - (e->x_devi / 2) - (e->y_devi / 2) - e->z_devi - (e->xv_devi / 2) - (e->yv_devi / 2) - e->zv_devi;
-		speed[2] = (int) e->v + (e->x_devi / 2) - (e->y_devi / 2) + e->z_devi + (e->xv_devi / 2) - (e->yv_devi / 2) + e->zv_devi;
-		speed[3] = (int) e->v + (e->x_devi / 2) + (e->y_devi / 2) - e->z_devi + (e->xv_devi / 2) + (e->yv_devi / 2) - e->zv_devi;
+		speed[0] = (int) e->v + (e->xv_devi / 2) - (e->yv_devi / 2) - e->zv_devi;
+		speed[1] = (int) e->v + (e->xv_devi / 2) + (e->yv_devi / 2) + e->zv_devi;
+		speed[2] = (int) e->v - (e->xv_devi / 2) + (e->yv_devi / 2) - e->zv_devi;
+		speed[3] = (int) e->v - (e->xv_devi / 2) - (e->yv_devi / 2) + e->zv_devi;
 
-		for (int i = 0; i < MOTOR_COUNT; i++)
+		for (s32 i = 0; i < MOTOR_COUNT; i++)
 		{
 			speed[i] = speed[i] > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : speed[i];
 			speed[i] = speed[i] < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : speed[i];

@@ -29,16 +29,16 @@
 typedef struct
 {
 	//高电平时长
-	int time_m;
+	s32 time_m;
 	//低电平时长
-	int time_w;
+	s32 time_w;
 } motor_pwm;
 
-int __init(s_engine* e, s_params* p);
+s32 __init(s_engine* e, s_params* p);
 
-int __destory(s_engine* e, s_params* p);
+s32 __destory(s_engine* e, s_params* p);
 
-int __status();
+s32 __status();
 
 void motor_setup();
 
@@ -46,10 +46,10 @@ void motor_setup();
 void motor_clear();
 
 //将电机速度转为PWM信号
-void motor_set_pwm(int speed, motor_pwm* pwm);
+void motor_set_pwm(s32 speed, motor_pwm* pwm);
 
 //对电机0发送PWM信号
-void motor_run_pwm(int motor, motor_pwm* pwm);
+void motor_run_pwm(s32 motor, motor_pwm* pwm);
 
 //向电机0发送PWM信号
 void motor_run(void* args);

@@ -12,15 +12,15 @@
 
 #define FHEIGHT_MAX_SPEED (1000)
 
-int __init(s_engine* engine, s_params* params);
+s32 __init(s_engine* engine, s_params* params);
 
-int __destory(s_engine* e, s_params* p);
+s32 __destory(s_engine* e, s_params* p);
 
-int __status();
+s32 __status();
 
 void fheight_automatic();
 
-float fheight_pid(float et, float et_1, float* sum);
+f32 fheight_pid(f32 et, f32 et_1, float* sum);
 
 void fheight_limit(float* v);
 

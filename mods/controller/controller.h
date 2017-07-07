@@ -33,13 +33,13 @@ typedef struct
 	struct timeval timer_end;
 } s_ctl_pwm;
 
-int __init(s_engine* engine, s_params* params);
+s32 __init(s_engine* engine, s_params* params);
 
-int __destory(s_engine* e, s_params* p);
+s32 __destory(s_engine* e, s_params* p);
 
-int __status();
+s32 __status();
 
-void controller_ctl_pwm(int gpio_port, s_ctl_pwm* ctl_pwm);
+void controller_ctl_pwm(s32 gpio_port, s_ctl_pwm* ctl_pwm);
 
 //读取摇控器接收机的PWM信号“前后”
 void controller_ctl_pwm_fb();
@@ -60,28 +60,28 @@ void controller_ctl_pwm_ud();
 void controller_ctl_pwm_di();
 
 //读入摇控器“前/后”的PWM信号
-void controller_fb_pwm(int fb);
+void controller_fb_pwm(s32 fb);
 
 //读入摇控器“左/右”的PWM信号
-void controller_lr_pwm(int lr);
+void controller_lr_pwm(s32 lr);
 
 //读入摇控器“油门”的PWM信号
-void controller_pw_pwm(int pw);
+void controller_pw_pwm(s32 pw);
 
 //读入摇控器第4通道的PWM信号
-void controller_md_pwm(int md);
+void controller_md_pwm(s32 md);
 
 //读入摇控器第5通道的PWM信号
-void controller_ud_pwm(int md);
+void controller_ud_pwm(s32 md);
 
 //读入摇控器方向舵比例缩放通道的PWM信号
-void controller_di_pwm(int md);
+void controller_di_pwm(s32 md);
 
 //取绝对值
-float controller_abs(float x);
+f32 controller_abs(f32 x);
 
 //二次曲线函数
-float controller_parabola(float x);
+f32 controller_parabola(f32 x);
 
 /***
  * est预估值
@@ -90,6 +90,6 @@ float controller_parabola(float x);
  * measure_devi测量噪声
  * devi上一次最优偏差
  */
-float controller_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi);
+f32 controller_kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi);
 
 #endif /* MODS_CONTROLLER_CONTROLLER_H_ */

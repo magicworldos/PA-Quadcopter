@@ -24,7 +24,7 @@ sem_t sem_engine;
 pthread_t pthd;
 
 //启动引擎
-void engine_start(int argc, char* argv[])
+void engine_start(s32 argc, char* argv[])
 {
 	//处理Ctrl + C退出信号
 	signal(SIGINT, (void (*)(int)) &engine_handler);
@@ -98,50 +98,68 @@ void engine_fly()
 {
 	s_engine* e = &engine;
 
-	//欧拉角的上一次读数
-	float x_et = 0.0;
-	float y_et = 0.0;
-	float z_et = 0.0;
-	//角速度期望值
-	float xv_et = 0.0;
-	float yv_et = 0.0;
-	float zv_et = 0.0;
-	//角速度的上一次读数
-	float x_v_et = 0.0;
-	float y_v_et = 0.0;
-	float z_v_et = 0.0;
+	//外环:输入-欧拉角的上一次读数
+	f32 x_last = 0.0;
+	f32 y_last = 0.0;
+	f32 z_last = 0.0;
+
+	//外环:输入-欧拉角的积分变量
+	f32 x_sum = 0.0;
+	f32 y_sum = 0.0;
+	f32 z_sum = 0.0;
+
+	//外环:输出-角速度期望值
+	f32 xv_et = 0.0;
+	f32 yv_et = 0.0;
+	f32 zv_et = 0.0;
+
+	//内环:输入-角速度的上一次读数
+	f32 xv_last = 0.0;
+	f32 yv_last = 0.0;
+	f32 zv_last = 0.0;
+
+	//外环:输入-角速度的积分变量
+	f32 xv_sum = 0.0;
+	f32 yv_sum = 0.0;
+	f32 zv_sum = 0.0;
 
 	while (1)
 	{
-		//处理欧拉角平衡补偿
+		//实际欧拉角
 		e->tx = e->x + e->dx + e->dax + e->ctlmx;
 		e->ty = e->y + e->dy + e->day + e->ctlmy;
 		e->tz = e->z + e->dz;
 
-		//期望角速度
-		xv_et = e->tx * PV;
-		yv_et = e->ty * PV;
-		zv_et = e->tz * PV;
+		//当前实际角速度
+		e->tgx = e->gx + e->dgx;
+		e->tgy = e->gy + e->dgy;
+		e->tgz = e->gz + e->dgz;
 
-		//使用欧拉角的PID反馈控制算法
-		e->x_devi = engine_pid(e->tx, x_et, &e->x_sum);
-		e->y_devi = engine_pid(e->ty, y_et, &e->y_sum);
-		e->z_devi = engine_pid(e->tz, z_et, NULL);
+		//外环PID对根据欧拉角控制期望角速度
+		//这里应该是期望角度-当前实际角度，所以这里为 0 - x_et
+		xv_et = engine_outside_pid(-e->tx, -x_last, &x_sum);
+		yv_et = engine_outside_pid(-e->ty, -y_last, &y_sum);
+		zv_et = engine_outside_pid(-e->tz, -z_last, NULL);
 
-		//角速度PID
-		e->xv_devi = engine_v_pid(xv_et + (e->gx + e->dgx), x_v_et + xv_et, &e->x_v_sum);
-		e->yv_devi = engine_v_pid(yv_et + (e->gy + e->dgy), y_v_et + yv_et, &e->y_v_sum);
-		e->zv_devi = engine_v_pid(zv_et + (e->gz + e->dgz), z_v_et + zv_et, NULL);
+		//内环角速度PID
+		//这里应该期望角速度-当前实际角速度
+		xv_et -= e->tgx;
+		yv_et -= e->tgy;
+		zv_et -= e->tgz;
+
+		e->xv_devi = engine_inside_pid(xv_et, xv_last, &xv_sum);
+		e->yv_devi = engine_inside_pid(yv_et, yv_last, &yv_sum);
+		e->zv_devi = engine_inside_pid(zv_et, zv_last, NULL);
 
 		//记录欧拉角的上一次读数
-		x_et = e->tx;
-		y_et = e->ty;
-		z_et = e->tz;
+		x_last = e->tx;
+		y_last = e->ty;
+		z_last = e->tz;
 
 		//记录角速度的上一次读数
-		x_v_et = e->gx + e->dgx;
-		y_v_et = e->gy + e->dgy;
-		z_v_et = e->gz + e->dgz;
+		xv_last = xv_et;
+		yv_last = yv_et;
+		zv_last = zv_et;
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -170,7 +188,7 @@ void engine_lock()
 	{
 		u32 status = e->lock_status;
 		//计时状态
-		int timer_start = 0;
+		s32 timer_start = 0;
 		while (1)
 		{
 			//最低油门方向最左方向最右
@@ -213,64 +231,73 @@ void engine_lock()
 	}
 }
 
-// XY轴的欧拉角PID反馈控制
-float engine_pid(float et, float et2, float* sum)
+//内环PID输入角度输出角速度
+f32 engine_outside_pid(f32 et, f32 et2, float* sum)
 {
+	//输出期望角速度
+	f32 palstance = 0.0;
 	s_engine* e = &engine;
-
-	//计算积分参数累加和，消除稳态误差
 	if (sum == NULL)
 	{
-		//对X、Y轴做PID反馈控制
-		float devi = params.kp * et + params.kd * (et - et2);
-		engine_limit(&devi);
-		//返回Z轴补偿值
-		return devi;
+		//Z轴PID中只做P和D
+		palstance = params.kp * et + params.kd * (et - et2);
+		//输出限幅
+		engine_limit_palstance(&palstance);
+		return palstance;
 	}
-
 	*sum += params.ki * et;
-	engine_limit(sum);
-
-	//对X、Y轴做PID反馈控制
-	float devi = params.kp * et + (*sum) + params.kd * (et - et2);
-	engine_limit(&devi);
-	//返回X、Y轴补偿值
-	return devi;
+	//积分限幅
+	engine_limit_palstance(sum);
+	//XY轴PID反馈控制
+	palstance = params.kp * et + (*sum) + params.kd * (et - et2);
+	//输出限幅
+	engine_limit_palstance(&palstance);
+	return palstance;
 }
 
-// XY轴的欧拉角PID反馈控制
-float engine_v_pid(float et, float et2, float* sum)
+//内环PID输入角速度输出PWM比例（千分比）
+f32 engine_inside_pid(f32 et, f32 et2, float* sum)
 {
+	//输入期望pwm千分比
+	f32 pwm = 0.0;
 	s_engine* e = &engine;
-
-	//计算积分参数累加和，消除稳态误差
 	if (sum == NULL)
 	{
-		//对X、Y轴做PID反馈控制
-		float devi = params.v_kp * et + params.v_kd * (et - et2);
-		engine_limit(&devi);
-		//返回Z轴补偿值
-		return devi;
+		//Z轴PID中只做P和D
+		pwm = params.v_kp * et + params.v_kd * (et - et2);
+		//输出限幅
+		engine_limit_pwm(&pwm);
+		return pwm;
 	}
-
-	//计算积分参数累加和，消除稳态误差
+	//积分限幅
 	*sum += params.v_ki * et;
-	engine_limit(sum);
-
-	//对X、Y轴做PID反馈控制
-	float devi = params.v_kp * et + (*sum) + params.v_kd * (et - et2);
-	engine_limit(&devi);
-	//返回X、Y轴补偿值
-	return devi;
+	engine_limit_pwm(sum);
+	//XY轴PID反馈控制
+	pwm = params.v_kp * et + (*sum) + params.v_kd * (et - et2);
+	//输出限幅
+	engine_limit_pwm(&pwm);
+	return pwm;
 }
 
-//速度限幅
-void engine_limit(float* v)
+//外环角速度限幅
+void engine_limit_palstance(float* palstance)
+{
+	if (palstance == NULL)
+	{
+		return;
+	}
+	*palstance = *palstance > MAX_PALSTANCE_MAX ? MAX_PALSTANCE_MAX : *palstance;
+	*palstance = *palstance < -MAX_PALSTANCE_MAX ? -MAX_PALSTANCE_MAX : *palstance;
+}
+
+//内环PWM限幅
+void engine_limit_pwm(float* v)
 {
 	if (v == NULL)
 	{
 		return;
 	}
+	//不大于电机当前速度，防止在低油门是积分项的累加导致一侧转数变的非常大
 	s_engine* e = &engine;
 	*v = *v > e->v ? e->v : *v;
 	*v = *v < -e->v ? -e->v : *v;
@@ -283,14 +310,14 @@ void engine_limit(float* v)
  * measure_devi测量噪声
  * devi上一次最优偏差
  */
-float engine_kalman_filter(float est, float est_devi, float measure, float measure_devi, float* devi)
+f32 engine_kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi)
 {
 	//预估高斯噪声的偏差
-	float q = sqrt((*devi) * (*devi) + est_devi * est_devi);
+	f32 q = sqrt((*devi) * (*devi) + est_devi * est_devi);
 	//卡尔曼增益
-	float kg = q * q / (q * q + measure_devi * measure_devi);
+	f32 kg = q * q / (q * q + measure_devi * measure_devi);
 	//滤波结果
-	float val = est + kg * (measure - est);
+	f32 val = est + kg * (measure - est);
 	//最优偏差
 	*devi = sqrt((1.0 - kg) * q * q);
 
@@ -309,46 +336,38 @@ void engine_reset(s_engine* e)
 	e->dx = 0;
 	e->dy = 0;
 	e->dz = 0;
+	//起飞前根据重力方向的角度补偿
 	e->dax = 0;
 	e->day = 0;
-	// XYZ欧拉角
+	//欧拉角
 	e->x = 0;
 	e->y = 0;
 	e->z = 0;
-	// XYZ加速度
+	//加速度
 	e->ax = 0;
 	e->ay = 0;
 	e->az = 0;
 	//摇控器飞行移动倾斜角
 	e->ctlmx = 0;
 	e->ctlmy = 0;
-	// XYZ轴旋转角速度
+	//角速度
 	e->gx = 0;
 	e->gy = 0;
 	e->gz = 0;
-	//陀螺仪修正补偿XYZ轴
+	//角速度修正补偿
 	e->dgx = 0;
 	e->dgy = 0;
 	e->dgz = 0;
+	//实际角速度
+	e->tgx = 0;
+	e->tgy = 0;
+	e->tgz = 0;
 	//重置速度速度置为0
 	e->v = 0;
-	// XYZ欧拉角补偿
-	e->x_devi = 0;
-	e->y_devi = 0;
-	e->z_devi = 0;
 	// XYZ角速度补偿
 	e->xv_devi = 0;
 	e->yv_devi = 0;
 	e->zv_devi = 0;
-
-	// XYZ欧拉角累加值
-	e->x_sum = 0;
-	e->y_sum = 0;
-	e->z_sum = 0;
-	// XYZ角速度累加值
-	e->x_v_sum = 0;
-	e->y_v_sum = 0;
-	e->z_v_sum = 0;
 	//显示摇控器读数
 	e->ctl_fb = 0;
 	e->ctl_lr = 0;
@@ -356,16 +375,8 @@ void engine_reset(s_engine* e)
 	e->ctl_md = 0;
 	e->ctl_ud = 0;
 	e->ctl_di = 0;
-	//高度
-	e->height = 0;
-	e->height_target = 0;
-	e->h_devi = 0;
-	e->h_sum = 0;
 	//最低油门,最左，最右
 	e->lock_status = 0;
-	// 0手动模式
-	// 1自动定高模式
-	e->mode = MODE_MANUAL;
 }
 
 //陀螺仪补偿
@@ -382,16 +393,6 @@ void engine_set_dxy()
 	e->dgy = -e->gy;
 	e->dgz = -e->gz;
 
-	e->x_sum = 0;
-	e->y_sum = 0;
-	e->z_sum = 0;
-
-	e->x_v_sum = 0;
-	e->y_v_sum = 0;
-	e->z_v_sum = 0;
-
-	e->h_sum = 0;
-
 	if (engine_abs(e->ax) < MAX_ACC)
 	{
 		e->dax = asin(e->ax / MAX_ACC);
@@ -400,15 +401,10 @@ void engine_set_dxy()
 	{
 		e->day = asin(e->ay / MAX_ACC);
 	}
-
-	e->x_devi = 0;
-	e->y_devi = 0;
-	e->z_devi = 0;
-	e->h_devi = 0;
 }
 
 //绝对值
-float engine_abs(float v)
+f32 engine_abs(f32 v)
 {
 	if (v < 0)
 	{
