@@ -28,7 +28,7 @@ MOD_INCLUDE			= -Iinclude
 C_FLAGS				= -pthread -lm -ldl -lwiringPi -std=gnu11
 
 all:	$(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES)
-	ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+	#ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
 	
 engine:	$(MOD_PROJECT)
 
