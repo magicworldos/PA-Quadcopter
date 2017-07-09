@@ -126,6 +126,8 @@ void engine_fly()
 	while (1)
 	{
 		//实际欧拉角
+		e->dax = 0;
+		e->day = 0;
 		e->tx = e->x + e->dx + e->dax + e->ctlmx;
 		e->ty = e->y + e->dy + e->day + e->ctlmy;
 		e->tz = e->z + e->dz;
