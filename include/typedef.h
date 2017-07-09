@@ -54,7 +54,7 @@ typedef unsigned long long u64;
 // 10ms 100Hz
 #define ENG_TIMER 			(10)
 //角速度限幅
-#define MAX_PALSTANCE_MAX	(30.0)
+#define MAX_PALSTANCE		(30.0)
 
 #define MAX_ACC				(20.0)
 

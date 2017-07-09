@@ -286,8 +286,10 @@ void engine_limit_palstance(float* palstance)
 	{
 		return;
 	}
-	*palstance = *palstance > MAX_PALSTANCE_MAX ? MAX_PALSTANCE_MAX : *palstance;
-	*palstance = *palstance < -MAX_PALSTANCE_MAX ? -MAX_PALSTANCE_MAX : *palstance;
+	s_engine* e = &engine;
+	float max_pal = MAX_PALSTANCE * (e->v / MAX_SPEED_RUN_MAX);
+	*palstance = *palstance > max_pal ? max_pal : *palstance;
+	*palstance = *palstance < -max_pal ? -max_pal : *palstance;
 }
 
 //内环PWM限幅
