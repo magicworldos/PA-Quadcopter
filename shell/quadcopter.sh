@@ -16,6 +16,7 @@ case $1 in
 	start)
 		
 		release/bin/quadcopter --fly > /dev/null &
+		ps -ef | grep quadcopter | grep -v grep | awk '{print $2}' | xargs renice -19 > /dev/null &
 		;;
 
 	stop)
@@ -25,6 +26,7 @@ case $1 in
 	restart)
 		ps -ef | grep "release/bin/quadcopter --fly" | grep -v grep | awk '{print $2}' | xargs kill -9
 		release/bin/quadcopter --fly > /dev/null &
+		ps -ef | grep quadcopter | grep -v grep | awk '{print $2}' | xargs renice -19 > /dev/null &
 		;;
 
 	*)
