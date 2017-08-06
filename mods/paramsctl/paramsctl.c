@@ -102,13 +102,13 @@ void params_from_cache()
 void params_reset()
 {
 	// XY轴欧拉角PID参数
-	p->kp = 32.0;
-	p->ki = 1.2;
-	p->kd = 53.0;
+	p->kp = 28.0;
+	p->ki = 0.6;
+	p->kd = 36.0;
 	// XY轴欧拉角PID参数
-	p->v_kp = 8.0;
-	p->v_ki = 0.0;
-	p->v_kd = 15.0;
+	p->v_kp = 6.0;
+	p->v_ki = 0.1;
+	p->v_kd = 20.0;
 	//摇控器3通道起始值
 	p->ctl_fb_zero = 1500;
 	p->ctl_lr_zero = 1500;
