@@ -106,7 +106,7 @@ void params_reset()
 	p->ki = 0.6;
 	p->kd = 36.0;
 	// XY轴欧拉角PID参数
-	p->v_kp = 6.0;
+	p->v_kp = 7.6;
 	p->v_ki = 0.1;
 	p->v_kd = 20.0;
 	//摇控器3通道起始值
