@@ -192,7 +192,7 @@ void controller_fb_pwm(s32 fb)
 	e->ctl_fb = fb;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	e->ctlmx = controller_parabola(((float) (fb - p->ctl_fb_zero)) / 10.0);
+	e->ctlmx = controller_parabola((float) (fb - p->ctl_fb_zero));
 }
 
 //读入摇控器“左/右”的PWM信号
@@ -209,7 +209,7 @@ void controller_lr_pwm(s32 lr)
 	e->ctl_lr = lr;
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
-	e->ctlmy = controller_parabola(((float) (lr - p->ctl_lr_zero)) / 10.0);
+	e->ctlmy = controller_parabola((float) (lr - p->ctl_lr_zero));
 
 	//如果是最左或最右
 	if (abs(lr - p->ctl_lr_zero) > 160)
@@ -339,19 +339,27 @@ f32 controller_abs(f32 x)
 //二次曲线函数
 f32 controller_parabola(f32 x)
 {
+	f32 max_pwm = (CTL_PWM_MAX - CTL_PWM_MIN) / 2;
+
 	if (controller_abs(x) < 0.0001)
 	{
 		return 0;
 	}
-	//取得方向读数
-	f32 flag = x / controller_abs(x);
-	//二次曲线函数，使小于6度时读数更小
-	f32 mxy = flag * (1.0 / 36.0) * (x * x);
-	//校验倾斜角最值范围
-	mxy = mxy > MAX_ANGLE ? MAX_ANGLE : mxy;
-	mxy = mxy < -MAX_ANGLE ? -MAX_ANGLE : mxy;
-	//转为弧度制
-	f32 angle = mxy * M_PI / 180.0;
+
+	if (x > max_pwm)
+	{
+		return MAX_ANGLE;
+	}
+
+	if (x < -max_pwm)
+	{
+		return -MAX_ANGLE;
+	}
+
+	f32 angle = x / max_pwm * MAX_ANGLE;
+	angle = angle > MAX_ANGLE ? MAX_ANGLE : angle;
+	angle = angle < -MAX_ANGLE ? -MAX_ANGLE : angle;
+	angle = angle * M_PI / 180.0;
 
 	//如果方向比例通道无读数则直接返回倾斜角
 	if (e->ctl_di < CTL_DI_MIN || e->ctl_di > CTL_DI_MAX)
@@ -360,7 +368,7 @@ f32 controller_parabola(f32 x)
 	}
 
 	//如果方向舵比例通道有读数，倾斜角需要根据此读数做缩放
-	f32 sacle = controller_abs((float) e->ctl_di - 1000.0) / 1000.0;
+	f32 sacle = controller_abs((float) e->ctl_di - CTL_DI_MIN) / (CTL_DI_MAX - CTL_DI_MIN);
 	return angle * sacle;
 }
 

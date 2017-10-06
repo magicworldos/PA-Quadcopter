@@ -25,7 +25,7 @@
 #define CTL_DI_MIN (1000)
 #define CTL_DI_MAX (2000)
 //最大倾斜角
-#define MAX_ANGLE (45)
+#define MAX_ANGLE (30)
 
 typedef struct
 {
