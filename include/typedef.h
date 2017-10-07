@@ -81,6 +81,9 @@ typedef struct
 	f32 dax;
 	f32 day;
 
+	//静止时垂直重力加速度
+	f32 s_az;
+
 	//摇控器移动倾角
 	f32 ctlmx;
 	f32 ctlmy;
@@ -107,6 +110,8 @@ typedef struct
 
 	//引擎速度
 	f32 v;
+	//垂直方向重力加速度对油门速度补偿
+	f32 az_devi;
 
 	// XYZ角速度补偿
 	f32 xv_devi;
@@ -138,6 +143,10 @@ typedef struct
 	f32 v_kp;
 	f32 v_ki;
 	f32 v_kd;
+	//垂直加速度PID参数
+	f32 a_kp;
+	f32 a_ki;
+	f32 a_kd;
 	//摇控器4通道起始读数
 	s32 ctl_fb_zero;
 	s32 ctl_lr_zero;

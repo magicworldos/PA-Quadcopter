@@ -48,7 +48,19 @@ void display_run()
 		printf("[%s]", e->lock == 1 ? "LOCKED" : "UNLOCK");
 		if (display_get_onoff(7))
 		{
-			printf("[%s]", p->ctl_type == 0 ? " PID" : "VPID");
+			if (p->ctl_type == 0)
+			{
+				printf("[%s]"," PID");
+			}
+			else if (p->ctl_type == 1)
+			{
+				printf("[%s]", "VPID");
+			}
+			else if (p->ctl_type == 2)
+			{
+				printf("[%s]", "APID");
+			}
+
 		}
 		if (display_get_onoff(0))
 		{
@@ -80,9 +92,11 @@ void display_run()
 		}
 		if (display_get_onoff(8))
 		{
+			printf("[a: %+7.3f %+7.3f %+7.3f]", e->ax, e->ay, e->az);
 		}
 		if (display_get_onoff(9))
 		{
+			printf("[apid: %+5.2f %+5.2f %+5.2f]", p->a_kp, p->a_ki, p->a_kd);
 		}
 
 		printf("\n");
