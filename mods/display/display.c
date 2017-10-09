@@ -50,7 +50,7 @@ void display_run()
 		{
 			if (p->ctl_type == 0)
 			{
-				printf("[%s]"," PID");
+				printf("[%s]", " PID");
 			}
 			else if (p->ctl_type == 1)
 			{
@@ -96,7 +96,15 @@ void display_run()
 		}
 		if (display_get_onoff(9))
 		{
-			printf("[apid: %+5.2f %+5.2f %+5.2f]", p->a_kp, p->a_ki, p->a_kd);
+			printf("[vz: %+5.2f]", e->vz);
+		}
+		if (display_get_onoff(10))
+		{
+			printf("[vz_devi: %+5.2f]", e->vz_devi);
+		}
+		if (display_get_onoff(11))
+		{
+			printf("[vzpid: %+5.2f %+5.2f %+5.2f]", p->vz_kp, p->vz_ki, p->vz_kd);
 		}
 
 		printf("\n");

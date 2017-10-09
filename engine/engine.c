@@ -123,14 +123,14 @@ void engine_fly()
 	f32 yv_sum = 0.0;
 	f32 zv_sum = 0.0;
 
-	//垂直加速度上一次计数
-	f32 acc_et = 0.0;
+	//上一次垂直速度
+	f32 vz_et = 0.0;
 
 	while (1)
 	{
 		//实际欧拉角
-		e->dax = 0;
-		e->day = 0;
+		//e->dax = 0;
+		//e->day = 0;
 		e->tx = e->x + e->dx + e->dax + e->ctlmx;
 		e->ty = e->y + e->dy + e->day + e->ctlmy;
 		e->tz = e->z + e->dz;
@@ -166,10 +166,11 @@ void engine_fly()
 		yv_last = yv_et;
 		zv_last = zv_et;
 
+		e->vz += (e->az + e->daz);
 
-		//垂直方向加速度PID补偿油门
-		e->az_devi = engine_acc_pid(e->az - e->s_az, acc_et, NULL);
-		acc_et = e->az - e->s_az;
+		//垂直方向速度PID补偿油门
+		e->vz_devi = engine_vz_pid(e->vz, vz_et, NULL);
+		vz_et = e->vz;
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -289,18 +290,18 @@ f32 engine_inside_pid(f32 et, f32 et2, float* sum)
 	return pwm;
 }
 
-//垂直方向加速度PID补偿速度
-f32 engine_acc_pid(f32 et, f32 et2, float* sum)
+//垂直方向速度PID补偿速度
+f32 engine_vz_pid(f32 et, f32 et2, float* sum)
 {
 	f32 v = 0.0;
 	s_engine* e = &engine;
 	if (sum == NULL)
 	{
-		v = params.a_kp * et + params.a_kd * (et - et2);
+		v = params.vz_kp * et + params.vz_kd * (et - et2);
 		return v;
 	}
-	*sum += params.a_ki * et;
-	v = params.a_kp * et + (*sum) + params.a_kd * (et - et2);
+	*sum += params.vz_ki * et;
+	v = params.vz_kp * et + (*sum) + params.vz_kd * (et - et2);
 	return v;
 }
 
@@ -366,8 +367,7 @@ void engine_reset(s_engine* e)
 	//起飞前根据重力方向的角度补偿
 	e->dax = 0;
 	e->day = 0;
-	//静止时垂直重力加速度
-	e->s_az = 0;
+	e->daz = 0;
 	//欧拉角
 	e->x = 0;
 	e->y = 0;
@@ -393,7 +393,8 @@ void engine_reset(s_engine* e)
 	e->tgz = 0;
 	//重置速度速度置为0
 	e->v = 0;
-	e->az_devi = 0;
+	e->vz = 0;
+	e->vz_devi = 0;
 	// XYZ角速度补偿
 	e->xv_devi = 0;
 	e->yv_devi = 0;
@@ -424,7 +425,7 @@ void engine_set_dxy()
 	e->dgz = -e->gz;
 
 	//静止时垂直重力加速度
-	e->s_az = e->az;
+	e->daz = -e->az;
 
 	if (engine_abs(e->ax) < MAX_ACC)
 	{

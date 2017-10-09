@@ -110,9 +110,9 @@ void params_reset()
 	p->v_ki = 0.1;
 	p->v_kd = 16.0;
 	// 垂直加速度PID参数
-	p->a_kp = 0.0;
-	p->a_ki = 0.0;
-	p->a_kd = 0.0;
+	p->vz_kp = 0.0;
+	p->vz_ki = 0.0;
+	p->vz_kd = 0.0;
 	//摇控器3通道起始值
 	p->ctl_fb_zero = 1500;
 	p->ctl_lr_zero = 1500;
@@ -155,7 +155,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->a_kp += ctl_step;
+				p->vz_kp += ctl_step;
 			}
 		}
 		// 8
@@ -171,7 +171,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->a_ki += ctl_step;
+				p->vz_ki += ctl_step;
 			}
 		}
 		// 9
@@ -187,7 +187,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->a_kd += ctl_step;
+				p->vz_kd += ctl_step;
 			}
 		}
 		// 4
@@ -203,7 +203,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->a_kp -= ctl_step;
+				p->vz_kp -= ctl_step;
 			}
 		}
 		// 5
@@ -219,7 +219,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->a_ki -= ctl_step;
+				p->vz_ki -= ctl_step;
 			}
 		}
 		// 6
@@ -235,7 +235,7 @@ void params_input()
 			}
 			else if (p->ctl_type == 2)
 			{
-				p->a_kd -= ctl_step;
+				p->vz_kd -= ctl_step;
 			}
 		}
 		//-
@@ -316,6 +316,46 @@ void params_input()
 		else if (ch == 'p')
 		{
 			params_set_onoff(9);
+		}
+		else if (ch == 'Q')
+		{
+			params_set_onoff(10);
+		}
+		else if (ch == 'W')
+		{
+			params_set_onoff(11);
+		}
+		else if (ch == 'E')
+		{
+			params_set_onoff(12);
+		}
+		else if (ch == 'R')
+		{
+			params_set_onoff(13);
+		}
+		else if (ch == 'T')
+		{
+			params_set_onoff(14);
+		}
+		else if (ch == 'Y')
+		{
+			params_set_onoff(15);
+		}
+		else if (ch == 'U')
+		{
+			params_set_onoff(16);
+		}
+		else if (ch == 'I')
+		{
+			params_set_onoff(17);
+		}
+		else if (ch == 'O')
+		{
+			params_set_onoff(18);
+		}
+		else if (ch == 'P')
+		{
+			params_set_onoff(19);
 		}
 		//保存所有参数到缓存
 		else if (ch == 'S')

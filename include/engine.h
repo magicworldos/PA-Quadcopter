@@ -27,8 +27,8 @@ f32 engine_outside_pid(f32 et, f32 et2, float* sum);
 //内环PID输入角速度输出PWM比例（千分比）
 f32 engine_inside_pid(f32 et, f32 et2, float* sum);
 
-//垂直方向加速度PID补偿速度
-f32 engine_acc_pid(f32 et, f32 et2, float* sum);
+//垂直方向速度PID补偿速度
+f32 engine_vz_pid(f32 et, f32 et2, float* sum);
 
 //外环角速度限幅
 void engine_limit_palstance(float* palstance);
