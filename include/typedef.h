@@ -56,7 +56,7 @@ typedef unsigned long long u64;
 //角速度限幅
 #define MAX_PALSTANCE		(30.0)
 
-#define MAX_ACC				(23.0)
+#define MAX_ACC				(32.0)
 
 //引擎结构
 typedef struct

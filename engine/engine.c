@@ -128,9 +128,10 @@ void engine_fly()
 
 	while (1)
 	{
+		//静止时重力方向修正角
+		e->dax = 0;
+		e->day = 0;
 		//实际欧拉角
-		//e->dax = 0;
-		//e->day = 0;
 		e->tx = e->x + e->dx + e->dax + e->ctlmx;
 		e->ty = e->y + e->dy + e->day + e->ctlmy;
 		e->tz = e->z + e->dz;
@@ -166,11 +167,10 @@ void engine_fly()
 		yv_last = yv_et;
 		zv_last = zv_et;
 
-		e->vz += (e->az + e->daz);
-
-		//垂直方向速度PID补偿油门
-		e->vz_devi = engine_vz_pid(e->vz, vz_et, NULL);
-		vz_et = e->vz;
+//		e->vz += (e->az + e->daz);
+//		//垂直方向速度PID补偿油门
+//		e->vz_devi = engine_vz_pid(e->vz, vz_et, NULL);
+//		vz_et = e->vz;
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
