@@ -1,6 +1,7 @@
 #include <timer.h>
 
 __IO u32 timer_delay = 0;
+__IO u32 timer_tick = 0;
 
 void timer_init()
 {
@@ -40,6 +41,7 @@ void timer_delay_us(u32 us)
 
 void timer_decrement()
 {
+	timer_tick++;
 	if (timer_delay != 0)
 	{
 		timer_delay--;

@@ -1,7 +1,11 @@
 #include <typedef.h>
 
-void tim4_gpio_config(void);
+void pwm_init(void);
 
-void tim4_mode_config(void);
+void pwm_gpio_config_out(void);
 
-void tim4_pwm_init(void);
+//void pwm_gpio_config_in(void);
+
+void pwm_mode_config_out();
+
+//void pwm_mode_config_in();
