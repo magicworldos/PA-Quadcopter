@@ -11,5 +11,6 @@
 #include <system_stm32f10x.h>
 #include <math.h>
 #include <misc.h>
+#include <string.h>
 
 #endif

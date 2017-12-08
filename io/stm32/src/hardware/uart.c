@@ -46,6 +46,8 @@ void UART1_Configuration(void)
 
 u8 Uart1_PutChar(u8 ch)
 {
+	USART_ClearFlag(USART1, USART_FLAG_TC);
+	//USART_GetFlagStatus(USART1, USART_FLAG_TC);
 	USART_SendData(USART1, (u8) ch);
 	while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)
 	{
@@ -74,3 +76,4 @@ void USART1_IRQHandler(void)
 		}
 	}
 }
+

@@ -20,6 +20,7 @@ objs:
 	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/exti.o -c $(PATH_HARDWARE)/exti.c
 	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/led.o -c $(PATH_HARDWARE)/led.c
 	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/uart.o -c $(PATH_HARDWARE)/uart.c
+	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/frame.o -c $(PATH_HARDWARE)/frame.c
 
 app.a:
 	$(AR) cr $(PATH_TARGET)/app.a $(PATH_TARGET)/startup.o \
@@ -28,7 +29,8 @@ app.a:
 		$(PATH_TARGET)/pwm.o \
 		$(PATH_TARGET)/led.o \
 		$(PATH_TARGET)/exti.o \
-		$(PATH_TARGET)/uart.o
+		$(PATH_TARGET)/uart.o \
+		$(PATH_TARGET)/frame.o
 	
 clean:
 	rm -f $(PATH_TARGET)/*

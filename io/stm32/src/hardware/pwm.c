@@ -62,13 +62,13 @@ void pwm_mode_config_out()
 	//output Channel1
 	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
-	//output Channel1
+	//output Channel2
 	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
-	//output Channel1
+	//output Channel3
 	TIM_OC3Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
-	//output Channel1
+	//output Channel4
 	TIM_OC4Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
 	//enable TIM4

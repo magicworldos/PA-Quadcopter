@@ -49,19 +49,19 @@ void EXTIX_Init(void)
 	EXTI_Init(&EXTI_InitStructure);
 
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
@@ -74,10 +74,8 @@ u32 _start2 = 0;
 u32 _start3 = 0;
 u32 _start4 = 0;
 
-u32 pwm1 = 0;
-u32 pwm2 = 0;
-u32 pwm3 = 0;
-u32 pwm4 = 0;
+u16 pwm[6] =
+{ 0, 0, 0, 0, 0, 0 };
 
 void EXTI9_5_IRQHandler(void)
 {
@@ -92,11 +90,11 @@ void EXTI9_5_IRQHandler(void)
 			u32 _end = timer_tick;
 			if (_end < _start1)
 			{
-				pwm1 = 0xffffffff - _start1 + _end;
+				pwm[0] = 0xffffffff - _start1 + _end;
 			}
 			else
 			{
-				pwm1 = _end - _start1;
+				pwm[0] = _end - _start1;
 			}
 		}
 	}
@@ -113,11 +111,11 @@ void EXTI9_5_IRQHandler(void)
 			u32 _end = timer_tick;
 			if (_end < _start2)
 			{
-				pwm2 = 0xffffffff - _start2 + _end;
+				pwm[1] = 0xffffffff - _start2 + _end;
 			}
 			else
 			{
-				pwm2 = _end - _start2;
+				pwm[1] = _end - _start2;
 			}
 		}
 
@@ -138,11 +136,11 @@ void EXTI0_IRQHandler(void)
 			u32 _end = timer_tick;
 			if (_end < _start3)
 			{
-				pwm3 = 0xffffffff - _start3 + _end;
+				pwm[2] = 0xffffffff - _start3 + _end;
 			}
 			else
 			{
-				pwm3 = _end - _start3;
+				pwm[2] = _end - _start3;
 			}
 		}
 	}
@@ -162,11 +160,11 @@ void EXTI1_IRQHandler(void)
 			u32 _end = timer_tick;
 			if (_end < _start4)
 			{
-				pwm4 = 0xffffffff - _start4 + _end;
+				pwm[3] = 0xffffffff - _start4 + _end;
 			}
 			else
 			{
-				pwm4 = _end - _start4;
+				pwm[3] = _end - _start4;
 			}
 		}
 	}
