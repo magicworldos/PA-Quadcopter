@@ -69,11 +69,8 @@ void EXTIX_Init(void)
 
 extern u32 timer_tick;
 
-u32 _start1 = 0;
-u32 _start2 = 0;
-u32 _start3 = 0;
-u32 _start4 = 0;
-
+u32 start[6] =
+{ 0, 0, 0, 0, 0, 0 };
 u16 pwm[6] =
 { 0, 0, 0, 0, 0, 0 };
 
@@ -83,18 +80,18 @@ void EXTI9_5_IRQHandler(void)
 	{
 		if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_6) == Bit_SET)
 		{
-			_start1 = timer_tick;
+			start[0] = timer_tick;
 		}
 		else if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_6) == Bit_RESET)
 		{
 			u32 _end = timer_tick;
-			if (_end < _start1)
+			if (_end < start[0])
 			{
-				pwm[0] = 0xffffffff - _start1 + _end;
+				pwm[0] = 0xffffffff - start[0] + _end;
 			}
 			else
 			{
-				pwm[0] = _end - _start1;
+				pwm[0] = _end - start[0];
 			}
 		}
 	}
@@ -104,18 +101,18 @@ void EXTI9_5_IRQHandler(void)
 	{
 		if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == Bit_SET)
 		{
-			_start2 = timer_tick;
+			start[1] = timer_tick;
 		}
 		else if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == Bit_RESET)
 		{
 			u32 _end = timer_tick;
-			if (_end < _start2)
+			if (_end < start[1])
 			{
-				pwm[1] = 0xffffffff - _start2 + _end;
+				pwm[1] = 0xffffffff - start[1] + _end;
 			}
 			else
 			{
-				pwm[1] = _end - _start2;
+				pwm[1] = _end - start[1];
 			}
 		}
 
@@ -129,18 +126,18 @@ void EXTI0_IRQHandler(void)
 	{
 		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_0) == Bit_SET)
 		{
-			_start3 = timer_tick;
+			start[2] = timer_tick;
 		}
 		else if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_0) == Bit_RESET)
 		{
 			u32 _end = timer_tick;
-			if (_end < _start3)
+			if (_end < start[2])
 			{
-				pwm[2] = 0xffffffff - _start3 + _end;
+				pwm[2] = 0xffffffff - start[2] + _end;
 			}
 			else
 			{
-				pwm[2] = _end - _start3;
+				pwm[2] = _end - start[2];
 			}
 		}
 	}
@@ -153,18 +150,18 @@ void EXTI1_IRQHandler(void)
 	{
 		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1) == Bit_SET)
 		{
-			_start4 = timer_tick;
+			start[3] = timer_tick;
 		}
 		else if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1) == Bit_RESET)
 		{
 			u32 _end = timer_tick;
-			if (_end < _start4)
+			if (_end < start[3])
 			{
-				pwm[3] = 0xffffffff - _start4 + _end;
+				pwm[3] = 0xffffffff - start[3] + _end;
 			}
 			else
 			{
-				pwm[3] = _end - _start4;
+				pwm[3] = _end - start[3];
 			}
 		}
 	}
