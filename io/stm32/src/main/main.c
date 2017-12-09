@@ -8,7 +8,6 @@
 #include <frame.h>
 
 extern u16 pwm[6];
-//u16 pwm[6] = { 0, 0, 0, 0, 0, 0 };
 
 int main(int argc, char* argv[])
 {

@@ -3,7 +3,7 @@ include ../Makefile.common
 PROGRAM=main
 CC=gcc
 LIBS=-lm
-FLAGS=
+FLAGS= -g
 INCLUDES=-Iinclude
 
 PATH_MAIN=main

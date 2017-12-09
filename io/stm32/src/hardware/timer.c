@@ -38,7 +38,6 @@ void timer_delay_us(u32 us)
 	{
 	}
 }
-
 void timer_decrement()
 {
 	timer_tick++;
