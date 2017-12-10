@@ -347,13 +347,9 @@ int main(int argc, char** argv)
 //	cfsetispeed(&tios, B115200);
 //	cfsetospeed(&tios, B115200);
 //	tios.c_cflag = 0;
-////	tios.c_cflag |= CLOCAL | CREAD;
-////	tios.c_cflag &= ~CSIZE;
-////	tios.c_cflag |= CS8;
+//	tios.c_cflag |= CS8;
 //	tios.c_cflag &= ~CSTOPB;
 //	tios.c_cflag &= ~PARENB;
-//	tios.c_cc[VTIME] = 0;
-//	tios.c_cc[VMIN] = 0;
 //	tcflush(fd, TCIFLUSH);
 //	if ((tcsetattr(fd, TCSANOW, &tios)) != 0)
 //	{
@@ -373,12 +369,12 @@ int main(int argc, char** argv)
 	memset(_recv.buffer, 0x00, BUFFER_SIZE);
 
 	u16 rc_data[6];
-	u16 pwm_data[4] = { 1000, 1200, 1400, 1600 };
+	u16 pwm_data[4] = { 1000, 1000, 1000, 1000 };
 	while (1)
 	{
 		frame_send_rc_data(pwm_data);
-
 		usleep(5000);
+
 		read_data_from_uart();
 		if (parse_mag_feedback())
 		{

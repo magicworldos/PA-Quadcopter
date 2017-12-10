@@ -33,20 +33,23 @@ int main(int argc, char* argv[])
 
 	timer_start();
 
-	TIM_SetCompare1(TIM4, 500);
-	TIM_SetCompare2(TIM4, 900);
-	TIM_SetCompare3(TIM4, 1300);
-	TIM_SetCompare4(TIM4, 1700);
+	TIM_SetCompare1(TIM4, 0);
+	TIM_SetCompare2(TIM4, 0);
+	TIM_SetCompare3(TIM4, 0);
+	TIM_SetCompare4(TIM4, 0);
 
 	led0_off();
 
 	while (1)
 	{
 		pwm_limit(pwm, 6);
-		//frame_send_rc_data(pwm);
+		frame_send_rc_data(pwm);
 
 		get_motor_pwm();
-		frame_send_rc_data(motor);
+		TIM_SetCompare1(TIM4, motor[0]);
+		TIM_SetCompare2(TIM4, motor[1]);
+		TIM_SetCompare3(TIM4, motor[2]);
+		TIM_SetCompare4(TIM4, motor[3]);
 
 		timer_delay_ms(10);
 	}
