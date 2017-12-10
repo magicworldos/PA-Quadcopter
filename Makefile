@@ -17,6 +17,7 @@ MOD_HCSR04			= hcsr04
 MOD_FHEIGHT			= fheight
 MOD_DISPLAY			= display
 MOD_COMMAND			= command
+MOD_IO_STM32		= io_stm32
 
 #编译目录
 MOD_MKDIR			= mkdir
@@ -40,7 +41,7 @@ $(MOD_PROJECT):
 	engine/emode.c							\
 	util/list.c
 	
-$(MOD_MODULES):	$(MOD_MOTOR)	$(MOD_PARAMSCTL)	$(MOD_CONTROLLER)	$(MOD_MPU6050)		$(MOD_DISPLAY)
+$(MOD_MODULES):	$(MOD_PARAMSCTL)	$(MOD_IO_STM32)	$(MOD_MPU6050)		$(MOD_DISPLAY)
 
 $(MOD_MOTOR):
 	cd mods/motor/			&& make
@@ -65,6 +66,9 @@ $(MOD_DISPLAY):
 
 $(MOD_COMMAND):
 	cd mods/command/		&& make
+	
+$(MOD_IO_STM32):
+	cd mods/io_stm32/		&& make
 
 $(MOD_MKDIR):
 	mkdir -p $(RELEASE_PATH)/bin/ lib/

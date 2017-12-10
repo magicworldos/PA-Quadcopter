@@ -36,7 +36,7 @@ void engine_start(s32 argc, char* argv[])
 	if (argc >= 2)
 	{
 		//初始化WiringPi
-		wiringPiSetup();
+		//wiringPiSetup();
 
 		//正常模式，飞行，调参
 		if (strcmp(argv[1], "--fly") == 0)
@@ -53,9 +53,9 @@ void engine_start(s32 argc, char* argv[])
 		}
 
 		//校准摇控器模式
-		if (strcmp(argv[1], "--ctl") == 0)
+		if (strcmp(argv[1], "--ctl") == 0 && argc == 3)
 		{
-			emode_start_control();
+			emode_start_control(argv[2]);
 			return;
 		}
 

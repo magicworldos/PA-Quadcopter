@@ -36,7 +36,7 @@ void emode_start_gyro(char* argv2)
 	//加入陀螺仪模块
 	list_insert(&list, mod_gyro);
 	//运行模块功能
-	list_visit(&list, (void*)&dlmod_run_pt_init);
+	list_visit(&list, (void*) &dlmod_run_pt_init);
 
 	while (1)
 	{
@@ -45,8 +45,10 @@ void emode_start_gyro(char* argv2)
 	}
 }
 
-void emode_start_control()
+void emode_start_control(char* argv2)
 {
+	char modname[0x200];
+	snprintf(modname, 0x200, "./lib/lib%s.so", argv2);
 	//重置引擎
 	engine_reset(&engine);
 	s_engine* e = &engine;
@@ -60,7 +62,7 @@ void emode_start_control()
 	}
 
 	//载入摇控器模块
-	s_dlmod* mod_controller = dlmod_open("./lib/libcontroller.so");
+	s_dlmod* mod_controller = dlmod_open(modname);
 	if (mod_controller == NULL)
 	{
 		return;
@@ -73,7 +75,7 @@ void emode_start_control()
 	//加入摇控器模块
 	list_insert(&list, mod_controller);
 	//运行模块功能
-	list_visit(&list, (void*)&dlmod_run_pt_init);
+	list_visit(&list, (void*) &dlmod_run_pt_init);
 
 	while (1)
 	{
