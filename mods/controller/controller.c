@@ -20,8 +20,8 @@ s_ctl_pwm ctl_pwm_ud;
 s_ctl_pwm ctl_pwm_di;
 
 //摇控器pwm信号噪声
-f32 ctl_est_devi = 0.1;
-f32 ctl_measure_devi = 1.5;
+f32 ctl_est_devi = 1;
+f32 ctl_measure_devi = 5;
 //前后卡尔曼滤波
 f32 fb_est = 0.0, fb_devi = 0.0;
 //左右卡尔曼滤波
