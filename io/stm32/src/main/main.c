@@ -9,6 +9,14 @@
 
 extern u16 pwm[6];
 
+void pwm_limit(u16 *pwm, int len)
+{
+	for (int i = 0; i < len; i++)
+	{
+		pwm[i] = pwm[i] > 2000 ? 2000 : pwm[i];
+	}
+}
+
 int main(int argc, char* argv[])
 {
 	SystemInit();
@@ -35,6 +43,7 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
+		pwm_limit(pwm, 6);
 		frame_send_rc_data(pwm);
 
 		timer_delay_ms(10);
