@@ -2,12 +2,12 @@
 #include <led.h>
 #include <timer.h>
 #include <pwm.h>
-//#include <pwm_in.h>
 #include <uart.h>
 #include <exti.h>
 #include <frame.h>
 
 extern u16 pwm[6];
+extern u16 motor[6];
 
 void pwm_limit(u16 *pwm, int len)
 {
@@ -24,7 +24,6 @@ int main(int argc, char* argv[])
 	led_init();
 
 	EXTIX_Init();
-	//TIM3_PWM_Init();
 
 	UART_Init();
 
@@ -44,7 +43,10 @@ int main(int argc, char* argv[])
 	while (1)
 	{
 		pwm_limit(pwm, 6);
-		frame_send_rc_data(pwm);
+		//frame_send_rc_data(pwm);
+
+		get_motor_pwm();
+		frame_send_rc_data(motor);
 
 		timer_delay_ms(10);
 	}

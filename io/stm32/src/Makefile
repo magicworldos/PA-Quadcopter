@@ -20,6 +20,7 @@ objs:
 	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/exti.o -c $(PATH_HARDWARE)/exti.c
 	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/led.o -c $(PATH_HARDWARE)/led.c
 	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/uart.o -c $(PATH_HARDWARE)/uart.c
+	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/crc.o -c $(PATH_HARDWARE)/crc.c
 	$(CC) $(CFLAGSlib) -o $(PATH_TARGET)/frame.o -c $(PATH_HARDWARE)/frame.c
 
 app.a:
@@ -30,6 +31,7 @@ app.a:
 		$(PATH_TARGET)/exti.o \
 		$(PATH_TARGET)/led.o \
 		$(PATH_TARGET)/uart.o \
+		$(PATH_TARGET)/crc.o \
 		$(PATH_TARGET)/frame.o
 	
 clean:

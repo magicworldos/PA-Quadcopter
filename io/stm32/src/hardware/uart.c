@@ -6,11 +6,21 @@
  */
 
 #include <uart.h>
+#include <crc.h>
+
+struct uart_buffer_s _recv;
+u8 _packet_buffer[BUFFER_SIZE];
+u16 motor[6] = { 0, 0, 0, 0, 0, 0 };
 
 void UART_Init()
 {
 	UART1_GPIO_Configuration();
 	UART1_Configuration();
+
+	_recv.head = 0;
+	_recv.tail = 0;
+	_recv.size = BUFFER_SIZE;
+	memset(_recv.buffer, 0x00, BUFFER_SIZE);
 }
 
 void UART1_GPIO_Configuration(void)
@@ -70,10 +80,108 @@ void USART1_IRQHandler(void)
 		while ((USART1->SR & USART_SR_RXNE) == 0)
 		{
 		}
-		u8 chf = USART_ReceiveData(USART1);
-		if (chf == 0xf)
+		_recv.buffer[_recv.head] = USART_ReceiveData(USART1);
+		_recv.head = (_recv.head + 1) % _recv.size;
+		if (_recv.head == _recv.tail)
 		{
+			_recv.over++;
 		}
 	}
 }
 
+int uart_buffer_count(struct uart_buffer_s *lb)
+{
+	s16 n = lb->head - lb->tail;
+	if (n < 0)
+	{
+		n += lb->size;
+	}
+	return n;
+}
+
+int parse_mag_feedback()
+{
+	u16 data_cnt = 0;
+	u16 parse_packet_step = 0;
+	u16 packet_index = 0;
+	u8 FrameLen = 0;
+	u8 Frame_data_len = 0;
+	int ret = 0;
+	data_cnt = uart_buffer_count(&_recv);
+	s16 tail = _recv.tail;
+	for (u16 i = 0; i < data_cnt; i++)
+	{
+		_packet_buffer[packet_index++] = _recv.buffer[tail];
+		switch (parse_packet_step)
+		{
+			case PWM_HEAD:
+				if (packet_index >= 2)
+				{
+					if ((_packet_buffer[PWM_POS_START1] == PWM_BYTE_HEAD_1) && (_packet_buffer[PWM_POS_START2] == PWM_BYTE_HEAD_2))
+					{
+						parse_packet_step = PWM_LEN;
+					}
+					else if (_packet_buffer[PWM_POS_START2] == PWM_BYTE_HEAD_1)
+					{
+						_packet_buffer[PWM_POS_START1] = PWM_BYTE_HEAD_1;
+						packet_index = 1;
+					}
+					else
+					{
+						packet_index = 0;
+					}
+				}
+				break;
+
+			case PWM_LEN:
+				if (packet_index >= 6)
+				{
+					Frame_data_len = _packet_buffer[PWM_POS_LEN];
+					FrameLen = Frame_data_len + 6;
+					if (FrameLen <= BUFFER_SIZE)
+					{
+						parse_packet_step = PWM_END;
+					}
+					else
+					{
+						parse_packet_step = PWM_HEAD;
+						packet_index = 0;
+						memset(_packet_buffer, 0x00, sizeof(_packet_buffer));
+					}
+				}
+				break;
+
+			case PWM_END:
+				if (packet_index == FrameLen)
+				{
+					u16 crc16 = _packet_buffer[PWM_POS_CRC1] << 8 | _packet_buffer[PWM_POS_CRC2];
+					if (crc16_check(&_packet_buffer[PWM_POS_START1], Frame_data_len + 3, crc16))
+					{
+						ret = 1;
+					}
+					parse_packet_step = PWM_HEAD;
+					packet_index = 0;
+				}
+				break;
+
+			default:
+				break;
+		}
+		tail = (tail + 1) % _recv.size;
+	}
+	if (ret == 1)
+	{
+		_recv.tail = tail;
+	}
+	return ret;
+}
+
+int get_motor_pwm()
+{
+	if (parse_mag_feedback())
+	{
+		memcpy(motor, &_packet_buffer[PWM_POS_DATA], sizeof(u16) * 4);
+		return 1;
+	}
+	return 0;
+}

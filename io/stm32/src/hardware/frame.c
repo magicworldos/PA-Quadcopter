@@ -6,32 +6,7 @@
  */
 
 #include <frame.h>
-#include <framecrc8.h>
-#include <framecrc16.h>
-
-u16 crc16_value(u8 *buff, u8 len)
-{
-	u16 crc16 = 0;
-	for (u8 i = 0; i < len; i++)
-	{
-		crc16 = crc16table[crc16 >> 8 ^ buff[i]] | (0xff & crc16);
-	}
-	return crc16;
-}
-
-int crc16_check(u8 *buff, u8 len, u16 crc16)
-{
-	u16 sum = 0;
-	for (u8 i = 0; i < len; i++)
-	{
-		sum = crc16table[sum >> 8 ^ buff[i]] | (0xff & sum);
-	}
-	if (sum == crc16)
-	{
-		return 1;
-	}
-	return 0;
-}
+#include <crc.h>
 
 int frame_send_rc_data(u16 *rc_data)
 {
