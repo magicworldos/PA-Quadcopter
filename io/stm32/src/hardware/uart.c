@@ -11,6 +11,7 @@
 struct uart_buffer_s _recv;
 u8 _packet_buffer[BUFFER_SIZE];
 u16 motor[6] = { 0, 0, 0, 0, 0, 0 };
+u32 error_count = 0;
 
 void UART_Init()
 {
@@ -181,7 +182,13 @@ int get_motor_pwm()
 	if (parse_mag_feedback())
 	{
 		memcpy(motor, &_packet_buffer[PWM_POS_DATA], sizeof(u16) * 4);
+		error_count = 0;
 		return 1;
+	}
+	error_count++;
+	if (error_count > 100)
+	{
+		memset(motor, 0, sizeof(u16) * 4);
 	}
 	return 0;
 }
