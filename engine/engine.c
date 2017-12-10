@@ -36,7 +36,7 @@ void engine_start(s32 argc, char* argv[])
 	if (argc >= 2)
 	{
 		//初始化WiringPi
-		//wiringPiSetup();
+		wiringPiSetup();
 
 		//正常模式，飞行，调参
 		if (strcmp(argv[1], "--fly") == 0)

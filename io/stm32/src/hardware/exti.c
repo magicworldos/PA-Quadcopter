@@ -93,6 +93,7 @@ extern u32 timer_tick;
 
 u32 start[6] = { 0, 0, 0, 0, 0, 0 };
 u16 pwm[6] = { 0, 0, 0, 0, 0, 0 };
+u32 ctl_error[6] = { 0, 0, 0, 0, 0, 0 };
 
 void EXTI4_IRQHandler(void)
 {
@@ -113,6 +114,7 @@ void EXTI4_IRQHandler(void)
 			{
 				pwm[0] = _end - start[0];
 			}
+			ctl_error[0] = 0;
 		}
 	}
 	EXTI_ClearITPendingBit(EXTI_Line4);
@@ -137,6 +139,7 @@ void EXTI9_5_IRQHandler(void)
 			{
 				pwm[1] = _end - start[1];
 			}
+			ctl_error[1] = 0;
 		}
 	}
 	EXTI_ClearITPendingBit(EXTI_Line5);
@@ -158,6 +161,7 @@ void EXTI9_5_IRQHandler(void)
 			{
 				pwm[2] = _end - start[2];
 			}
+			ctl_error[2] = 0;
 		}
 	}
 	EXTI_ClearITPendingBit(EXTI_Line6);
@@ -179,6 +183,7 @@ void EXTI9_5_IRQHandler(void)
 			{
 				pwm[3] = _end - start[3];
 			}
+			ctl_error[3] = 0;
 		}
 
 	}
@@ -204,6 +209,7 @@ void EXTI0_IRQHandler(void)
 			{
 				pwm[4] = _end - start[4];
 			}
+			ctl_error[4] = 0;
 		}
 	}
 	EXTI_ClearITPendingBit(EXTI_Line0);
@@ -228,6 +234,7 @@ void EXTI1_IRQHandler(void)
 			{
 				pwm[5] = _end - start[5];
 			}
+			ctl_error[5] = 0;
 		}
 	}
 	EXTI_ClearITPendingBit(EXTI_Line1);

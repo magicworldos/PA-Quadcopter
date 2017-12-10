@@ -10,13 +10,13 @@
 
 #include <typedef.h>
 
-//摇控器接收机的4个通道引脚
-#define GPIO_FB (12)
-#define GPIO_LR (14)
-#define GPIO_PW (13)
-#define GPIO_MD (1)
-#define GPIO_UD (5)
-#define GPIO_DI (4)
+//摇控器接收机的6个通道引脚
+#define GPIO_FB (2)
+#define GPIO_LR (12)
+#define GPIO_PW (3)
+#define GPIO_MD (0)
+#define GPIO_UD (13)
+#define GPIO_DI (14)
 
 //摇控器接收机的4个通道读数范围
 #define CTL_PWM_MIN (980)

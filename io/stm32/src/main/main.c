@@ -6,7 +6,6 @@
 #include <exti.h>
 #include <frame.h>
 
-extern u16 pwm[6];
 extern u16 motor[6];
 
 void pwm_limit(u16 *pwm, int len)
@@ -42,16 +41,14 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
-		pwm_limit(pwm, 6);
-		frame_send_rc_data(pwm);
-
 		get_motor_pwm();
+		pwm_limit(motor, 4);
 		TIM_SetCompare1(TIM4, motor[0]);
 		TIM_SetCompare2(TIM4, motor[1]);
 		TIM_SetCompare3(TIM4, motor[2]);
 		TIM_SetCompare4(TIM4, motor[3]);
 
-		timer_delay_ms(10);
+		timer_delay_ms(1);
 	}
 }
 

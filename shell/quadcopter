@@ -12,13 +12,13 @@
 ### END INIT INFO
 case $1 in
     start)
-        /home/pi/work/MBH_ARobotThatCanFly/shell/quadcopter.sh start
+        /home/pi/work/quadcopter/shell/quadcopter.sh start
         ;;
     stop)
-        /home/pi/work/MBH_ARobotThatCanFly/shell/quadcopter.sh stop
+        /home/pi/work/quadcopter/shell/quadcopter.sh stop
         ;;
     restart)
-        /home/pi/work/MBH_ARobotThatCanFly/shell/quadcopter.sh restart
+        /home/pi/work/quadcopter/shell/quadcopter.sh restart
         ;;
 *)
 echo "Usage: $0 (start|stop|restart)"

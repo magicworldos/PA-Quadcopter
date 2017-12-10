@@ -95,45 +95,6 @@ u16 crc16_value(u8 *buff, u8 len);
 
 int frame_send_rc_data(u16 *pwm);
 
-void read_data_from_uart();
-
-int uart_buffer_count(struct uart_buffer_s *lb);
-
-int parse_mag_feedback();
-
 int set_opt(int fd, int nSpeed, int nBits, char nEvent, int nStop);
-
-//读入摇控器“前/后”的PWM信号
-void controller_fb_pwm(s32 fb);
-
-//读入摇控器“左/右”的PWM信号
-void controller_lr_pwm(s32 lr);
-
-//读入摇控器“油门”的PWM信号
-void controller_pw_pwm(s32 pw);
-
-//读入摇控器第4通道PWM信号
-void controller_md_pwm(s32 md);
-
-//读入摇控器第5通道PWM信号
-void controller_ud_pwm(s32 ud);
-
-//读入摇控器方向舵比例缩放通道PWM信号
-void controller_di_pwm(s32 di);
-
-//取绝对值
-f32 controller_abs(f32 x);
-
-//二次曲线函数
-f32 controller_parabola(f32 x);
-
-/***
- * est预估值
- * est_devi预估偏差
- * measure测量读数
- * measure_devi测量噪声
- * devi上一次最优偏差
- */
-f32 controller_kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi);
 
 #endif /* INCLUDE_DRIVER_H_ */
