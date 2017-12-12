@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 		TIM_SetCompare3(TIM4, motor[2]);
 		TIM_SetCompare4(TIM4, motor[3]);
 
-		timer_delay_ms(1);
+		timer_delay_ms(10);
 	}
 }
 

@@ -44,7 +44,7 @@ void UART1_Configuration(void)
 	USART_InitTypeDef usart1_init_struct;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 	USART_Cmd(USART1, ENABLE);
-	usart1_init_struct.USART_BaudRate = 1152000;
+	usart1_init_struct.USART_BaudRate = 115200;
 	usart1_init_struct.USART_WordLength = USART_WordLength_8b;
 	usart1_init_struct.USART_StopBits = USART_StopBits_1;
 	usart1_init_struct.USART_Parity = USART_Parity_No;
