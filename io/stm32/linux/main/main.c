@@ -373,7 +373,6 @@ int main(int argc, char** argv)
 	while (1)
 	{
 		frame_send_rc_data(pwm_data);
-		usleep(5000);
 
 		read_data_from_uart();
 		if (parse_mag_feedback())
@@ -385,7 +384,8 @@ int main(int argc, char** argv)
 			}
 			printf("\n");
 		}
-		usleep(5000);
+
+		usleep(10000);
 	}
 	close(fd);
 

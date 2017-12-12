@@ -1,20 +1,12 @@
 #include <typedef.h>
-#include <led.h>
-#include <timer.h>
-#include <pwm.h>
-#include <uart.h>
-#include <exti.h>
-#include <frame.h>
+#include <pwm_in.h>
+#include <pwm_out.h>
+#include <led_light.h>
+#include <timer_tick.h>
+#include <serial_port.h>
 
-extern u16 motor[6];
-
-void pwm_limit(u16 *pwm, int len)
-{
-	for (int i = 0; i < len; i++)
-	{
-		pwm[i] = pwm[i] > 2000 ? 2000 : pwm[i];
-	}
-}
+//extern u16 rc[6];
+extern u16 pwm[4];
 
 int main(int argc, char* argv[])
 {
@@ -22,32 +14,37 @@ int main(int argc, char* argv[])
 
 	led_init();
 
-	EXTIX_Init();
+	led_off();
 
-	UART_Init();
+	pwm_in_init();
 
-	pwm_init();
+	pwm_out_init();
+
+	serial_port_init();
 
 	timer_init();
 
 	timer_start();
 
-	TIM_SetCompare1(TIM4, 0);
-	TIM_SetCompare2(TIM4, 0);
-	TIM_SetCompare3(TIM4, 0);
-	TIM_SetCompare4(TIM4, 0);
-
-	led0_off();
+	u32 i = 0;
 
 	while (1)
 	{
-		get_motor_pwm();
-		pwm_limit(motor, 4);
-		TIM_SetCompare1(TIM4, motor[0]);
-		TIM_SetCompare2(TIM4, motor[1]);
-		TIM_SetCompare3(TIM4, motor[2]);
-		TIM_SetCompare4(TIM4, motor[3]);
+//		memcpy(rc, pwm, sizeof(u16) * 4);
+//		serial_port_frame_send_rc(rc);
 
+		serial_port_frame_recv_pwm(pwm);
+
+		pwm_out_set_value();
+
+		if (i++ % 100 < 50)
+		{
+			led_on();
+		}
+		else if (i++ % 100 >= 50)
+		{
+			led_off();
+		}
 		timer_delay_ms(10);
 	}
 }

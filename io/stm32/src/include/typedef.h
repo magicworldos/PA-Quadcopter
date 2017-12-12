@@ -1,3 +1,10 @@
+/*
+ * typedef.h
+ *
+ *  Created on: Jun 25, 2017
+ *      Author: lidq
+ */
+
 #ifndef __TYPEDEF_H
 #define __TYPEDEF_H
 
