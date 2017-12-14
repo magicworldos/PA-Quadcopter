@@ -20,10 +20,10 @@
 #define	RC_POS_START2	                      	1
 #define	RC_POS_LEN	                      		2
 #define	RC_POS_DATA	                      		3
-#define	RC_POS_CRC1  	                      	15
-#define	RC_POS_CRC2  	                      	16
-#define	RC_POS_END1  	                     	17
-#define	RC_POS_END2  	                     	18
+#define	RC_POS_CRC1  	                      	19
+#define	RC_POS_CRC2  	                      	20
+#define	RC_POS_END1  	                     	21
+#define	RC_POS_END2  	                     	22
 
 #define RC_BYTE_HEAD_1                         	0X55
 #define RC_BYTE_HEAD_2                         	0XAA

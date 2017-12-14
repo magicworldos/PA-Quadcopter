@@ -188,11 +188,11 @@ int serial_port_frame_recv_pwm(u16 *pwm)
 
 int serial_port_frame_send_rc(u16 *rc)
 {
-	serial_port_limit(rc, 6);
+	serial_port_limit(rc, 8);
 	//only support 6 channels.
 	//2 + 1 + 12 + 1 + 2
-	int len_data = 12;
-	int len = 19;
+	int len_data = 16;
+	int len = 23;
 	u8 frame[len];
 	frame[RC_POS_START1] = RC_BYTE_HEAD_1;
 	frame[RC_POS_START2] = RC_BYTE_HEAD_2;

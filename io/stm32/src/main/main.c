@@ -5,7 +5,7 @@
 #include <timer_tick.h>
 #include <serial_port.h>
 
-//extern u16 rc[6];
+extern u16 pwm_in[8];
 extern u16 pwm[4];
 
 int main(int argc, char* argv[])
@@ -30,8 +30,7 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
-//		memcpy(rc, pwm, sizeof(u16) * 4);
-//		serial_port_frame_send_rc(rc);
+		serial_port_frame_send_rc(pwm_in);
 
 		serial_port_frame_recv_pwm(pwm);
 

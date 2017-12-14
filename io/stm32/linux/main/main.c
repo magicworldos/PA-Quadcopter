@@ -17,10 +17,10 @@ typedef unsigned int u32;
 #define	FW_POS_START2	                      	1
 #define	FW_POS_LEN	                      		2
 #define	FW_POS_DATA	                      		3
-#define	FW_POS_CRC1 	                      	15
-#define	FW_POS_CRC2  	                      	16
-#define	FW_POS_END1  	                     	17
-#define	FW_POS_END2  	                     	18
+#define	FW_POS_CRC1 	                      	19
+#define	FW_POS_CRC2  	                      	20
+#define	FW_POS_END1  	                     	21
+#define	FW_POS_END2  	                     	22
 
 #define FW_BYTE_HEAD_1                         	0X55
 #define FW_BYTE_HEAD_2                         	0XAA
@@ -368,7 +368,7 @@ int main(int argc, char** argv)
 	_recv.size = BUFFER_SIZE;
 	memset(_recv.buffer, 0x00, BUFFER_SIZE);
 
-	u16 rc_data[6];
+	u16 rc_data[8];
 	u16 pwm_data[4] = { 1000, 1000, 1000, 1000 };
 	while (1)
 	{
@@ -377,8 +377,8 @@ int main(int argc, char** argv)
 		read_data_from_uart();
 		if (parse_mag_feedback())
 		{
-			memcpy(rc_data, &_packet_buffer[FW_POS_DATA], sizeof(u16) * 6);
-			for (int i = 0; i < 6; i++)
+			memcpy(rc_data, &_packet_buffer[FW_POS_DATA], sizeof(u16) * 8);
+			for (int i = 0; i < 8; i++)
 			{
 				printf("%4d ", rc_data[i]);
 			}
