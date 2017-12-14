@@ -36,14 +36,8 @@ int main(int argc, char* argv[])
 
 		pwm_out_set_value();
 
-		if (i++ % 100 < 50)
-		{
-			led_on();
-		}
-		else if (i++ % 100 >= 50)
-		{
-			led_off();
-		}
+		led_blink(500 * 1000);
+
 		timer_delay_ms(10);
 	}
 }

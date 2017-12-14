@@ -19,7 +19,7 @@ s_params* p = NULL;
 
 //摇控器pwm信号噪声
 f32 ctl_est_devi = 1;
-f32 ctl_measure_devi = 1.5;
+f32 ctl_measure_devi = 1;
 //前后卡尔曼滤波
 f32 fb_est = 0.0, fb_devi = 0.0;
 //左右卡尔曼滤波
@@ -127,7 +127,7 @@ void motor_balance_compensation()
 				speed[i] = 0;
 				pwm_data[i] = CTL_PWM_MIN;
 			}
-			frame_send_rc_data(pwm_data);
+			frame_send_pwm_data(pwm_data);
 			usleep(ENG_TIMER * 1000);
 			continue;
 		}
@@ -195,7 +195,7 @@ int crc16_check(u8 *buff, u8 len, u16 crc16)
 	return 0;
 }
 
-int frame_send_rc_data(u16 *pwm)
+int frame_send_pwm_data(u16 *pwm)
 {
 	//only support 4 channels.
 	//2 + 1 + 8 + 1 + 2
@@ -214,6 +214,114 @@ int frame_send_rc_data(u16 *pwm)
 
 	write(fd, frame, len);
 	return len;
+}
+
+void frame_read_rc_data()
+{
+	u8 tmp_serial_buf[BUFFER_SIZE];
+	int len = read(fd, tmp_serial_buf, BUFFER_SIZE);
+//	printf("len %d\n", len);
+//	for (int i = 0; i < len; i++)
+//	{
+//		printf("%02x ", tmp_serial_buf[i]);
+//	}
+//	printf("\n");
+	for (int i = 0; i < len; i++)
+	{
+		_recv.buffer[_recv.head] = tmp_serial_buf[i];
+		_recv.head = (_recv.head + 1) % _recv.size;
+		if (_recv.head == _recv.tail)
+		{
+			_recv.over++;
+		}
+	}
+}
+
+int frame_count_rc(struct uart_buffer_s *lb)
+{
+	s16 n = lb->head - lb->tail;
+	if (n < 0)
+	{
+		n += lb->size;
+	}
+	return n;
+}
+
+int frame_parse_rc()
+{
+	u16 data_cnt = 0;
+	u16 parse_packet_step = 0;
+	u16 packet_index = 0;
+	u8 FrameLen = 0;
+	u8 Frame_data_len = 0;
+	int ret = 0;
+	data_cnt = uart_buffer_count(&_recv);
+	s16 tail = _recv.tail;
+	for (u16 i = 0; i < data_cnt; i++)
+	{
+		_packet_buffer[packet_index++] = _recv.buffer[tail];
+		switch (parse_packet_step)
+		{
+			case FW_HEAD:
+				if (packet_index >= 2)
+				{
+					if ((_packet_buffer[FW_POS_START1] == FW_BYTE_HEAD_1) && (_packet_buffer[FW_POS_START2] == FW_BYTE_HEAD_2))
+					{
+						parse_packet_step = FW_LEN;
+					}
+					else if (_packet_buffer[FW_POS_START2] == FW_BYTE_HEAD_1)
+					{
+						_packet_buffer[FW_POS_START1] = FW_BYTE_HEAD_1;
+						packet_index = 1;
+					}
+					else
+					{
+						packet_index = 0;
+					}
+				}
+				break;
+
+			case FW_LEN:
+				if (packet_index >= 6)
+				{
+					Frame_data_len = _packet_buffer[FW_POS_LEN];
+					FrameLen = Frame_data_len + 6;
+					if (FrameLen <= BUFFER_SIZE)
+					{
+						parse_packet_step = FW_END;
+					}
+					else
+					{
+						parse_packet_step = FW_HEAD;
+						packet_index = 0;
+						memset(_packet_buffer, 0x00, sizeof(_packet_buffer));
+					}
+				}
+				break;
+
+			case FW_END:
+				if (packet_index == FrameLen)
+				{
+					u16 crc16 = _packet_buffer[FW_POS_CRC1] << 8 | _packet_buffer[FW_POS_CRC2];
+					if (crc16_check(&_packet_buffer[FW_POS_START1], Frame_data_len + 3, crc16))
+					{
+						ret = 1;
+					}
+					parse_packet_step = FW_HEAD;
+					packet_index = 0;
+				}
+				break;
+
+			default:
+				break;
+		}
+		tail = (tail + 1) % _recv.size;
+	}
+	if (ret == 1)
+	{
+		_recv.tail = tail;
+	}
+	return ret;
 }
 
 int set_opt(int fd, int nSpeed, int nBits, char nEvent, int nStop)
@@ -256,41 +364,18 @@ int set_opt(int fd, int nSpeed, int nBits, char nEvent, int nStop)
 			newtio.c_cflag &= ~PARENB;
 			break;
 	}
-//	/*设置波特率*/
-//	switch (nSpeed)
-//	{
-//		case 2400:
-//			cfsetispeed(&newtio, B2400);
-//			cfsetospeed(&newtio, B2400);
-//			break;
-//		case 4800:
-//			cfsetispeed(&newtio, B4800);
-//			cfsetospeed(&newtio, B4800);
-//			break;
-//		case 9600:
-//			cfsetispeed(&newtio, B9600);
-//			cfsetospeed(&newtio, B9600);
-//			break;
-//		case 115200:
-//			cfsetispeed(&newtio, B115200);
-//			cfsetospeed(&newtio, B115200);
-//			break;
-//		case 460800:
-//			cfsetispeed(&newtio, B460800);
-//			cfsetospeed(&newtio, B460800);
-//			break;
-//		default:
-//			cfsetispeed(&newtio, B9600);
-//			cfsetospeed(&newtio, B9600);
-//			break;
-//	}
+	//设置波特率
 	cfsetispeed(&newtio, nSpeed);
 	cfsetospeed(&newtio, nSpeed);
 	/*设置停止位*/
 	if (nStop == 1)
+	{
 		newtio.c_cflag &= ~CSTOPB;
+	}
 	else if (nStop == 2)
+	{
 		newtio.c_cflag |= CSTOPB;
+	}
 	/*设置等待时间和最小接收字符*/
 	newtio.c_cc[VTIME] = 0;
 	newtio.c_cc[VMIN] = 0;

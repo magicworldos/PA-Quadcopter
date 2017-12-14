@@ -28,23 +28,23 @@
 
 #define BUFFER_SIZE	(256)
 
-#define	FW_POS_START1                         	0
-#define	FW_POS_START2	                      	1
-#define	FW_POS_LEN	                      		2
-#define	FW_POS_DATA	                      		3
-#define	FW_POS_CRC1 	                      	15
-#define	FW_POS_CRC2  	                      	16
-#define	FW_POS_END1  	                     	17
-#define	FW_POS_END2  	                     	18
+#define	RC_POS_START1                         	0
+#define	RC_POS_START2	                      	1
+#define	RC_POS_LEN	                      		2
+#define	RC_POS_DATA	                      		3
+#define	RC_POS_CRC1 	                      	19
+#define	RC_POS_CRC2  	                      	20
+#define	RC_POS_END1  	                     	21
+#define	RC_POS_END2  	                     	22
 
-#define FW_BYTE_HEAD_1                         	0X55
-#define FW_BYTE_HEAD_2                         	0XAA
-#define FW_BYTE_END_1                          	0XA5
-#define FW_BYTE_END_2		                   	0X5A
+#define RC_BYTE_HEAD_1                         	0X55
+#define RC_BYTE_HEAD_2                         	0XAA
+#define RC_BYTE_END_1                          	0XA5
+#define RC_BYTE_END_2		                   	0X5A
 
-#define FW_HEAD                                 0
-#define FW_LEN    								1
-#define FW_END    								2
+#define RC_HEAD                                 0
+#define RC_LEN    								1
+#define RC_END    								2
 
 //
 
