@@ -18,8 +18,8 @@ s_engine* e = NULL;
 s_params* p = NULL;
 
 //摇控器pwm信号噪声
-f32 ctl_est_devi = 1;
-f32 ctl_measure_devi = 1;
+f32 ctl_est_devi = 15;
+f32 ctl_measure_devi = 6;
 //前后卡尔曼滤波
 f32 fb_est = 0.0, fb_devi = 0.0;
 //左右卡尔曼滤波
@@ -178,12 +178,12 @@ void io_rc_data()
 		if (frame_parse_rc())
 		{
 			memcpy(rc_data, &_buff[RC_POS_DATA], sizeof(u16) * RCCH_COUNT);
-			controller_pitch_pwm(rc_data[0]);
-			controller_roll_pwm(rc_data[1]);
-			controller_power_pwm(rc_data[2]);
-			controller_pro_pwm(rc_data[3]);
-			controller_mod0_pwm(rc_data[4]);
-			controller_mod1_pwm(rc_data[5]);
+			controller_pitch_pwm(rc_data[4]);
+			controller_roll_pwm(rc_data[2]);
+			controller_power_pwm(rc_data[3]);
+			controller_pro_pwm(rc_data[0]);
+			controller_mod0_pwm(rc_data[5]);
+			controller_mod1_pwm(rc_data[1]);
 //			for (int i = 0; i < 8; i++)
 //			{
 //				printf("%4d ", rc_data[i]);
