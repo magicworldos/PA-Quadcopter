@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 
 		led_blink(500 * 1000);
 
-		timer_delay_ms(10);
+		timer_delay_ms(5);
 	}
 }
 

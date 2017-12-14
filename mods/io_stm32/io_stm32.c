@@ -40,8 +40,8 @@ u16 crc16table[256] =
 
 int fd = -1;
 
-struct uart_buffer_s _recv;
-u8 _packet_buffer[BUFFER_SIZE];
+s_buff _recv;
+u8 _buff[BUFF_SIZE];
 
 //初始化时电调可能需要行程校准，通常是3秒最大油门，再3秒最小油门，但不是必要的，可以不做
 s32 __init(s_engine* engine, s_params* params)
@@ -67,17 +67,14 @@ s32 __init(s_engine* engine, s_params* params)
 
 	_recv.head = 0;
 	_recv.tail = 0;
-	_recv.size = BUFFER_SIZE;
-	memset(_recv.buffer, 0x00, BUFFER_SIZE);
+	_recv.size = BUFF_SIZE;
+	memset(_recv.buffer, 0x00, BUFF_SIZE);
 
-	u16 rc_data[6];
+	u16 rc_data[8];
 
-	for (s32 i = 0; i < MOTOR_COUNT; i++)
-	{
-		//电机初始速度为0
-		speed[i] = 0;
-		pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &motor_balance_compensation, NULL);
-	}
+	pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &io_rc_data, NULL);
+
+	pthread_create(&pthddr, (const pthread_attr_t*) NULL, (void* (*)(void*)) &io_pwm_data, NULL);
 
 	printf("[ OK ] Motor Init.\n");
 
@@ -107,10 +104,8 @@ s32 __status()
 	return sts;
 }
 
-void motor_balance_compensation()
+void io_pwm_data()
 {
-	u16 rc_data[6] =
-	{ 0, 0, 0, 0 };
 	u16 pwm_data[MOTOR_COUNT] =
 	{ 0, 0, 0, 0 };
 
@@ -163,7 +158,38 @@ void motor_balance_compensation()
 		pwm_data[2] = speed[0] + CTL_PWM_MIN;
 		//1
 		pwm_data[3] = speed[1] + CTL_PWM_MIN;
-		frame_send_rc_data(pwm_data);
+
+		frame_send_pwm_data(pwm_data);
+
+		usleep(ENG_TIMER * 1000);
+	}
+
+	sts = 0;
+}
+
+void io_rc_data()
+{
+	u16 rc_data[RCCH_COUNT] =
+	{ 0, 0, 0, 0, 0, 0, 0, 0 };
+
+	while (r)
+	{
+		frame_read_rc_data();
+		if (frame_parse_rc())
+		{
+			memcpy(rc_data, &_buff[RC_POS_DATA], sizeof(u16) * RCCH_COUNT);
+			controller_pitch_pwm(rc_data[0]);
+			controller_roll_pwm(rc_data[1]);
+			controller_power_pwm(rc_data[2]);
+			controller_pro_pwm(rc_data[3]);
+			controller_mod0_pwm(rc_data[4]);
+			controller_mod1_pwm(rc_data[5]);
+//			for (int i = 0; i < 8; i++)
+//			{
+//				printf("%4d ", rc_data[i]);
+//			}
+//			printf("\n");
+		}
 
 		usleep(ENG_TIMER * 1000);
 	}
@@ -218,8 +244,8 @@ int frame_send_pwm_data(u16 *pwm)
 
 void frame_read_rc_data()
 {
-	u8 tmp_serial_buf[BUFFER_SIZE];
-	int len = read(fd, tmp_serial_buf, BUFFER_SIZE);
+	u8 tmp_serial_buf[BUFF_SIZE];
+	int len = read(fd, tmp_serial_buf, BUFF_SIZE);
 //	printf("len %d\n", len);
 //	for (int i = 0; i < len; i++)
 //	{
@@ -237,7 +263,7 @@ void frame_read_rc_data()
 	}
 }
 
-int frame_count_rc(struct uart_buffer_s *lb)
+int frame_count_rc(s_buff *lb)
 {
 	s16 n = lb->head - lb->tail;
 	if (n < 0)
@@ -252,26 +278,26 @@ int frame_parse_rc()
 	u16 data_cnt = 0;
 	u16 parse_packet_step = 0;
 	u16 packet_index = 0;
-	u8 FrameLen = 0;
-	u8 Frame_data_len = 0;
+	u8 frameLen = 0;
+	u8 frame_data_len = 0;
 	int ret = 0;
-	data_cnt = uart_buffer_count(&_recv);
+	data_cnt = frame_count_rc(&_recv);
 	s16 tail = _recv.tail;
 	for (u16 i = 0; i < data_cnt; i++)
 	{
-		_packet_buffer[packet_index++] = _recv.buffer[tail];
+		_buff[packet_index++] = _recv.buffer[tail];
 		switch (parse_packet_step)
 		{
-			case FW_HEAD:
+			case RC_HEAD:
 				if (packet_index >= 2)
 				{
-					if ((_packet_buffer[FW_POS_START1] == FW_BYTE_HEAD_1) && (_packet_buffer[FW_POS_START2] == FW_BYTE_HEAD_2))
+					if ((_buff[RC_POS_START1] == RC_BYTE_HEAD_1) && (_buff[RC_POS_START2] == RC_BYTE_HEAD_2))
 					{
-						parse_packet_step = FW_LEN;
+						parse_packet_step = RC_LEN;
 					}
-					else if (_packet_buffer[FW_POS_START2] == FW_BYTE_HEAD_1)
+					else if (_buff[RC_POS_START2] == RC_BYTE_HEAD_1)
 					{
-						_packet_buffer[FW_POS_START1] = FW_BYTE_HEAD_1;
+						_buff[RC_POS_START1] = RC_BYTE_HEAD_1;
 						packet_index = 1;
 					}
 					else
@@ -281,33 +307,33 @@ int frame_parse_rc()
 				}
 				break;
 
-			case FW_LEN:
+			case RC_LEN:
 				if (packet_index >= 6)
 				{
-					Frame_data_len = _packet_buffer[FW_POS_LEN];
-					FrameLen = Frame_data_len + 6;
-					if (FrameLen <= BUFFER_SIZE)
+					frame_data_len = _buff[RC_POS_LEN];
+					frameLen = frame_data_len + 6;
+					if (frameLen <= BUFF_SIZE)
 					{
-						parse_packet_step = FW_END;
+						parse_packet_step = RC_END;
 					}
 					else
 					{
-						parse_packet_step = FW_HEAD;
+						parse_packet_step = RC_HEAD;
 						packet_index = 0;
-						memset(_packet_buffer, 0x00, sizeof(_packet_buffer));
+						memset(_buff, 0x00, sizeof(_buff));
 					}
 				}
 				break;
 
-			case FW_END:
-				if (packet_index == FrameLen)
+			case RC_END:
+				if (packet_index == frameLen)
 				{
-					u16 crc16 = _packet_buffer[FW_POS_CRC1] << 8 | _packet_buffer[FW_POS_CRC2];
-					if (crc16_check(&_packet_buffer[FW_POS_START1], Frame_data_len + 3, crc16))
+					u16 crc16 = _buff[RC_POS_CRC1] << 8 | _buff[RC_POS_CRC2];
+					if (crc16_check(&_buff[RC_POS_START1], frame_data_len + 3, crc16))
 					{
 						ret = 1;
 					}
-					parse_packet_step = FW_HEAD;
+					parse_packet_step = RC_HEAD;
 					packet_index = 0;
 				}
 				break;
@@ -389,4 +415,218 @@ int set_opt(int fd, int nSpeed, int nBits, char nEvent, int nStop)
 	}
 	printf("set done!\n");
 	return 0;
+}
+
+//读入摇控器“前/后”的PWM信号
+void controller_pitch_pwm(s32 fb)
+{
+	if (fb < CTL_PWM_MIN || fb > CTL_PWM_MAX)
+	{
+		return;
+	}
+	if (p->ctl_fb_zero < CTL_PWM_MIN || p->ctl_fb_zero > CTL_PWM_MAX)
+	{
+		p->ctl_fb_zero = 1500;
+	}
+	e->ctl_fb = fb;
+	//由2000～1600信号修正为-32.0 ～ +32.0角度
+	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
+	e->ctlmx = controller_parabola((float) (fb - p->ctl_fb_zero));
+}
+
+//读入摇控器“左/右”的PWM信号
+void controller_roll_pwm(s32 lr)
+{
+	if (lr < CTL_PWM_MIN || lr > CTL_PWM_MAX)
+	{
+		return;
+	}
+	if (p->ctl_lr_zero < CTL_PWM_MIN || p->ctl_lr_zero > CTL_PWM_MAX)
+	{
+		p->ctl_lr_zero = 1500;
+	}
+	e->ctl_lr = lr;
+	//由2000～1600信号修正为-32.0 ～ +32.0角度
+	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
+	e->ctlmy = controller_parabola((float) (lr - p->ctl_lr_zero));
+
+	//如果是最左或最右
+	if (abs(lr - p->ctl_lr_zero) > 160)
+	{
+		//如果是最左
+		if (lr - p->ctl_lr_zero < 0)
+		{
+			e->lock_status |= (0x1 << 2);
+			e->lock_status &= ~(0x1 << 1);
+			return;
+		}
+
+		e->lock_status |= (0x1 << 1);
+		e->lock_status &= ~(0x1 << 2);
+		return;
+	}
+
+	e->lock_status &= ~(0x1 << 1);
+	e->lock_status &= ~(0x1 << 2);
+}
+
+//读入摇控器“油门”的PWM信号
+void controller_power_pwm(s32 pw)
+{
+	if (pw < CTL_PWM_MIN || pw > CTL_PWM_MAX)
+	{
+		return;
+	}
+	if (p->ctl_pw_zero < CTL_PWM_MIN || p->ctl_pw_zero > CTL_PWM_MAX)
+	{
+		p->ctl_pw_zero = 1100;
+	}
+	e->ctl_pw = pw;
+	//读入速度
+	f32 v = (float) (pw - p->ctl_pw_zero);
+	//校验速度范围
+	v = v > MAX_SPEED_RUN_MAX ? MAX_SPEED_RUN_MAX : v;
+	v = v < MAX_SPEED_RUN_MIN ? MAX_SPEED_RUN_MIN : v;
+
+	//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
+	if (e->lock || v < PROCTED_SPEED)
+	{
+		//设置速度为0
+		v = 0;
+	}
+
+	//设置引擎的速度
+	e->v = v;
+
+	//如果是最低油门
+	if (abs(pw - p->ctl_pw_zero) < PROCTED_SPEED)
+	{
+		e->lock_status |= 0x1;
+	}
+	else
+	{
+		e->lock_status &= (~0x1);
+	}
+}
+
+//读入摇控器第4通道PWM信号
+void controller_mod0_pwm(s32 md)
+{
+	if (md < CTL_PWM_MIN || md > CTL_PWM_MAX)
+	{
+		return;
+	}
+	if (p->ctl_md_zero < CTL_PWM_MIN || p->ctl_md_zero > CTL_PWM_MAX)
+	{
+		p->ctl_md_zero = 2000;
+	}
+	e->ctl_md = md;
+
+	//读入读数
+	f32 val = (float) (md - p->ctl_md_zero);
+	if (abs(val) < 500)
+	{
+		//手动模式
+		//e->mode = MODE_MANUAL;
+		return;
+	}
+
+	//自动模式
+	//e->mode = MODE_AUTO;
+}
+
+//读入摇控器第5通道PWM信号
+void controller_mod1_pwm(s32 ud)
+{
+	if (ud < CTL_PWM_MIN || ud > CTL_PWM_MAX)
+	{
+		return;
+	}
+	if (p->ctl_ud_zero < CTL_PWM_MIN || p->ctl_ud_zero > CTL_PWM_MAX)
+	{
+		p->ctl_ud_zero = 1060;
+	}
+	e->ctl_ud = ud;
+}
+
+//读入摇控器方向舵比例缩放通道PWM信号
+void controller_pro_pwm(s32 di)
+{
+	if (di < CTL_PWM_MIN || di > CTL_PWM_MAX)
+	{
+		return;
+	}
+	//如果读数超出范围
+	if (p->ctl_di_zero < CTL_PWM_MIN || p->ctl_di_zero > CTL_PWM_MAX)
+	{
+		//这个通道比较特殊，它是对方向舵数值做比例缩放用的，所以当它为读数超出范围时不希望它起作用所以默认读数为0
+		p->ctl_di_zero = 0;
+	}
+	e->ctl_di = di;
+}
+
+//取绝对值
+f32 controller_abs(f32 x)
+{
+	if (x < 0)
+	{
+		return -x;
+	}
+	return x;
+}
+
+//二次曲线函数
+f32 controller_parabola(f32 x)
+{
+	f32 max_pwm = (CTL_PWM_MAX - CTL_PWM_MIN) / 2;
+
+	if (controller_abs(x) < 0.0001)
+	{
+		return 0;
+	}
+
+	if (x > max_pwm)
+	{
+		return MAX_ANGLE;
+	}
+
+	if (x < -max_pwm)
+	{
+		return -MAX_ANGLE;
+	}
+
+	f32 angle = x / max_pwm * MAX_ANGLE;
+	angle = angle > MAX_ANGLE ? MAX_ANGLE : angle;
+	angle = angle < -MAX_ANGLE ? -MAX_ANGLE : angle;
+	angle = angle * M_PI / 180.0;
+
+	//如果方向比例通道无读数则直接返回倾斜角
+	if (e->ctl_di < CTL_DI_MIN || e->ctl_di > CTL_DI_MAX)
+	{
+		return angle;
+	}
+
+	//如果方向舵比例通道有读数，倾斜角需要根据此读数做缩放
+	f32 sacle = controller_abs((float) e->ctl_di - CTL_DI_MIN) / (CTL_DI_MAX - CTL_DI_MIN);
+	return angle * sacle;
+}
+
+/***
+ * est预估值
+ * est_devi预估偏差
+ * measure测量读数
+ * measure_devi测量噪声
+ * devi上一次最优偏差
+ */
+f32 controller_kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi)
+{
+	//预估高斯噪声的偏差
+	f32 q = sqrt((*devi) * (*devi) + est_devi * est_devi);
+	//卡尔曼增益
+	f32 kg = q * q / (q * q + measure_devi * measure_devi);
+	//滤波结果
+	f32 val = est + kg * (measure - est);
+	//最优偏差
+	*devi = sqrt((1.0 - kg) * q * q);
+	return val;
 }

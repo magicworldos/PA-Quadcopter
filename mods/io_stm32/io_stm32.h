@@ -25,8 +25,9 @@
 //最大倾斜角
 #define MAX_ANGLE (30)
 #define MOTOR_COUNT	(4)
+#define RCCH_COUNT	(8)
 
-#define BUFFER_SIZE	(256)
+#define BUFF_SIZE	(256)
 
 #define	RC_POS_START1                         	0
 #define	RC_POS_START2	                      	1
@@ -66,16 +67,16 @@
 #define PWM_LEN    								1
 #define PWM_END    								2
 
-struct uart_buffer_s
+typedef struct s_buff
 {
 	s16 head;
 	s16 tail;
 	s16 size;
-	u8 buffer[BUFFER_SIZE];
+	u8 buffer[BUFF_SIZE];
 	u32 total_len;
 	u32 over;
 	u32 user_buf_over;
-};
+} s_buff;
 
 s32 __init(s_engine* engine, s_params* params);
 
@@ -83,18 +84,55 @@ s32 __destory(s_engine* e, s_params* p);
 
 s32 __status();
 
-void motor_balance_compensation();
+void io_pwm_data();
 
-void read_controller();
-
-int crc8_check(u8 *buff, u8 len, u8 crc8);
-
-int crc16_check(u8 *buff, u8 len, u16 crc16);
+void io_rc_data();
 
 u16 crc16_value(u8 *buff, u8 len);
 
-int frame_send_rc_data(u16 *pwm);
+int crc16_check(u8 *buff, u8 len, u16 crc16);
+
+int frame_send_pwm_data(u16 *pwm);
+
+void frame_read_rc_data();
+
+int frame_count_rc(s_buff *lb);
+
+int frame_parse_rc();
 
 int set_opt(int fd, int nSpeed, int nBits, char nEvent, int nStop);
+
+//读入摇控器“前/后”的PWM信号
+void controller_pitch_pwm(s32 fb);
+
+//读入摇控器“左/右”的PWM信号
+void controller_roll_pwm(s32 lr);
+
+//读入摇控器“油门”的PWM信号
+void controller_power_pwm(s32 pw);
+
+//读入摇控器第4通道PWM信号
+void controller_mod0_pwm(s32 md);
+
+//读入摇控器第5通道PWM信号
+void controller_mod1_pwm(s32 ud);
+
+//读入摇控器方向舵比例缩放通道PWM信号
+void controller_pro_pwm(s32 di);
+
+//取绝对值
+f32 controller_abs(f32 x);
+
+//二次曲线函数
+f32 controller_parabola(f32 x);
+
+/***
+ * est预估值
+ * est_devi预估偏差
+ * measure测量读数
+ * measure_devi测量噪声
+ * devi上一次最优偏差
+ */
+f32 controller_kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi);
 
 #endif /* INCLUDE_DRIVER_H_ */
