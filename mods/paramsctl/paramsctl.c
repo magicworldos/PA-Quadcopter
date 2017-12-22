@@ -102,13 +102,13 @@ void params_from_cache()
 void params_reset()
 {
 	// XY轴欧拉角PID参数
-	p->kp = 28.0;
-	p->ki = 0.30;
-	p->kd = 36.0;
+	p->kp = 68.0;
+	p->ki = 0.0;
+	p->kd = 0.0;
 	// XY轴欧拉角PID参数
 	p->v_kp = 5.2;
-	p->v_ki = 0.1;
-	p->v_kd = 16.0;
+	p->v_ki = 0.02;
+	p->v_kd = 48.0;
 	// 垂直加速度PID参数
 	p->vz_kp = 0.0;
 	p->vz_ki = 0.0;

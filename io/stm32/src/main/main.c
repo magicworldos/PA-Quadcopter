@@ -7,7 +7,6 @@
 
 extern u16 pwm_in[8];
 extern u16 pwm[4];
-extern u32 rc_power_count;
 
 int main(int argc, char* argv[])
 {
@@ -31,10 +30,6 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
-		if (rc_power_count++ > 200)
-		{
-			memset(pwm_in, 0, sizeof(u16) * 8);
-		}
 		serial_port_frame_send_rc(pwm_in);
 
 		serial_port_frame_recv_pwm(pwm);
