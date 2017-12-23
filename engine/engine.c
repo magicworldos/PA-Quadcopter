@@ -256,7 +256,7 @@ f32 engine_outside_pid(f32 et, f32 et2, float* sum)
 		engine_limit_palstance(&palstance);
 		return palstance;
 	}
-	*sum += params.ki * et;
+	*sum += params.ki * et * 0.01;
 	//积分限幅
 	engine_limit_palstance(sum);
 	//XY轴PID反馈控制
@@ -281,7 +281,7 @@ f32 engine_inside_pid(f32 et, f32 et2, float* sum)
 		return pwm;
 	}
 	//积分限幅
-	*sum += params.v_ki * et;
+	*sum += params.v_ki * et * 0.01;
 	engine_limit_pwm(sum);
 	//XY轴PID反馈控制
 	pwm = params.v_kp * et + (*sum) + params.v_kd * (et - et2);
@@ -300,7 +300,7 @@ f32 engine_vz_pid(f32 et, f32 et2, float* sum)
 		v = params.vz_kp * et + params.vz_kd * (et - et2);
 		return v;
 	}
-	*sum += params.vz_ki * et;
+	*sum += params.vz_ki * et * 0.01;
 	v = params.vz_kp * et + (*sum) + params.vz_kd * (et - et2);
 	return v;
 }
