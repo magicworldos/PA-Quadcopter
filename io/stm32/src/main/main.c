@@ -6,7 +6,9 @@
 #include <serial_port.h>
 
 extern u16 pwm_in[8];
-extern u16 pwm[4];
+extern u16 pwm_out[4];
+extern u32 pwm_in_error_count;
+extern u32 pwm_out_error_count;
 
 int main(int argc, char* argv[])
 {
@@ -30,10 +32,18 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
+		if (pwm_in_error_count++ > PWM_ERR_MAX)
+		{
+			memset(pwm_in, 0, sizeof(u16) * 8);
+		}
 		serial_port_frame_send_rc(pwm_in);
 
-		serial_port_frame_recv_pwm(pwm);
+		serial_port_frame_recv_pwm(pwm_out);
 
+		if (pwm_out_error_count++ > PWM_ERR_MAX)
+		{
+			memset(pwm_out, 0, sizeof(u16) * 4);
+		}
 		pwm_out_set_value();
 
 		led_blink(500 * 1000);

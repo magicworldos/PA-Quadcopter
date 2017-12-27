@@ -7,6 +7,8 @@ u16 pwm_rise[8] =
 u16 pwm_drop[8] =
 { 0, 0, 0, 0, 0, 0, 0, 0 };
 
+u32 pwm_in_error_count = 0;
+
 void pwm_in_init(void)
 {
 	tim2_irq_init();
@@ -226,9 +228,13 @@ void TIM2_IRQHandler(void)
 			TIM_OC2PolarityConfig(TIM2, TIM_ICPolarity_Rising);
 			pwm_drop[1] = TIM_GetCapture2(TIM2);
 			if (pwm_rise[1] > pwm_drop[1])
+			{
 				pwm_in[1] = 65535 - pwm_rise[1] + pwm_drop[1];
+			}
 			else
+			{
 				pwm_in[1] = pwm_drop[1] - pwm_rise[1];
+			}
 		}
 	}
 
@@ -245,9 +251,13 @@ void TIM2_IRQHandler(void)
 			TIM_OC3PolarityConfig(TIM2, TIM_ICPolarity_Rising);
 			pwm_drop[2] = TIM_GetCapture3(TIM2);
 			if (pwm_rise[2] > pwm_drop[2])
+			{
 				pwm_in[2] = 65535 - pwm_rise[2] + pwm_drop[2];
+			}
 			else
+			{
 				pwm_in[2] = pwm_drop[2] - pwm_rise[2];
+			}
 		}
 	}
 
@@ -264,9 +274,14 @@ void TIM2_IRQHandler(void)
 			TIM_OC4PolarityConfig(TIM2, TIM_ICPolarity_Rising);
 			pwm_drop[3] = TIM_GetCapture4(TIM2);
 			if (pwm_rise[3] > pwm_drop[3])
+			{
 				pwm_in[3] = 65535 - pwm_rise[3] + pwm_drop[3];
+			}
 			else
+			{
 				pwm_in[3] = pwm_drop[3] - pwm_rise[3];
+			}
+			pwm_in_error_count = 0;
 		}
 	}
 }
@@ -286,9 +301,13 @@ void TIM3_IRQHandler(void)
 			TIM_OC1PolarityConfig(TIM3, TIM_ICPolarity_Rising);
 			pwm_drop[4] = TIM_GetCapture1(TIM3);
 			if (pwm_rise[4] > pwm_drop[4])
+			{
 				pwm_in[4] = 65535 - pwm_rise[4] + pwm_drop[4];
+			}
 			else
+			{
 				pwm_in[4] = pwm_drop[4] - pwm_rise[4];
+			}
 		}
 	}
 
@@ -305,9 +324,13 @@ void TIM3_IRQHandler(void)
 			TIM_OC2PolarityConfig(TIM3, TIM_ICPolarity_Rising);
 			pwm_drop[5] = TIM_GetCapture2(TIM3);
 			if (pwm_rise[5] > pwm_drop[5])
+			{
 				pwm_in[5] = 65535 - pwm_rise[5] + pwm_drop[5];
+			}
 			else
+			{
 				pwm_in[5] = pwm_drop[5] - pwm_rise[5];
+			}
 		}
 	}
 
@@ -324,9 +347,13 @@ void TIM3_IRQHandler(void)
 			TIM_OC3PolarityConfig(TIM3, TIM_ICPolarity_Rising);
 			pwm_drop[6] = TIM_GetCapture3(TIM3);
 			if (pwm_rise[6] > pwm_drop[6])
+			{
 				pwm_in[6] = 65535 - pwm_rise[6] + pwm_drop[6];
+			}
 			else
+			{
 				pwm_in[6] = pwm_drop[6] - pwm_rise[6];
+			}
 		}
 	}
 
@@ -343,9 +370,13 @@ void TIM3_IRQHandler(void)
 			TIM_OC4PolarityConfig(TIM3, TIM_ICPolarity_Rising);
 			pwm_drop[7] = TIM_GetCapture4(TIM3);
 			if (pwm_rise[7] > pwm_drop[7])
+			{
 				pwm_in[7] = 65535 - pwm_rise[7] + pwm_drop[7];
+			}
 			else
+			{
 				pwm_in[7] = pwm_drop[7] - pwm_rise[7];
+			}
 		}
 	}
 }

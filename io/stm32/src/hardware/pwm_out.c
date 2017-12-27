@@ -7,7 +7,7 @@
 
 #include <pwm_out.h>
 
-u16 pwm[4] = { 0, 0, 0, 0 };
+u16 pwm_out[4] = { 0, 0, 0, 0 };
 
 void pwm_out_init()
 {
@@ -68,8 +68,8 @@ void pwm_out_mode_config()
 
 void pwm_out_set_value()
 {
-	TIM_SetCompare1(TIM4, pwm[0]);
-	TIM_SetCompare2(TIM4, pwm[1]);
-	TIM_SetCompare3(TIM4, pwm[2]);
-	TIM_SetCompare4(TIM4, pwm[3]);
+	TIM_SetCompare1(TIM4, pwm_out[0]);
+	TIM_SetCompare2(TIM4, pwm_out[1]);
+	TIM_SetCompare3(TIM4, pwm_out[2]);
+	TIM_SetCompare4(TIM4, pwm_out[3]);
 }

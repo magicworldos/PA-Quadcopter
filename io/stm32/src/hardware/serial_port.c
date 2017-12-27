@@ -10,7 +10,7 @@
 
 s_serial_port recv;
 u8 buff[BUFF_SIZE];
-u32 pwm_err = 0;
+u32 pwm_out_error_count = 0;
 
 void serial_port_init()
 {
@@ -174,14 +174,9 @@ int serial_port_frame_recv_pwm(u16 *pwm)
 	if (serial_port_frame_pase())
 	{
 		memcpy(pwm, &buff[PWM_POS_DATA], sizeof(u16) * 4);
-		pwm_err = 0;
+		pwm_out_error_count = 0;
 		serial_port_limit(pwm, 4);
 		return 1;
-	}
-	pwm_err++;
-	if (pwm_err > PWM_ERR_MAX)
-	{
-		memset(pwm, 0, sizeof(u16) * 4);
 	}
 	return 0;
 }
