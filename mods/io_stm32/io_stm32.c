@@ -171,12 +171,13 @@ void io_rc_data()
 {
 	u16 rc_data[RCCH_COUNT] =
 	{ 0, 0, 0, 0, 0, 0, 0, 0 };
-
+	u32 rc_error_count = 0;
 	while (r)
 	{
 		frame_read_rc_data();
 		if (frame_parse_rc())
 		{
+			rc_error_count = 0;
 			memcpy(rc_data, &_buff[RC_POS_DATA], sizeof(u16) * RCCH_COUNT);
 			controller_pitch_pwm(rc_data[4]);
 			controller_roll_pwm(rc_data[2]);
@@ -184,13 +185,11 @@ void io_rc_data()
 			controller_pro_pwm(rc_data[0]);
 			controller_mod0_pwm(rc_data[5]);
 			controller_mod1_pwm(rc_data[1]);
-//			for (int i = 0; i < 8; i++)
-//			{
-//				printf("%4d ", rc_data[i]);
-//			}
-//			printf("\n");
 		}
-
+		if (rc_error_count++ > PWM_ERR_MAX)
+		{
+			memset(rc_data, 0, sizeof(u16) * 8);
+		}
 		usleep(ENG_TIMER * 1000);
 	}
 

@@ -16,6 +16,7 @@
 #include <string.h>
 #include <typedef.h>
 
+#define PWM_ERR_MAX								(100)
 //摇控器接收机的4个通道读数范围
 #define CTL_PWM_MIN (1000)
 #define CTL_PWM_MAX (2000)
