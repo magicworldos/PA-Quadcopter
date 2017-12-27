@@ -490,9 +490,9 @@ void controller_power_pwm(s32 pw)
 		e->ctl_pw = 0;
 		return;
 	}
-	if (pw < CTL_PWM_MIN || pw > CTL_PWM_MAX)
+	if (pw > CTL_PWM_MAX)
 	{
-		return;
+		e->ctl_pw = CTL_PWM_MAX;
 	}
 	if (p->ctl_pw_zero < CTL_PWM_MIN || p->ctl_pw_zero > CTL_PWM_MAX)
 	{

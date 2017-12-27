@@ -47,10 +47,11 @@ int main(int argc, char* argv[])
 		{
 			pwm_out_error_count++;
 		}
-		if (pwm_out_error_count < PWM_ERR_MAX)
+		if (pwm_out_error_count > PWM_ERR_MAX)
 		{
-			pwm_out_set_value();
+			memset(pwm_out, 0, sizeof(u16) * 4);
 		}
+		pwm_out_set_value();
 
 		led_blink(500 * 1000);
 
