@@ -32,19 +32,25 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
-		if (pwm_in_error_count++ > PWM_ERR_MAX)
+		if (pwm_in_error_count < 2 * PWM_ERR_MAX)
 		{
-			memset(pwm_in, 0, sizeof(u16) * 8);
+			pwm_in_error_count++;
 		}
-		serial_port_frame_send_rc(pwm_in);
+		if (pwm_in_error_count < PWM_ERR_MAX)
+		{
+			serial_port_frame_send_rc(pwm_in);
+		}
 
 		serial_port_frame_recv_pwm(pwm_out);
 
-		if (pwm_out_error_count++ > PWM_ERR_MAX)
+		if (pwm_out_error_count < 2 * PWM_ERR_MAX)
 		{
-			memset(pwm_out, 0, sizeof(u16) * 4);
+			pwm_out_error_count++;
 		}
-		pwm_out_set_value();
+		if (pwm_out_error_count < PWM_ERR_MAX)
+		{
+			pwm_out_set_value();
+		}
 
 		led_blink(500 * 1000);
 

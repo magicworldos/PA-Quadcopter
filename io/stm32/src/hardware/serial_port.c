@@ -10,7 +10,7 @@
 
 s_serial_port recv;
 u8 buff[BUFF_SIZE];
-u32 pwm_out_error_count = 0;
+__IO u32 pwm_out_error_count = 0;
 
 void serial_port_init()
 {

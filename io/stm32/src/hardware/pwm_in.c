@@ -7,7 +7,7 @@ u16 pwm_rise[8] =
 u16 pwm_drop[8] =
 { 0, 0, 0, 0, 0, 0, 0, 0 };
 
-u32 pwm_in_error_count = 0;
+__IO u32 pwm_in_error_count = 0;
 
 void pwm_in_init(void)
 {
