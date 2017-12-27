@@ -10,8 +10,8 @@
 # sudo update-rc.d quadcopter defaults
 # sudo update-rc.d -f quadcopter remove
 ### END INIT INFO
-QUADCOPTER_PATH=/data/work/workspace/pi/063.Quadcopter
-#QUADCOPTER_PATH=/home/pi/work/quadcopter
+#QUADCOPTER_PATH=/data/work/workspace/pi/063.Quadcopter
+QUADCOPTER_PATH=/home/pi/work/quadcopter
 case $1 in
     start)
         $QUADCOPTER_PATH/shell/quadcopter.sh start
