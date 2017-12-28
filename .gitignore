@@ -2,3 +2,4 @@
 release/
 lib/
 lib/*.so
+defconfig.h

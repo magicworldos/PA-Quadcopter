@@ -9,11 +9,7 @@
 #ifndef _INCLUDE_TYPEDEF_H_
 #define _INCLUDE_TYPEDEF_H_
 
-//飞行模式为X型
-//如需要I型，需要将其修改为 _FLY_MODE_I_
-#define _FLY_MODE_X_
-//如果需要wiringPi
-//#define _NEED_WIRINGPI_
+#include <defconfig.h>
 
 #include <dirent.h>
 #include <dlfcn.h>
@@ -44,22 +40,6 @@ typedef double f64;
 
 typedef signed long long s64;
 typedef unsigned long long u64;
-
-#define MAX_PATH_NAME		(0x200)
-
-//保护最低速度
-#define PROCTED_SPEED		(100)
-//电机最大速度
-#define MAX_SPEED_RUN_MAX	(1000)
-//电机最小速度
-#define MAX_SPEED_RUN_MIN	(0)
-//原定计算频率1000Hz，但由于MPU6050的输出为100hz只好降低到100hz
-// 10ms 100Hz
-#define ENG_TIMER 			(10)
-//角速度限幅
-#define MAX_PALSTANCE		(30.0)
-
-#define MAX_ACC				(32.0)
 
 //引擎结构
 typedef struct

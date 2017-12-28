@@ -4,11 +4,28 @@
 #
 # 四轴飞行控制器  Copyright (C) 2016  李德强
 
+#安装路径
 PATH_INSTALL		= /home/lidq/work/quadcopter
+#如需要I型，需要将其修改为 _FLY_MODE_I_
+FLY_MODE			= _FLY_MODE_X_
+#保护最低速度
+PROCTED_SPEED		= (100)
+#电机最大速度
+MAX_SPEED_RUN_MAX	= (1000)
+#电机最小速度
+MAX_SPEED_RUN_MIN	= (0)
+#10ms 100Hz
+ENG_TIMER 			= (10)
+#文件名及路径最大长度
+MAX_PATH_NAME		= (0x200)
+#重力读取
+MAX_ACC				= (32.0)
+#角度限幅
+MAX_PALSTANCE		= (30.0)
+
 
 #工程
 MOD_PROJECT			= quadcopter
-
 #模块动态链接库
 MOD_MODULES			= modlibs
 MOD_MODULES_IO		= mode_io
@@ -31,14 +48,42 @@ MOD_INCLUDE			= -Iinclude
 #编译选项
 C_FLAGS				= -pthread -lm -ldl -lwiringPi -std=gnu11
 
-pi:	$(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES)
+default: pi
 
-io:	$(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES_IO)
+pi:	need_wiringpi $(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES)
+
+io:	noneed_wiringpi $(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES_IO)
 
 install:
 	./shell/install.sh $(PATH_INSTALL)
 
-#ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+defconfig:
+	echo "#define $(FLY_MODE)" >> include/defconfig.h
+	echo "#define PROCTED_SPEED	$(PROCTED_SPEED)" >> include/defconfig.h
+	echo "#define MAX_SPEED_RUN_MAX	$(MAX_SPEED_RUN_MAX)" >> include/defconfig.h
+	echo "#define MAX_SPEED_RUN_MIN	$(MAX_SPEED_RUN_MIN)" >> include/defconfig.h
+	echo "#define ENG_TIMER	$(ENG_TIMER)" >> include/defconfig.h
+	echo "#define MAX_PATH_NAME	$(MAX_PATH_NAME)" >> include/defconfig.h
+	echo "#define MAX_ACC	$(MAX_ACC)" >> include/defconfig.h
+	echo "#define MAX_PALSTANCE	$(MAX_PALSTANCE)" >> include/defconfig.h
+	
+	
+need_wiringpi:
+	echo "#ifndef _DEFCONFIG_H_" > include/defconfig.h
+	echo "#define _DEFCONFIG_H_" >> include/defconfig.h
+	echo "" >> include/defconfig.h
+	echo "#define _NEED_WIRINGPI_" >> include/defconfig.h
+	make defconfig
+	echo "" >> include/defconfig.h
+	echo "#endif" >> include/defconfig.h
+	
+noneed_wiringpi:
+	echo "#ifndef _DEFCONFIG_H_" > include/defconfig.h
+	echo "#define _DEFCONFIG_H_" >> include/defconfig.h
+	echo "" >> include/defconfig.h
+	make defconfig
+	echo "" >> include/defconfig.h
+	echo "#endif" >> include/defconfig.h
 
 engine:	$(MOD_PROJECT)
 
