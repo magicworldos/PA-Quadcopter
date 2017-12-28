@@ -4,11 +4,14 @@
 #
 # 四轴飞行控制器  Copyright (C) 2016  李德强
 
+PATH_INSTALL		= /home/lidq/work/quadcopter
+
 #工程
 MOD_PROJECT			= quadcopter
 
 #模块动态链接库
 MOD_MODULES			= modlibs
+MOD_MODULES_IO		= mode_io
 MOD_MOTOR			= motor
 MOD_PARAMSCTL		= paramsctl
 MOD_CONTROLLER		= controller
@@ -28,9 +31,15 @@ MOD_INCLUDE			= -Iinclude
 #编译选项
 C_FLAGS				= -pthread -lm -ldl -lwiringPi -std=gnu11
 
-all:	$(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES)
-	#ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
-	
+pi:	$(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES)
+
+io:	$(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES_IO)
+
+install:
+	./shell/install.sh $(PATH_INSTALL)
+
+#ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+
 engine:	$(MOD_PROJECT)
 
 $(MOD_PROJECT):
@@ -39,9 +48,14 @@ $(MOD_PROJECT):
 	engine/engine.c							\
 	engine/dlmod.c							\
 	engine/emode.c							\
+	engine/config.c							\
 	util/list.c
 	
-$(MOD_MODULES):	$(MOD_PARAMSCTL)	$(MOD_IO_STM32)	$(MOD_MPU6050)		$(MOD_DISPLAY)
+#default option
+$(MOD_MODULES):	$(MOD_PARAMSCTL)	$(MOD_MOTOR)	$(MOD_CONTROLLER)	$(MOD_MPU6050)		$(MOD_DISPLAY)
+
+#io use stm32
+$(MOD_MODULES_IO):	$(MOD_PARAMSCTL)	$(MOD_IO_STM32)	$(MOD_MPU6050)		$(MOD_DISPLAY)
 
 $(MOD_MOTOR):
 	cd mods/motor/			&& make

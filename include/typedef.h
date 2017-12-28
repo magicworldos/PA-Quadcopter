@@ -9,6 +9,12 @@
 #ifndef _INCLUDE_TYPEDEF_H_
 #define _INCLUDE_TYPEDEF_H_
 
+//飞行模式为X型
+//如需要I型，需要将其修改为 _FLY_MODE_I_
+#define _FLY_MODE_X_
+//如果需要wiringPi
+//#define _NEED_WIRINGPI_
+
 #include <dirent.h>
 #include <dlfcn.h>
 #include <math.h>
@@ -21,7 +27,6 @@
 #include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
-
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
@@ -40,9 +45,7 @@ typedef double f64;
 typedef signed long long s64;
 typedef unsigned long long u64;
 
-//飞行模式为X型
-//如需要I型，需要将其修改为 _FLY_MODE_I_
-#define _FLY_MODE_X_
+#define MAX_PATH_NAME		(0x200)
 
 //保护最低速度
 #define PROCTED_SPEED		(100)

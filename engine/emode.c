@@ -14,11 +14,13 @@ extern s_engine engine;
 extern s_params params;
 //用于存放动态链接库
 extern s_list list;
+//环境变量，安装位置
+extern s8 quad_home[MAX_PATH_NAME];
 
 void emode_start_gyro(char* argv2)
 {
-	char modname[0x200];
-	snprintf(modname, 0x200, "./lib/lib%s.so", argv2);
+	char modname[MAX_PATH_NAME];
+	snprintf(modname, MAX_PATH_NAME, "%s/lib/lib%s.so", quad_home, argv2);
 	//重置引擎
 	engine_reset(&engine);
 	s_engine* e = &engine;
@@ -48,14 +50,16 @@ void emode_start_gyro(char* argv2)
 void emode_start_control(char* argv2)
 {
 	char modname[0x200];
-	snprintf(modname, 0x200, "./lib/lib%s.so", argv2);
+	snprintf(modname, 0x200, "%s/lib/lib%s.so", quad_home, argv2);
 	//重置引擎
 	engine_reset(&engine);
 	s_engine* e = &engine;
 	s_params* p = &params;
 
+	s8 path[MAX_PATH_NAME];
+	snprintf(path, MAX_PATH_NAME, "%s/lib/libparamsctl.so", quad_home);
 	//载入参数调整模块
-	s_dlmod* mod_paramsctl = dlmod_open("./lib/libparamsctl.so");
+	s_dlmod* mod_paramsctl = dlmod_open(path);
 	if (mod_paramsctl == NULL)
 	{
 		return;

@@ -23,6 +23,9 @@ sem_t sem_engine;
 //多线程描述符
 pthread_t pthd;
 
+//环境变量，安装位置
+s8 quad_home[MAX_PATH_NAME];
+
 //启动引擎
 void engine_start(s32 argc, char* argv[])
 {
@@ -32,11 +35,17 @@ void engine_start(s32 argc, char* argv[])
 	//初始化引擎信号量
 	sem_init(&sem_engine, 0, 0);
 
+	//读取环境变量，安装位置
+	config_env(quad_home, "QUAD_HOME");
+
 	//处理启动参数
 	if (argc >= 2)
 	{
+
+#ifdef _NEED_WIRINGPI_
 		//初始化WiringPi
-		//wiringPiSetup();
+		wiringPiSetup();
+#endif
 
 		//正常模式，飞行，调参
 		if (strcmp(argv[1], "--fly") == 0)

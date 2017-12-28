@@ -9,8 +9,9 @@
 #ifndef SRC_ENGINE_H_
 #define SRC_ENGINE_H_
 
-#include <dlmod.h>
 #include <typedef.h>
+#include <dlmod.h>
+#include <config.h>
 
 //启动引擎
 void engine_start(s32 argc, char* argv[]);

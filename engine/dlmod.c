@@ -16,27 +16,34 @@ extern s_list list;
 
 pthread_t pthdmod;
 
+//环境变量，安装位置
+extern s8 quad_home[MAX_PATH_NAME];
+
 //读取lib文件夹，并载入*.so动态链接库
 s32 dlmod_init()
 {
+	printf("%s\n", quad_home);
 	list_init(&list, &dlmod_free_mod);
 
 	//准备读取工作目录
 	DIR* dir;
 	struct dirent* dirinfo;
+	s8 path[MAX_PATH_NAME];
+	snprintf(path, MAX_PATH_NAME, "%s/lib", quad_home);
+
 	//打开工作目录
-	if ((dir = opendir("./lib")) == NULL)
+	if ((dir = opendir(path)) == NULL)
 	{
 		return -1;
 	}
-	char filename[0x200];
+	char filename[MAX_PATH_NAME];
 	//循环读入每一个文件
 	while ((dirinfo = readdir(dir)) != NULL)
 	{
 		//如果是普通文件
 		if (dirinfo->d_type == 8)
 		{
-			snprintf(filename, 0x200, "%s/%s", "./lib", dirinfo->d_name);
+			snprintf(filename, MAX_PATH_NAME, "%s/%s", path, dirinfo->d_name);
 			//文件名
 			printf("%s\n", filename);
 			s_dlmod* mod = dlmod_open(filename);
@@ -51,7 +58,7 @@ s32 dlmod_init()
 	//关闭文件夹
 	closedir(dir);
 
-	list_visit(&list, (void*)&dlmod_run_pt_init);
+	list_visit(&list, (void*) &dlmod_run_pt_init);
 
 	return 0;
 }
@@ -59,7 +66,7 @@ s32 dlmod_init()
 //销毁模块链表
 s32 dlmod_destory()
 {
-	list_visit(&list, (void*)&dlmod_run_pt_destory);
+	list_visit(&list, (void*) &dlmod_run_pt_destory);
 	for (s32 i = 0; i < 3000; i++)
 	{
 		if (dlmod_mods_status() == 0)
@@ -69,7 +76,7 @@ s32 dlmod_destory()
 
 		usleep(1000);
 	}
-	list_visit(&list, (void*)&dlmod_dlclose);
+	list_visit(&list, (void*) &dlmod_dlclose);
 	list_destroy(&list);
 
 	return 0;
@@ -114,9 +121,9 @@ s_dlmod* dlmod_open(char* filename)
 	}
 
 	mod->handler = handler;
-	mod->init    = init;
+	mod->init = init;
 	mod->destory = destory;
-	mod->status  = status;
+	mod->status = status;
 
 	mod->args = malloc(sizeof(void*) * 4);
 	if (mod->args == NULL)
@@ -131,13 +138,13 @@ s_dlmod* dlmod_open(char* filename)
 
 	goto _label_ret;
 
-_label_mod:
+	_label_mod:
 
 	dlclose(handler);
 	free(mod);
 	return NULL;
 
-_label_ret:;
+	_label_ret: ;
 
 	return mod;
 }
@@ -183,7 +190,7 @@ s32 dlmod_mods_status()
 	s_node* p = list.header;
 	while (p != NULL)
 	{
-		s_dlmod* mod = (s_dlmod*)p->data;
+		s_dlmod* mod = (s_dlmod*) p->data;
 		if (mod->status())
 		{
 			return 1;
@@ -200,7 +207,7 @@ void dlmod_run_init(void* args)
 	{
 		return;
 	}
-	void** ags   = (void**)args;
+	void** ags = (void**) args;
 	s_dlmod* mod = ags[0];
 	if (mod == NULL)
 	{
@@ -222,7 +229,7 @@ s32 dlmod_run_pt_init(s_dlmod* mod)
 		return -1;
 	}
 
-	pthread_create(&pthdmod, (const pthread_attr_t*)NULL, (void* (*)(void*)) & dlmod_run_init, mod->args);
+	pthread_create(&pthdmod, (const pthread_attr_t*) NULL, (void* (*)(void*)) &dlmod_run_init, mod->args);
 
 	return 0;
 }
@@ -234,7 +241,7 @@ void dlmod_run_destory(void* args)
 	{
 		return;
 	}
-	void** ags   = (void**)args;
+	void** ags = (void**) args;
 	s_dlmod* mod = ags[0];
 	if (mod == NULL)
 	{
@@ -256,7 +263,7 @@ s32 dlmod_run_pt_destory(s_dlmod* mod)
 		return -1;
 	}
 
-	pthread_create(&pthdmod, (const pthread_attr_t*)NULL, (void* (*)(void*)) & dlmod_run_destory, mod->args);
+	pthread_create(&pthdmod, (const pthread_attr_t*) NULL, (void* (*)(void*)) &dlmod_run_destory, mod->args);
 
 	return 0;
 }

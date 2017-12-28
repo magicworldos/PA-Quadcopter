@@ -58,7 +58,13 @@ s32 __status()
 //保存参数
 void params_save()
 {
-	FILE* fp = fopen(QUAD_PMS_FILE, "wb");
+	s8 quad_home[MAX_PATH_NAME];
+	char* v = getenv("QUAD_HOME");
+	memcpy(quad_home, v, strlen(v) + 1);
+	s8 path[MAX_PATH_NAME];
+	snprintf(path, MAX_PATH_NAME, "%s/" QUAD_PMS_FILE, quad_home);
+
+	FILE* fp = fopen(path, "wb");
 	if (fp == NULL)
 	{
 		printf("save params error!\n");
@@ -71,7 +77,13 @@ void params_save()
 //载入参数
 void params_load()
 {
-	FILE* fp = fopen(QUAD_PMS_FILE, "rb");
+	s8 quad_home[MAX_PATH_NAME];
+	char* v = getenv("QUAD_HOME");
+	memcpy(quad_home, v, strlen(v) + 1);
+	s8 path[MAX_PATH_NAME];
+	snprintf(path, MAX_PATH_NAME, "%s/" QUAD_PMS_FILE, quad_home);
+
+	FILE* fp = fopen(path, "rb");
 	if (fp == NULL)
 	{
 		printf("load params error!\n");
