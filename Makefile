@@ -22,10 +22,10 @@ MAX_SPEED_RUN_MIN	= (0)
 ENG_TIMER 			= (10)
 #文件名及路径最大长度
 MAX_PATH_NAME		= (0x200)
-#重力读取
-MAX_ACC				= (32.0)
 #角度限幅
-MAX_PALSTANCE		= (30.0)
+MAX_PALSTANCE		= (45.0)
+#重力读数
+MAX_ACC				= (32.0)
 #i2c设备路径
 I2C_DEV 			= \"/dev/i2c-1\"
 #4个电机的GPIO引脚
