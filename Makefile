@@ -6,7 +6,11 @@
 
 #安装路径
 PATH_INSTALL		= /home/lidq/work/quadcopter
-#如需要I型，需要将其修改为 _FLY_MODE_I_
+
+################################################################################
+
+#X型 _FLY_MODE_X_ 
+#I型 _FLY_MODE_I_
 FLY_MODE			= _FLY_MODE_X_
 #保护最低速度
 PROCTED_SPEED		= (100)
@@ -22,7 +26,28 @@ MAX_PATH_NAME		= (0x200)
 MAX_ACC				= (32.0)
 #角度限幅
 MAX_PALSTANCE		= (30.0)
+#i2c设备路径
+I2C_DEV 			= \"/dev/i2c-1\"
+#4个电机的GPIO引脚
+PORT_MOTOR0			= (27)
+PORT_MOTOR1			= (26)
+PORT_MOTOR2			= (28)
+PORT_MOTOR3			= (25)
+#摇控器接收机的6个通道引脚
+#俯仰
+GPIO_FB				= (2)
+#横滚
+GPIO_LR				= (12)
+#油门
+GPIO_PW				= (3)
+#预留
+GPIO_MD				= (0)
+#预留
+GPIO_UD				= (13)
+#俯仰横滚灵敏度
+GPIO_DI				= (14)
 
+###############################################################################
 
 #工程
 MOD_PROJECT			= quadcopter
@@ -66,7 +91,17 @@ defconfig:
 	echo "#define MAX_PATH_NAME	$(MAX_PATH_NAME)" >> include/defconfig.h
 	echo "#define MAX_ACC	$(MAX_ACC)" >> include/defconfig.h
 	echo "#define MAX_PALSTANCE	$(MAX_PALSTANCE)" >> include/defconfig.h
-	
+	echo "#define I2C_DEV	$(I2C_DEV)" >> include/defconfig.h
+	echo "#define PORT_MOTOR0	$(PORT_MOTOR0)" >> include/defconfig.h
+	echo "#define PORT_MOTOR1	$(PORT_MOTOR1)" >> include/defconfig.h
+	echo "#define PORT_MOTOR2	$(PORT_MOTOR2)" >> include/defconfig.h
+	echo "#define PORT_MOTOR3	$(PORT_MOTOR3)" >> include/defconfig.h
+	echo "#define GPIO_FB	$(GPIO_FB)" >> include/defconfig.h
+	echo "#define GPIO_LR	$(GPIO_LR)" >> include/defconfig.h
+	echo "#define GPIO_PW	$(GPIO_PW)" >> include/defconfig.h
+	echo "#define GPIO_MD	$(GPIO_MD)" >> include/defconfig.h
+	echo "#define GPIO_UD	$(GPIO_UD)" >> include/defconfig.h
+	echo "#define GPIO_DI	$(GPIO_DI)" >> include/defconfig.h
 	
 need_wiringpi:
 	echo "#ifndef _DEFCONFIG_H_" > include/defconfig.h

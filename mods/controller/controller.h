@@ -10,14 +10,6 @@
 
 #include <typedef.h>
 
-//摇控器接收机的6个通道引脚
-#define GPIO_FB (2)
-#define GPIO_LR (12)
-#define GPIO_PW (3)
-#define GPIO_MD (0)
-#define GPIO_UD (13)
-#define GPIO_DI (14)
-
 //摇控器接收机的4个通道读数范围
 #define CTL_PWM_MIN (980)
 #define CTL_PWM_MAX (2020)
@@ -25,7 +17,7 @@
 #define CTL_DI_MIN (1000)
 #define CTL_DI_MAX (2000)
 //最大倾斜角
-#define MAX_ANGLE (30)
+#define MAX_ANGLE	MAX_PALSTANCE
 
 typedef struct
 {

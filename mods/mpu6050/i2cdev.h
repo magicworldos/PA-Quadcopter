@@ -3,8 +3,6 @@
 
 #include <typedef.h>
 
-#define I2C_DEV "/dev/i2c-1"
-
 /** Read a single bit from an 8-bit device register.
  * @param devAddr I2C slave device address
  * @param regAddr Register regAddr to read from

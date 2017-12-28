@@ -14,12 +14,6 @@
 //电机数量
 #define MOTOR_COUNT (4)
 
-// 4个电机的GPIO引脚
-#define PORT_MOTOR0 (27)
-#define PORT_MOTOR1 (26)
-#define PORT_MOTOR2 (28)
-#define PORT_MOTOR3 (25)
-
 // PWM信号时长
 #define TIME_PWM_WIDTH (2000)
 //电调起始时长
