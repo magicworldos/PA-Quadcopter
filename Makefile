@@ -73,6 +73,8 @@ MOD_INCLUDE			= -Iinclude
 #编译选项
 C_FLAGS				= -pthread -lm -ldl -lwiringPi -std=gnu11
 
+all: default
+
 default: pi
 
 pi:	need_wiringpi $(MOD_MKDIR)	$(MOD_PROJECT)	$(MOD_MODULES)
@@ -163,6 +165,7 @@ $(MOD_COMMAND):
 	
 $(MOD_IO_STM32):
 	cd mods/io_stm32/		&& make
+	cd io/stm32/			&& make
 
 $(MOD_MKDIR):
 	mkdir -p $(RELEASE_PATH)/bin/ lib/
