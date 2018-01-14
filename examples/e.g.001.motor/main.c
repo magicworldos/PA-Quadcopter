@@ -23,7 +23,7 @@ void set_speed()
 {
 	while (run)
 	{
-		printf("SPEED = %d, Enter new speed:\n", speed);
+		printf("SPEED = %4d, Enter new speed:\n", speed);
 		int tmp = 0;
 		scanf("%d", &tmp);
 		if (tmp >= 0 && tmp <= 1000)
@@ -31,6 +31,8 @@ void set_speed()
 			speed = tmp;
 			continue;
 		}
+		speed = 0;
+		usleep(10 * 1000);
 		run = 0;
 	}
 }
