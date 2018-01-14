@@ -1,4 +1,5 @@
 all:
+	mkdir -p release
 	gcc -o ./release/example -lpthread -lwiringPi -std=gnu11 main.c
 
 clean:
