@@ -12,7 +12,9 @@ fi
 echo "[Install] "$path_install
 
 mkdir -p $path_install/
+rm -rvf $path_install/*
 mkdir -p $path_install/bin
+mkdir -p $path_install/log
 mkdir -p $path_install/lib
 mkdir -p $path_install/params
 

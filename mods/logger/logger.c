@@ -36,7 +36,7 @@ s32 __init(s_engine* engine, s_params* params)
 	time(&now);
 	timenow = localtime(&now);
 	s8 logname[MAX_PATH_NAME];
-	snprintf(logname, MAX_PATH_NAME, "%s/%04d-%02d-%02d_%02d-%02d-%02d.csv", quad_home, timenow->tm_year + 1900, timenow->tm_mon + 1, timenow->tm_mday, timenow->tm_hour, timenow->tm_min, timenow->tm_sec);
+	snprintf(logname, MAX_PATH_NAME, "%s/log/%04d-%02d-%02d_%02d-%02d-%02d.csv", quad_home, timenow->tm_year + 1900, timenow->tm_mon + 1, timenow->tm_mday, timenow->tm_hour, timenow->tm_min, timenow->tm_sec);
 	buff = malloc(BUFF_SIZE);
 	if (buff == NULL)
 	{
