@@ -61,6 +61,7 @@ MOD_MPU6050			= mpu6050
 MOD_HCSR04			= hcsr04
 MOD_FHEIGHT			= fheight
 MOD_DISPLAY			= display
+MOD_LOGGER			= logger
 MOD_COMMAND			= command
 MOD_IO_STM32		= io_stm32
 
@@ -134,10 +135,10 @@ $(MOD_PROJECT):
 	util/list.c
 	
 #default option
-$(MOD_MODULES):	$(MOD_PARAMSCTL)	$(MOD_MOTOR)	$(MOD_CONTROLLER)	$(MOD_MPU6050)		$(MOD_DISPLAY)
+$(MOD_MODULES):	$(MOD_PARAMSCTL)	$(MOD_MOTOR)	$(MOD_CONTROLLER)	$(MOD_MPU6050)		$(MOD_DISPLAY)	$(MOD_LOGGER)
 
 #io use stm32
-$(MOD_MODULES_IO):	$(MOD_PARAMSCTL)	$(MOD_IO_STM32)	$(MOD_MPU6050)		$(MOD_DISPLAY)
+$(MOD_MODULES_IO):	$(MOD_PARAMSCTL)	$(MOD_IO_STM32)	$(MOD_MPU6050)		$(MOD_DISPLAY)	$(MOD_LOGGER)
 
 $(MOD_MOTOR):
 	cd mods/motor/			&& make
@@ -159,6 +160,9 @@ $(MOD_FHEIGHT):
 
 $(MOD_DISPLAY):
 	cd mods/display/		&& make
+	
+$(MOD_LOGGER):
+	cd mods/logger/			&& make
 
 $(MOD_COMMAND):
 	cd mods/command/		&& make
