@@ -91,6 +91,8 @@ typedef struct
 
 	//引擎速度
 	f32 v;
+	//角度补偿
+	f32 v_angle;
 	//垂直方向重力加速度对油门速度补偿
 	f32 vz;
 	f32 vz_devi;

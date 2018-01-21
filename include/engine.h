@@ -46,9 +46,6 @@ void engine_reset(s_engine* e);
 //陀螺仪补偿
 void engine_set_dxy();
 
-//绝对值
-f32 engine_abs(f32 v);
-
 //电机锁定解锁处理
 void engine_lock();
 

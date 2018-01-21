@@ -14,7 +14,7 @@
 #define BUFF_SIZE								(32)
 #define LIMIT_MAX								(2000)
 #define LIMIT_MIN								(0)
-#define PWM_ERR_MAX								(100)
+#define PWM_ERR_MAX								(10)
 
 #define	RC_POS_START1                         	0
 #define	RC_POS_START2	                      	1

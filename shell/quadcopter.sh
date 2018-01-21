@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# quadcopter.sh
+# /home/pi/work/quadcopter/bin/quadcopter.sh
 #
 #  Created on: May 24, 2016
 #
@@ -8,6 +8,9 @@
 # /etc/init.d/
 # sudo update-rc.d quadcopter defaults
 # sudo update-rc.d -f quadcopter remove
+
+export QUAD_HOME=/home/pi/work/quadcopter
+export PATH=$QUAD_HOME/bin:$PATH
 
 case $1 in
 	start)

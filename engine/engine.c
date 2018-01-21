@@ -176,6 +176,13 @@ void engine_fly()
 		yv_last = yv_et;
 		zv_last = zv_et;
 
+		float angle = (fabs(e->x + e->dx) + fabs(e->y + e->dy)) * 0.5;
+		if (angle > MAX_PALSTANCE)
+		{
+			angle = MAX_PALSTANCE;
+		}
+		e->v_angle = e->v / cos(angle) - e->v;
+
 //		e->vz += (e->az + e->daz);
 //		//垂直方向速度PID补偿油门
 //		e->vz_devi = engine_vz_pid(e->vz, vz_et, NULL);
@@ -402,6 +409,7 @@ void engine_reset(s_engine* e)
 	e->tgz = 0;
 	//重置速度速度置为0
 	e->v = 0;
+	e->v_angle = 0;
 	e->vz = 0;
 	e->vz_devi = 0;
 	// XYZ角速度补偿
@@ -436,24 +444,14 @@ void engine_set_dxy()
 	//静止时垂直重力加速度
 	e->daz = -e->az;
 
-	if (engine_abs(e->ax) < MAX_ACC)
+	if (fabs(e->ax) < MAX_ACC)
 	{
 		e->dax = asin(e->ax / MAX_ACC);
 	}
-	if (engine_abs(e->ay) < MAX_ACC)
+	if (fabs(e->ay) < MAX_ACC)
 	{
 		e->day = asin(e->ay / MAX_ACC);
 	}
-}
-
-//绝对值
-f32 engine_abs(f32 v)
-{
-	if (v < 0)
-	{
-		return -v;
-	}
-	return v;
 }
 
 //系统信号处理

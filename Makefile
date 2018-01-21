@@ -5,7 +5,7 @@
 # 四轴飞行控制器  Copyright (C) 2016  李德强
 
 #安装路径
-PATH_INSTALL		= /home/lidq/work/quadcopter
+PATH_INSTALL		= /home/pi/work/quadcopter
 
 ################################################################################
 
@@ -23,7 +23,7 @@ ENG_TIMER 			= (10)
 #文件名及路径最大长度
 MAX_PATH_NAME		= (0x200)
 #角度限幅
-MAX_PALSTANCE		= (45.0)
+MAX_PALSTANCE		= (60.0)
 #重力读数
 MAX_ACC				= (32.0)
 #i2c设备路径
@@ -50,20 +50,21 @@ GPIO_DI				= (14)
 ###############################################################################
 
 #工程
-MOD_PROJECT			= quadcopter
+MOD_PROJECT				= quadcopter
 #模块动态链接库
-MOD_MODULES			= modlibs
-MOD_MODULES_IO		= mode_io
-MOD_MOTOR			= motor
-MOD_PARAMSCTL		= paramsctl
-MOD_CONTROLLER		= controller
-MOD_MPU6050			= mpu6050
-MOD_HCSR04			= hcsr04
-MOD_FHEIGHT			= fheight
-MOD_DISPLAY			= display
-MOD_LOGGER			= logger
-MOD_COMMAND			= command
-MOD_IO_STM32		= io_stm32
+MOD_MODULES				= modlibs
+MOD_MODULES_IO			= mode_io
+MOD_MOTOR				= motor
+MOD_PARAMSCTL			= paramsctl
+MOD_CONTROLLER			= controller
+MOD_MPU6050				= mpu6050
+MOD_HCSR04				= hcsr04
+MOD_FHEIGHT				= fheight
+MOD_DISPLAY				= display
+MOD_LOGGER				= logger
+MOD_COMMAND				= command
+MOD_IO					= modio
+MOD_STM32				= stm32
 
 #编译目录
 MOD_MKDIR			= mkdir
@@ -138,7 +139,8 @@ $(MOD_PROJECT):
 $(MOD_MODULES):	$(MOD_PARAMSCTL)	$(MOD_MOTOR)	$(MOD_CONTROLLER)	$(MOD_MPU6050)		$(MOD_DISPLAY)	$(MOD_LOGGER)
 
 #io use stm32
-$(MOD_MODULES_IO):	$(MOD_PARAMSCTL)	$(MOD_IO_STM32)	$(MOD_MPU6050)		$(MOD_DISPLAY)	$(MOD_LOGGER)
+$(MOD_MODULES_IO):	$(MOD_PARAMSCTL)	$(MOD_IO) 	$(MOD_MPU6050)		$(MOD_DISPLAY)	$(MOD_LOGGER)
+
 
 $(MOD_MOTOR):
 	cd mods/motor/			&& make
@@ -166,9 +168,11 @@ $(MOD_LOGGER):
 
 $(MOD_COMMAND):
 	cd mods/command/		&& make
-	
-$(MOD_IO_STM32):
+
+$(MOD_IO):
 	cd mods/io_stm32/		&& make
+
+$(MOD_STM32):
 	cd io/stm32/			&& make
 
 $(MOD_MKDIR):

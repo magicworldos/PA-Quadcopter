@@ -30,6 +30,6 @@ echo "export PATH=\$QUAD_HOME/bin:\$PATH" >> ~/.bash_profile
 #echo "export PATH=\$QUAD_HOME/bin:\$PATH" >> /etc/profile
 
 echo "Install finished."
-echo "Please execute \"source /.bash_profile\" or reboot your computer."
+echo "Please execute \"source ~/.bash_profile\" or reboot your computer."
 
 exit 0

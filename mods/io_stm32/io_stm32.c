@@ -183,7 +183,11 @@ void io_rc_data()
 			controller_mod0_pwm(rc_data[5]);
 			controller_mod1_pwm(rc_data[1]);
 		}
-		if (rc_error_count++ > PWM_ERR_MAX)
+		if (rc_error_count < 2 * PWM_ERR_MAX)
+		{
+			rc_error_count++;
+		}
+		if (rc_error_count > PWM_ERR_MAX)
 		{
 			memset(rc_data, 0, sizeof(u16) * RCCH_COUNT);
 			controller_pitch_pwm(rc_data[4]);
@@ -488,6 +492,7 @@ void controller_power_pwm(s32 pw)
 	if (pw < PROCTED_SPEED)
 	{
 		e->ctl_pw = 0;
+		e->v = 0;
 		return;
 	}
 	if (pw > CTL_PWM_MAX)
@@ -496,7 +501,7 @@ void controller_power_pwm(s32 pw)
 	}
 	if (p->ctl_pw_zero < CTL_PWM_MIN || p->ctl_pw_zero > CTL_PWM_MAX)
 	{
-		p->ctl_pw_zero = 1100;
+		p->ctl_pw_zero = 1000;
 	}
 	e->ctl_pw = pw;
 	//读入速度
