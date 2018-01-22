@@ -70,6 +70,10 @@ s32 __init(s_engine* engine, s_params* params)
 s32 __destory(s_engine* e, s_params* p)
 {
 	r = 0;
+	//wake up the write pthread.
+	sem_post(&sem_write_file);
+	usleep(10 * 1000);
+
 	return 0;
 }
 
@@ -246,28 +250,6 @@ void logger_logging()
 	sem_post(&sem_write_buff);
 }
 
-void logger_writting()
-{
-	sem_wait(&sem_write_file);
-	sem_wait(&sem_write_buff);
-	s32 pos_w = brw.pos_w;
-	s32 pos_r = brw.pos_r;
-	s32 rw_size = brw.rw_size;
-	brw.pos_r = brw.pos_w;
-	brw.rw_size = 0;
-	sem_post(&sem_write_buff);
-
-	if (pos_r < pos_w)
-	{
-		fwrite(brw.buff + pos_r, sizeof(u8), pos_w - pos_r, fp);
-	}
-	else if (pos_r > pos_w)
-	{
-		fwrite(brw.buff + pos_r, sizeof(u8), brw.buff_size - pos_r, fp);
-		fwrite(brw.buff, sizeof(u8), pos_w, fp);
-	}
-}
-
 void logger_run()
 {
 	while (r)
@@ -301,7 +283,28 @@ void logger_write()
 {
 	while (r)
 	{
-		logger_writting();
+		sem_wait(&sem_write_file);
+		if (!r)
+		{
+			break;
+		}
+		sem_wait(&sem_write_buff);
+		s32 pos_w = brw.pos_w;
+		s32 pos_r = brw.pos_r;
+		s32 rw_size = brw.rw_size;
+		brw.pos_r = brw.pos_w;
+		brw.rw_size = 0;
+		sem_post(&sem_write_buff);
+
+		if (pos_r < pos_w)
+		{
+			fwrite(brw.buff + pos_r, sizeof(u8), pos_w - pos_r, fp);
+		}
+		else if (pos_r > pos_w)
+		{
+			fwrite(brw.buff + pos_r, sizeof(u8), brw.buff_size - pos_r, fp);
+			fwrite(brw.buff, sizeof(u8), pos_w, fp);
+		}
 	}
 	s1 = 0;
 }
