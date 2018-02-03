@@ -199,16 +199,17 @@ void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz
 		mpu6050_dmpGetAccel(&aa, fifoBuffer);
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetLinearAccel(&aaReal, &aa, &gravity);
-		*ax = (float) aaReal.x / 163.84;
-		*ay = (float) aaReal.y / 163.84;
-		*az = (float) aaReal.z / 163.84;
+//		*ax = (float) aaReal.x / 163.84;
+//		*ay = (float) aaReal.y / 163.84;
+//		*az = (float) aaReal.z / 163.84;
+
 		//az_est = kalman_filter(az_est, az_est_devi, (float) aaReal.y / 163.84, az_measure_devi, &az_devi);
 		//*az = az_est;
 
-		//		mpu6050_dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-		//		*ax = (float) aaWorld.x / 16384.0;
-		//		*ay = (float) aaWorld.y / 16384.0;
-		//		*az = (float) aaWorld.z / 16384.0;
+		mpu6050_dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
+		*ax = (float) aaWorld.x / 16384.0;
+		*ay = (float) aaWorld.y / 16384.0;
+		*az = (float) aaWorld.z / 16384.0;
 
 		mpu6050_getRotation(&ggx, &ggy, &ggz);
 		f32 _gx = (float) (ggx) / 131.0;
