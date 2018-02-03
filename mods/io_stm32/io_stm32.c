@@ -127,18 +127,18 @@ void io_pwm_data()
 
 #ifdef _FLY_MODE_I_
 		//四轴平衡补偿I型
-		speed[0] = (int)(e->v - e->vz_devi + e->xv_devi - e->zv_devi);
-		speed[1] = (int)(e->v - e->vz_devi + e->yv_devi + e->zv_devi);
-		speed[2] = (int)(e->v - e->vz_devi - e->xv_devi - e->zv_devi);
-		speed[3] = (int)(e->v - e->vz_devi - e->yv_devi + e->zv_devi);
+		speed[0] = (int)(e->v + e->xv_devi - e->zv_devi);
+		speed[1] = (int)(e->v + e->yv_devi + e->zv_devi);
+		speed[2] = (int)(e->v - e->xv_devi - e->zv_devi);
+		speed[3] = (int)(e->v - e->yv_devi + e->zv_devi);
 #endif
 
 #ifdef _FLY_MODE_X_
 		//四轴平衡补偿X型
-		speed[0] = (int) (e->v - e->vz_devi + (e->xv_devi / 2) - (e->yv_devi / 2) - e->zv_devi);
-		speed[1] = (int) (e->v - e->vz_devi + (e->xv_devi / 2) + (e->yv_devi / 2) + e->zv_devi);
-		speed[2] = (int) (e->v - e->vz_devi - (e->xv_devi / 2) + (e->yv_devi / 2) - e->zv_devi);
-		speed[3] = (int) (e->v - e->vz_devi - (e->xv_devi / 2) - (e->yv_devi / 2) + e->zv_devi);
+		speed[0] = (int) (e->v + (e->xv_devi / 2) - (e->yv_devi / 2) - e->zv_devi);
+		speed[1] = (int) (e->v + (e->xv_devi / 2) + (e->yv_devi / 2) + e->zv_devi);
+		speed[2] = (int) (e->v - (e->xv_devi / 2) + (e->yv_devi / 2) - e->zv_devi);
+		speed[3] = (int) (e->v - (e->xv_devi / 2) - (e->yv_devi / 2) + e->zv_devi);
 #endif
 
 		//对电机限幅
