@@ -28,9 +28,9 @@ s8 quad_home[MAX_PATH_NAME];
 
 f32 xyz_a_est_devi = 0.05;
 f32 xyz_a_measure_devi = 0.02;
-f32 ax_est = 0.0, ax_devi = 0.0;
-f32 ay_est = 0.0, ay_devi = 0.0;
-f32 az_est = 0.0, az_devi = 0.0;
+f32 ax_devi = 0.0;
+f32 ay_devi = 0.0;
+f32 az_devi = 0.0;
 
 //启动引擎
 void engine_start(s32 argc, char* argv[])
@@ -187,9 +187,9 @@ void engine_fly()
 		{
 			angle = MAX_PALSTANCE;
 		}
-		ax_est = engine_kalman_filter(ax_est, xyz_a_est_devi, e->ax, xyz_a_measure_devi, &ax_devi);
-		ay_est = engine_kalman_filter(ay_est, xyz_a_est_devi, e->ay, xyz_a_measure_devi, &ay_devi);
-		az_est = engine_kalman_filter(az_est, xyz_a_est_devi, e->az, xyz_a_measure_devi, &az_devi);
+		e->axt = engine_kalman_filter(e->axt, xyz_a_est_devi, e->ax, xyz_a_measure_devi, &ax_devi);
+		e->ayt = engine_kalman_filter(e->ayt, xyz_a_est_devi, e->ay, xyz_a_measure_devi, &ay_devi);
+		e->azt = engine_kalman_filter(e->azt, xyz_a_est_devi, e->az, xyz_a_measure_devi, &az_devi);
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
