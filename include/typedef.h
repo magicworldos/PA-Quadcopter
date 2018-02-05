@@ -88,14 +88,15 @@ typedef struct
 	f32 ax;
 	f32 ay;
 	f32 az;
+	f32 axt;
+	f32 ayt;
+	f32 azt;
+	f32 vx;
+	f32 vy;
+	f32 vz;
 
 	//引擎速度
 	f32 v;
-	//角度补偿
-	f32 v_angle;
-	//垂直方向重力加速度对油门速度补偿
-	f32 vz;
-	f32 vz_devi;
 
 	// XYZ角速度补偿
 	f32 xv_devi;

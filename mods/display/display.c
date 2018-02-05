@@ -96,13 +96,9 @@ void display_run()
 		}
 		if (display_get_onoff(9))
 		{
-			printf("[vz: %+5.2f]", e->vz);
+			printf("[v: %+7.3f %+7.3f %+7.3f]", e->vx, e->vy, e->vz);
 		}
 		if (display_get_onoff(10))
-		{
-			printf("[vz_devi: %+5.2f]", e->vz_devi);
-		}
-		if (display_get_onoff(11))
 		{
 			printf("[vzpid: %+5.2f %+5.2f %+5.2f]", p->vz_kp, p->vz_ki, p->vz_kd);
 		}

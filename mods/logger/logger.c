@@ -123,6 +123,12 @@ void logger_start()
 	count = snprintf(brw.data, WRITE_SIZE, ",E_AX,E_AY,E_AZ");
 	fwrite(brw.data, sizeof(u8), count, fp);
 
+	count = snprintf(brw.data, WRITE_SIZE, ",E_AXT,E_AYT,E_AZT");
+	fwrite(brw.data, sizeof(u8), count, fp);
+
+	count = snprintf(brw.data, WRITE_SIZE, ",E_VX,E_VY,E_VZ");
+	fwrite(brw.data, sizeof(u8), count, fp);
+
 	count = snprintf(brw.data, WRITE_SIZE, ",E_V");
 	fwrite(brw.data, sizeof(u8), count, fp);
 
@@ -211,6 +217,12 @@ void logger_logging()
 	logger_write_data(count);
 
 	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->ax, e->ay, e->az);
+	logger_write_data(count);
+
+	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->axt, e->ayt, e->azt);
+	logger_write_data(count);
+
+	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->vx, e->vy, e->vz);
 	logger_write_data(count);
 
 	count = snprintf(brw.data, WRITE_SIZE, ",%f", e->v);

@@ -26,6 +26,12 @@ pthread_t pthd;
 //环境变量，安装位置
 s8 quad_home[MAX_PATH_NAME];
 
+f32 xyz_a_est_devi = 0.05;
+f32 xyz_a_measure_devi = 0.02;
+f32 ax_devi = 0.0;
+f32 ay_devi = 0.0;
+f32 az_devi = 0.0;
+
 //启动引擎
 void engine_start(s32 argc, char* argv[])
 {
@@ -181,12 +187,9 @@ void engine_fly()
 		{
 			angle = MAX_PALSTANCE;
 		}
-		e->v_angle = e->v / cos(angle) - e->v;
-
-//		e->vz += (e->az + e->daz);
-//		//垂直方向速度PID补偿油门
-//		e->vz_devi = engine_vz_pid(e->vz, vz_et, NULL);
-//		vz_et = e->vz;
+		e->axt = engine_kalman_filter(e->axt, xyz_a_est_devi, e->ax, xyz_a_measure_devi, &ax_devi);
+		e->ayt = engine_kalman_filter(e->ayt, xyz_a_est_devi, e->ay, xyz_a_measure_devi, &ay_devi);
+		e->azt = engine_kalman_filter(e->azt, xyz_a_est_devi, e->az, xyz_a_measure_devi, &az_devi);
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -392,6 +395,12 @@ void engine_reset(s_engine* e)
 	e->ax = 0;
 	e->ay = 0;
 	e->az = 0;
+	e->axt = 0;
+	e->ayt = 0;
+	e->azt = 0;
+	e->vx = 0;
+	e->vy = 0;
+	e->vz = 0;
 	//摇控器飞行移动倾斜角
 	e->ctlmx = 0;
 	e->ctlmy = 0;
@@ -409,9 +418,6 @@ void engine_reset(s_engine* e)
 	e->tgz = 0;
 	//重置速度速度置为0
 	e->v = 0;
-	e->v_angle = 0;
-	e->vz = 0;
-	e->vz_devi = 0;
 	// XYZ角速度补偿
 	e->xv_devi = 0;
 	e->yv_devi = 0;
