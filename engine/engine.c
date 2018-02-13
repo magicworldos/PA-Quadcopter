@@ -149,7 +149,7 @@ void engine_fly()
 		//实际欧拉角
 		e->tx = e->x + e->dx + e->dax + e->ctlmx;
 		e->ty = e->y + e->dy + e->day + e->ctlmy;
-		e->tz = e->z + e->dz;
+		e->tz = e->z + e->dz + e->ctlmz;
 
 		//当前实际角速度
 		e->tgx = e->gx + e->dgx;

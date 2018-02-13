@@ -68,6 +68,7 @@ typedef struct
 	//摇控器移动倾角
 	f32 ctlmx;
 	f32 ctlmy;
+	f32 ctlmz;
 
 	// XYZ轴旋转角速度
 	f32 gx;

@@ -70,6 +70,14 @@ s32 __init(s_engine* engine, s_params* params)
 s32 __destory(s_engine* e, s_params* p)
 {
 	r = 0;
+	if (brw.buff != NULL)
+	{
+		free(brw.buff);
+	}
+	if (brw.data != NULL)
+	{
+		free(brw.data);
+	}
 	//wake up the write pthread.
 	sem_post(&sem_write_file);
 	usleep(10 * 1000);
@@ -165,14 +173,6 @@ void logger_stop()
 	if (fp != NULL)
 	{
 		fclose(fp);
-	}
-	if (brw.buff != NULL)
-	{
-		free(brw.buff);
-	}
-	if (brw.data != NULL)
-	{
-		free(brw.data);
 	}
 }
 

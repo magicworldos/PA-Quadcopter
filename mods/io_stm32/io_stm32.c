@@ -177,11 +177,16 @@ void io_rc_data()
 			rc_error_count = 0;
 			memcpy(rc_data, &_buff[RC_POS_DATA], sizeof(u16) * RCCH_COUNT);
 			controller_pitch_pwm(rc_data[4]);
-			controller_roll_pwm(rc_data[2]);
+			controller_roll_pwm(rc_data[5]);
 			controller_power_pwm(rc_data[3]);
 			controller_pro_pwm(rc_data[0]);
-			controller_mod0_pwm(rc_data[5]);
+			controller_mod0_pwm(rc_data[2]);
 			controller_mod1_pwm(rc_data[1]);
+			//for (int i = 0; i < RCCH_COUNT; i++)
+			//{
+			//	printf("%4d ", rc_data[i]);
+			//}
+			//printf("\n");
 		}
 		if (rc_error_count < 2 * PWM_ERR_MAX)
 		{
@@ -191,10 +196,10 @@ void io_rc_data()
 		{
 			memset(rc_data, 0, sizeof(u16) * RCCH_COUNT);
 			controller_pitch_pwm(rc_data[4]);
-			controller_roll_pwm(rc_data[2]);
+			controller_roll_pwm(rc_data[5]);
 			controller_power_pwm(rc_data[3]);
 			controller_pro_pwm(rc_data[0]);
-			controller_mod0_pwm(rc_data[5]);
+			controller_mod0_pwm(rc_data[2]);
 			controller_mod1_pwm(rc_data[1]);
 		}
 		usleep(ENG_TIMER * 1000);
@@ -426,13 +431,14 @@ int set_opt(int fd, int nSpeed, int nBits, char nEvent, int nStop)
 //读入摇控器“前/后”的PWM信号
 void controller_pitch_pwm(s32 fb)
 {
-	if (fb < PROCTED_SPEED)
-	{
-		e->ctl_fb = 0;
-		return;
-	}
+	//if (fb < PROCTED_SPEED)
+	//{
+	//	e->ctl_fb = 0;
+	//	return;
+	//}
 	if (fb < CTL_PWM_MIN || fb > CTL_PWM_MAX)
 	{
+		e->ctl_fb = 1500;
 		return;
 	}
 	if (p->ctl_fb_zero < CTL_PWM_MIN || p->ctl_fb_zero > CTL_PWM_MAX)
@@ -534,32 +540,22 @@ void controller_power_pwm(s32 pw)
 //读入摇控器第4通道PWM信号
 void controller_mod0_pwm(s32 md)
 {
-	if (md < PROCTED_SPEED)
-	{
-		e->ctl_md = 0;
-		return;
-	}
 	if (md < CTL_PWM_MIN || md > CTL_PWM_MAX)
 	{
+		e->ctl_md = 1500;
 		return;
 	}
 	if (p->ctl_md_zero < CTL_PWM_MIN || p->ctl_md_zero > CTL_PWM_MAX)
 	{
-		p->ctl_md_zero = 2000;
+		p->ctl_md_zero = 1500;
 	}
 	e->ctl_md = md;
-
-	//读入读数
-	f32 val = (float) (md - p->ctl_md_zero);
-	if (abs(val) < 500)
+	float z = ((float) (e->ctl_md - p->ctl_md_zero)) / 30000.0;
+	if (fabs(z) > 0.0005)
 	{
-		//手动模式
-		//e->mode = MODE_MANUAL;
-		return;
+		e->ctlmz += z;
 	}
 
-	//自动模式
-	//e->mode = MODE_AUTO;
 }
 
 //读入摇控器第5通道PWM信号

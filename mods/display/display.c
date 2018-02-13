@@ -72,7 +72,7 @@ void display_run()
 		}
 		if (display_get_onoff(2))
 		{
-			printf("[ctlxy: %+7.3f %+7.3f]", e->ctlmx, e->ctlmy);
+			printf("[ctlxy: %+7.3f %+7.3f %+7.3f]", e->ctlmx, e->ctlmy, e->ctlmz);
 		}
 		if (display_get_onoff(3))
 		{
@@ -101,6 +101,10 @@ void display_run()
 		if (display_get_onoff(10))
 		{
 			printf("[vzpid: %+5.2f %+5.2f %+5.2f]", p->vz_kp, p->vz_ki, p->vz_kd);
+		}
+		if (display_get_onoff(11))
+		{
+			printf("[ctl value: %4d %4d %4d %4d %4d %4d]", e->ctl_fb, e->ctl_lr, e->ctl_pw, e->ctl_md, e->ctl_ud, e->ctl_di);
 		}
 
 		printf("\n");

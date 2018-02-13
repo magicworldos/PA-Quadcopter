@@ -23,8 +23,8 @@ all: ctags mkdir src linux
 
 .PHONY: ctags mkdir src linux clean
 
-ctags:
-	ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+#ctags:
+#	ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
 	
 mkdir:
 	mkdir -p $(PATH_TARGET)

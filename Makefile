@@ -5,7 +5,7 @@
 # 四轴飞行控制器  Copyright (C) 2016  李德强
 
 #安装路径
-PATH_INSTALL		= /home/lidq/work/quadcopter
+PATH_INSTALL		= /home/pi/work/quadcopter
 
 ################################################################################
 
