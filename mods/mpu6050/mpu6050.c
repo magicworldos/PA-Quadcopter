@@ -144,8 +144,14 @@ void mpu6050_setup()
 	}
 }
 
+u32 i = 0;
+
 void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz, float* ax, float* ay, float* az)
 {
+	if (e->v < PROCTED_SPEED && i++ % 100 == 0)
+	{
+		mpu6050_resetFIFO();
+	}
 	// if programming failed, don't try to do anything
 	if (!dmpReady)
 	{

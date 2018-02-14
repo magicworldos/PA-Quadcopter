@@ -68,7 +68,8 @@ void display_run()
 		}
 		if (display_get_onoff(1))
 		{
-			printf("[xyz: %+7.3f %+7.3f %+7.3f]", e->tx, e->ty, e->tz);
+			printf("[xyz: %+7.3f %+7.3f %+7.3f]", e->x, e->y, e->z);
+			printf("[dxyz: %+7.3f %+7.3f %+7.3f]", e->dx, e->dy, e->dz);
 		}
 		if (display_get_onoff(2))
 		{
