@@ -177,10 +177,10 @@ void io_rc_data()
 			rc_error_count = 0;
 			memcpy(rc_data, &_buff[RC_POS_DATA], sizeof(u16) * RCCH_COUNT);
 			controller_pitch_pwm(rc_data[4]);
-			controller_roll_pwm(rc_data[5]);
+			controller_roll_pwm(rc_data[2]);
 			controller_power_pwm(rc_data[3]);
 			controller_pro_pwm(rc_data[0]);
-			controller_mod0_pwm(rc_data[2]);
+			controller_mod0_pwm(rc_data[5]);
 			controller_mod1_pwm(rc_data[1]);
 			//for (int i = 0; i < RCCH_COUNT; i++)
 			//{
@@ -196,10 +196,10 @@ void io_rc_data()
 		{
 			memset(rc_data, 0, sizeof(u16) * RCCH_COUNT);
 			controller_pitch_pwm(rc_data[4]);
-			controller_roll_pwm(rc_data[5]);
+			controller_roll_pwm(rc_data[2]);
 			controller_power_pwm(rc_data[3]);
 			controller_pro_pwm(rc_data[0]);
-			controller_mod0_pwm(rc_data[2]);
+			controller_mod0_pwm(rc_data[5]);
 			controller_mod1_pwm(rc_data[1]);
 		}
 		usleep(ENG_TIMER * 1000);

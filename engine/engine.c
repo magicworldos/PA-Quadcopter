@@ -404,6 +404,7 @@ void engine_reset(s_engine* e)
 	//摇控器飞行移动倾斜角
 	e->ctlmx = 0;
 	e->ctlmy = 0;
+	e->ctlmz = 0;
 	//角速度
 	e->gx = 0;
 	e->gy = 0;
@@ -446,6 +447,10 @@ void engine_set_dxy()
 	e->dgx = -e->gx;
 	e->dgy = -e->gy;
 	e->dgz = -e->gz;
+
+	e->ctlmx = 0;
+	e->ctlmy = 0;
+	e->ctlmz = 0;
 
 	//静止时垂直重力加速度
 	e->daz = -e->az;
