@@ -119,7 +119,7 @@ void logger_start()
 	count = snprintf(brw.data, WRITE_SIZE, ",E_X,E_Y,E_Z");
 	fwrite(brw.data, sizeof(u8), count, fp);
 
-	count = snprintf(brw.data, WRITE_SIZE, ",E_CTLMX,E_CTLMY");
+	count = snprintf(brw.data, WRITE_SIZE, ",E_CTLMX,E_CTLMY,E_CTLMZ");
 	fwrite(brw.data, sizeof(u8), count, fp);
 
 	count = snprintf(brw.data, WRITE_SIZE, ",E_TGX,E_TGY,E_TGZ");
@@ -143,7 +143,7 @@ void logger_start()
 	count = snprintf(brw.data, WRITE_SIZE, ",E_XV_DEVI,E_YV_DEVI,E_ZV_DEVI");
 	fwrite(brw.data, sizeof(u8), count, fp);
 
-	count = snprintf(brw.data, WRITE_SIZE, ",E_CTL_FB,E->CTL_LR,E->CTL_PW,E->CTL_MD,E->CTL_UD,E->CTL_DI");
+	count = snprintf(brw.data, WRITE_SIZE, ",E_CTL_FB,E_CTL_LR,E_CTL_PW,E_CTL_MD,E_CTL_UD,E_CTL_DI");
 	fwrite(brw.data, sizeof(u8), count, fp);
 
 	count = snprintf(brw.data, WRITE_SIZE, ",E_LOCK_STATUS,E_MODE");
@@ -207,7 +207,7 @@ void logger_logging()
 	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->x, e->y, e->z);
 	logger_write_data(count);
 
-	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f", e->ctlmx, e->ctlmy);
+	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->ctlmx, e->ctlmy, e->ctlmz);
 	logger_write_data(count);
 
 	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->tgx, e->tgy, e->tgz);
