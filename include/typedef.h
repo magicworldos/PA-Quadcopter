@@ -38,8 +38,8 @@ typedef unsigned int u32;
 typedef float f32;
 typedef double f64;
 
-typedef signed long long s64;
-typedef unsigned long long u64;
+typedef signed long int s64;
+typedef unsigned long int u64;
 
 //引擎结构
 typedef struct
