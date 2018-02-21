@@ -23,6 +23,7 @@ s_buff_rw brw;
 s8 logging = 0;
 u64 logtime = 0;
 struct timeval timer;
+struct timeval timer_log;
 sem_t sem_write_buff;
 sem_t sem_write_file;
 
@@ -192,10 +193,8 @@ void logger_write_data(int count)
 void logger_logging()
 {
 	sem_wait(&sem_write_buff);
-	gettimeofday(&timer, NULL);
-	u64 t = timer.tv_sec * 1000000 + timer.tv_usec;
-
-	s32 count = snprintf(brw.data, WRITE_SIZE, "%u", t - logtime);
+	gettimeofday(&timer_log, NULL);
+	s32 count = snprintf(brw.data, WRITE_SIZE, "%u",(u64)(timer_log.tv_sec * 1000000 + timer_log.tv_usec) - logtime);
 	logger_write_data(count);
 
 	count = snprintf(brw.data, WRITE_SIZE, ",%d", e->lock);
