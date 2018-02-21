@@ -26,12 +26,6 @@ pthread_t pthd;
 //环境变量，安装位置
 s8 quad_home[MAX_PATH_NAME];
 
-f32 xyz_a_est_devi = 0.05;
-f32 xyz_a_measure_devi = 0.02;
-f32 ax_devi = 0.0;
-f32 ay_devi = 0.0;
-f32 az_devi = 0.0;
-
 //启动引擎
 void engine_start(s32 argc, char* argv[])
 {
@@ -181,15 +175,6 @@ void engine_fly()
 		xv_last = xv_et;
 		yv_last = yv_et;
 		zv_last = zv_et;
-
-		float angle = (fabs(e->x + e->dx) + fabs(e->y + e->dy)) * 0.5;
-		if (angle > MAX_PALSTANCE)
-		{
-			angle = MAX_PALSTANCE;
-		}
-		e->axt = engine_kalman_filter(e->axt, xyz_a_est_devi, e->ax, xyz_a_measure_devi, &ax_devi);
-		e->ayt = engine_kalman_filter(e->ayt, xyz_a_est_devi, e->ay, xyz_a_measure_devi, &ay_devi);
-		e->azt = engine_kalman_filter(e->azt, xyz_a_est_devi, e->az, xyz_a_measure_devi, &az_devi);
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -348,27 +333,6 @@ void engine_limit_pwm(float* v)
 	s_engine* e = &engine;
 	*v = *v > e->v ? e->v : *v;
 	*v = *v < -e->v ? -e->v : *v;
-}
-
-/***
- * est预估值
- * est_devi预估偏差
- * measure测量读数
- * measure_devi测量噪声
- * devi上一次最优偏差
- */
-f32 engine_kalman_filter(f32 est, f32 est_devi, f32 measure, f32 measure_devi, float* devi)
-{
-	//预估高斯噪声的偏差
-	f32 q = sqrt((*devi) * (*devi) + est_devi * est_devi);
-	//卡尔曼增益
-	f32 kg = q * q / (q * q + measure_devi * measure_devi);
-	//滤波结果
-	f32 val = est + kg * (measure - est);
-	//最优偏差
-	*devi = sqrt((1.0 - kg) * q * q);
-
-	return val;
 }
 
 //引擎重置

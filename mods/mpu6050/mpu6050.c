@@ -35,25 +35,12 @@ s32 r = 0;
 s32 cycle_z = 0;
 f32 last_z = 0;
 
-// xyz欧拉角噪声
-f32 xyz_est_devi = 0.02;
-f32 xyz_measure_devi = 0.05;
-//欧拉角卡尔曼滤波
-f32 x_est = 0.0, x_devi = 0.0;
-f32 y_est = 0.0, y_devi = 0.0;
-f32 z_est = 0.0, z_devi = 0.0;
-// xy轴角速度噪声
-f32 xyz_v_est_devi = 0.03;
-f32 xyz_v_measure_devi = 0.05;
-//角速度卡尔曼滤波
-f32 xv_est = 0.0, xv_devi = 0.0;
-f32 yv_est = 0.0, yv_devi = 0.0;
-f32 zv_est = 0.0, zv_devi = 0.0;
-
 //加速度滤波
-f32 az_est_devi = 0.2;
-f32 az_measure_devi = 0.5;
+f32 a_est_devi = 0.0028;
+f32 a_measure_devi = 0.09;
 //欧拉角卡尔曼滤波
+f32 ax_est = 0.0, ax_devi = 0.0;
+f32 ay_est = 0.0, ay_devi = 0.0;
 f32 az_est = 0.0, az_devi = 0.0;
 
 s32 __init(s_engine* engine, s_params* params)
@@ -150,7 +137,7 @@ void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz
 {
 	if (e->v < PROCTED_SPEED && i++ % 100 == 0)
 	{
-		mpu6050_resetFIFO();
+		//mpu6050_resetFIFO();
 	}
 	// if programming failed, don't try to do anything
 	if (!dmpReady)
@@ -178,14 +165,6 @@ void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetYawPitchRoll(ypr, &q, &gravity);
 
-		//		//卡尔曼滤波
-		//		x_est = kalman_filter(x_est, xyz_est_devi, ypr[2], xyz_measure_devi, &x_devi);
-		//		y_est = kalman_filter(y_est, xyz_est_devi, ypr[1], xyz_measure_devi, &y_devi);
-		//		z_est = kalman_filter(z_est, xyz_est_devi, ypr[0], xyz_measure_devi, &z_devi);
-		//		*x = x_est;
-		//		*y = y_est;
-		//		*z = z_est;
-
 		if (ypr[0] - last_z < -M_PI)
 		{
 			cycle_z++;
@@ -205,12 +184,16 @@ void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz
 		mpu6050_dmpGetAccel(&aa, fifoBuffer);
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetLinearAccel(&aaReal, &aa, &gravity);
-//		*ax = (float) aaReal.x / 163.84;
-//		*ay = (float) aaReal.y / 163.84;
-//		*az = (float) aaReal.z / 163.84;
 
-		//az_est = kalman_filter(az_est, az_est_devi, (float) aaReal.y / 163.84, az_measure_devi, &az_devi);
-		//*az = az_est;
+		*ax = (float) aaReal.x / 163.84;
+		*ay = (float) aaReal.y / 163.84;
+		*az = (float) aaReal.z / 163.84;
+
+		ax_est = kalman_filter(ax_est, a_est_devi, *ax, a_measure_devi, &ax_devi);
+		ay_est = kalman_filter(ay_est, a_est_devi, *ay, a_measure_devi, &ay_devi);
+		az_est = kalman_filter(az_est, a_est_devi, *az, a_measure_devi, &az_devi);
+
+		//printf("%f,%f,%f,%f,%f,%f\n", *ax, ax_est, *ay, ay_est, *az, az_est);
 
 		mpu6050_dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
 		*ax = (float) aaWorld.x / 16384.0;
@@ -222,13 +205,6 @@ void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz
 		f32 _gy = (float) (-ggy) / 131.0;
 		f32 _gz = (float) (-ggz) / 131.0;
 
-		//		//卡尔曼滤波
-		//		xv_est = kalman_filter(xv_est, xyz_v_est_devi, _gx, xyz_v_measure_devi, &xv_devi);
-		//		yv_est = kalman_filter(yv_est, xyz_v_est_devi, _gy, xyz_v_measure_devi, &yv_devi);
-		//		zv_est = kalman_filter(zv_est, xyz_v_est_devi, _gz, xyz_v_measure_devi, &zv_devi);
-		//		*gx = xv_est;
-		//		*gy = yv_est;
-		//		*gz = zv_est;
 		*gx = _gx;
 		*gy = _gy;
 		*gz = _gz;
@@ -4060,3 +4036,4 @@ void mpu6050_setDMPConfig2(uint8_t config)
 {
 	i2cdev_writeByte(devAddr, MPU6050_RA_DMP_CFG_2, config);
 }
+
