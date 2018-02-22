@@ -137,9 +137,6 @@ void engine_fly()
 
 	while (1)
 	{
-		//静止时重力方向修正角
-		e->dax = 0;
-		e->day = 0;
 		//实际欧拉角
 		e->tx = e->x + e->dx + e->dax + e->ctlmx;
 		e->ty = e->y + e->dy + e->day + e->ctlmy;
@@ -175,6 +172,13 @@ void engine_fly()
 		xv_last = xv_et;
 		yv_last = yv_et;
 		zv_last = zv_et;
+
+		e->tax = e->ax + e->dax;
+		e->tay = e->ay + e->day;
+		e->taz = e->az + e->daz;
+		e->vx += e->tax;
+		e->vy += e->tay;
+		e->vz += e->taz;
 
 		//在电机锁定时，停止转动，并禁用平衡补偿，保护措施
 		if (e->lock || e->v < PROCTED_SPEED)
@@ -359,9 +363,9 @@ void engine_reset(s_engine* e)
 	e->ax = 0;
 	e->ay = 0;
 	e->az = 0;
-	e->axt = 0;
-	e->ayt = 0;
-	e->azt = 0;
+	e->tax = 0;
+	e->tay = 0;
+	e->taz = 0;
 	e->vx = 0;
 	e->vy = 0;
 	e->vz = 0;
@@ -412,21 +416,18 @@ void engine_set_dxy()
 	e->dgy = -e->gy;
 	e->dgz = -e->gz;
 
+	//补偿陀螺仪读数，将3个轴的角速度都补偿为0
+	e->dax = -e->ax;
+	e->day = -e->ay;
+	e->daz = -e->az;
+	
+	e->vx = 0;
+	e->vy = 0;
+	e->vz = 0;
+
 	e->ctlmx = 0;
 	e->ctlmy = 0;
 	e->ctlmz = 0;
-
-	//静止时垂直重力加速度
-	e->daz = -e->az;
-
-	if (fabs(e->ax) < MAX_ACC)
-	{
-		e->dax = asin(e->ax / MAX_ACC);
-	}
-	if (fabs(e->ay) < MAX_ACC)
-	{
-		e->day = asin(e->ay / MAX_ACC);
-	}
 }
 
 //系统信号处理

@@ -185,20 +185,23 @@ void mpu6050_value(float* x, float* y, float* z, float* gx, float* gy, float* gz
 		mpu6050_dmpGetGravity(&gravity, &q);
 		mpu6050_dmpGetLinearAccel(&aaReal, &aa, &gravity);
 
-		*ax = (float) aaReal.x / 163.84;
-		*ay = (float) aaReal.y / 163.84;
-		*az = (float) aaReal.z / 163.84;
-
-		ax_est = kalman_filter(ax_est, a_est_devi, *ax, a_measure_devi, &ax_devi);
-		ay_est = kalman_filter(ay_est, a_est_devi, *ay, a_measure_devi, &ay_devi);
-		az_est = kalman_filter(az_est, a_est_devi, *az, a_measure_devi, &az_devi);
-
-		//printf("%f,%f,%f,%f,%f,%f\n", *ax, ax_est, *ay, ay_est, *az, az_est);
+//		*ax = (float) aaReal.x / 163.84;
+//		*ay = (float) aaReal.y / 163.84;
+//		*az = (float) aaReal.z / 163.84;
 
 		mpu6050_dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-		*ax = (float) aaWorld.x / 16384.0;
-		*ay = (float) aaWorld.y / 16384.0;
-		*az = (float) aaWorld.z / 16384.0;
+		float vax = (float) aaWorld.x / 163.84;
+		float vay = (float) aaWorld.y / 163.84;
+		float vaz = (float) aaWorld.z / 163.84;
+
+		ax_est = kalman_filter(ax_est, a_est_devi, vax, a_measure_devi, &ax_devi);
+		ay_est = kalman_filter(ay_est, a_est_devi, vay, a_measure_devi, &ay_devi);
+		az_est = kalman_filter(az_est, a_est_devi, vaz, a_measure_devi, &az_devi);
+		*ax = ax_est;
+		*ay = ay_est;
+		*az = az_est;
+
+		//printf("%+9.7f\t%+9.7f\t%+9.7f\n", *ax, *ay, *az);
 
 		mpu6050_getRotation(&ggx, &ggy, &ggz);
 		f32 _gx = (float) (ggx) / 131.0;

@@ -70,6 +70,7 @@ void display_run()
 		{
 			printf("[xyz: %+7.3f %+7.3f %+7.3f]", e->x, e->y, e->z);
 			printf("[dxyz: %+7.3f %+7.3f %+7.3f]", e->dx, e->dy, e->dz);
+			printf("[txyz: %+7.3f %+7.3f %+7.3f]", e->tx, e->ty, e->tz);
 		}
 		if (display_get_onoff(2))
 		{
@@ -94,6 +95,8 @@ void display_run()
 		if (display_get_onoff(8))
 		{
 			printf("[a: %+7.3f %+7.3f %+7.3f]", e->ax, e->ay, e->az);
+			printf("[da: %+7.3f %+7.3f %+7.3f]", e->dax, e->day, e->daz);
+			printf("[ta: %+7.3f %+7.3f %+7.3f]", e->tax, e->tay, e->taz);
 		}
 		if (display_get_onoff(9))
 		{

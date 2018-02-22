@@ -89,9 +89,9 @@ typedef struct
 	f32 ax;
 	f32 ay;
 	f32 az;
-	f32 axt;
-	f32 ayt;
-	f32 azt;
+	f32 tax;
+	f32 tay;
+	f32 taz;
 	f32 vx;
 	f32 vy;
 	f32 vz;
