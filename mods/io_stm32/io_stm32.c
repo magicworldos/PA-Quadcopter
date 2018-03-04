@@ -172,23 +172,11 @@ void io_rc_data()
 				est[i] = controller_kalman_filter(est[i], ctl_est_devi, rc_data[i], ctl_measure_devi, &devi[i]);
 			}
 			controller_pitch_pwm((u32)est[4]);
-			controller_roll_pwm((u32)est[2]);
+			controller_roll_pwm((u32)est[5]);
 			controller_power_pwm((u32)est[3]);
 			controller_pro_pwm((u32)est[0]);
-			controller_mod0_pwm((u32)est[5]);
+			controller_mod0_pwm((u32)est[2]);
 			controller_mod1_pwm((u32)est[1]);
-
-			//controller_pitch_pwm(rc_data[4]);
-			//controller_roll_pwm(rc_data[2]);
-			//controller_power_pwm(rc_data[3]);
-			//controller_pro_pwm(rc_data[0]);
-			//controller_mod0_pwm(rc_data[5]);
-			//controller_mod1_pwm(rc_data[1]);
-			//for (int i = 0; i < RCCH_COUNT; i++)
-			//{
-			//	printf("[%6d%6d]", rc_data[i], (u32)est[i]);
-			//}
-			//printf("\n");
 		}
 		if (rc_error_count < 2 * PWM_ERR_MAX)
 		{
@@ -198,10 +186,10 @@ void io_rc_data()
 		{
 			memset(rc_data, 0, sizeof(u16) * RCCH_COUNT);
 			controller_pitch_pwm(rc_data[4]);
-			controller_roll_pwm(rc_data[2]);
+			controller_roll_pwm(rc_data[5]);
 			controller_power_pwm(rc_data[3]);
 			controller_pro_pwm(rc_data[0]);
-			controller_mod0_pwm(rc_data[5]);
+			controller_mod0_pwm(rc_data[2]);
 			controller_mod1_pwm(rc_data[1]);
 		}
 		usleep(ENG_TIMER * 1000);
@@ -473,25 +461,6 @@ void controller_roll_pwm(s32 lr)
 	//由2000～1600信号修正为-32.0 ～ +32.0角度
 	//采用二次曲线来对倾斜角做过滤，使角度变化更平滑
 	e->ctlmy = controller_parabola((float) (lr - p->ctl_lr_zero));
-
-	//如果是最左或最右
-	if (abs(lr - p->ctl_lr_zero) > 160)
-	{
-		//如果是最左
-		if (lr - p->ctl_lr_zero > 0)
-		{
-			e->lock_status |= (0x1 << 2);
-			e->lock_status &= ~(0x1 << 1);
-			return;
-		}
-
-		e->lock_status |= (0x1 << 1);
-		e->lock_status &= ~(0x1 << 2);
-		return;
-	}
-
-	e->lock_status &= ~(0x1 << 1);
-	e->lock_status &= ~(0x1 << 2);
 }
 
 //读入摇控器“油门”的PWM信号
@@ -558,6 +527,24 @@ void controller_mod0_pwm(s32 md)
 		e->ctlmz += z;
 	}
 
+	//如果是最左或最右
+	if (abs(md - p->ctl_md_zero) > 160)
+	{
+		//如果是最左
+		if (md - p->ctl_md_zero < 0)
+		{
+			e->lock_status |= (0x1 << 2);
+			e->lock_status &= ~(0x1 << 1);
+			return;
+		}
+
+		e->lock_status |= (0x1 << 1);
+		e->lock_status &= ~(0x1 << 2);
+		return;
+	}
+
+	e->lock_status &= ~(0x1 << 1);
+	e->lock_status &= ~(0x1 << 2);
 }
 
 //读入摇控器第5通道PWM信号
