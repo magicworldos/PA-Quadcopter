@@ -173,9 +173,9 @@ int serial_port_frame_recv_pwm(u16 *pwm)
 {
 	if (serial_port_frame_pase())
 	{
-		memcpy(pwm, &buff[PWM_POS_DATA], sizeof(u16) * 4);
+		memcpy(pwm, &buff[PWM_POS_DATA], sizeof(u16) * 8);
 		pwm_out_error_count = 0;
-		serial_port_limit(pwm, 4);
+		serial_port_limit(pwm, 8);
 		return 1;
 	}
 	return 0;

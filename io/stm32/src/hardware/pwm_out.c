@@ -7,7 +7,8 @@
 
 #include <pwm_out.h>
 
-u16 pwm_out[4] = { 0, 0, 0, 0 };
+u16 pwm_out[8] =
+{ 0, 0, 0, 0, 0, 0, 0, 0 };
 
 void pwm_out_init()
 {
@@ -20,17 +21,42 @@ void pwm_out_init()
 
 void pwm_out_gpio_config()
 {
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 
 	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 
-	//output
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
+	//OUT1-PA15
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	//OUT1-PB3
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	//OUT1-PB10
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	//OUT1-PB11
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	//OUT1-PA6
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	//OUT1-PA7
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	//OUT1-PB0
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	//OUT1-PB1
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+	GPIO_PinRemapConfig(GPIO_FullRemap_TIM2, ENABLE);
+
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 }
 
 void pwm_out_mode_config()
@@ -49,27 +75,47 @@ void pwm_out_mode_config()
 	TIM_OCInitStructure.TIM_Pulse = TIM_PULSE;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
-	//output Channel1
-	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
-	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
-	//output Channel2
-	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
-	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
-	//output Channel3
-	TIM_OC3Init(TIM4, &TIM_OCInitStructure);
-	TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
-	//output Channel4
-	TIM_OC4Init(TIM4, &TIM_OCInitStructure);
-	TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
-	//enable TIM4
-	TIM_ARRPreloadConfig(TIM4, ENABLE);
-	TIM_Cmd(TIM4, ENABLE);
+	//OUT1
+	TIM_OC1Init(TIM2, &TIM_OCInitStructure);
+	TIM_OC1PreloadConfig(TIM2, TIM_OCPreload_Enable);
+	//OUT2
+	TIM_OC2Init(TIM2, &TIM_OCInitStructure);
+	TIM_OC2PreloadConfig(TIM2, TIM_OCPreload_Enable);
+	//OUT3
+	TIM_OC3Init(TIM2, &TIM_OCInitStructure);
+	TIM_OC3PreloadConfig(TIM2, TIM_OCPreload_Enable);
+	//OUT4
+	TIM_OC4Init(TIM2, &TIM_OCInitStructure);
+	TIM_OC4PreloadConfig(TIM2, TIM_OCPreload_Enable);
+	//OUT5
+	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
+	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
+	//OUT6
+	TIM_OC2Init(TIM3, &TIM_OCInitStructure);
+	TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);
+	//OUT7
+	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
+	TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);
+	//OUT8
+	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
+	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
+
+	//enable TIM2
+	TIM_ARRPreloadConfig(TIM2, ENABLE);
+	TIM_Cmd(TIM2, ENABLE);
+	//enable TIM3
+	TIM_ARRPreloadConfig(TIM3, ENABLE);
+	TIM_Cmd(TIM3, ENABLE);
 }
 
 void pwm_out_set_value()
 {
-	TIM_SetCompare1(TIM4, pwm_out[0]);
-	TIM_SetCompare2(TIM4, pwm_out[1]);
-	TIM_SetCompare3(TIM4, pwm_out[2]);
-	TIM_SetCompare4(TIM4, pwm_out[3]);
+	TIM_SetCompare1(TIM2, pwm_out[0]);
+	TIM_SetCompare2(TIM2, pwm_out[1]);
+	TIM_SetCompare3(TIM2, pwm_out[2]);
+	TIM_SetCompare4(TIM2, pwm_out[3]);
+	TIM_SetCompare1(TIM3, pwm_out[4]);
+	TIM_SetCompare2(TIM3, pwm_out[5]);
+	TIM_SetCompare3(TIM3, pwm_out[6]);
+	TIM_SetCompare4(TIM3, pwm_out[7]);
 }

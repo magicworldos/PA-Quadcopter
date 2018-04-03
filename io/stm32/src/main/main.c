@@ -6,7 +6,7 @@
 #include <serial_port.h>
 
 extern u16 pwm_in[8];
-extern u16 pwm_out[4];
+extern u16 pwm_out[8];
 extern u32 pwm_in_error_count;
 extern u32 pwm_out_error_count;
 
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 		}
 		if (pwm_out_error_count > PWM_ERR_MAX)
 		{
-			memset(pwm_out, 0, sizeof(u16) * 4);
+			memset(pwm_out, 0, sizeof(u16) * 8);
 		}
 		pwm_out_set_value();
 
