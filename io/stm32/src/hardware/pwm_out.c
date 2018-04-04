@@ -8,7 +8,7 @@
 #include <pwm_out.h>
 
 u16 pwm_out[8] =
-{ 0, 0, 0, 0, 0, 0, 0, 0 };
+{ 1510, 1520, 1530, 1540, 1550, 1560, 1570, 1580 };
 
 void pwm_out_init()
 {
@@ -21,6 +21,10 @@ void pwm_out_init()
 
 void pwm_out_gpio_config()
 {
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable , ENABLE);
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 
@@ -68,7 +72,8 @@ void pwm_out_mode_config()
 	TIM_TimeBaseStructure.TIM_Prescaler = TIM_PRESCALER;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
 
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;

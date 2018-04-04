@@ -95,7 +95,7 @@ s32 __status()
 
 void io_pwm_data()
 {
-	u16 pwm_data[MOTOR_COUNT] = { 0, 0, 0, 0 };
+	u16 pwm_data[MOTOR_COUNT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	while (r)
 	{

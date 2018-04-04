@@ -25,7 +25,7 @@
 #define CTL_DI_MAX (2000)
 //最大倾斜角
 #define MAX_ANGLE (MAX_PALSTANCE)
-#define MOTOR_COUNT	(4)
+#define MOTOR_COUNT	(8)
 #define RCCH_COUNT	(8)
 
 #define BUFF_SIZE	(256)
@@ -54,10 +54,10 @@
 #define	PWM_POS_START2	                      	1
 #define	PWM_POS_LEN	                      		2
 #define	PWM_POS_DATA	                      	3
-#define	PWM_POS_CRC1 	                      	11
-#define	PWM_POS_CRC2  	                      	12
-#define	PWM_POS_END1  	                     	13
-#define	PWM_POS_END2  	                     	14
+#define	PWM_POS_CRC1 	                      	19
+#define	PWM_POS_CRC2  	                      	20
+#define	PWM_POS_END1  	                     	21
+#define	PWM_POS_END2  	                     	22
 
 #define PWM_BYTE_HEAD_1                         0X55
 #define PWM_BYTE_HEAD_2                         0XAA

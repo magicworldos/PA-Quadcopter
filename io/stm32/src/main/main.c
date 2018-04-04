@@ -10,9 +10,13 @@ extern u16 pwm_out[8];
 extern u32 pwm_in_error_count;
 extern u32 pwm_out_error_count;
 
+
 int main(int argc, char* argv[])
 {
 	SystemInit();
+
+	//RCC_ClocksTypeDef RCC_ClockFreq;
+	//RCC_GetClocksFreq(&RCC_ClockFreq);
 
 	led_init();
 
@@ -28,8 +32,6 @@ int main(int argc, char* argv[])
 
 	timer_start();
 
-	u32 i = 0;
-
 	while (1)
 	{
 		if (pwm_in_error_count < 2 * PWM_ERR_MAX)
@@ -40,17 +42,18 @@ int main(int argc, char* argv[])
 		{
 			serial_port_frame_send_rc(pwm_in);
 		}
-
-		serial_port_frame_recv_pwm(pwm_out);
-
-		if (pwm_out_error_count < 2 * PWM_ERR_MAX)
-		{
-			pwm_out_error_count++;
-		}
-		if (pwm_out_error_count > PWM_ERR_MAX)
-		{
-			memset(pwm_out, 0, sizeof(u16) * 8);
-		}
+		serial_port_frame_send_rc(pwm_in);
+//
+//		serial_port_frame_recv_pwm(pwm_out);
+//
+//		if (pwm_out_error_count < 2 * PWM_ERR_MAX)
+//		{
+//			pwm_out_error_count++;
+//		}
+//		if (pwm_out_error_count > PWM_ERR_MAX)
+//		{
+//			memset(pwm_out, 0, sizeof(u16) * 8);
+//		}
 		pwm_out_set_value();
 
 		led_blink(500 * 1000);

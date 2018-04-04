@@ -25,41 +25,43 @@ void serial_port_init()
 
 void serial_port_gpio_config()
 {
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB1Periph_UART4 | RCC_APB2Periph_USART1 | RCC_APB2Periph_AFIO, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB1Periph_UART4 | RCC_APB2Periph_USART1 | RCC_APB2Periph_AFIO, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
 
 	GPIO_InitTypeDef GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
 }
 
 void serial_port_mode_config()
 {
-	USART_InitTypeDef usart1_init_struct;
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
-	USART_Cmd(USART1, ENABLE);
-	usart1_init_struct.USART_BaudRate = USART_BAUDRATE;
-	usart1_init_struct.USART_WordLength = USART_WordLength_8b;
-	usart1_init_struct.USART_StopBits = USART_StopBits_1;
-	usart1_init_struct.USART_Parity = USART_Parity_No;
-	usart1_init_struct.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-	usart1_init_struct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	USART_Init(USART1, &usart1_init_struct);
-	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-	NVIC_EnableIRQ(USART1_IRQn);
+	USART_InitTypeDef usart4_init_struct;
+	RCC_APB2PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
+	USART_Cmd(UART4, ENABLE);
+	usart4_init_struct.USART_BaudRate = 115200;
+	usart4_init_struct.USART_WordLength = USART_WordLength_8b;
+	usart4_init_struct.USART_StopBits = USART_StopBits_1;
+	usart4_init_struct.USART_Parity = USART_Parity_No;
+	usart4_init_struct.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+	usart4_init_struct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_Init(UART4, &usart4_init_struct);
+	USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);
+	NVIC_EnableIRQ(UART4_IRQn);
 }
 
 u8 serial_port_putchar(u8 ch)
 {
-	//USART_ClearFlag(USART1, USART_FLAG_TC);
-	//USART_GetFlagStatus(USART1, USART_FLAG_TC);
-	USART_SendData(USART1, (u8) ch);
-	while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)
+	//USART_ClearFlag(UART4, USART_FLAG_TC);
+	//USART_GetFlagStatus(UART4, USART_FLAG_TC);
+	USART_SendData(UART4, (u16) ch);
+	while (USART_GetFlagStatus(UART4, USART_FLAG_TXE) == RESET)
 	{
 	}
 	return ch;
@@ -203,14 +205,14 @@ int serial_port_frame_send_rc(u16 *rc)
 	return len;
 }
 
-void USART1_IRQHandler(void)
+void UART4_IRQHandler(void)
 {
-	if (USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+	if (USART_GetITStatus(UART4, USART_IT_RXNE) != RESET)
 	{
-		while ((USART1->SR & USART_SR_RXNE) == 0)
+		while ((UART4->SR & USART_SR_RXNE) == 0)
 		{
 		}
-		recv.buffer[recv.head] = USART_ReceiveData(USART1);
+		recv.buffer[recv.head] = USART_ReceiveData(UART4);
 		recv.head = (recv.head + 1) % recv.size;
 		if (recv.head == recv.tail)
 		{
