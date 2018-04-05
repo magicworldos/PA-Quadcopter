@@ -37,10 +37,10 @@ typedef unsigned int u32;
 #define	PWM_POS_START2	                      	1
 #define	PWM_POS_LEN	                      		2
 #define	PWM_POS_DATA	                      	3
-#define	PWM_POS_CRC1 	                      	11
-#define	PWM_POS_CRC2  	                      	12
-#define	PWM_POS_END1  	                     	13
-#define	PWM_POS_END2  	                     	14
+#define	PWM_POS_CRC1 	                      	19
+#define	PWM_POS_CRC2  	                      	20
+#define	PWM_POS_END1  	                     	21
+#define	PWM_POS_END2  	                     	22
 
 #define PWM_BYTE_HEAD_1                         0X55
 #define PWM_BYTE_HEAD_2                         0XAA
@@ -281,39 +281,18 @@ int set_opt(int fd, int nSpeed, int nBits, char nEvent, int nStop)
 			newtio.c_cflag &= ~PARENB;
 			break;
 	}
-	/*设置波特率*/
-	switch (nSpeed)
-	{
-		case 2400:
-			cfsetispeed(&newtio, B2400);
-			cfsetospeed(&newtio, B2400);
-			break;
-		case 4800:
-			cfsetispeed(&newtio, B4800);
-			cfsetospeed(&newtio, B4800);
-			break;
-		case 9600:
-			cfsetispeed(&newtio, B9600);
-			cfsetospeed(&newtio, B9600);
-			break;
-		case 115200:
-			cfsetispeed(&newtio, B115200);
-			cfsetospeed(&newtio, B115200);
-			break;
-		case 460800:
-			cfsetispeed(&newtio, B460800);
-			cfsetospeed(&newtio, B460800);
-			break;
-		default:
-			cfsetispeed(&newtio, B9600);
-			cfsetospeed(&newtio, B9600);
-			break;
-	}
+	//设置波特率
+	cfsetispeed(&newtio, nSpeed);
+	cfsetospeed(&newtio, nSpeed);
 	/*设置停止位*/
 	if (nStop == 1)
+	{
 		newtio.c_cflag &= ~CSTOPB;
+	}
 	else if (nStop == 2)
+	{
 		newtio.c_cflag |= CSTOPB;
+	}
 	/*设置等待时间和最小接收字符*/
 	newtio.c_cc[VTIME] = 0;
 	newtio.c_cc[VMIN] = 0;
@@ -338,26 +317,7 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-//	struct termios tios;
-//	if (tcgetattr(fd, &tios) != 0)
-//	{
-//		printf("tcgetattr error\n");
-//		return -1;
-//	}
-//	cfsetispeed(&tios, B115200);
-//	cfsetospeed(&tios, B115200);
-//	tios.c_cflag = 0;
-//	tios.c_cflag |= CS8;
-//	tios.c_cflag &= ~CSTOPB;
-//	tios.c_cflag &= ~PARENB;
-//	tcflush(fd, TCIFLUSH);
-//	if ((tcsetattr(fd, TCSANOW, &tios)) != 0)
-//	{
-//		printf("tcgetattr error\n");
-//		return -1;
-//	}
-
-	if (set_opt(fd, 115200, 8, 'N', 1))
+	if (set_opt(fd, B115200, 8, 'N', 1))
 	{
 		perror("set_opt error");
 		return -1;
@@ -369,7 +329,7 @@ int main(int argc, char** argv)
 	memset(_recv.buffer, 0x00, BUFFER_SIZE);
 
 	u16 rc_data[8];
-	u16 pwm_data[4] = { 1000, 1000, 1000, 1000 };
+	u16 pwm_data[8] = { 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000 };
 	while (1)
 	{
 		frame_send_rc_data(pwm_data);
@@ -380,7 +340,7 @@ int main(int argc, char** argv)
 			memcpy(rc_data, &_packet_buffer[FW_POS_DATA], sizeof(u16) * 8);
 			for (int i = 0; i < 8; i++)
 			{
-				printf("%4d ", rc_data[i]);
+				printf("%04d ", rc_data[i]);
 			}
 			printf("\n");
 		}
