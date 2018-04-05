@@ -285,7 +285,7 @@ void TIM4_IRQHandler(void)
 	if (TIM_GetITStatus(TIM4, TIM_IT_CC1) != RESET)   //捕获1发生捕获事件
 	{
 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
-		if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_6) == 1)
+		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_6) == 1)
 		{
 			TIM_OC1PolarityConfig(TIM4, TIM_ICPolarity_Falling);
 			pwm_rise[4] = TIM_GetCapture1(TIM4);
@@ -308,7 +308,7 @@ void TIM4_IRQHandler(void)
 	if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)
 	{
 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC2);
-		if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == 1)
+		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_7) == 1)
 		{
 			TIM_OC2PolarityConfig(TIM4, TIM_ICPolarity_Falling);
 			pwm_rise[5] = TIM_GetCapture2(TIM4);
@@ -331,7 +331,7 @@ void TIM4_IRQHandler(void)
 	if (TIM_GetITStatus(TIM4, TIM_IT_CC3) != RESET)
 	{
 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC3);
-		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_0) == 1)
+		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_8) == 1)
 		{
 			TIM_OC3PolarityConfig(TIM4, TIM_ICPolarity_Falling);
 			pwm_rise[6] = TIM_GetCapture3(TIM4);
@@ -354,7 +354,7 @@ void TIM4_IRQHandler(void)
 	if (TIM_GetITStatus(TIM4, TIM_IT_CC4) != RESET)
 	{
 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC4);
-		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1) == 1)
+		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_9) == 1)
 		{
 			TIM_OC4PolarityConfig(TIM4, TIM_ICPolarity_Falling);
 			pwm_rise[7] = TIM_GetCapture4(TIM4);

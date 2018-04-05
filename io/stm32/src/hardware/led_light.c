@@ -23,13 +23,13 @@ void led_init()
 void led_on()
 {
 	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	GPIO_SetBits(GPIOA, GPIO_Pin_5);
+//	GPIO_SetBits(GPIOA, GPIO_Pin_5);
 }
 
 void led_off()
 {
 	GPIO_SetBits(GPIOA, GPIO_Pin_4);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_5);
+//	GPIO_ResetBits(GPIOA, GPIO_Pin_5);
 }
 
 void led_blink(u32 usecs)

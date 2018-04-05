@@ -138,10 +138,10 @@ void read_data_from_uart()
 	u8 tmp_serial_buf[BUFFER_SIZE];
 	int len = read(fd, tmp_serial_buf, BUFFER_SIZE);
 //	printf("len %d\n", len);
-	for (int i = 0; i < len; i++)
-	{
-		printf("%02x ", tmp_serial_buf[i]);
-	}
+//	for (int i = 0; i < len; i++)
+//	{
+//		printf("%02x ", tmp_serial_buf[i]);
+//	}
 //	printf("\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -340,7 +340,7 @@ int main(int argc, char** argv)
 			memcpy(rc_data, &_packet_buffer[FW_POS_DATA], sizeof(u16) * 8);
 			for (int i = 0; i < 8; i++)
 			{
-				printf("%4d ", rc_data[i]);
+				printf("%04d ", rc_data[i]);
 			}
 			printf("\n");
 		}
