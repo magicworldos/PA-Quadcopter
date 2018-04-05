@@ -218,11 +218,11 @@ void logger_logging()
 	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->ax, e->ay, e->az);
 	logger_write_data(count);
 
-	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->axt, e->ayt, e->azt);
-	logger_write_data(count);
+	//count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->axt, e->ayt, e->azt);
+	//logger_write_data(count);
 
-	count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->vx, e->vy, e->vz);
-	logger_write_data(count);
+	//count = snprintf(brw.data, WRITE_SIZE, ",%f,%f,%f", e->vx, e->vy, e->vz);
+	//logger_write_data(count);
 
 	count = snprintf(brw.data, WRITE_SIZE, ",%f", e->v);
 	logger_write_data(count);

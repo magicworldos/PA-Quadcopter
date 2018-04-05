@@ -41,7 +41,7 @@ s32 __init(s_engine* engine, s_params* params)
 	r = 1;
 	sts = 1;
 
-	fd = open("/dev/ttyUSB0", O_RDWR | O_NONBLOCK); //| O_NOCTTY | O_NDELAY
+	fd = open("/dev/ttyAMA0", O_RDWR | O_NONBLOCK); //| O_NOCTTY | O_NDELAY
 	if (fd == -1)
 	{
 		printf("Can't Open Serial Port\n");
@@ -139,13 +139,13 @@ void io_pwm_data()
 
 		}
 		//3
-		pwm_data[0] = speed[3] + CTL_PWM_MIN;
+		pwm_data[PWM_OUT0] = speed[3] + CTL_PWM_MIN;
 		//2
-		pwm_data[1] = speed[2] + CTL_PWM_MIN;
+		pwm_data[PWM_OUT1] = speed[2] + CTL_PWM_MIN;
 		//0
-		pwm_data[2] = speed[0] + CTL_PWM_MIN;
+		pwm_data[PWM_OUT2] = speed[0] + CTL_PWM_MIN;
 		//1
-		pwm_data[3] = speed[1] + CTL_PWM_MIN;
+		pwm_data[PWM_OUT3] = speed[1] + CTL_PWM_MIN;
 
 		frame_send_pwm_data(pwm_data);
 
@@ -171,12 +171,12 @@ void io_rc_data()
 			{
 				est[i] = controller_kalman_filter(est[i], ctl_est_devi, rc_data[i], ctl_measure_devi, &devi[i]);
 			}
-			controller_pitch_pwm((u32)est[4]);
-			controller_roll_pwm((u32)est[5]);
-			controller_power_pwm((u32)est[3]);
-			controller_pro_pwm((u32)est[0]);
-			controller_mod0_pwm((u32)est[2]);
-			controller_mod1_pwm((u32)est[1]);
+			controller_pitch_pwm((u32)est[RC_PITCH]);
+			controller_roll_pwm((u32)est[RC_ROLL]);
+			controller_power_pwm((u32)est[RC_POW]);
+			controller_pro_pwm((u32)est[RC_SENSITIVE]);
+			controller_mod0_pwm((u32)est[RC_YAW]);
+			controller_mod1_pwm((u32)est[RC_NULL0]);
 		}
 		if (rc_error_count < 2 * PWM_ERR_MAX)
 		{
@@ -185,12 +185,12 @@ void io_rc_data()
 		if (rc_error_count > PWM_ERR_MAX)
 		{
 			memset(rc_data, 0, sizeof(u16) * RCCH_COUNT);
-			controller_pitch_pwm(rc_data[4]);
-			controller_roll_pwm(rc_data[5]);
-			controller_power_pwm(rc_data[3]);
-			controller_pro_pwm(rc_data[0]);
-			controller_mod0_pwm(rc_data[2]);
-			controller_mod1_pwm(rc_data[1]);
+			controller_pitch_pwm((u32)est[RC_PITCH]);
+			controller_roll_pwm((u32)est[RC_ROLL]);
+			controller_power_pwm((u32)est[RC_POW]);
+			controller_pro_pwm((u32)est[RC_SENSITIVE]);
+			controller_mod0_pwm((u32)est[RC_YAW]);
+			controller_mod1_pwm((u32)est[RC_NULL0]);
 		}
 		usleep(ENG_TIMER * 1000);
 	}

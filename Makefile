@@ -28,24 +28,40 @@ MAX_PALSTANCE		= (60.0)
 MAX_ACC				= (32.0)
 #i2c设备路径
 I2C_DEV 			= \"/dev/i2c-1\"
+
+#以下为STM32扩展板IO定义
+#8路输出PWM_OUT
+PWM_OUT0			= (0)
+PWM_OUT1			= (1)
+PWM_OUT2			= (2)
+PWM_OUT3			= (3)
+PWM_OUT4			= (4)
+PWM_OUT5			= (5)
+PWM_OUT6			= (6)
+PWM_OUT7			= (7)
+##8路输入PWM_IN
+RC_PITCH			= (1)	#俯仰
+RC_ROLL				= (0)	#横滚
+RC_POW				= (2)	#油门
+RC_YAW				= (3)	#预留
+RC_SENSITIVE		= (5)	#俯仰横滚灵敏度
+RC_NULL0			= (4)	#预留
+RC_NULL1			= (6)	#预留
+RC_NULL2			= (7)	#预留
+
+#以下为树莓派IO定义，后续版本不再支持树莓派IO功能
 #4个电机的GPIO引脚
 PORT_MOTOR0			= (27)
 PORT_MOTOR1			= (26)
 PORT_MOTOR2			= (28)
 PORT_MOTOR3			= (25)
 #摇控器接收机的6个通道引脚
-#俯仰
-GPIO_FB				= (2)
-#横滚
-GPIO_LR				= (12)
-#油门
-GPIO_PW				= (3)
-#预留
-GPIO_MD				= (0)
-#预留
-GPIO_UD				= (13)
-#俯仰横滚灵敏度
-GPIO_DI				= (14)
+GPIO_FB				= (2)	#俯仰
+GPIO_LR				= (12)	#横滚
+GPIO_PW				= (3)	#油门
+GPIO_MD				= (0)	#预留
+GPIO_UD				= (13)	#预留
+GPIO_DI				= (14)	#俯仰横滚灵敏度
 
 ###############################################################################
 
@@ -106,6 +122,24 @@ defconfig:
 	echo "#define GPIO_MD	$(GPIO_MD)" >> include/defconfig.h
 	echo "#define GPIO_UD	$(GPIO_UD)" >> include/defconfig.h
 	echo "#define GPIO_DI	$(GPIO_DI)" >> include/defconfig.h
+	
+	echo "#define PWM_OUT0	$(PWM_OUT0)" >> include/defconfig.h
+	echo "#define PWM_OUT1	$(PWM_OUT1)" >> include/defconfig.h
+	echo "#define PWM_OUT2	$(PWM_OUT2)" >> include/defconfig.h
+	echo "#define PWM_OUT3	$(PWM_OUT3)" >> include/defconfig.h
+	echo "#define PWM_OUT4	$(PWM_OUT4)" >> include/defconfig.h
+	echo "#define PWM_OUT5	$(PWM_OUT5)" >> include/defconfig.h
+	echo "#define PWM_OUT6	$(PWM_OUT6)" >> include/defconfig.h
+	echo "#define PWM_OUT7	$(PWM_OUT7)" >> include/defconfig.h
+	
+	echo "#define RC_PITCH	$(RC_PITCH)" >> include/defconfig.h
+	echo "#define RC_ROLL	$(RC_ROLL)" >> include/defconfig.h
+	echo "#define RC_POW	$(RC_POW)" >> include/defconfig.h
+	echo "#define RC_YAW	$(RC_YAW)" >> include/defconfig.h
+	echo "#define RC_SENSITIVE	$(RC_SENSITIVE)" >> include/defconfig.h
+	echo "#define RC_NULL0	$(RC_NULL0)" >> include/defconfig.h
+	echo "#define RC_NULL1	$(RC_NULL1)" >> include/defconfig.h
+	echo "#define RC_NULL2	$(RC_NULL2)" >> include/defconfig.h
 	
 need_wiringpi:
 	echo "#ifndef _DEFCONFIG_H_" > include/defconfig.h

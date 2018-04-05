@@ -61,23 +61,6 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
-		u8 state_err_in = 0;
-		u8 state_err_out = 0;
-
-		if (pwm_in_error_count < 2 * PWM_ERR_MAX)
-		{
-			pwm_in_error_count++;
-		}
-		if (pwm_in_error_count < PWM_ERR_MAX)
-		{
-			serial_port_frame_send_rc(pwm_in);
-		}
-		else
-		{
-			state_err_in = 1;
-		}
-		serial_port_frame_send_rc(pwm_in);
-
 		serial_port_frame_recv_pwm(pwm_out);
 		if (pwm_out_error_count < 2 * PWM_ERR_MAX)
 		{
@@ -86,18 +69,23 @@ int main(int argc, char* argv[])
 		if (pwm_out_error_count > PWM_ERR_MAX)
 		{
 			memset(pwm_out, 0, sizeof(u16) * 8);
-			state_err_out = 1;
 		}
+
+		if (pwm_in_error_count < 2 * PWM_ERR_MAX)
+		{
+			pwm_in_error_count++;
+		}
+		if (pwm_in_error_count > PWM_ERR_MAX)
+		{
+			memset(pwm_in, 0, sizeof(u16) * 8);
+			memset(pwm_out, 0, sizeof(u16) * 8);
+			serial_port_frame_send_rc(pwm_in);
+		}
+		serial_port_frame_send_rc(pwm_in);
+
 		pwm_out_set_value();
 
-		if (state_err_out)
-		{
-			led_blink(100 * 1000);
-		}
-		else
-		{
-			led_blink(1000 * 1000);
-		}
+		led_blink(1000 * 1000);
 
 		timer_delay_ms(5);
 	}
