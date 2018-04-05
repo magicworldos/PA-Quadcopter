@@ -20,26 +20,60 @@ void led_init()
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
-void led_on()
+void led0_on()
 {
 	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-//	GPIO_SetBits(GPIOA, GPIO_Pin_5);
 }
 
-void led_off()
+void led0_off()
 {
 	GPIO_SetBits(GPIOA, GPIO_Pin_4);
-//	GPIO_ResetBits(GPIOA, GPIO_Pin_5);
+}
+
+void led1_on()
+{
+	GPIO_ResetBits(GPIOA, GPIO_Pin_5);
+}
+
+void led1_off()
+{
+	GPIO_SetBits(GPIOA, GPIO_Pin_5);
+}
+
+void led0_blink(u32 usecs)
+{
+	if (timer_tick % usecs < usecs / 2)
+	{
+		led0_on();
+	}
+	else
+	{
+		led0_off();
+	}
+}
+
+void led1_blink(u32 usecs)
+{
+	if (timer_tick % usecs < usecs / 2)
+	{
+		led1_on();
+	}
+	else
+	{
+		led1_off();
+	}
 }
 
 void led_blink(u32 usecs)
 {
-	if (timer_tick % (2 * usecs) < usecs)
+	if (timer_tick % usecs < usecs / 2)
 	{
-		led_on();
+		led0_on();
+		led1_off();
 	}
 	else
 	{
-		led_off();
+		led0_off();
+		led1_on();
 	}
 }

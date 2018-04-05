@@ -115,9 +115,9 @@ int crc16_check(u8 *buff, u8 len, u16 crc16)
 int frame_send_rc_data(u16 *pwm)
 {
 	//only support 4 channels.
-	//2 + 1 + 8 + 1 + 2
-	int len_data = 8;
-	int len = 15;
+	//2 + 1 + 16 + 1 + 2
+	int len_data = 16;
+	int len = 23;
 	u8 frame[len];
 	frame[PWM_POS_START1] = PWM_BYTE_HEAD_1;
 	frame[PWM_POS_START2] = PWM_BYTE_HEAD_2;
@@ -338,6 +338,7 @@ int main(int argc, char** argv)
 		if (parse_mag_feedback())
 		{
 			memcpy(rc_data, &_packet_buffer[FW_POS_DATA], sizeof(u16) * 8);
+			memcpy(pwm_data, rc_data, sizeof(u16) * 8);
 			for (int i = 0; i < 8; i++)
 			{
 				printf("%04d ", rc_data[i]);

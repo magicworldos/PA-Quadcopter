@@ -226,8 +226,8 @@ int frame_send_pwm_data(u16 *pwm)
 {
 	//only support 4 channels.
 	//2 + 1 + 8 + 1 + 2
-	int len_data = 8;
-	int len = 15;
+	int len_data = 16;
+	int len = 23;
 	u8 frame[len];
 	frame[PWM_POS_START1] = PWM_BYTE_HEAD_1;
 	frame[PWM_POS_START2] = PWM_BYTE_HEAD_2;

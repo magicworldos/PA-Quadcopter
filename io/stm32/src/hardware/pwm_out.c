@@ -69,7 +69,7 @@ void pwm_out_mode_config()
 	TIM_OCInitTypeDef TIM_OCInitStructure;
 
 	TIM_TimeBaseStructure.TIM_Period = TIM_PERIOD;
-	TIM_TimeBaseStructure.TIM_Prescaler = TIM_PRESCALER;
+	TIM_TimeBaseStructure.TIM_Prescaler = 35;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);

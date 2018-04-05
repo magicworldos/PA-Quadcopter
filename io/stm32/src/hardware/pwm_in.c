@@ -76,9 +76,9 @@ void tim5_capture_init(void)
 	//初始化定时器2 TIM5 设定计数器自动重装值
 	TIM_TimeBaseStructure.TIM_Period = 0xffff;
 	//预分频器
-	TIM_TimeBaseStructure.TIM_Prescaler = 71;
+	TIM_TimeBaseStructure.TIM_Prescaler = 35;
 	//设置时钟分割:TDTS = Tck_tim
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_ICPSC_DIV1;
 	//TIM向上计数模式
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	//根据TIM_TimeBaseInitStruct中指定的参数初始化TIMx的时间基数单位
@@ -139,8 +139,8 @@ void tim4_capture_init(void)
 
 	//初始化定时器4 TIM4
 	TIM_TimeBaseStructure.TIM_Period = 0xffff;
-	TIM_TimeBaseStructure.TIM_Prescaler = 71;
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_Prescaler = 35;
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_ICPSC_DIV1;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
 

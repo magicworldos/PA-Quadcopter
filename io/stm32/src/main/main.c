@@ -44,12 +44,10 @@ int main(int argc, char* argv[])
 
 	led_init();
 
-	led_off();
+	led0_off();
+	led1_off();
 
 	RCC_config();
-
-	RCC_ClocksTypeDef RCC_Clocks;
-	RCC_GetClocksFreq(&RCC_Clocks);
 
 	pwm_in_init();
 
@@ -63,33 +61,43 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
-//		if (pwm_in_error_count < 2 * PWM_ERR_MAX)
-//		{
-//			pwm_in_error_count++;
-//		}
-//		if (pwm_in_error_count < PWM_ERR_MAX)
-//		{
-//			serial_port_frame_send_rc(pwm_in);
-//		}
-//		pwm_in[0] = RCC_Clocks.HCLK_Frequency >> 16;
-//		pwm_in[1] = RCC_Clocks.HCLK_Frequency;
-//		pwm_in[2] = RCC_Clocks.SYSCLK_Frequency >> 16;
-//		pwm_in[3] = RCC_Clocks.SYSCLK_Frequency;
+		u8 state_err_in = 0;
+		u8 state_err_out = 0;
+
+		if (pwm_in_error_count < 2 * PWM_ERR_MAX)
+		{
+			pwm_in_error_count++;
+		}
+		if (pwm_in_error_count < PWM_ERR_MAX)
+		{
+			serial_port_frame_send_rc(pwm_in);
+		}
+		else
+		{
+			state_err_in = 1;
+		}
 		serial_port_frame_send_rc(pwm_in);
-//
-//		serial_port_frame_recv_pwm(pwm_out);
-//
-//		if (pwm_out_error_count < 2 * PWM_ERR_MAX)
-//		{
-//			pwm_out_error_count++;
-//		}
-//		if (pwm_out_error_count > PWM_ERR_MAX)
-//		{
-//			memset(pwm_out, 0, sizeof(u16) * 8);
-//		}
+
+		serial_port_frame_recv_pwm(pwm_out);
+		if (pwm_out_error_count < 2 * PWM_ERR_MAX)
+		{
+			pwm_out_error_count++;
+		}
+		if (pwm_out_error_count > PWM_ERR_MAX)
+		{
+			memset(pwm_out, 0, sizeof(u16) * 8);
+			state_err_out = 1;
+		}
 		pwm_out_set_value();
 
-		led_blink(500 * 1000);
+		if (state_err_out)
+		{
+			led_blink(100 * 1000);
+		}
+		else
+		{
+			led_blink(1000 * 1000);
+		}
 
 		timer_delay_ms(5);
 	}
