@@ -224,15 +224,25 @@ int crc16_check(u8 *buff, u8 len, u16 crc16)
 
 int frame_send_pwm_data(u16 *pwm)
 {
+	u16 status = 0;
+	if (e->lock)
+	{
+		status |= 0x1;
+	}
+	else
+	{
+		status &= (~0x1);
+	}
 	//only support 4 channels.
 	//2 + 1 + 8 + 1 + 2
-	int len_data = 16;
-	int len = 23;
+	int len_data = 18;
+	int len = 25;
 	u8 frame[len];
 	frame[PWM_POS_START1] = PWM_BYTE_HEAD_1;
 	frame[PWM_POS_START2] = PWM_BYTE_HEAD_2;
 	frame[PWM_POS_LEN] = len_data;
-	memcpy(&frame[PWM_POS_DATA], pwm, len_data);
+	memcpy(&frame[PWM_POS_DATA], &status, sizeof(u16));
+	memcpy(&frame[PWM_POS_DATA] + sizeof(u16), pwm, len_data);
 	u16 crc16 = crc16_value(frame, len_data + 3);
 	frame[PWM_POS_CRC1] = crc16 >> 8;
 	frame[PWM_POS_CRC2] = crc16 & 0xff;

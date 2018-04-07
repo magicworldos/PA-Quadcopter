@@ -9,6 +9,7 @@
 #include <frame_crc.h>
 
 s_serial_port recv;
+u16 status = 0;
 u8 buff[BUFF_SIZE];
 __IO u32 pwm_out_error_count = 0;
 
@@ -174,7 +175,8 @@ int serial_port_frame_recv_pwm(u16 *pwm)
 {
 	if (serial_port_frame_pase())
 	{
-		memcpy(pwm, &buff[PWM_POS_DATA], sizeof(u16) * 8);
+		memcpy(&status, &buff[PWM_POS_DATA], sizeof(u16));
+		memcpy(pwm, &buff[PWM_POS_DATA] + sizeof(u16), sizeof(u16) * 8);
 		pwm_out_error_count = 0;
 		serial_port_limit(pwm, 8);
 		return 1;

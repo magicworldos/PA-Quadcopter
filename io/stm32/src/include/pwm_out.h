@@ -13,6 +13,7 @@
 #define TIM_PRESCALER		(72)
 #define TIM_PERIOD			(2000)
 #define TIM_PULSE			(0)
+#define PWM_FAILSAFE		(880)
 
 void pwm_out_init(void);
 
@@ -20,6 +21,8 @@ void pwm_out_gpio_config(void);
 
 void pwm_out_mode_config(void);
 
-void pwm_out_set_value();
+void pwm_out_set_failsafe(void);
+
+void pwm_out_set_value(void);
 
 #endif

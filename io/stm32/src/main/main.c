@@ -10,6 +10,8 @@ extern u16 pwm_out[8];
 extern u32 pwm_in_error_count;
 extern u32 pwm_out_error_count;
 
+extern u16 status;
+
 void RCC_config() //如果外部晶振为8M，PLLCLK=SYSCLK=72M，HCLK=72M，//P2CLK=72M，P1CLK=36M，ADCCLK=36M，USBCLK=48M，TIMCLK=72M
 {
 	ErrorStatus HSEStartUpStatus; // 定义错误状态变量
@@ -68,7 +70,7 @@ int main(int argc, char* argv[])
 		}
 		if (pwm_out_error_count > PWM_ERR_MAX)
 		{
-			memset(pwm_out, 0, sizeof(u16) * 8);
+			pwm_out_set_failsafe();
 		}
 
 		if (pwm_in_error_count < 2 * PWM_ERR_MAX)
@@ -78,15 +80,36 @@ int main(int argc, char* argv[])
 		if (pwm_in_error_count > PWM_ERR_MAX)
 		{
 			memset(pwm_in, 0, sizeof(u16) * 8);
-			memset(pwm_out, 0, sizeof(u16) * 8);
+			pwm_out_set_failsafe();
 			serial_port_frame_send_rc(pwm_in);
 		}
 		serial_port_frame_send_rc(pwm_in);
 
 		pwm_out_set_value();
 
-		led_blink(1000 * 1000);
+		//RC and PWMOUT OK
+		if (pwm_in_error_count < PWM_ERR_MAX && pwm_out_error_count < PWM_ERR_MAX)
+		{
+			led0_blink(100 * 1000);
+		}
+		//RC or PWMOUT error
+		else
+		{
+			status = 0xffff;
+			led0_blink(1000 * 1000);
+		}
 
+		//lock
+		if (status != 0)
+		{
+			led1_blink(1000 * 1000);
+		}
+
+		//everything is going OK.
+		if (status == 0)
+		{
+			led1_blink(100 * 1000);
+		}
 		timer_delay_ms(5);
 	}
 }

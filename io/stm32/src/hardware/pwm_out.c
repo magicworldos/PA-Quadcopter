@@ -7,8 +7,7 @@
 
 #include <pwm_out.h>
 
-u16 pwm_out[8] =
-{ 1510, 1520, 1530, 1540, 1550, 1560, 1570, 1580 };
+u16 pwm_out[8] = { PWM_FAILSAFE, PWM_FAILSAFE, PWM_FAILSAFE, PWM_FAILSAFE, PWM_FAILSAFE, PWM_FAILSAFE, PWM_FAILSAFE, PWM_FAILSAFE };
 
 void pwm_out_init()
 {
@@ -21,7 +20,7 @@ void pwm_out_init()
 
 void pwm_out_gpio_config()
 {
-	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable , ENABLE);
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 
@@ -105,12 +104,26 @@ void pwm_out_mode_config()
 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
+	pwm_out_set_failsafe();
+	pwm_out_set_value();
+
 	//enable TIM2
 	TIM_ARRPreloadConfig(TIM2, ENABLE);
 	TIM_Cmd(TIM2, ENABLE);
 	//enable TIM3
 	TIM_ARRPreloadConfig(TIM3, ENABLE);
 	TIM_Cmd(TIM3, ENABLE);
+
+	pwm_out_set_failsafe();
+	pwm_out_set_value();
+}
+
+void pwm_out_set_failsafe()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		pwm_out[i] = PWM_FAILSAFE;
+	}
 }
 
 void pwm_out_set_value()
